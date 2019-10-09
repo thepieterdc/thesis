@@ -1,0 +1,17 @@
+-afhankelijk van wijzigingen detecteren welke tests moeten uitgevoerd worden en sommige skippen
+  - IMPACT TESTING
+  - ook op unit testing?
+  end to end testing
+  - benadrukken waarom dit super super belangrijk is
+
+  zoek specifieke projecten om op te testen:
+    - chromium?
+
+  - virtual wall
+  - elektriciteistkost, runtime kost, tijdskost, ...
+
+  - mail sturen naar Bruno met verandering van onderwerp
+      P.S. Moet ik elke week update geven naar u, 2 wekelijks, ...
+          Jasper/Dwight in CC
+
+  - doe benchmarks met bestaande projecten
