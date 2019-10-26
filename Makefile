@@ -1,4 +1,5 @@
 all: literature/bronnen.pdf \
+		 literature/techniques.pdf \
 		 meetings/15-10-2019.pdf
 
 clean:
