@@ -1,0 +1,46 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[toc,page]{appendix}
+\usepackage[english]{babel}
+\usepackage[margin=1in]{geometry}
+\usepackage[pdftex]{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage[default,scale=0.95]{opensans}
+\usepackage{scrlayer}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{xcolor}
+
+% Custom colors
+\definecolor{code-background}{HTML}{EEEEEE}
+\definecolor{code-delim}{RGB}{20,105,176}
+\colorlet{code-punct}{red!60!black}
+
+% Configuration for code listings.
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{code-background},
+    literate=
+     *{:}{{{\color{code-punct}{:}}}}{1}
+      {,}{{{\color{code-punct}{,}}}}{1}
+      {\{}{{{\color{code-delim}{\{}}}}{1}
+      {\}}{{{\color{code-delim}{\}}}}}{1}
+      {[}{{{\color{code-delim}{[}}}}{1}
+      {]}{{{\color{code-delim}{]}}}}{1},
+}
+
+
+\titleclass{\chapter}{straight}
+
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{18pt}{\huge}
+\titlespacing*{\chapter}{0pt}{20pt}{20pt}
+
+\setcounter{secnumdepth}{5}

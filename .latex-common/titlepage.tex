@@ -1,0 +1,25 @@
+\DeclareNewLayer[
+	foreground,
+	foot,
+	contents={\parbox[b][\layerheight][b]{\layerwidth}{%
+		\includegraphics[height=2.5cm]{\Root/.latex-common/logo-ghent-university.pdf}
+		\hfill
+		\includegraphics[height=1.2cm]{\Root/.latex-common/logo-sciences.pdf}%
+		\vspace*{1cm}
+	}}
+]{titlepage.logos}
+
+\title{
+	\vspace*{1.4in}
+	\Huge{Thesis}\\
+	\vspace*{0.4in}
+	\Large{Progress Report 1}\\
+	\vspace*{4cm}
+}
+
+\date{November 2, 2019}
+\author{Pieter De Clercq\vspace*{3.5cm}}
+
+\AddLayersToPageStyle{empty}{titlepage.logos}
+\maketitle
+\RemoveLayersFromPageStyle{empty}{titlepage.logos}
