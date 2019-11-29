@@ -1,2 +1,0 @@
-- is [1] [2] genoeg of moet dit bvb zijn [Royce, 1987]
-- feedback op eerste deel
