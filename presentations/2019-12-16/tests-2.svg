@@ -13,13 +13,13 @@
    data-icon="tasks"
    class="svg-inline--fa fa-tasks fa-w-16"
    role="img"
-   viewBox="0 0 2514.2036 1561.3048"
+   viewBox="0 0 2514.2036 1400.2908"
    version="1.1"
    id="svg12"
    sodipodi:docname="tests-2.svg"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
    width="2514.2036"
-   height="1561.3048">
+   height="1400.2908">
   <metadata
      id="metadata18">
     <rdf:RDF>
@@ -48,8 +48,8 @@
      id="namedview14"
      showgrid="false"
      inkscape:zoom="0.40576172"
-     inkscape:cx="1574.032"
-     inkscape:cy="794.78994"
+     inkscape:cx="1107.0091"
+     inkscape:cy="753.45883"
      inkscape:window-x="0"
      inkscape:window-y="33"
      inkscape:window-maximized="1"
@@ -62,7 +62,7 @@
      fit-margin-bottom="0" />
   <g
      id="g2112"
-     transform="translate(-5.3717305e-4,-27.041537)">
+     transform="translate(-5.3717305e-4,-31.970537)">
     <path
        id="path1609"
        d="m 139.61,35.5 a 12,12 0 0 0 -17,0 L 58.93,98.81 36.23,76.69 a 12,12 0 0 0 -17,0 L 3.53,92.41 a 12,12 0 0 0 0,17 l 47.59,47.4 a 12.78,12.78 0 0 0 17.61,0 L 84.32,141.19 156.52,69 a 12.09,12.09 0 0 0 0.09,-17 z"
@@ -96,7 +96,7 @@
   </g>
   <g
      id="g2104"
-     transform="translate(98.115563,-23.041536)">
+     transform="translate(98.115563,-27.970537)">
     <g
        transform="translate(3.6967509,22.511012)"
        id="g1829">
