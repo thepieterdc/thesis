@@ -1,0 +1,9 @@
+---
+documentclass:     article
+papersize:         a4
+geometry:          margin=2cm
+fontfamilyoptions: sfdefault,book
+
+header-includes: |
+    \usepackage[default,scale=0.95]{opensans}
+...
