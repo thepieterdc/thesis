@@ -1,0 +1,54 @@
+% !TeX root = ../../thesis.tex
+
+\subsection{Agile Manifesto}
+Since the late 1990's, developers have tried to reduce the time occupied by the implementation and testing phases. In order to accomplish this, several new implementations of the SDLC were proposed and evaluated, later collectively referred to as \emph{Agile development methodologies}. The term \emph{Agile development} was coined during a meeting of seventeen prominent software developers, held between February 11-13, 2001, in Snowbird, Utah \cite{jimhighsmith2001}. As a result of this meeting, the developers defined the four key values and twelve principles that define these new methodologies, called the \emph{Manifesto for Agile Software Development}, also known as the \emph{Agile Manifesto}.\\
+
+\noindent According to the authors, the four key values of Agile software development should be interpreted as follows: ``While there is value in the items on the right, we value the items on the left more'' \cite{beck2001agile}. Meyer provides a the following definition for the four values: ``general assumptions framing the agile view of the world``, while defining the principles as ``core agile rules, organizational and technical`` \cite[p.~2]{Meyer2014}. Martin identifies the principles as ``the characteristics that differentiate a set of agile practices from a heavyweight process`` \cite[p.~33]{martin2014}. A variety of different programming models, based on the agile ideologies, have arisen since 2001 and each one incorporates these values and principles in their own unique way. I will very briefly explain these values and their corresponding principles, using the mapping proposed by Kiv \cite[p.~12]{10.1007/978-3-030-03673-7_2}.
+
+\subsubsection{\emph{Individuals and interactions} over processes and tools}\label{sssec:agilevalue-individuals}
+Instead of meticulously following an outlined development process and utilising the best tools available, the main focus of attention should shift to the people behind the development and how they are interacting with each other. According to Glass, the quality of the programmers and the team is the most influential factor in the successful development of software \cite{glass2001agile}. 
+
+\agileprinciple{5}{Build projects around motivated individuals. Give them the environment and support they need, and trust them to get the job done.}
+The key to successful software development is ensuring that the people working on the project are both skilled and motivated. Research has shown that, while proficient programmers can cost twice as much as their less-skilled counterparts, their productivity lies between 5 to 30 times higher \cite{glass2001agile}. Any factor that negatively impacts a healthy environment or decreases motivation should be changed \cite[p.~34]{martin2014}.
+
+\agileprinciple{6}{The most efficient and effective method of conveying information to and within a development team is face-to-face conversation.}
+Real-life conversations and human interaction, ideally in an informal setting, should be preferred over forms of digital communication. Direct communication techniques will encourage the developers to raise questions instead of making (possibly) wrong assumptions \cite{fowlerhighsmithagile,glass2001agile}.
+
+\agileprinciple{8}{Agile processes promote sustainable development. The sponsors, developers, and users should be able to maintain a constant pace indefinitely.}
+The team should aim for a fast, yet sustainable pace instead of rushing to finish the project. This reduces the risk of burnouts and ensures high-quality software will be delivered \cite{martin2014}.
+
+\agileprinciple{11}{The best architectures, requirements, and designs emerge from self-organizing teams.}
+The idea of requiring a hierarchy within a team should be abolished. Every team member must be considered equal and must have input on how to divide the work and the corresponding responsibilities \cite{martin2014}. Subsequently, Fowler and Highsmith state that a minimal amount of process rules and an increase in human interactions has a positive influence on innovation and creativity \cite{fowlerhighsmithagile}. 
+
+\agileprinciple{12}{At regular intervals, the team reflects on how to become more effective, then tunes and adjusts its behavior accordingly.}
+An agile team is versatile and aware that the environment changes continuously, and that they should act accordingly \cite{martin2014}. An important aspect to keep in mind is that the decision on whether to incorporate changes, should be taken by the team itself instead of by an upper hand, since all members share equal responsibilities \cite{glass2001agile}.
+
+\subsubsection{\emph{Working software} over comprehensive documentation}\label{sssec:agilevalue-workingsoftware}
+The primary goal of software engineering is to deliver a working end product which fulfils the needs of the customer. In order to accomplish this, development should start as soon as possible. Traditional programming models demand a lot of documentation to be written prior to the actual development, which will inevitably lead to inconsistencies between the documentation and the actual application as the project grows and the requirements change \cite{Hazzan2014}. 
+	
+\agileprinciple{1}{Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.}
+Research has identified a negative correlation between the functionalities of the initial delivery and the quality of the final release. This implies that the team should strive to deliver a rudimentary version of the project as soon as possible \cite{martin2014}, rather than attempting to implement all required features at once.
+
+\agileprinciple{3}{Deliver working software frequently, from a couple of weeks to a couple of months, with a preference to the shorter timescale.}
+In the first principle I have explained the importance of an early, rudimental version of the project. After this initial delivery, new functionality is added in an incremental fashion in subsequent deliveries until all required features are implemented, with the interval between two delivery cycles being as short as possible. An important distinction to make is the difference between a ``delivery'' and a ``release''. Deliveries are iterations of the project sent to the customer, while releases are those deliveries that the customer considers suitable for public use  \cite{fowlerhighsmithagile}. Glass criticises this statement and sees little point in delivering development versions to the customer \cite{glass2001agile}.
+
+\agileprinciple{7}{Working software is the primary measure of progress.}
+In traditional software development, the progress is measured by the amount of documentation that has been written. This way of measuring is however not representative for the actual completion of the project. Glass gives the example of a team lacking behind on schedule. They can hide their lack of progress by simply writing documentation instead of code, fooling their management \cite{glass2001agile}. In agile software development, the progress is measured directly by the fraction of completed functionality \cite{martin2014}.
+
+\agileprinciple{10}{Simplicity --the art of maximizing the amount of work not done-- is essential.}
+Agile software development tries to realise a minimal working version as soon as possible. In order to achieve this goal, optimal time management is crucial. This imposes two important consequences. First, the developers should only start writing code when the design is thoroughly tested, to avoid having to restart all over again \cite{glass2001agile}. Secondly, as \autoref{sssec:agilevalue-respondingtochange} will explain, it is possible that the structure of the project can change completely, something which needs to be accounted for when writing the code \cite{martin2014}.
+
+\subsubsection{\emph{Customer collaboration} over contract negotiation}
+In traditional software engineering, the role of the customer is subordinate to the developer. Agile software engineering maintains a different perception of this role, treating both the customer and developers as equal entities. Daily contact between both parties is of vital importance to avoid misunderstandings and a short feedback loop allows the developers to cope with changes in requirements and to ensure that the customer is satisfied with the delivered product \cite{Hazzan2014}.
+
+\agileprinciple{4}{Business people and developers must work together daily throughout the project.}
+Martin: ``For a project to be agile, customers, developers and stakeholders must have significant and frequent interaction.'' \cite{martin2014}. This has already been emphasised before by the principles discussed in \autoref{sssec:agilevalue-individuals}. Note that the word ``customer'' is missing in the definition of this principle. According to Glass, this was done on purpose to make the agile ideas apply to non-business applications as well \cite{glass2001agile}.
+
+\subsubsection{\emph{Responding to change} over following a plan}\label{sssec:agilevalue-respondingtochange}
+The first step of the aforementioned waterfall model (\autoref{sec:se-sdlc}) was to ensure both the customer and the developers have a complete and exhaustive view of the entire application. In reality however, this has proven to be rather difficult and sometimes even impossible. As a result of this, a change in requirements was one of the most common causes of software project failure \cite{glass2001agile}. Consequently, the agile software development methodologies do not require a complete specification of the final product to be known a priori and stimulate the developers to successfully cope with changes as the application is being developed \cite{Hazzan2014}.
+
+\agileprinciple{2}{Welcome changing requirements, even late in development. Agile processes harness change for the customer's competitive advantage.}
+Due to the iterative development approach, agile methodologies are able to implement required changes much earlier in the process, resulting in only a minimal impact on the system \cite{martin2014}. 
+
+\agileprinciple{9}{Continuous attention to technical excellence and good design enhances agility.}
+``High quality is the key to high speed'', according to Fowler \cite{martin2014}. Code of high quality can only be achieved if the quality of the design is high as well, since this is required to handle changes in requirements. As a consequence, agile programmers should manage a ``refactor early, refactor often'' approach. While this might not result in a short-term benefit, as no new functionality is added, it definitely has a major impact in the long run and is essential to maintaining agility \cite{fowlerhighsmithagile}.
