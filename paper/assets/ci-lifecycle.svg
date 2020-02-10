@@ -7,6 +7,7 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="86.641449mm"
@@ -25,9 +26,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="160.32043"
-     inkscape:cy="144.81724"
+     inkscape:zoom="1.979899"
+     inkscape:cx="294.20129"
+     inkscape:cy="138.65435"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -38,8 +39,9 @@
      inkscape:window-width="1920"
      inkscape:window-height="1022"
      inkscape:window-x="0"
-     inkscape:window-y="33"
-     inkscape:window-maximized="1" />
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     showguides="false" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -48,7 +50,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -75,24 +77,53 @@
          style="stroke-width:0.26458332" /></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="76.693893"
-       y="129.82291"
-       id="text886"><tspan
-         sodipodi:role="line"
-         id="tspan884"
-         x="76.693893"
-         y="129.82291"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#0000ff;stroke-width:0.26458332">TODO ZET HIER</tspan><tspan
-         sodipodi:role="line"
-         x="76.693893"
-         y="143.05208"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#0000ff;stroke-width:0.26458332"
-         id="tspan888">TEKST IN VAN</tspan><tspan
-         sodipodi:role="line"
-         x="76.693893"
-         y="156.28123"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#0000ff;stroke-width:0.26458332"
-         id="tspan890">DRIE FASEN</tspan></text>
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       id="text16"
+       y="0.52916664"
+       transform="translate(0.52916667,2.6458334)"><textPath
+         xlink:href="#path18"
+         id="textPath885"
+         style="font-size:6.3499999px">1. Implementation</textPath></text>
+    <circle
+       id="path18"
+       cx="-130.00499"
+       cy="-88.846779"
+       r="33.542328"
+       style="fill:none;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       transform="rotate(-153.46179)" />
+    <circle
+       id="path18-3"
+       cx="146.74554"
+       cy="-57.103363"
+       r="33.542328"
+       style="fill:none;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       transform="matrix(0.77023822,0.63775629,0.63775629,-0.77023822,0,0)" />
+    <circle
+       id="path18-3-6"
+       cx="-5.3910456"
+       cy="157.37213"
+       r="33.542328"
+       style="fill:none;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       transform="matrix(-0.88980939,0.45633239,0.45633239,0.88980939,0,0)" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       id="text905"
+       y="-0.52916664"
+       transform="translate(-0.52916667)"><textPath
+         xlink:href="#path18-3"
+         id="textPath907"><tspan
+   style="font-size:6.3499999px;stroke-width:0.26458332"
+   id="tspan903">2. Integration</tspan></textPath></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       id="text912"
+       y="-0.52916664"
+       transform="translate(1.0583333)"><textPath
+         xlink:href="#path18-3-6"
+         id="textPath914"><tspan
+   style="font-size:6.3499999px;stroke-width:0.26458332"
+   id="tspan910">3. Test</tspan></textPath></text>
   </g>
 </svg>
