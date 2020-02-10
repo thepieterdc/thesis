@@ -1,13 +1,11 @@
 % !TeX root = ../../thesis.tex
 
 \subsection{Continuous Integration}
-In traditional software development, the design phase typically leads to a representation of the required functionality in multiple, stand-alone modules. Subsequently, every module is implemented separately by individual developers. Afterwards, an attempt is made to integrate all the modules into the final application, an event to which Meyer refers to as the ``Big Bang'' \cite[~p.103]{Meyer2014}. The name \emph{Big Bang} reflects the complex nature of this operation, since every developer can take unexpected assumptions, resulting in mutually incompatible components.\\
+In traditional software development, the design phase typically leads to a representation of the required functionality in multiple, stand-alone modules. Subsequently, every module is implemented separately by individual developers. Afterwards, an attempt is made to integrate all the modules into the final application, an event to which Meyer refers to as the ``Big Bang'' \cite[~p.103]{Meyer2014}. The name \emph{Big Bang} reflects the complex nature of this operation. This can prove to be a challenging operation, because every developer can take unexpected assumptions at the start of the project, which may ultimately result in mutually incompatible components. Furthermore, since the code was written over a span of several weeks to months, the developers often need to rewrite code that they have not touched in a long time. Eventually this will lead to unanticipated delays and costs \cite{SmartJenkinsDefinitive}.\\ 
 
-\noindent Contrarily, agile development methodologies advocate the idea of frequent, yet small deliveries (\autoref{sssec:agilevalue-workingsoftware}). Consequently, this implies that the code is built often and that the modules are integrated multiple times, on a \emph{continuous} basis, rather than just once at the end. This practice of frequent builds is referred to as \emph{Continuous Integration} \cite{martin2014,Meyer2014}. It should be noted that this idea exists and has been applied before the agile manifesto was written. The first notorious software company that has adopted this practice is Microsoft, already in 1989 \cite[~p.11]{cusumanomicrosoft}. Cusumano reports that Microsoft typically builds the entire application at least once per day \cite[~p.12]{cusumanomicrosoft}, which in turn requires developers to integrate and test their changes multiple times per day.\\
+\noindent Contrarily, agile development methodologies advocate the idea of frequent, yet small deliveries (\autoref{sssec:agilevalue-workingsoftware}). Consequently, this implies that the code is built often and that the modules are integrated multiple times, on a \emph{continuous} basis, rather than just once at the end. This practice of frequent builds is referred to as \emph{Continuous Integration} \cite{martin2014,Meyer2014}. It should be noted that this idea exists and has been applied before the agile manifesto was written. The first notorious software company that has adopted this practice is Microsoft, already in 1989 \cite[~p.11]{cusumanomicrosoft}. Cusumano reports that Microsoft typically builds the entire application at least once per day \cite[~p.12]{cusumanomicrosoft}, therefore requiring developers to integrate and test their changes multiple times per day.\\
 
-\noindent The introduction of Continuous Integration in software development has important consequences on the life cycle. Where the waterfall model used a cascading life cycle, Continuous Integration employs a circular, repetitive structure consisting of three phases, as visualised in \autoref{fig:agile-ci-lifecycle}.
-
-% zie een van die papers
+\noindent The introduction of Continuous Integration \texttt{[CI]} in software development has important consequences on the life cycle. Where the waterfall model used a cascading life cycle, Continuous Integration employs a circular, repetitive structure consisting of three phases, as visualised in \autoref{fig:agile-ci-lifecycle}.
 
 \begin{enumerate}
 	\bolditem{Implementation} In the first phase, every developer individually writes code for the module they were assigned to. At a regular interval, the code is committed to the remote repository.
@@ -24,16 +22,47 @@ In traditional software development, the design phase typically leads to a repre
 	\label{fig:agile-ci-lifecycle}
 \end{figure}
 
-\noindent Adopting Continuous Integration can prove to be a lengthy and repetitive task. Luckily, a variety of tools and frameworks exist to automate this process. These tools are typically added as a \texttt{post-receive} hook to the version control system (e.g. Git, Subversion, \dots). Every time a commit is pushed by a developer, the code is built and tests are executed. I will now discuss four prominent Continuous Integration systems.
+\noindent Adopting Continuous Integration can prove to be a lengthy and repetitive task. Luckily, a variety of tools and frameworks exist to automate this process. Essentially, these tools are typically attached to a version control system (e.g. Git, Mercurial, \dots), using a \texttt{post-receive} hook. Every time a commit is pushed by one of the developers, the CI system is notified, after which the code is automatically built and tests are executed. Optionally, the system can be configured to automatically publish successful runs to the end users, a process referred to as \emph{Continuous Delivery}. I will now proceed by discussing four prominent Continuous Integration systems.
+
+% ZIE DIE ENE PAPER VAN 736 BLADZIJDEN ROND P424 -> 10.1007@978-3-030-34080-3.pdf
 
 \subsubsection{Jenkins}
-// TODO EXPLAIN
+Jenkins CI\footnote{\url{https://jenkins.io/}} was launched in 2011 and profiles itself as ``The leading open source automation server''.
+- Initieel gestart als "Hudson" in 2004 door Kohsuke Kawaguchi (Sun/Oracle employee)
+- Geherlanceerd
+- Gratis, zelf te hosten
+- Java
+- Community heeft heel veel plugins geschreven voor vanalles -- ecosysteem
+- Mogelijkheid om zelf plugins te schrijven
+- (source: JenkinsDefGuide)
 
-\subsubsection{CircleCI}
+\begin{figure}[htbp!]
+	\centering
+	\includegraphics[width=0.5\textwidth]{assets/jenkins.pdf}
+	\caption{Logo of Jenkins CI (\url{https://jenkins.io/})}
+	\label{fig:jenkins}
+\end{figure}
+
+\subsubsection{GitLab CI}
 // TODO EXPLAIN
 
 \subsubsection{Travis-CI}
 // TODO EXPLAIN
 
 \subsubsection{GitHub Actions}
-// TODO EXPLAIN
+- Github
+- 2019
+- Gratis voor open source projecten
+- Gehost door Github (werkt ook enkel met Github projecten)
+- Mogelijkheid om zowel op Windows, Linux als OSX te runnen
+- Mogelijkheid om uit te breiden via docker containers of via javascript acties
+- (source: https://github.blog/2019-08-08-github-actions-now-supports-ci-cd/)
+- (source: https://help.github.com/en/actions/getting-started-with-github-actions/about-github-actions)
+- (source: https://github.com/features/actions)
+
+\begin{figure}[htbp!]
+	\centering
+	\includegraphics[width=0.5\textwidth]{assets/github-actions.pdf}
+	\caption{Logo of GitHub Actions (\url{https://github.com/features/actions})}
+	\label{fig:github-actions}
+\end{figure}
