@@ -8,3 +8,15 @@
 - Metapredictor: Voer alle algoritmes eens uit en rangschik ze volgens hoe goed ze het voorspeld hebben
 
 - Scoringsmechanisme: Nog bepalen
+
+- Junit: https://www.baeldung.com/junit-5-test-order
+
+\subsection{Architectuur}
+- Commit
+- POST /commit
+	data: parent commit hash, huidige commit hash
+	result: volgorde van tests
+- voer tests uit in gegeven volgorde
+- POST /result
+	data: huidige commit hash, gefaalde tests
+	
