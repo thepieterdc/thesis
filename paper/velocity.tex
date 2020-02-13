@@ -20,3 +20,8 @@
 - POST /result
 	data: huidige commit hash, gefaalde tests
 	
+\subsection{Junit-reorder}
+- Orde vastleggen in yaml files (plaats voorbeeld)
+- Out of the box support om tests binnen eenzelfde klasse in volgorde uit te voeren, maar niet class-wide support
+- Na elke uitvoering van een test wordt een nieuwe processor aangemaakt met een filter op de methodnaam, dit heeft als nadeel dat hergebruiken van initialisaties niet gaat. Misschien hier nog iets op vinden
+- Parallelliseren momenteel niet gesupport, geen idee hoe dat zou werken met een volgorde (kan niet gewoon verdelen in volgorde want stel dat 1 test heel lang duurt dan is die volgorde niet meer juist)
