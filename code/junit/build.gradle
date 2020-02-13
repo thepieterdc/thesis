@@ -1,0 +1,34 @@
+plugins {
+    id 'groovy'
+    id 'idea'
+    id 'java'
+    id 'java-gradle-plugin'
+    id 'maven-publish'
+}
+
+group 'io.github.thepieterdc.velocity'
+version '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.yaml:snakeyaml:1.25'
+}
+
+gradlePlugin {
+    plugins {
+        velocityPlugin {
+            id = 'velocity-junit'
+            implementationClass = 'io.github.thepieterdc.velocity.junit.VelocityPlugin'
+        }
+    }
+}
+
+wrapper {
+    gradleVersion = '6.1.1'
+}

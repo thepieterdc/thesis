@@ -1,0 +1,7 @@
+---
+order:
+- {class: io.github.thepieterdc.velocity.junit.example.FirstTest, method: testHello}
+- {class: io.github.thepieterdc.velocity.junit.example.SecondTest, method: testWorld}
+- {class: io.github.thepieterdc.velocity.junit.example.FirstTest, method: testFoo}
+- {class: io.github.thepieterdc.velocity.junit.example.SecondTest, method: testLoremIpsum}
+- {class: io.github.thepieterdc.velocity.junit.example.SecondTest, method: testBar}
