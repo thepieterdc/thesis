@@ -1,0 +1,49 @@
+\newcommand*{\Root}{..}
+\input{\Root/.latex-common/preamble.tex}
+\renewcommand{\documentdate}{February 16, 2020}
+\renewcommand{\documenttitle}{Progress Report 2}
+\begin{document}
+\input{\Root/.latex-common/titlepage.tex}
+\onehalfspacing
+\newpage
+
+\chapter*{Metadata}
+\emph{The title of my thesis is still provisionary.}
+
+\begin{itemize}
+  \item \textbf{Title:} Applying Test Case Prioritization to optimize Continuous Integrating
+  \item \textbf{Name:} Pieter De Clercq \texttt{(01503338)}
+  \item \textbf{Study programme:} Master of Science in Computer Science
+  \item \textbf{Promotor(s):} prof. dr. Bruno Volckaert, prof. dr. ir. Filip De Turck
+  \item \textbf{Supervisors:} Jasper Vaneessen, Dwight Kerkhove
+\end{itemize}
+
+\chapter*{Status}
+In the previous progress report, I have determined the scope of my masters' thesis. As outlined before, my masters' thesis will research whether or not it is possible to optimize Continuous Integration performance by adopting Test Case Prioritization. In essence, this means that I want to reduce the time occupied by executing regression, integration and unit tests by ranking them according to their failure expectation probability.\\
+
+\noindent First of all, I could not spend as much time to my masters' thesis as I had wanted during December/January, as a result of my busy exam schedule. Since this is my graduation year, I wanted to ensure myself not to fail any exams, a task at which I succeeded. Besides studying however, I was able to find some free moments at which I could progress my thesis.\\
+
+\noindent My first goal was to finish the literature study I had started in the first semester and write a textual report. I have not yet finished this report, however I expect to do so by next week (my textual report currently consists of 21 pages).\\
+
+\noindent Secondly, I had to think of an architecture and start coding an implementation. As to the architecture part, I have devised a simple web-based API as outlined in \autoref{fig:architecture}. I have opted for a web API since this allows data to be exposed easily, optionally for other tools to take advantage of in the future. The architecture works as follows: First, the Continuous Integration system \texttt{[CI-server]} sends a request to the prioritization server \texttt{[PRIO-server]}, indicating that a new commit is ready to be tested. Subsequently, the commit is pulled from the remote repository by the PRIO-server, after which an order is determined. This analysis is performed asynchronously, since it can span several seconds. The CI-server frequently polls the PRIO-server for status updates regarding the analysis. When this is complete, the CI-server receives an order in which the tests should be executed. The tests are executed in the given order and the outcome of the tests is sent back to the PRIO-server as feedback, to improve subsequent analyses. As for the implementation, I have currently finished a proof-of-concept JUnit runner which allows tests (in Java) to be executed in a self-chosen order. The order can currently be provided using a \texttt{YAML}-file, as illustrated in \autoref{lst:order-format}.
+
+\begin{figure}[htbp]
+	\includegraphics[width=\textwidth]{assets/architecture.pdf}
+	\caption{Architecture design of the implementation}
+	\label{fig:architecture}
+\end{figure}
+
+\begin{lstlisting}[caption=JUnit Order format, label=lst:order-format, language=yaml]
+- {class: "FirstTest", method: "testHello"}
+- {class: "SecondTest", method: "testWorld"}
+- {class: "SecondTest", method: "testLoremIpsum"}
+- {class: "FirstTest", method: "testFoo"}
+- {class: "SecondTest", method: "testBar"}
+\end{lstlisting}
+
+\chapter*{Schedule}
+This semester, I only have to attend 1 course, which means that I can dedicate most, if not all of my time towards writing my masters' thesis. Until now I have mainly focussed on writing the textual report, my first task will be to finish the literature study. Starting from next week, I will start implementing the architecture discussed in the previous section. I do not expect the Prioritization server to be very resource intensive (performance testing is however required), so I will attempt to deploy it on a Raspberry Pi. Afterwards, I will feed some open source projects into this architecture, in order to evaluate its performance. In the previous progress report I had already identified three potential projects that I wanted to use. Finally, I will write a detailed report of both the implementation, the results, and future work and append this to the literature study. Concerning these sections, I have already written some schematic pseudo-sentences containing the basic ideas of these sections.\\
+
+\noindent In a final phase, I will investigate the feasibility to support other languages beside Java, and other frameworks beside JUnit, such as Python.
+
+\end{document}
