@@ -1,6 +1,11 @@
 # JUnit example
 
-This example illustrates the junit-reorder library. The order is specified in `src/test/resources/order.yaml` and the used order is printed upon execution of the `test` target:
+This example illustrates the junit-reorder library. The order is specified in `src/test/resources/order.yaml` and the used order is printed upon execution of the `velocity` target.
+
+```shell script
+(cd ../ && ./gradlew jar publishToMavenLocal) && ./gradlew velocity --rerun-tasks --stacktrace
+```
+
 ```text
 io.github.thepieterdc.thesis.junitreorder.example.FirstTest > testHello STANDARD_OUT
     Test: FirstTest#testHello
