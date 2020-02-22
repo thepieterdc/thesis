@@ -1,9 +1,5 @@
 \chapter{Related work}
-- In vorig hoofdstuk uitgelegd dat je vaak moet changes integreren -> vaak tests uitvoeren, maar dat kan miserie zijn als tests heel lang duren want dan ben je maar steeds bezig met wachten tot die tests stoppen
-
-(TODO)
-
-- Maar; dat testen kan heel lang duren (zoek een bron waarin lange tests besproken worden)
+In the previous chapter I have stressed the paramount importance of periodically integrating one's changes into the upstream repository. Additionally, Continuous Integration was introduced as both a practice and a tool to facilitate this often complex and time-consuming process. In this chapter I will investigate the flip side of applying this practice. After every integration, all of the unit and regression tests in the test suite must be executed to ensure that the integration was successful and that no new bugs have been introduced. As the project progresses, the size of the codebase increases and subsequently the size of the test suite will increase as well to maintain a sufficiently high coverage. This imposes a issue, since executing these tests evidently does not scale. Walcott, Soffa and Kapfhammer illustrate the magnitude of this problem by providing an example of a codebase of 20.000 lines, requiring seven weeks to execute all tests \cite{10.1145/1146238.1146240}.
 
 - Bestaan aantal oplossingen voor:
 
