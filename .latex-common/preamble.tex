@@ -4,8 +4,13 @@
 \usepackage[english]{babel}
 \usepackage[margin=1in]{geometry}
 \usepackage[pdftex]{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
 \usepackage{biblatex}
 \usepackage{caption}
+\usepackage{changepage}
+\usepackage{enumitem}
 \usepackage{hyperref}
 \usepackage{listing}
 \usepackage{listings,lstautogobble}
@@ -15,6 +20,11 @@
 \usepackage[caption=false]{subfig}
 \usepackage{titlesec}
 \usepackage{xcolor}
+
+% Mathematical definitions.
+\theoremstyle{break}
+\newtheorem{definition}{Definition}
+\newcommand{\definitionautorefname}{definition}
 
 % Custom colors
 \definecolor{code-background}{HTML}{EEEEEE}
