@@ -3,3 +3,5 @@ AGILE: https://www.scriptieprijs.be/sites/default/files/Master%20thesis%20-The%2
 WERK STUK ROND SOORTEN TESTS MISSCHIEN UIT MET MEYER2014 - p114 en verder
 
 Future work: Junit-reorder uitbreiden zodat MaxNParallelTestClassProcessor kan worden gebruikt. is wat problematisch want stel dat eerste test heel lang duurt dan gaat order niet meer juist zijn.
+
+Doe stuff met lineair programmeren in evaluator? -> cplex

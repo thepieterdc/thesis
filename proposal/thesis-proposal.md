@@ -3,7 +3,7 @@ title: "[DRAFT] Towards scalable CI/CD tools on low-end devices."
 author: [Pieter De Clercq]
 date: "2019-02-28"
 geometry: margin=1in
-fontfamily: merriweather
+mainfont: Lato
 ---
 
 # Introduction
