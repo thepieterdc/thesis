@@ -5,9 +5,9 @@
  *
  * https://github.com/thepieterdc/thesis/
  */
-package io.github.thepieterdc.velocity.junit.reorder
+package io.github.thepieterdc.velocity.junit.test
 
-import org.gradle.internal.Pair
+
 import org.yaml.snakeyaml.Yaml
 import org.yaml.snakeyaml.constructor.Constructor
 
@@ -16,7 +16,7 @@ import java.util.stream.Collectors
 /**
  * Parser for order.yaml files.
  */
-final class OrderParser {
+final class VelocityOrderParser {
     static class Order {
         List<Map<String, String>> order = new ArrayList<>()
 
@@ -32,7 +32,7 @@ final class OrderParser {
     /**
      * OrderParser constructor.
      */
-    private OrderParser() {
+    private VelocityOrderParser() {
 
     }
 
@@ -42,12 +42,12 @@ final class OrderParser {
      * @param file the order file
      * @return the order
      */
-    static List<Pair<String, String>> parse(final File file) {
+    static List<TestCase> parse(final File file) {
         final Yaml yaml = new Yaml(new Constructor(Order.class))
         final Order parsed = yaml.load(new FileInputStream(file))
         return parsed.order.stream()
             .map({ final item ->
-                Pair.of(item['class'], item['method'])
+                new TestCase(item['class'], item['method'])
             })
             .collect(Collectors.toList())
     }

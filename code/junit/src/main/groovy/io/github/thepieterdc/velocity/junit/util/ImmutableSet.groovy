@@ -9,7 +9,6 @@ package io.github.thepieterdc.velocity.junit.util
 
 import java.util.stream.Collectors
 import java.util.stream.StreamSupport
-
 /**
  * A set of which the contents cannot be modified.
  */
@@ -28,6 +27,6 @@ final class ImmutableSet {
      * @return the set
      */
     static <T> Set<T> create(final Iterable<T> iterable) {
-        return StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toUnmodifiableSet());
+        return StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toUnmodifiableSet())
     }
 }

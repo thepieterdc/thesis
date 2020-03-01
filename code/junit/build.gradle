@@ -17,7 +17,13 @@ repositories {
 }
 
 dependencies {
+    compileOnly gradleApi()
+    compileOnly localGroovy()
     compile 'org.yaml:snakeyaml:1.25'
+    compile 'org.jacoco:org.jacoco.agent:0.8.5:runtime'
+    compile 'org.jacoco:org.jacoco.core:0.8.5'
+    compile 'org.jacoco:org.jacoco.report:0.8.5'
+    implementation 'junit:junit:4.13'
 }
 
 gradlePlugin {
@@ -30,5 +36,5 @@ gradlePlugin {
 }
 
 wrapper {
-    gradleVersion = '6.1.1'
+    gradleVersion = '6.2.1'
 }

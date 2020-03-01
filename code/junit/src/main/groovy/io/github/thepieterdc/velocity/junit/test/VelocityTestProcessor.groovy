@@ -5,20 +5,18 @@
  *
  * https://github.com/thepieterdc/thesis/
  */
-package io.github.thepieterdc.velocity.junit.reorder
+package io.github.thepieterdc.velocity.junit.test
 
 import io.github.thepieterdc.velocity.junit.util.FileClassLoader
 import org.gradle.api.internal.tasks.testing.TestClassProcessor
 import org.gradle.api.internal.tasks.testing.TestClassRunInfo
 import org.gradle.api.internal.tasks.testing.TestResultProcessor
-import org.gradle.internal.Pair
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import java.lang.reflect.Method
 import java.util.function.Function
 import java.util.stream.Collectors
-
 /**
  * Processes test classes and executes tests.
  */
@@ -26,7 +24,7 @@ class VelocityTestProcessor implements TestClassProcessor {
     private static final Logger LOG = LoggerFactory.getLogger(VelocityTestProcessor.class)
     private static final String TEST_ANNOTATION = "org.junit.Test"
 
-    private final Function<Pair<String, String>, TestClassProcessor> delegator
+    private final Function<TestCase, TestClassProcessor> delegator
     private final String orderFile
 
     private TestClassProcessor processor
@@ -35,8 +33,8 @@ class VelocityTestProcessor implements TestClassProcessor {
     private final ClassLoader loader
     private TestResultProcessor resultProcessor
 
-    private final List<Pair<String, String>> order
-    private final Collection<Pair<String, String>> tests
+    private final List<TestCase> order
+    private final Collection<TestCase> tests
     private final Map<String, TestClassRunInfo> testsInfo
 
     /**
@@ -47,7 +45,7 @@ class VelocityTestProcessor implements TestClassProcessor {
      * @param classpath classpath containing the tests
      * @param orderFile file containing the test order
      */
-    VelocityTestProcessor(final Function<Pair<String, String>, TestClassProcessor> delegator,
+    VelocityTestProcessor(final Function<TestCase, TestClassProcessor> delegator,
                           final Collection<File> classpath,
                           final String orderFile) {
         this.delegator = delegator
@@ -90,12 +88,12 @@ class VelocityTestProcessor implements TestClassProcessor {
                 .collect(Collectors.toSet()))
 
             // Traverse up the inheritance tree.
-            cursor = cursor.getSuperclass()
+            cursor = cursor.superclass
         }
 
         // Save the test methods.
         testMethods.stream()
-            .map({ final method -> Pair.of(testClass.testClassName, method)})
+            .map({ final method -> new TestCase(testClass.testClassName, method) })
             .forEach(this.tests.&add)
         this.testsInfo[testClass.testClassName] = testClass
     }
@@ -104,7 +102,7 @@ class VelocityTestProcessor implements TestClassProcessor {
     void startProcessing(final TestResultProcessor resultProcessor) {
         // Parse the order file.
         this.order.clear()
-        this.order.addAll(OrderParser.parse(new File(this.orderFile)))
+        this.order.addAll(VelocityOrderParser.parse(new File(this.orderFile)))
 
         // Save the result processor.
         this.resultProcessor = resultProcessor
@@ -117,14 +115,15 @@ class VelocityTestProcessor implements TestClassProcessor {
         LOG.info("Total tests found: {}.", this.tests.size())
 
         LOG.info("=============== [Running prioritized tests] ===============")
-        for (final Pair<String, String> orderedTest : this.order) {
+        for (final TestCase orderedTest : this.order) {
             // Execute the test.
             this.processor = this.delegator.apply(orderedTest)
             this.processor.startProcessing(this.resultProcessor)
             if (this.stoppedNow) {
                 return
             }
-            this.processor.processTestClass(this.testsInfo[orderedTest.left])
+
+            this.processor.processTestClass(this.testsInfo[orderedTest.className])
             this.processor.stop()
 
             // Remove the test from the list of tests.
@@ -132,14 +131,14 @@ class VelocityTestProcessor implements TestClassProcessor {
         }
 
         LOG.info("=============== [Running remaining tests] ===============")
-        for (final Pair<String, String> remainingTest : this.tests) {
+        for (final TestCase remainingTest : this.tests) {
             // Execute the test.
             this.processor = this.delegator.apply(remainingTest)
             this.processor.startProcessing(this.resultProcessor)
             if (this.stoppedNow) {
                 return
             }
-            this.processor.processTestClass(this.testsInfo[remainingTest.left])
+            this.processor.processTestClass(this.testsInfo[remainingTest.className])
             this.processor.stop()
         }
     }
