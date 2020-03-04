@@ -1,7 +1,7 @@
 ---
 order:
-- {class: io.github.thepieterdc.velocity.junit.example.FirstTest, method: testHello}
-- {class: io.github.thepieterdc.velocity.junit.example.SecondTest, method: testWorld}
-- {class: io.github.thepieterdc.velocity.junit.example.FirstTest, method: testFoo}
-- {class: io.github.thepieterdc.velocity.junit.example.SecondTest, method: testLoremIpsum}
-- {class: io.github.thepieterdc.velocity.junit.example.SecondTest, method: testBar}
+  - io.github.thepieterdc.velocity.junit.example.FirstTest.testHello
+  - io.github.thepieterdc.velocity.junit.example.SecondTest.testWorld
+  - io.github.thepieterdc.velocity.junit.example.FirstTest.testFoo
+  - io.github.thepieterdc.velocity.junit.example.SecondTest.testLoremIpsum
+  - io.github.thepieterdc.velocity.junit.example.SecondTest.testBar

@@ -4,7 +4,7 @@ This Gradle plugin allows JUnit4 tests to be executed in a chosen order. The ord
 ```yaml
 ---
 order:
-  - {class: ClassContainingTest, method: NameOfTestMethod}
+  - package.containing.the.test.TestClass.TestMethod
 ```
 
 Tests that are not listed will be executed in a random yet deterministic order after the listed tests.

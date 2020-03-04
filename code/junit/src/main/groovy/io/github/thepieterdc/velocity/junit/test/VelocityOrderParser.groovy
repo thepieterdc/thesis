@@ -18,13 +18,13 @@ import java.util.stream.Collectors
  */
 final class VelocityOrderParser {
     static class Order {
-        List<Map<String, String>> order = new ArrayList<>()
+        List<String> order = new ArrayList<>()
 
-        List<Map<String, String>> getOrder() {
+        List<String> getOrder() {
             return this.order
         }
 
-        void setOrder(final List<Map<String, String>> order) {
+        void setOrder(final List<String> order) {
             this.order = order
         }
     }
@@ -47,7 +47,9 @@ final class VelocityOrderParser {
         final Order parsed = yaml.load(new FileInputStream(file))
         return parsed.order.stream()
             .map({ final item ->
-                new TestCase(item['class'], item['method'])
+                final String className = item.substring(0, item.lastIndexOf('.'))
+                final String methodName = item.substring(item.lastIndexOf('.') + 1)
+                new TestCase(className, methodName)
             })
             .collect(Collectors.toList())
     }
