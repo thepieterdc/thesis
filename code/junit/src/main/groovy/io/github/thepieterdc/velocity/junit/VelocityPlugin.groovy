@@ -10,12 +10,14 @@ package io.github.thepieterdc.velocity.junit
 import io.github.thepieterdc.velocity.junit.coverage.VelocityCoverageAgent
 import io.github.thepieterdc.velocity.junit.tasks.VelocityProcessTask
 import io.github.thepieterdc.velocity.junit.tasks.VelocityTestTask
+import io.github.thepieterdc.velocity.junit.tasks.VelocityUploadTask
 import org.gradle.api.Plugin
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.DependencySet
 import org.gradle.api.internal.file.FileOperations
 import org.gradle.api.internal.project.ProjectInternal
 import org.gradle.api.plugins.JavaPluginConvention
+import org.gradle.api.tasks.bundling.Zip
 import org.gradle.internal.jacoco.JacocoAgentJar
 import org.gradle.internal.reflect.Instantiator
 import org.gradle.language.base.plugins.LifecycleBasePlugin
@@ -34,6 +36,8 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
 
     private static final String COVERAGE_CONFIG = 'velocityCoverageAgent'
     private static final String JACOCO_AGENT = 'org.jacoco:org.jacoco.agent:0.8.5'
+
+    private static final String TASK_ZIP_NAME = 'velocityZip'
 
     private final Instantiator instantiator
     private ProjectInternal project
@@ -73,13 +77,27 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
             .provider({ fileOps.mkdir(processedCoverageOutputFolder) })
             .get()
 
+        // Zip archive.
+        final String processedCoverageZip = String.format("%s/coverage-processed/all.zip",
+            project.layout.buildDirectory.get().asFile
+        )
+        final File processedCoverageZipFile = new File(processedCoverageZip)
+
         this.configureTestTask(coverageOutput)
         this.configureProcessTask(coverageOutput, processedCoverageOutput)
+        this.configureZipTask(processedCoverageOutput, processedCoverageZipFile)
+        this.configureUploadTask(processedCoverageZipFile)
 
         // Configure the call graph.
         project.tasks
             .findByName(VelocityTestTask.TASK_NAME)
             .finalizedBy(VelocityProcessTask.TASK_NAME)
+        project.tasks
+            .findByName(VelocityProcessTask.TASK_NAME)
+            .finalizedBy(TASK_ZIP_NAME)
+        project.tasks
+            .findByName(TASK_ZIP_NAME)
+            .finalizedBy(VelocityUploadTask.TASK_NAME)
     }
 
     /**
@@ -97,14 +115,14 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
         }
 
         // Get the compiled java output path.
-        final File[] outputs = project.convention
+        final File[] outputs = this.project.convention
             .getPlugin(JavaPluginConvention.class)
             .sourceSets
             .findByName('main')
             .output.files
 
         // Add the report parse task.
-        project.tasks.register(
+        this.project.tasks.register(
             VelocityProcessTask.TASK_NAME,
             VelocityProcessTask.class,
             { final VelocityProcessTask task ->
@@ -112,9 +130,8 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
                 task.group = LifecycleBasePlugin.VERIFICATION_GROUP
 
                 task.classpath = outputs
-
-                task.inputDirectory = coverageInput
                 task.destinationGenerator = outputCreator
+                task.inputDirectory = coverageInput
             }
         )
     }
@@ -170,5 +187,38 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
                 ))
             }
         )
+    }
+
+    /**
+     * Configures the upload task.
+     */
+    private void configureUploadTask(final File zipFile) {
+        // Add the zip upload task.
+        this.project.tasks.register(
+            VelocityUploadTask.TASK_NAME,
+            VelocityUploadTask.class,
+            { final VelocityUploadTask task ->
+                task.description = 'Uploads zip files to the server for analysis'
+                task.group = LifecycleBasePlugin.VERIFICATION_GROUP
+
+                task.input = zipFile
+            }
+        )
+    }
+
+    /**
+     * Configures the zip task.
+     */
+    private void configureZipTask(final File processedCoverageOutput,
+                                  final File zipFile) {
+        // Add the zip task.
+        this.project.configure(this.project) {
+            task(type: Zip, description: 'Combines .xml reports into a .zip archive', TASK_ZIP_NAME) {
+                archiveName = zipFile
+                from(processedCoverageOutput) {
+                    include '*.xml'
+                }
+            }
+        }
     }
 }

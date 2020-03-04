@@ -13,16 +13,22 @@ sourceCompatibility = 11
 targetCompatibility = 11
 
 repositories {
+    jcenter()
     mavenCentral()
 }
 
 dependencies {
     compileOnly gradleApi()
     compileOnly localGroovy()
-    compile 'org.yaml:snakeyaml:1.25'
+
+    compile 'org.apache.httpcomponents:httpmime:4.5'
+    compile 'org.apache.tika:tika-core:1.4'
+    compile 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.2'
     compile 'org.jacoco:org.jacoco.agent:0.8.5:runtime'
     compile 'org.jacoco:org.jacoco.core:0.8.5'
     compile 'org.jacoco:org.jacoco.report:0.8.5'
+    compile 'org.yaml:snakeyaml:1.25'
+
     implementation 'junit:junit:4.13'
 }
 

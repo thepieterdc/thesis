@@ -45,9 +45,13 @@ class VelocityProcessTask extends DefaultTask {
         // Find the logs.
         final File[] files = this.inputDirectory
             .listFiles({ final _, final file -> file.endsWith('.exec') } as FilenameFilter)
+
+        // Parse the logs.
         for (final File file : files) {
             this.parseFile(file)
         }
+
+        LOG.info('Parsed all logs.')
     }
 
     /**
