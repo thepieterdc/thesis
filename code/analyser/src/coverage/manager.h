@@ -1,0 +1,77 @@
+/*
+ * Copyright (c) 2019-2020. All rights reserved.
+ *
+ * @author Pieter De Clercq
+ *
+ * https://github.com/thepieterdc/thesis/
+ */
+
+#ifndef ANALYSER_COVERAGE_MANAGER_H
+#define ANALYSER_COVERAGE_MANAGER_H
+
+#include "../database/connection.h"
+#include "../runs/run.h"
+#include "../tests/manager.h"
+
+namespace coverage {
+    /**
+     * Manages coverage data.
+     */
+    class manager {
+    private:
+        const database::connection &db;
+        const tests::manager &tests;
+
+        /**
+         * Parses the coverage results of one file and inserts it into the
+         * database. A coverage path is only updated if it does not yet exist,
+         * or if the test was successful.
+         *
+         * @param run current test run
+         * @param file coverage result
+         */
+        void parse(const runs::run &run, const std::string &file) const;
+
+    public:
+        /**
+         * manager constructor.
+         *
+         * @param db database connection
+         */
+        manager(const database::connection &db, const tests::manager &tests) :
+                db(db),
+                tests(tests) {};
+
+        /**
+         * manager destructor.
+         */
+        virtual ~manager() = default;
+
+        /**
+         * Gets whether coverage is available for the given test id.
+         *
+         * @param test_id the test id to find
+         * @return true if coverage is known
+         */
+        bool available(std::uint_fast64_t test_id) const;
+
+        /**
+         * Removes the coverage information for the given test.
+         *
+         * @param test_id the test
+         */
+        void clear(std::uint_fast64_t test_id) const;
+
+        /**
+         * Parses the coverage results and inserts them into the database. A
+         * coverage path is only updated if it does not yet exist, or if the
+         * test was successful.
+         *
+         * @param run current test run
+         * @param path folder containing the coverage results
+         */
+        void parse_all(const runs::run &run, const std::string &path) const;
+    };
+}
+
+#endif /* ANALYSER_COVERAGE_MANAGER_H */

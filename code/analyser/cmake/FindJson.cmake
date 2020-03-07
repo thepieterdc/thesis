@@ -1,0 +1,1 @@
+find_path(JSON_INCLUDE_DIRS json.hpp PATHS "${CMAKE_SOURCE_DIR}/lib/json")
