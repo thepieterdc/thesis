@@ -43,6 +43,11 @@ public class SecondTest {
     }
     
     @Test
+    public void testOtherBar() {
+        Assert.assertEquals(84, HelloOtherWorld.someBar());
+    }
+    
+    @Test
     public void testWorld() {
         Assert.assertEquals("World", HelloWorld.world());
     }

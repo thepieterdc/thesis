@@ -12,7 +12,7 @@ package io.github.thepieterdc.velocity.junit.example;
  */
 public class HelloWorld {
 	public static int bar() {
-		return 42;
+		return 41;
 	}
 	
 	public static boolean foo() {

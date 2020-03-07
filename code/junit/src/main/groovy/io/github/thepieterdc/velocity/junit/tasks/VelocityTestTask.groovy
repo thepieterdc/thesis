@@ -9,6 +9,7 @@ package io.github.thepieterdc.velocity.junit.tasks
 
 import io.github.thepieterdc.velocity.junit.test.TestCase
 import io.github.thepieterdc.velocity.junit.test.VelocityTestExecutor
+import io.github.thepieterdc.velocity.junit.test.VelocityTestResultListener
 import io.github.thepieterdc.velocity.junit.test.junit.VelocityJUnitFramework
 import org.gradle.api.internal.DocumentationRegistry
 import org.gradle.api.internal.tasks.testing.JvmTestExecutionSpec
@@ -37,6 +38,8 @@ class VelocityTestTask extends Test {
 
     @Input
     String orderFile = ""
+
+    File results = null
 
     @Override
     protected TestExecuter<JvmTestExecutionSpec> createTestExecuter() {
@@ -95,8 +98,20 @@ class VelocityTestTask extends Test {
     @TaskAction
     @Override
     void executeTests() {
-        this.testLogging.showStandardStreams = true
-        this.executor = this.createTestExecuter()
-        super.executeTests()
+        // Add a listener to capture the test results.
+        final VelocityTestResultListener listener = new VelocityTestResultListener()
+        this.addTestListener(listener)
+
+        try {
+            // Execute the tests.
+            this.testLogging.showStandardStreams = true
+            this.executor = this.createTestExecuter()
+            super.executeTests()
+        } catch (final Exception error) {
+            throw error;
+        } finally {
+            // Write the test results.
+            listener.write(this.results)
+        }
     }
 }

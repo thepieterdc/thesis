@@ -25,7 +25,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import javax.inject.Inject
-import java.nio.file.Paths
 import java.util.function.Function
 
 /**
@@ -38,6 +37,12 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
     private static final String JACOCO_AGENT = 'org.jacoco:org.jacoco.agent:0.8.5'
 
     private static final String TASK_ZIP_NAME = 'velocityZip'
+
+    private static final String VELOCITY_DIR = 'velocity'
+    private static final String VELOCITY_COVERAGE_RAW_DIR = 'coverage-raw'
+    private static final String VELOCITY_COVERAGE_DIR = 'coverage'
+    private static final String VELOCITY_TEST_OUTPUT_FILE = 'results.json'
+    private static final String VELOCITY_ZIP_FILE = 'all.zip'
 
     private final Instantiator instantiator
     private ProjectInternal project
@@ -57,36 +62,39 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
         // Save the project.
         this.project = project
 
-        // Create required folder structure.
+        // Set-up the folder structure.
         final FileOperations fileOps = this.project.services
             .get(FileOperations.class) as FileOperations
 
+        final String build = project.layout.buildDirectory.get().asFile
+        final String baseDirectory = String.format('%s/%s', build, VELOCITY_DIR)
+        fileOps.delete(baseDirectory)
+        fileOps.mkdir(baseDirectory)
+
+        // Test output file.
+        final File testOutputFile = new File(String.format('%s/%s',
+            baseDirectory, VELOCITY_TEST_OUTPUT_FILE
+        ))
+
         // Coverage outputs.
-        final String coverageOutputFolder = String.format("%s/coverage/",
-            project.layout.buildDirectory.get().asFile
-        )
-        final File coverageOutput = this.project.providers
-            .provider({ fileOps.mkdir(coverageOutputFolder) })
-            .get()
+        final File coverageOutput = fileOps.mkdir(String.format('%s/%s',
+            baseDirectory, VELOCITY_COVERAGE_RAW_DIR
+        ))
 
         // Processed coverage outputs.
-        final String processedCoverageOutputFolder = String.format("%s/coverage-processed/",
-            project.layout.buildDirectory.get().asFile
-        )
-        final File processedCoverageOutput = this.project.providers
-            .provider({ fileOps.mkdir(processedCoverageOutputFolder) })
-            .get()
+        final File processedCoverageOutput = fileOps.mkdir(String.format('%s/%s',
+            baseDirectory, VELOCITY_COVERAGE_DIR
+        ))
 
         // Zip archive.
-        final String processedCoverageZip = String.format("%s/coverage-processed/all.zip",
-            project.layout.buildDirectory.get().asFile
-        )
-        final File processedCoverageZipFile = new File(processedCoverageZip)
+        final File zipFile = new File(String.format('%s/%s',
+            baseDirectory, VELOCITY_ZIP_FILE
+        ))
 
-        this.configureTestTask(coverageOutput)
+        this.configureTestTask(testOutputFile, coverageOutput)
         this.configureProcessTask(coverageOutput, processedCoverageOutput)
-        this.configureZipTask(processedCoverageOutput, processedCoverageZipFile)
-        this.configureUploadTask(processedCoverageZipFile)
+        this.configureZipTask(testOutputFile, processedCoverageOutput, zipFile)
+        this.configureUploadTask(zipFile)
 
         // Configure the call graph.
         project.tasks
@@ -107,11 +115,7 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
                                       final File processedCoverageOutput) {
         // Create a function that generates output files.
         final Function<String, File> outputCreator = {
-            final name ->
-                this.project.providers
-                    .provider({ Paths.get(processedCoverageOutput.path, String.format("%s.xml", name)) })
-                    .get()
-                    .toFile()
+            final name -> new File(String.format('%s/%s.xml', processedCoverageOutput.path, name))
         }
 
         // Get the compiled java output path.
@@ -139,9 +143,11 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
     /**
      * Configures the test task.
      *
+     * @param testOutput destination to write the test execution results to
      * @param coverageOutput destination to write the .exec files to
      */
-    private void configureTestTask(final File coverageOutput) {
+    private void configureTestTask(final File testOutput,
+                                   final File coverageOutput) {
         // Create a configuration for the coverage agent.
         final Configuration coverageConfig = project.configurations
             .create(COVERAGE_CONFIG)
@@ -161,11 +167,7 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
 
         // Create a function that generates output files.
         final Function<String, File> outputCreator = {
-            final name ->
-                this.project.providers
-                    .provider({ Paths.get(coverageOutput.path, String.format("%s.exec", name)) })
-                    .get()
-                    .toFile()
+            final name -> new File(String.format('%s/%s.exec', coverageOutput.path, name))
         }
 
         // Add the test task.
@@ -180,6 +182,7 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
                 )
 
                 task.destinationGenerator = outputCreator
+                task.results = testOutput
 
                 LOG.debug(String.format(
                     'Loaded Velocity in %s.',
@@ -209,13 +212,17 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
     /**
      * Configures the zip task.
      */
-    private void configureZipTask(final File processedCoverageOutput,
+    private void configureZipTask(final File testOutput,
+                                  final File processedCoverageOutputs,
                                   final File zipFile) {
         // Add the zip task.
         this.project.configure(this.project) {
-            task(type: Zip, description: 'Combines .xml reports into a .zip archive', TASK_ZIP_NAME) {
+            task(type: Zip, description: 'Combines the test results and coverage reports into a .zip archive', TASK_ZIP_NAME) {
                 archiveName = zipFile
-                from(processedCoverageOutput) {
+                from(testOutput.parentFile) {
+                    include testOutput.name
+                }
+                from(processedCoverageOutputs) {
                     include '*.xml'
                 }
             }
