@@ -196,4 +196,8 @@ modules.xml
 # End of https://www.gitignore.io/api/c,c++,linux,cmake,jetbrains+all
 
 # Executable
-analyser
+create-run
+get-order
+parse-coverage
+test-results
+web

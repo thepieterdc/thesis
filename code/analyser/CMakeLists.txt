@@ -20,6 +20,7 @@ add_compile_options(-Wall -Wextra -Wpedantic -Wno-missing-field-initializers -Wn
 
 # Packages.
 find_package(Json REQUIRED)
+find_package(Mongoose REQUIRED)
 
 # Files.
 file(GLOB coverage_SRC
@@ -38,7 +39,32 @@ file(GLOB tests_SRC
         "src/tests/*.h"
         "src/tests/*.cpp")
 
+file(GLOB util_SRC
+        "src/util/*.h"
+        "src/util/*.cpp")
+
+file(GLOB web_SRC
+        "src/web/*.h"
+        "src/web/*.cpp"
+        "src/web/handlers/*.h"
+        "src/web/handlers/*.cpp")
+
 # Executables.
-add_executable(analyser main.cpp ${coverage_SRC} ${database_SRC} ${runs_SRC} ${tests_SRC})
-target_link_libraries(analyser pugixml stdc++fs sqlite3)
-include_directories(${JSON_INCLUDE_DIRS})
+add_executable(create-run src/create-run.cpp ${database_SRC} ${runs_SRC} ${util_SRC})
+target_link_libraries(create-run sqlite3)
+
+add_executable(get-order src/get-order.cpp ${database_SRC} ${runs_SRC} ${tests_SRC} ${util_SRC})
+target_include_directories(get-order PUBLIC ${JSON_INCLUDE_DIRS})
+target_link_libraries(get-order sqlite3)
+
+add_executable(parse-coverage src/parse-coverage.cpp ${coverage_SRC} ${database_SRC} ${tests_SRC} ${util_SRC})
+target_include_directories(parse-coverage PUBLIC ${JSON_INCLUDE_DIRS} ${ZIPPP_INCLUDE_DIRS})
+target_link_libraries(parse-coverage archive pugixml sqlite3 stdc++fs)
+
+add_executable(test-results src/test-results.cpp ${database_SRC} ${tests_SRC} ${util_SRC})
+target_include_directories(test-results PUBLIC ${JSON_INCLUDE_DIRS})
+target_link_libraries(test-results sqlite3)
+
+add_executable(web src/web.cpp ${coverage_SRC} ${database_SRC} ${runs_SRC} ${tests_SRC} ${util_SRC} ${web_SRC})
+target_include_directories(web PUBLIC ${JSON_INCLUDE_DIRS} ${MONGOOSE_INCLUDE_DIRS})
+target_link_libraries(web archive ${MONGOOSE_LIBRARIES} pugixml sqlite3 stdc++fs)

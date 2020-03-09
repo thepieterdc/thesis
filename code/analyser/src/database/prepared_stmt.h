@@ -73,6 +73,14 @@ namespace database {
          * @return the integer value
          */
         std::uint_fast64_t get_integer(int idx);
+
+        /**
+         * Gets the text at the given index.
+         *
+         * @param idx the index
+         * @return the text
+         */
+        std::string get_text(int idx);
     };
 }
 

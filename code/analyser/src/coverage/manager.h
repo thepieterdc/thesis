@@ -28,9 +28,9 @@ namespace coverage {
          * or if the test was successful.
          *
          * @param run current test run
-         * @param file coverage result
+         * @param contents contents of the file to parse
          */
-        void parse(const runs::run &run, const std::string &file) const;
+        void parse(std::uint_fast64_t run, const std::string &contents) const;
 
     public:
         /**
@@ -68,9 +68,22 @@ namespace coverage {
          * test was successful.
          *
          * @param run current test run
-         * @param path folder containing the coverage results
+         * @param zip archive containing the coverage results
+         * @return amount of files parsed
          */
-        void parse_all(const runs::run &run, const std::string &path) const;
+        std::size_t parse_all(std::uint_fast64_t run, std::FILE *zip) const;
+
+        /**
+         * Parses the coverage results and inserts them into the database. A
+         * coverage path is only updated if it does not yet exist, or if the
+         * test was successful.
+         *
+         * @param run current test run
+         * @param path folder containing the coverage results
+         * @return amount of files parsed
+         */
+        std::size_t
+        parse_all(std::uint_fast64_t run, const std::string &path) const;
     };
 }
 

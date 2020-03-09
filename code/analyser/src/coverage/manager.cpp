@@ -6,9 +6,12 @@
  * https://github.com/thepieterdc/thesis/
  */
 
+#include <archive.h>
+#include <archive_entry.h>
 #include <experimental/filesystem>
 #include <iostream>
 #include <pugixml.hpp>
+#include <fstream>
 #include "manager.h"
 #include "buffer.h"
 
@@ -33,11 +36,11 @@ void coverage::manager::clear(const std::uint_fast64_t test_id) const {
     database::connection::exec(*stmt);
 }
 
-void coverage::manager::parse(const runs::run &run,
-                              const std::string &file) const {
+void coverage::manager::parse(const std::uint_fast64_t run,
+                              const std::string &contents) const {
     // Open the xml file.
     pugi::xml_document doc;
-    if (!doc.load_file(file.c_str())) {
+    if (!doc.load_string(contents.c_str())) {
         throw std::runtime_error("Failed parsing xml.");
     }
 
@@ -97,8 +100,55 @@ void coverage::manager::parse(const runs::run &run,
     }
 }
 
-void coverage::manager::parse_all(const runs::run &run,
-                                  const std::string &path) const {
+std::size_t coverage::manager::parse_all(const std::uint_fast64_t run,
+                                         std::FILE *zip) const {
+    // Open the zip archive.
+    struct archive *archive = archive_read_new();
+    archive_read_support_format_zip(archive);
+
+    if (archive_read_open_FILE(archive, zip) != ARCHIVE_OK) {
+        throw std::runtime_error("Could not parse zip archive.");
+    }
+
+    size_t processed = 0;
+    // Iterate over every file in the directory.
+    struct archive_entry *entry = nullptr;
+    while (archive_read_next_header(archive, &entry) == ARCHIVE_OK) {
+        // Parse the file.
+        const auto file_name = std::string(archive_entry_pathname(entry));
+
+        // Only consider xml files.
+        const auto name_len = file_name.size();
+        if (file_name.substr(name_len - std::fmin(4, name_len)) != ".xml") {
+            continue;
+        }
+
+        // Read the file.
+        const size_t file_size = archive_entry_size(entry);
+        auto *data = static_cast<char *>(malloc(file_size));
+        if (archive_read_data(archive, data, file_size) <= 0) {
+            throw std::runtime_error("Failed reading file in coverage zip.");
+        }
+
+        // Parse the file.
+        this->parse(run, std::string(data, file_size));
+
+        processed++;
+
+        // Memory cleanup.
+        free(data);
+    }
+
+    if (archive_read_free(archive) != ARCHIVE_OK) {
+        throw std::runtime_error("Could not free archive.");
+    }
+
+    return processed;
+}
+
+std::size_t coverage::manager::parse_all(const std::uint_fast64_t run,
+                                         const std::string &path) const {
+    size_t processed = 0;
     // Iterate over every file in the directory.
     for (const auto &file : fs::directory_iterator(path)) {
         const auto &file_path = file.path();
@@ -108,7 +158,16 @@ void coverage::manager::parse_all(const runs::run &run,
             continue;
         }
 
+        // Read the file.
+        const std::ifstream filestream(file_path);
+        std::stringstream contents;
+        contents << filestream.rdbuf();
+
         // Parse the file.
-        this->parse(run, file_path);
+        this->parse(run, contents.str());
+
+        processed++;
     }
+
+    return processed;
 }

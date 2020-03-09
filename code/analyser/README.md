@@ -1,8 +1,16 @@
 # analyser
 
-Parses the test outcomes and inserts them in the Mongo database.
-
-## Execute
+## Create a test run
 ```shell script
-./analyse results.json folder_containing_xmls/
+./create-run ${database.db}
+```
+
+## Save test results
+```shell script
+cat ${results.json} | ./test-results ${run_id} ${database.db}
+```
+
+## Parse coverage results
+```shell script
+./parse-coverage ${database.db} ${folder_containing_xmlfiles}
 ```

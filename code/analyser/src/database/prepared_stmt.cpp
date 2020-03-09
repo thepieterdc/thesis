@@ -40,10 +40,16 @@ void database::prepared_stmt::bind_text(int idx, const std::string &value) {
     }
 }
 
-bool database::prepared_stmt::get_boolean(int idx) {
+bool database::prepared_stmt::get_boolean(const int idx) {
     return sqlite3_column_int64(this->stmt, idx) == 1;
 }
 
-std::uint_fast64_t database::prepared_stmt::get_integer(int idx) {
+std::uint_fast64_t database::prepared_stmt::get_integer(const int idx) {
     return sqlite3_column_int64(this->stmt, idx);
+}
+
+std::string database::prepared_stmt::get_text(const int idx) {
+    const char *data = static_cast<const char *>(sqlite3_column_blob(this->stmt,
+                                                                     idx));
+    return std::string(data, sqlite3_column_bytes(this->stmt, idx));
 }

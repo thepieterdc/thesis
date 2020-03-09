@@ -27,7 +27,7 @@ tests::manager::create(const std::string &testcase) const {
 
 std::optional<std::shared_ptr<tests::test>>
 tests::manager::find(const std::string &testcase) const {
-    // Attempt to find the test with the given id.
+    // Attempt to find the test with the given testcase name.
     const std::string sql("SELECT id FROM tests WHERE testcase=? LIMIT 1");
     const auto stmt = this->db.prepare(sql);
     stmt->bind_text(1, testcase);
@@ -44,8 +44,27 @@ tests::manager::find(const std::string &testcase) const {
     return std::nullopt;
 }
 
+std::optional<std::shared_ptr<tests::test>>
+tests::manager::find(const std::uint_fast64_t test_id) const {
+    // Attempt to find the test with the given id.
+    const std::string sql("SELECT testcase FROM tests WHERE id=? LIMIT 1");
+    const auto stmt = this->db.prepare(sql);
+    stmt->bind_integer(1, test_id);
+    const auto found = database::connection::find(*stmt);
+
+    // Validate the result of the query.
+    if (found) {
+        return std::make_optional(std::shared_ptr<tests::test>(
+                new test(test_id, stmt->get_text(0))
+        ));
+    }
+
+    // Test was not found.
+    return std::nullopt;
+}
+
 std::optional<std::shared_ptr<tests::test_result>>
-tests::manager::find_result(const runs::run &run,
+tests::manager::find_result(const std::uint_fast64_t run,
                             const std::string &testcase) const {
     // Attempt to find the test with the given id.
     const std::string sql(
@@ -53,7 +72,7 @@ tests::manager::find_result(const runs::run &run,
     );
     const auto stmt = this->db.prepare(sql);
     stmt->bind_text(1, testcase);
-    stmt->bind_integer(2, run.id);
+    stmt->bind_integer(2, run);
     const auto found = database::connection::find(*stmt);
 
     // Validate the result of the query.
@@ -68,15 +87,10 @@ tests::manager::find_result(const runs::run &run,
     return std::nullopt;
 }
 
-void
-tests::manager::parse(const runs::run &run, const std::string &file) const {
-    // Open the file as json.
-    std::ifstream file_stream(file);
-    json j;
-    file_stream >> j;
-
+std::size_t
+tests::manager::parse(const std::uint_fast64_t run, json results) const {
     // Iterate over the test results.
-    for (json::iterator it = j.begin(); it != j.end(); ++it) {
+    for (json::iterator it = results.begin(); it != results.end(); ++it) {
         // Get the id of the test case.
         const auto opt_test = this->find(it.key());
         const auto test = opt_test.has_value()
@@ -88,9 +102,12 @@ tests::manager::parse(const runs::run &run, const std::string &file) const {
                 "INSERT INTO tests_results (run_id, test_id, failed) VALUES(?, ?, ?)"
         );
         const auto stmt = this->db.prepare(sql);
-        stmt->bind_integer(1, run.id);
+        stmt->bind_integer(1, run);
         stmt->bind_integer(2, test->id);
         stmt->bind_boolean(3, !it.value());
         this->db.insert(*stmt);
     }
+
+    // Return the amount of test results.
+    return results.size();
 }

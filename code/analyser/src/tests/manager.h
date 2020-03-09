@@ -9,10 +9,13 @@
 #ifndef ANALYSER_TESTS_MANAGER_H
 #define ANALYSER_TESTS_MANAGER_H
 
+#include <json.hpp>
 #include "../database/connection.h"
 #include "../runs/run.h"
 #include "test.h"
 #include "test_result.h"
+
+using json = nlohmann::json;
 
 namespace tests {
     /**
@@ -53,22 +56,32 @@ namespace tests {
         find(const std::string &testcase) const;
 
         /**
+         * Finds a test by its id.
+         *
+         * @param id the id of the testcase
+         * @return the test if found
+         */
+        std::optional<std::shared_ptr<tests::test>>
+        find(const std::uint_fast64_t id) const;
+
+        /**
          * Finds a test result by the name of the testcase.
          *
-         * @param run the test run
+         * @param run the id of the run
          * @param testcase the name of the testcase
          * @return the test result if found
          */
         std::optional<std::shared_ptr<tests::test_result>>
-        find_result(const runs::run &run, const std::string &testcase) const;
+        find_result(std::uint_fast64_t run, const std::string &testcase) const;
 
         /**
          * Parses the test results and inserts them into the database.
          *
-         * @param run the run
-         * @param file the json file containing the test results
+         * @param run the id of the run
+         * @param results the json test results
+         * @return amount of test cases inserted
          */
-        void parse(const runs::run &run, const std::string &file) const;
+        std::size_t parse(std::uint_fast64_t run, json results) const;
     };
 }
 
