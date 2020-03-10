@@ -15,7 +15,6 @@ import org.gradle.api.internal.DocumentationRegistry
 import org.gradle.api.internal.tasks.testing.JvmTestExecutionSpec
 import org.gradle.api.internal.tasks.testing.TestExecuter
 import org.gradle.api.internal.tasks.testing.TestFramework
-import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.testing.Test
 import org.gradle.internal.operations.BuildOperationExecutor
@@ -25,6 +24,7 @@ import org.gradle.process.JavaForkOptions
 import org.gradle.util.RelativePathUtil
 
 import java.util.function.Function
+import java.util.function.Supplier
 
 /**
  * Task that runs the tests in the given order.
@@ -36,8 +36,7 @@ class VelocityTestTask extends Test {
 
     private TestExecuter<JvmTestExecutionSpec> executor
 
-    @Input
-    String orderFile = ""
+    Supplier<List<String>> orderGetter
 
     File results = null
 
@@ -50,7 +49,7 @@ class VelocityTestTask extends Test {
                 this.services.get(BuildOperationExecutor.class) as BuildOperationExecutor,
                 this.services.get(Clock.class) as Clock,
                 this.services.get(DocumentationRegistry.class) as DocumentationRegistry,
-                this.&createTestExecutionSpec, this.orderFile)
+                this.&createTestExecutionSpec, this.orderGetter.get())
         } else {
             return this.executor
         }

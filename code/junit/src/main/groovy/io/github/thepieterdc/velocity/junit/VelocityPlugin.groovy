@@ -8,9 +8,7 @@
 package io.github.thepieterdc.velocity.junit
 
 import io.github.thepieterdc.velocity.junit.coverage.VelocityCoverageAgent
-import io.github.thepieterdc.velocity.junit.tasks.VelocityProcessTask
-import io.github.thepieterdc.velocity.junit.tasks.VelocityTestTask
-import io.github.thepieterdc.velocity.junit.tasks.VelocityUploadTask
+import io.github.thepieterdc.velocity.junit.tasks.*
 import org.gradle.api.Plugin
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.DependencySet
@@ -39,13 +37,18 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
     private static final String TASK_ZIP_NAME = 'velocityZip'
 
     private static final String VELOCITY_DIR = 'velocity'
-    private static final String VELOCITY_COVERAGE_RAW_DIR = 'coverage-raw'
     private static final String VELOCITY_COVERAGE_DIR = 'coverage'
+    private static final String VELOCITY_COVERAGE_LOGS = 'coverage-logs.zip'
+    private static final String VELOCITY_COVERAGE_RAW_DIR = 'coverage-raw'
     private static final String VELOCITY_TEST_OUTPUT_FILE = 'results.json'
-    private static final String VELOCITY_ZIP_FILE = 'all.zip'
+
+    private static final String VELOCITY_SERVER = 'http://localhost:8080'
 
     private final Instantiator instantiator
     private ProjectInternal project
+
+    public List<String> order
+    public long runId
 
     /**
      * VelocityPlugin constructor.
@@ -61,6 +64,13 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
     void apply(final ProjectInternal project) {
         // Save the project.
         this.project = project
+
+        // Get the commit hash from the command-line arguments.
+        if (!this.project.hasProperty('commit')) {
+            throw new IllegalArgumentException('Missing required argument: commit')
+        }
+
+        final String commitHash = project.commit
 
         // Set-up the folder structure.
         final FileOperations fileOps = this.project.services
@@ -87,14 +97,16 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
         ))
 
         // Zip archive.
-        final File zipFile = new File(String.format('%s/%s',
-            baseDirectory, VELOCITY_ZIP_FILE
+        final File coverageLogs = new File(String.format('%s/%s',
+            baseDirectory, VELOCITY_COVERAGE_LOGS
         ))
 
+        this.configureCreateRunTask(commitHash)
+        this.configureGetOrderTask()
         this.configureTestTask(testOutputFile, coverageOutput)
         this.configureProcessTask(coverageOutput, processedCoverageOutput)
-        this.configureZipTask(testOutputFile, processedCoverageOutput, zipFile)
-        this.configureUploadTask(zipFile)
+        this.configureZipTask(processedCoverageOutput, coverageLogs)
+        this.configureUploadTask(testOutputFile, coverageLogs)
 
         // Configure the call graph.
         project.tasks
@@ -106,6 +118,50 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
         project.tasks
             .findByName(TASK_ZIP_NAME)
             .finalizedBy(VelocityUploadTask.TASK_NAME)
+    }
+
+    /**
+     * Configures the create run task.
+     *
+     * @param commitHash the hash of the current commit
+     */
+    private void configureCreateRunTask(final String commitHash) {
+        // Add the create run task.
+        this.project.tasks.register(
+            VelocityCreateRunTask.TASK_NAME,
+            VelocityCreateRunTask.class,
+            { final VelocityCreateRunTask task ->
+                task.description = 'Creates a new run on a Velocity server.'
+                task.group = LifecycleBasePlugin.VERIFICATION_GROUP
+
+                task.commitHash = commitHash
+                task.runIdSetter = this.&setRunId
+                task.server = VELOCITY_SERVER
+
+                task.dependsOn 'cleanTest'
+            }
+        )
+    }
+
+    /**
+     * Configures the get order task.
+     */
+    private void configureGetOrderTask() {
+        // Add the create run task.
+        this.project.tasks.register(
+            VelocityGetOrderTask.TASK_NAME,
+            VelocityGetOrderTask.class,
+            { final VelocityGetOrderTask task ->
+                task.description = 'Gets the order for the current run.'
+                task.group = LifecycleBasePlugin.VERIFICATION_GROUP
+
+                task.orderSetter = this.&setOrder
+                task.runIdGetter = this.&getRunId
+                task.server = VELOCITY_SERVER
+
+                task.dependsOn VelocityCreateRunTask.TASK_NAME
+            }
+        )
     }
 
     /**
@@ -182,7 +238,10 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
                 )
 
                 task.destinationGenerator = outputCreator
+                task.orderGetter = this.&getOrder
                 task.results = testOutput
+
+                task.dependsOn VelocityGetOrderTask.TASK_NAME
 
                 LOG.debug(String.format(
                     'Loaded Velocity in %s.',
@@ -194,9 +253,13 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
 
     /**
      * Configures the upload task.
+     *
+     * @param testResults the json file that contains the test results
+     * @param coverageLogs zip archive containing test xml files
      */
-    private void configureUploadTask(final File zipFile) {
-        // Add the zip upload task.
+    private void configureUploadTask(final File testResults,
+                                     final File coverageLogs) {
+        // Add the upload task.
         this.project.tasks.register(
             VelocityUploadTask.TASK_NAME,
             VelocityUploadTask.class,
@@ -204,7 +267,10 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
                 task.description = 'Uploads zip files to the server for analysis'
                 task.group = LifecycleBasePlugin.VERIFICATION_GROUP
 
-                task.input = zipFile
+                task.coverageLogs = coverageLogs
+                task.runIdGetter = this.&getRunId
+                task.server = VELOCITY_SERVER
+                task.testResults = testResults
             }
         )
     }
@@ -212,20 +278,52 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
     /**
      * Configures the zip task.
      */
-    private void configureZipTask(final File testOutput,
-                                  final File processedCoverageOutputs,
+    private void configureZipTask(final File processedCoverageOutputs,
                                   final File zipFile) {
         // Add the zip task.
         this.project.configure(this.project) {
             task(type: Zip, description: 'Combines the test results and coverage reports into a .zip archive', TASK_ZIP_NAME) {
                 archiveName = zipFile
-                from(testOutput.parentFile) {
-                    include testOutput.name
-                }
                 from(processedCoverageOutputs) {
                     include '*.xml'
                 }
             }
         }
+    }
+
+    /**
+     * Gets the order.
+     *
+     * @return the order
+     */
+    private List<String> getOrder() {
+        return this.order
+    }
+
+    /**
+     * Gets the run id.
+     *
+     * @return the run id
+     */
+    private long getRunId() {
+        return this.runId
+    }
+
+    /**
+     * Sets the order.
+     *
+     * @param order the order
+     */
+    private void setOrder(final List<String> order) {
+        this.order = order
+    }
+
+    /**
+     * Sets the run id.
+     *
+     * @param id the run id
+     */
+    private void setRunId(final long id) {
+        this.runId = id
     }
 }

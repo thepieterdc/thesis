@@ -31,8 +31,6 @@ dependencies {
 }
 
 velocity {
-    dependsOn cleanTest
-    orderFile 'src/test/resources/order.yaml'
     outputs.upToDateWhen { false }
 }
 

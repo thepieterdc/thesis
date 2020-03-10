@@ -29,7 +29,7 @@ class VelocityTestExecutor implements TestExecuter<JvmTestExecutionSpec> {
     private final Clock clock
     private final DocumentationRegistry documentationRegistry
     private final ModuleRegistry moduleRegistry
-    private final String orderFile
+    private final List<String> order
     private final Function<TestCase, JvmTestExecutionSpec> specGenerator
     private final WorkerProcessFactory workerFactory
     private final WorkerLeaseRegistry workerLeaseRegistry
@@ -43,12 +43,12 @@ class VelocityTestExecutor implements TestExecuter<JvmTestExecutionSpec> {
                          final Clock clock,
                          final DocumentationRegistry documentationRegistry,
                          final Function<TestCase, JvmTestExecutionSpec> specGenerator,
-                         final String orderFile) {
+                         final List<String> order) {
         this.buildOperationExecutor = buildOperationExecutor
         this.clock = clock
         this.documentationRegistry = documentationRegistry
         this.moduleRegistry = moduleRegistry
-        this.orderFile = orderFile
+        this.order = order
         this.specGenerator = specGenerator
         this.workerFactory = workerFactory
         this.workerLeaseRegistry = workerLeaseRegistry
@@ -84,7 +84,7 @@ class VelocityTestExecutor implements TestExecuter<JvmTestExecutionSpec> {
         // Create a generator for test processors.
         this.processor = new VelocityTestProcessor({ final method ->
             createProcessor(method, classpath)
-        }, classpath, this.orderFile)
+        }, classpath, this.order)
 
         // Create a detector for test files.
         final Runnable detector = this.getDetector(testExecutionSpec, classpath)

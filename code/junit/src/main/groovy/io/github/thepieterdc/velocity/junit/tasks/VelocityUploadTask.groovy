@@ -7,9 +7,9 @@
  */
 package io.github.thepieterdc.velocity.junit.tasks
 
+import groovyx.net.http.ContentType
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.Method
-import org.apache.http.entity.ContentType
 import org.apache.http.entity.mime.MultipartEntityBuilder
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
@@ -17,7 +17,7 @@ import org.gradle.api.tasks.TaskAction
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-import static groovyx.net.http.ContentType.JSON
+import java.util.function.Supplier
 
 /**
  * Task that uploads zip file to the server for analysis.
@@ -28,22 +28,51 @@ class VelocityUploadTask extends DefaultTask {
     public static final String TASK_NAME = 'velocityUpload'
 
     @Input
-    File input = null
+    File coverageLogs = null
+
+    Supplier<Long> runIdGetter
+
+    @Input
+    String server = ""
+
+    @Input
+    File testResults = null
 
     @TaskAction
     def parse() {
-        LOG.info('Uploading coverage archive.')
+        LOG.info('Uploading test results.')
 
-        // Create a http client.
-        final HTTPBuilder http = new HTTPBuilder('http://localhost:8080/evaluate')
-        http.request(Method.POST, JSON) { final request ->
+        // Upload the test results.
+        HTTPBuilder http = new HTTPBuilder(String.format("%s", this.server))
+        http.request(Method.POST, ContentType.JSON) {
+            uri.path = String.format('/runs/%d/test-results', this.runIdGetter.get())
+            body = this.testResults.text
+
+            response.failure = { final resp ->
+                throw new RuntimeException(String.valueOf(resp.status))
+            }
+        }
+
+        LOG.info('Test results uploaded.')
+
+        LOG.info('Uploading coverage logs.')
+
+        // Upload the coverage logs.
+        http = new HTTPBuilder(String.format("%s", this.server))
+        http.request(Method.POST) { final request ->
+            uri.path = String.format('/runs/%d/coverage', this.runIdGetter.get())
+            requestContentType = 'multipart/form-data'
+
             headers.'Accept' = 'application/json'
 
-            final MultipartEntityBuilder entityBuilder = MultipartEntityBuilder
-                .create()
-                .addBinaryBody('file', this.input, ContentType.DEFAULT_BINARY, this.input.name)
+            request.entity = MultipartEntityBuilder.create()
+                .addBinaryBody('coverage', this.coverageLogs).build()
 
-            request.entity = entityBuilder.build()
+            response.failure = { final resp ->
+                throw new RuntimeException(String.valueOf(resp.status))
+            }
         }
+
+        LOG.info('Coverage logs uploaded.')
     }
 }

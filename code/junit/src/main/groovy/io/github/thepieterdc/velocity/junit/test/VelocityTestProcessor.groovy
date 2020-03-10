@@ -25,7 +25,6 @@ class VelocityTestProcessor implements TestClassProcessor {
     private static final String TEST_ANNOTATION = "org.junit.Test"
 
     private final Function<TestCase, TestClassProcessor> delegator
-    private final String orderFile
 
     private TestClassProcessor processor
     private boolean stoppedNow
@@ -47,11 +46,10 @@ class VelocityTestProcessor implements TestClassProcessor {
      */
     VelocityTestProcessor(final Function<TestCase, TestClassProcessor> delegator,
                           final Collection<File> classpath,
-                          final String orderFile) {
+                          final List<String> order) {
         this.delegator = delegator
         this.loader = FileClassLoader.create(classpath)
-        this.orderFile = orderFile
-        this.order = new LinkedList<>()
+        this.order = VelocityOrderParser.parse(order)
         this.stoppedNow = false
         this.tests = new HashSet<>()
         this.testsInfo = new HashMap<>()
@@ -100,10 +98,6 @@ class VelocityTestProcessor implements TestClassProcessor {
 
     @Override
     void startProcessing(final TestResultProcessor resultProcessor) {
-        // Parse the order file.
-        this.order.clear()
-        this.order.addAll(VelocityOrderParser.parse(new File(this.orderFile)))
-
         // Save the result processor.
         this.resultProcessor = resultProcessor
 

@@ -3,7 +3,7 @@
 This example illustrates the junit-reorder library. The order is specified in `src/test/resources/order.yaml` and the used order is printed upon execution of the `velocity` target.
 
 ```shell script
-(cd ../ && ./gradlew jar publishToMavenLocal) && ./gradlew velocity --rerun-tasks --stacktrace
+(cd ../ && ./gradlew jar publishToMavenLocal) && ./gradlew velocity --rerun-tasks --stacktrace -Pcommit="f54sdf98aez7fsd3f4"
 ```
 
 ```text
