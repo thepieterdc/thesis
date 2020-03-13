@@ -36,10 +36,12 @@ namespace runs {
         /**
          * Creates a new run.
          *
+         * @param repository id of the repository
          * @param commit_hash hash of the commit that triggered this run
          * @return the created run
          */
-        std::shared_ptr<runs::run> create(const std::string &commit_hash) const;
+        std::shared_ptr<runs::run> create(const std::uint_fast64_t repository,
+                                          const std::string &commit_hash) const;
 
         /**
          * Gets the order that was calculated for the given run.

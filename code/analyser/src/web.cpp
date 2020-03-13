@@ -7,9 +7,9 @@
  */
 
 #include <iostream>
-#include "web/server.h"
-#include "util/logging.h"
 #include "database/connection.h"
+#include "util/logging.h"
+#include "web/server.h"
 
 /**
  * Main entrypoint.
@@ -31,12 +31,13 @@ int main(int argc, char **argv) {
     const auto db = database::connection::connect(argv[1]);
 
     // Create managers.
+    const auto repositories = repositories::manager(*db);
     const auto runs = runs::manager(*db);
     const auto tests = tests::manager(*db);
     const auto coverage = coverage::manager(*db, tests);
 
     // Create the webserver.
-    auto server = web::server(port, runs, tests, coverage);
+    auto server = web::server(port, repositories, runs, tests, coverage);
 
     // Start the webserver.
     server.start();

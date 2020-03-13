@@ -14,6 +14,7 @@
 #include <mongoose.h>
 #include "../runs/manager.h"
 #include "../coverage/manager.h"
+#include "../repositories/manager.h"
 
 using json = nlohmann::json;
 
@@ -26,6 +27,7 @@ namespace web {
         const std::uint_fast16_t port;
 
         const coverage::manager &coverage;
+        const repositories::manager &repositories;
         const runs::manager &runs;
         const tests::manager &tests;
 
@@ -66,11 +68,14 @@ namespace web {
          * server constructor.
          *
          * @param port web server port
+         * @param repositories repositories manager
          * @param runs runs manager
          * @param tests tests manager
          * @param coverage coverage manager
          */
-        explicit server(std::uint_fast16_t port, const runs::manager &runs,
+        explicit server(std::uint_fast16_t port,
+                        const repositories::manager &repositories,
+                        const runs::manager &runs,
                         const tests::manager &tests,
                         const coverage::manager &coverage);
 

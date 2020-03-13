@@ -136,7 +136,8 @@ web::server::handle_post(struct mg_connection *conn, const std::string &uri,
 
     // Create a new run.
     if (uri == "/runs") {
-        return handle_post_runs(conn, this->runs, std::move(body));
+        return handle_post_runs(conn, this->repositories, this->runs,
+                                std::move(body));
     } else if (std::regex_search(uri, matches, coverage_logs_regex)) {
         // Get the run id.
         const auto run_id = std::stoi(matches[1].str());
@@ -156,12 +157,15 @@ web::server::handle_post(struct mg_connection *conn, const std::string &uri,
 }
 
 web::server::server(const std::uint_fast16_t port,
+                    const repositories::manager &repositories,
                     const runs::manager &runs,
                     const tests::manager &tests,
-                    const coverage::manager &coverage) : port(port),
-                                                         coverage(coverage),
-                                                         runs(runs),
-                                                         tests(tests) {
+                    const coverage::manager &coverage) :
+        port(port),
+        coverage(coverage),
+        repositories(repositories),
+        runs(runs),
+        tests(tests) {
     // Initialise the webserver.
     this->mgr = (mg_mgr *) malloc(sizeof(mg_mgr));
     mg_mgr_init(this->mgr, this);

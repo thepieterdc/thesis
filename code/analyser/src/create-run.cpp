@@ -9,6 +9,7 @@
 #include "database/connection.h"
 #include "runs/manager.h"
 #include "util/logging.h"
+#include "repositories/manager.h"
 
 /**
  * Main entrypoint.
@@ -18,16 +19,24 @@
  * @return successful
  */
 int main(int argc, char **argv) {
-    if (argc != 3) {
-        util::logging::error("Syntax: %s database.db commit_hash", argv[0]);
+    if (argc != 4) {
+        util::logging::error(
+                "Syntax: %s database.db repository_url commit_hash", argv[0]);
         return EXIT_FAILURE;
     }
 
     // Create a database connection.
     const auto db = database::connection::connect(argv[1]);
 
+    // Find the repository.
+    const auto repositories = repositories::manager(*db);
+    const auto opt_repository = repositories.find(argv[3]);
+    const auto repository = opt_repository.has_value()
+                            ? opt_repository.value()
+                            : repositories.create(argv[3]);
+
     // Create the run.
-    const auto run = runs::manager(*db).create(argv[2]);
+    const auto run = runs::manager(*db).create(repository, argv[4]);
 
     // Print the created job.
     util::logging::success("Run #%d created.", run->id);

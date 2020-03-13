@@ -12,7 +12,8 @@
 #include "manager.h"
 
 std::shared_ptr<runs::run>
-runs::manager::create(const std::string &commit_hash) const {
+runs::manager::create(const std::uint_fast64_t repository,
+                      const std::string &commit_hash) const {
     // Get the current timestamp.
     const auto now = std::chrono::system_clock::now();
     const auto now_epoch = std::chrono::duration_cast<std::chrono::seconds>(
@@ -21,10 +22,11 @@ runs::manager::create(const std::string &commit_hash) const {
 
     // Create a new run in the database.
     const std::string sql(
-            "INSERT INTO runs (commit_hash, created_at) VALUES(?, ?)");
+            "INSERT INTO runs (repository_id, commit_hash, created_at) VALUES(?, ?, ?)");
     const auto stmt = this->db.prepare(sql);
-    stmt->bind_text(1, commit_hash);
-    stmt->bind_integer(2, now_epoch);
+    stmt->bind_integer(1, repository);
+    stmt->bind_text(2, commit_hash);
+    stmt->bind_integer(3, now_epoch);
     const auto id = this->db.insert(*stmt);
 
     // Return the created run.

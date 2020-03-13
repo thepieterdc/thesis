@@ -31,6 +31,10 @@ file(GLOB database_SRC
         "src/database/*.h"
         "src/database/*.cpp")
 
+file(GLOB repositories_SRC
+        "src/repositories/*.h"
+        "src/repositories/*.cpp")
+
 file(GLOB runs_SRC
         "src/runs/*.h"
         "src/runs/*.cpp")
@@ -50,7 +54,7 @@ file(GLOB web_SRC
         "src/web/handlers/*.cpp")
 
 # Executables.
-add_executable(create-run src/create-run.cpp ${database_SRC} ${runs_SRC} ${util_SRC})
+add_executable(create-run src/create-run.cpp ${database_SRC} ${repositories_SRC} ${runs_SRC} ${util_SRC})
 target_link_libraries(create-run sqlite3)
 
 add_executable(get-order src/get-order.cpp ${database_SRC} ${runs_SRC} ${tests_SRC} ${util_SRC})
@@ -65,6 +69,6 @@ add_executable(test-results src/test-results.cpp ${database_SRC} ${tests_SRC} ${
 target_include_directories(test-results PUBLIC ${JSON_INCLUDE_DIRS})
 target_link_libraries(test-results sqlite3)
 
-add_executable(web src/web.cpp ${coverage_SRC} ${database_SRC} ${runs_SRC} ${tests_SRC} ${util_SRC} ${web_SRC})
+add_executable(web src/web.cpp ${coverage_SRC} ${database_SRC} ${repositories_SRC} ${runs_SRC} ${tests_SRC} ${util_SRC} ${web_SRC})
 target_include_directories(web PUBLIC ${JSON_INCLUDE_DIRS} ${MONGOOSE_INCLUDE_DIRS})
 target_link_libraries(web archive ${MONGOOSE_LIBRARIES} pugixml sqlite3 stdc++fs)
