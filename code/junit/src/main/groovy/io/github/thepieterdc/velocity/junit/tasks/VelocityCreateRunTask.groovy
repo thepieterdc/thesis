@@ -32,6 +32,9 @@ class VelocityCreateRunTask extends DefaultTask {
     Consumer<Long> runIdSetter
 
     @Input
+    String repository = ""
+
+    @Input
     String server = ""
 
     @TaskAction
@@ -42,7 +45,7 @@ class VelocityCreateRunTask extends DefaultTask {
         final HTTPBuilder http = new HTTPBuilder(String.format("%s", this.server))
         http.request(Method.POST, ContentType.JSON) {
             uri.path = '/runs'
-            body = ['commit_hash': commitHash]
+            body = ['commit_hash': commitHash, 'repository': repository]
 
             response.success = { final resp, final json ->
                 this.runIdSetter.accept(json['id'])

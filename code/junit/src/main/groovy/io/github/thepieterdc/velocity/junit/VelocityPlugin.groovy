@@ -31,6 +31,8 @@ import java.util.function.Function
 class VelocityPlugin implements Plugin<ProjectInternal> {
     private static final Logger LOG = LoggerFactory.getLogger(VelocityPlugin.class)
 
+    private static final String EXTENSION_NAME = 'velocity'
+
     private static final String COVERAGE_CONFIG = 'velocityCoverageAgent'
     private static final String JACOCO_AGENT = 'org.jacoco:org.jacoco.agent:0.8.5'
 
@@ -64,6 +66,10 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
     void apply(final ProjectInternal project) {
         // Save the project.
         this.project = project
+
+        // Create the extension.
+        final VelocityPluginExtension ext = project.extensions
+            .create(EXTENSION_NAME, VelocityPluginExtension) as VelocityPluginExtension
 
         // Get the commit hash from the command-line arguments.
         if (!this.project.hasProperty('commit')) {
@@ -101,7 +107,7 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
             baseDirectory, VELOCITY_COVERAGE_LOGS
         ))
 
-        this.configureCreateRunTask(commitHash)
+        this.configureCreateRunTask(ext, commitHash)
         this.configureGetOrderTask()
         this.configureTestTask(testOutputFile, coverageOutput)
         this.configureProcessTask(coverageOutput, processedCoverageOutput)
@@ -123,18 +129,21 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
     /**
      * Configures the create run task.
      *
+     * @param ext plugin extension
      * @param commitHash the hash of the current commit
      */
-    private void configureCreateRunTask(final String commitHash) {
+    private void configureCreateRunTask(final VelocityPluginExtension ext,
+                                        final String commitHash) {
         // Add the create run task.
         this.project.tasks.register(
             VelocityCreateRunTask.TASK_NAME,
-            VelocityCreateRunTask.class,
+            VelocityCreateRunTask,
             { final VelocityCreateRunTask task ->
                 task.description = 'Creates a new run on a Velocity server.'
                 task.group = LifecycleBasePlugin.VERIFICATION_GROUP
 
                 task.commitHash = commitHash
+                task.repository = ext.repository
                 task.runIdSetter = this.&setRunId
                 task.server = VELOCITY_SERVER
 
@@ -150,7 +159,7 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
         // Add the create run task.
         this.project.tasks.register(
             VelocityGetOrderTask.TASK_NAME,
-            VelocityGetOrderTask.class,
+            VelocityGetOrderTask,
             { final VelocityGetOrderTask task ->
                 task.description = 'Gets the order for the current run.'
                 task.group = LifecycleBasePlugin.VERIFICATION_GROUP
@@ -229,7 +238,7 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
         // Add the test task.
         this.project.tasks.register(
             VelocityTestTask.TASK_NAME,
-            VelocityTestTask.class,
+            VelocityTestTask,
             { final VelocityTestTask task ->
                 task.description = 'Executes the tests in a given order.'
                 task.group = LifecycleBasePlugin.VERIFICATION_GROUP

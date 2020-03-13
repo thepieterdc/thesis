@@ -4,4 +4,4 @@ set -euxo
 
 (cd ../ && ./gradlew --rerun-tasks jar publishToMavenLocal)
 
-./gradlew velocity -i --rerun-tasks --stacktrace -Pcommit="ffa5a"
+./gradlew velocityTest -i --rerun-tasks --stacktrace -Pcommit="ffa5a"

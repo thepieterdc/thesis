@@ -30,7 +30,7 @@ import java.util.function.Supplier
  * Task that runs the tests in the given order.
  */
 class VelocityTestTask extends Test {
-    public static final String TASK_NAME = "velocity"
+    public static final String TASK_NAME = 'velocityTest'
 
     Function<String, File> destinationGenerator = null
 
