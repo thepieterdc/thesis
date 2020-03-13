@@ -1,0 +1,9 @@
+version: '3'
+services:
+  web:
+    build: 'analyser/'
+    ports:
+      - '8080:8080'
+    restart: always
+    volumes:
+      - ./database:/data
