@@ -30,11 +30,11 @@ database::connection::~connection() {
     }
 }
 
-void database::connection::exec(const database::prepared_stmt &stmt) {
+void database::connection::exec(const database::prepared_stmt &stmt) const {
     sqlite3_step(stmt.stmt);
 }
 
-bool database::connection::find(const database::prepared_stmt &stmt) {
+bool database::connection::find(const database::prepared_stmt &stmt) const {
     const int result = sqlite3_step(stmt.stmt);
     if (result == SQLITE_ROW) {
         // Result found.
@@ -47,14 +47,14 @@ bool database::connection::find(const database::prepared_stmt &stmt) {
     }
 
     // Query failed.
-    throw std::runtime_error("Failed selecting.");
+    throw std::runtime_error(sqlite3_errmsg(this->conn));
 }
 
 std::uint_fast64_t
 database::connection::insert(const database::prepared_stmt &stmt) const {
     const int result = sqlite3_step(stmt.stmt);
     if (result != SQLITE_DONE) {
-        throw std::runtime_error("Failed inserting.");
+        throw std::runtime_error(sqlite3_errmsg(this->conn));
     }
 
     return sqlite3_last_insert_rowid(this->conn);
@@ -66,7 +66,7 @@ database::connection::prepare(const std::string &sql) const {
     const int result = sqlite3_prepare_v3(this->conn, sql.c_str(), -1, 0,
                                           &stmt, nullptr);
     if (result != SQLITE_OK) {
-        throw std::runtime_error("Could not prepare statement.");
+        throw std::runtime_error(sqlite3_errmsg(this->conn));
     }
 
     return std::unique_ptr<database::prepared_stmt>(

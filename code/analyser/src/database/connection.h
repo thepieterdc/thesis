@@ -54,7 +54,7 @@ namespace database {
          *
          * @param stmt the statement
          */
-        static void exec(const database::prepared_stmt &stmt);
+        void exec(const database::prepared_stmt &stmt) const;
 
         /**
          * Executes a select statement for 1 value.
@@ -62,7 +62,7 @@ namespace database {
          * @param stmt the statement
          * @return true if a match was found
          */
-        static bool find(const database::prepared_stmt &stmt);
+        bool find(const database::prepared_stmt &stmt) const;
 
         /**
          * Executes an insert statement.

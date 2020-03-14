@@ -31,7 +31,7 @@ tests::manager::find(const std::string &testcase) const {
     const std::string sql("SELECT id FROM tests WHERE testcase=? LIMIT 1");
     const auto stmt = this->db.prepare(sql);
     stmt->bind_text(1, testcase);
-    const auto found = database::connection::find(*stmt);
+    const auto found = this->db.find(*stmt);
 
     // Validate the result of the query.
     if (found) {
@@ -50,7 +50,7 @@ tests::manager::find(const std::uint_fast64_t test_id) const {
     const std::string sql("SELECT testcase FROM tests WHERE id=? LIMIT 1");
     const auto stmt = this->db.prepare(sql);
     stmt->bind_integer(1, test_id);
-    const auto found = database::connection::find(*stmt);
+    const auto found = this->db.find(*stmt);
 
     // Validate the result of the query.
     if (found) {
@@ -73,7 +73,7 @@ tests::manager::find_result(const std::uint_fast64_t run,
     const auto stmt = this->db.prepare(sql);
     stmt->bind_text(1, testcase);
     stmt->bind_integer(2, run);
-    const auto found = database::connection::find(*stmt);
+    const auto found = this->db.find(*stmt);
 
     // Validate the result of the query.
     if (found) {

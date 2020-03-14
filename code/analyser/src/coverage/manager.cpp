@@ -23,7 +23,7 @@ bool coverage::manager::available(const std::uint_fast64_t test_id) const {
     );
     const auto stmt = this->db.prepare(sql);
     stmt->bind_integer(1, test_id);
-    const auto found = database::connection::find(*stmt);
+    const auto found = this->db.find(*stmt);
 
     // Validate the result of the query.
     return found && stmt->get_integer(0) > 0;
@@ -33,7 +33,7 @@ void coverage::manager::clear(const std::uint_fast64_t test_id) const {
     const std::string sql("DELETE FROM tests_coverage WHERE test_id=?");
     const auto stmt = this->db.prepare(sql);
     stmt->bind_integer(1, test_id);
-    database::connection::exec(*stmt);
+    this->db.exec(*stmt);
 }
 
 void coverage::manager::parse(const std::uint_fast64_t run,

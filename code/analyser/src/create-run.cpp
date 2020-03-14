@@ -30,13 +30,13 @@ int main(int argc, char **argv) {
 
     // Find the repository.
     const auto repositories = repositories::manager(*db);
-    const auto opt_repository = repositories.find(argv[3]);
+    const auto opt_repository = repositories.find(argv[2]);
     const auto repository = opt_repository.has_value()
                             ? opt_repository.value()
-                            : repositories.create(argv[3]);
+                            : repositories.create(argv[2]);
 
     // Create the run.
-    const auto run = runs::manager(*db).create(repository, argv[4]);
+    const auto run = runs::manager(*db).create(repository, argv[3]);
 
     // Print the created job.
     util::logging::success("Run #%d created.", run->id);

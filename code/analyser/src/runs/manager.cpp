@@ -40,7 +40,7 @@ runs::manager::find_order(const std::uint_fast64_t run) const {
             "SELECT testorder FROM orders WHERE run_id=? LIMIT 1");
     const auto stmt = this->db.prepare(sql);
     stmt->bind_integer(1, run);
-    const auto found = database::connection::find(*stmt);
+    const auto found = this->db.find(*stmt);
 
     // Validate the result of the query.
     if (found) {

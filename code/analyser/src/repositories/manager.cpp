@@ -30,7 +30,7 @@ repositories::manager::find(const std::string &url) const {
             "SELECT id FROM repositories WHERE url=? LIMIT 1");
     const auto stmt = this->db.prepare(sql);
     stmt->bind_text(1, url);
-    const auto found = database::connection::find(*stmt);
+    const auto found = this->db.find(*stmt);
 
     // Validate the result of the query.
     if (found) {
