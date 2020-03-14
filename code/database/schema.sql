@@ -1,71 +1,71 @@
--- we don't know how to generate schema main (class Schema) :(
 create table repositories
 (
-	id integer
+	id serial not null
 		constraint repositories_pk
-			primary key autoincrement,
+			primary key,
 	url text not null
 );
+
+alter table repositories owner to velocity;
 
 create unique index repositories_url_uindex
 	on repositories (url);
 
 create table runs
 (
-	id integer
+	id serial not null
 		constraint runs_pk
-			primary key autoincrement,
+			primary key,
 	commit_hash text not null,
-	created_at datetime default current_timestamp,
-	repository_id int not null
-		references repositories
+	testorder text
+	repository_id integer
+		constraint runs_repositories_id_fk
+			references repositories,
+	created_at timestamp default now() not null,
 );
 
-create table orders
-(
-	id integer
-		constraint orders_pk
-			primary key autoincrement,
-	testorder text not null,
-	run_id int not null
-		references runs
-);
+alter table runs owner to velocity;
 
 create table tests
 (
-	id integer
+	id serial not null
 		constraint tests_pk
-			primary key autoincrement,
-	testcase text,
-	repository_id int
-		references repositories
+			primary key,
+	testcase text not null,
+	repository_id integer not null
+		constraint tests_repositories_id_fk
+			references repositories
 );
 
-create unique index tests_testcase_uindex
-	on tests (testcase);
+alter table tests owner to velocity;
 
 create table tests_coverage
 (
-	id integer
+	id serial not null
 		constraint tests_coverage_pk
-			primary key autoincrement,
+			primary key,
 	sourcefile text not null,
 	from_line integer not null,
 	to_line integer not null,
 	test_id integer not null
-		references tests
+		constraint tests_coverage_tests_id_fk
+			references tests
 );
+
+alter table tests_coverage owner to velocity;
 
 create table tests_results
 (
-	id integer
+	id serial not null
 		constraint tests_results_pk
-			primary key autoincrement,
-	run_id int not null
-		references runs,
-	test_id int not null
-		references tests,
-	failed boolean not null
+			primary key,
+	failed boolean not null,
+	run_id integer
+		constraint tests_results_runs_id_fk
+			references runs,
+	test_id integer
+		constraint tests_results_tests_id_fk
+			references tests
 );
 
-
+alter table tests_results owner to velocity;

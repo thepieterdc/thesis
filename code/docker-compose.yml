@@ -1,9 +1,19 @@
 version: '3'
 services:
+  database:
+    build: './database'
+    ports:
+      - '5432:5432'
+    restart: always
+
   web:
-    build: 'analyser/'
+    build: './web'
+    depends_on:
+      - database
+    environment:
+      - DB_HOST=database
+    links:
+      - database:database
     ports:
       - '8080:8080'
     restart: always
-    volumes:
-      - ./database:/data
