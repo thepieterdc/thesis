@@ -36,7 +36,9 @@ create table tests
 	id integer
 		constraint tests_pk
 			primary key autoincrement,
-	testcase text not null
+	testcase text,
+	repository_id int
+		references repositories
 );
 
 create unique index tests_testcase_uindex
@@ -65,3 +67,5 @@ create table tests_results
 		references tests,
 	failed boolean not null
 );
+
+

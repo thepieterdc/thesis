@@ -35,7 +35,7 @@ bool handle_get_run(struct mg_connection *conn, const std::uint_fast64_t run,
             } else {
                 // Unknown test.
                 util::logging::error(
-                        "Test with the following id was not found: ",
+                        "Test with the following id was not found: %d",
                         it);
                 resp.code = 500;
                 valid = false;

@@ -40,8 +40,17 @@ namespace runs {
          * @param commit_hash hash of the commit that triggered this run
          * @return the created run
          */
-        std::shared_ptr<runs::run> create(const std::uint_fast64_t repository,
+        std::shared_ptr<runs::run> create(std::uint_fast64_t repository,
                                           const std::string &commit_hash) const;
+
+        /**
+         * Gets the order that with the given id.
+         *
+         * @param id the id of the run
+         * @return the run if it exists
+         */
+        std::optional<std::shared_ptr<runs::run>>
+        find(std::uint_fast64_t id) const;
 
         /**
          * Gets the order that was calculated for the given run.

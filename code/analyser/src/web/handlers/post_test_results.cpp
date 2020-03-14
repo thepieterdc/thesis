@@ -10,14 +10,23 @@
 #include "../response.h"
 
 bool handle_post_test_results(struct mg_connection *conn,
-                              const std::uint_fast64_t run,
+                              const std::uint_fast64_t run_id,
                               json body,
+                              const runs::manager &runs,
                               const tests::manager &tests) {
     // Create the response.
     web::response resp;
 
+    // Get the run.
+    const auto opt_run = runs.find(run_id);
+    if (!opt_run.has_value()) {
+        resp.code = 404;
+        resp.send(conn);
+        return true;
+    }
+
     // Save the test results.
-    const auto parsed = tests.parse(run, std::move(body));
+    const auto parsed = tests.parse(*(*opt_run), std::move(body));
 
     // Finish the response.
     resp.code = 204;

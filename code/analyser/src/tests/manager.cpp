@@ -14,11 +14,14 @@
 using json = nlohmann::json;
 
 std::shared_ptr<tests::test>
-tests::manager::create(const std::string &testcase) const {
+tests::manager::create(const std::uint_fast64_t repository,
+                       const std::string &testcase) const {
     // Create a new test in the database.
-    const std::string sql("INSERT INTO tests (testcase) VALUES(?)");
+    const std::string sql(
+            "INSERT INTO tests (repository_id, testcase) VALUES(?, ?)");
     const auto stmt = this->db.prepare(sql);
-    stmt->bind_text(1, testcase);
+    stmt->bind_integer(1, repository);
+    stmt->bind_text(2, testcase);
     const auto id = this->db.insert(*stmt);
 
     // Return the created test.
@@ -88,21 +91,21 @@ tests::manager::find_result(const std::uint_fast64_t run,
 }
 
 std::size_t
-tests::manager::parse(const std::uint_fast64_t run, json results) const {
+tests::manager::parse(const runs::run &run, json results) const {
     // Iterate over the test results.
     for (json::iterator it = results.begin(); it != results.end(); ++it) {
         // Get the id of the test case.
         const auto opt_test = this->find(it.key());
         const auto test = opt_test.has_value()
                           ? *opt_test
-                          : this->create(it.key());
+                          : this->create(run.repository_id, it.key());
 
         // Insert the test result in the database.
         const std::string sql(
                 "INSERT INTO tests_results (run_id, test_id, failed) VALUES(?, ?, ?)"
         );
         const auto stmt = this->db.prepare(sql);
-        stmt->bind_integer(1, run);
+        stmt->bind_integer(1, run.id);
         stmt->bind_integer(2, test->id);
         stmt->bind_boolean(3, !it.value());
         this->db.insert(*stmt);

@@ -28,10 +28,12 @@ namespace tests {
         /**
          * Creates a new test.
          *
+         * @param repository id of the repository
          * @param testcase the name of the testcase
          * @return the created test
          */
-        std::shared_ptr<tests::test> create(const std::string &testcase) const;
+        std::shared_ptr<tests::test> create(const std::uint_fast64_t repository,
+                                            const std::string &testcase) const;
 
     public:
         /**
@@ -81,7 +83,7 @@ namespace tests {
          * @param results the json test results
          * @return amount of test cases inserted
          */
-        std::size_t parse(std::uint_fast64_t run, json results) const;
+        std::size_t parse(const runs::run &run, json results) const;
     };
 }
 

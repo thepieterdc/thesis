@@ -21,15 +21,19 @@ namespace runs {
          * run constructor.
          *
          * @param id id of the run
+         * @param repository_id if of the repository
          * @param created_at creation timestamp
          */
-        run(std::uint_fast64_t id, std::uint_fast64_t created_at) :
+        run(std::uint_fast64_t id, std::uint_fast64_t repository_id,
+            std::uint_fast64_t created_at) :
                 created_at(created_at),
-                id(id) {};
+                id(id),
+                repository_id(repository_id) {};
 
     public:
         const std::uint_fast64_t created_at;
         const std::uint_fast64_t id;
+        const std::uint_fast64_t repository_id;
 
         /**
          * run destructor.

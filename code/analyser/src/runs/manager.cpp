@@ -30,7 +30,30 @@ runs::manager::create(const std::uint_fast64_t repository,
     const auto id = this->db.insert(*stmt);
 
     // Return the created run.
-    return std::shared_ptr<runs::run>(new runs::run(id, now_epoch));
+    return std::shared_ptr<runs::run>(new runs::run(id, repository, now_epoch));
+}
+
+std::optional<std::shared_ptr<runs::run>>
+runs::manager::find(std::uint_fast64_t id) const {
+    // Get the run if it exists.
+    const std::string sql(
+            "SELECT id,repository,created_at FROM runs WHERE id=? LIMIT 1");
+    const auto stmt = this->db.prepare(sql);
+    stmt->bind_integer(1, id);
+    const auto found = this->db.find(*stmt);
+
+    // Validate the result of the query.
+    if (found) {
+        // Return the run.
+        return std::make_optional(std::shared_ptr<runs::run>(new runs::run(
+                stmt->get_integer(0),
+                stmt->get_integer(1),
+                stmt->get_integer(2)
+        )));
+    }
+
+    // Run was not found.
+    return std::nullopt;
 }
 
 std::optional<std::list<std::uint_fast64_t>>

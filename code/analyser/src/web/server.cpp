@@ -150,7 +150,7 @@ web::server::handle_post(struct mg_connection *conn, const std::string &uri,
 
         // Handle the request.
         return handle_post_test_results(conn, run_id, std::move(body),
-                                        this->tests);
+                                        this->runs, this->tests);
     }
 
     return false;
