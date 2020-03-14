@@ -6,12 +6,15 @@ services:
       - '5432:5432'
     restart: always
 
+  predict:
+    build: 'predictor/'
+    depends_on:
+      - database
+
   web:
     build: './web'
     depends_on:
       - database
-    environment:
-      - DB_HOST=database
     links:
       - database:database
     ports:

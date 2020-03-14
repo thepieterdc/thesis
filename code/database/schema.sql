@@ -17,11 +17,11 @@ create table runs
 		constraint runs_pk
 			primary key,
 	commit_hash text not null,
-	testorder text
-	repository_id integer
+	testorder text,
+	repository_id integer not null
 		constraint runs_repositories_id_fk
 			references repositories,
-	created_at timestamp default now() not null,
+	created_at timestamp default now() not null
 );
 
 alter table runs owner to velocity;
