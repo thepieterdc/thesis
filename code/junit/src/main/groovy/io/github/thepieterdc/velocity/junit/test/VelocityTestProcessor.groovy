@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory
 import java.lang.reflect.Method
 import java.util.function.Function
 import java.util.stream.Collectors
+
 /**
  * Processes test classes and executes tests.
  */
@@ -74,7 +75,7 @@ class VelocityTestProcessor implements TestClassProcessor {
         final Collection<String> testMethods = new HashSet<>(10)
 
         // Load the test class.
-        Class<?> cursor = Class.forName(testClass.testClassName, true, this.loader)
+        Class<?> cursor = Class.forName(testClass.testClassName, false, this.loader)
 
         // Consider inheritance.
         while (cursor != Object.class) {

@@ -45,4 +45,9 @@ public final class TestCase implements Serializable {
     public String flatten() {
         return String.format("%s.%s", this.className, this.methodName);
     }
+    
+    @Override
+    public String toString() {
+        return this.flatten();
+    }
 }

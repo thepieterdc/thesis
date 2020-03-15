@@ -36,6 +36,8 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
     private static final String COVERAGE_CONFIG = 'velocityCoverageAgent'
     private static final String JACOCO_AGENT = 'org.jacoco:org.jacoco.agent:0.8.5'
 
+    private static final String PROPERTY_COMMIT = 'commit'
+
     private static final String TASK_ZIP_NAME = 'velocityZip'
 
     private static final String VELOCITY_DIR = 'velocity'
@@ -71,13 +73,6 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
         final VelocityPluginExtension ext = project.extensions
             .create(EXTENSION_NAME, VelocityPluginExtension) as VelocityPluginExtension
 
-        // Get the commit hash from the command-line arguments.
-        if (!this.project.hasProperty('commit')) {
-            throw new IllegalArgumentException('Missing required argument: commit')
-        }
-
-        final String commitHash = project.commit
-
         // Set-up the folder structure.
         final FileOperations fileOps = this.project.services
             .get(FileOperations.class) as FileOperations
@@ -107,7 +102,7 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
             baseDirectory, VELOCITY_COVERAGE_LOGS
         ))
 
-        this.configureCreateRunTask(ext, commitHash)
+        this.configureCreateRunTask(ext)
         this.configureGetOrderTask()
         this.configureTestTask(testOutputFile, coverageOutput)
         this.configureProcessTask(coverageOutput, processedCoverageOutput)
@@ -132,8 +127,7 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
      * @param ext plugin extension
      * @param commitHash the hash of the current commit
      */
-    private void configureCreateRunTask(final VelocityPluginExtension ext,
-                                        final String commitHash) {
+    private void configureCreateRunTask(final VelocityPluginExtension ext) {
         // Add the create run task.
         this.project.tasks.register(
             VelocityCreateRunTask.TASK_NAME,
@@ -142,8 +136,8 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
                 task.description = 'Creates a new run on a Velocity server.'
                 task.group = LifecycleBasePlugin.VERIFICATION_GROUP
 
-                task.commitHash = commitHash
-                task.repository = ext.repository
+                task.commitHashGetter = this.&getCommitHash
+                task.extension = ext
                 task.runIdSetter = this.&setRunId
                 task.server = VELOCITY_SERVER
 
@@ -221,10 +215,7 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
         coverageConfig.visible = false
 
         // Create a coverage agent.
-        final JacocoAgentJar agent = this.instantiator.newInstance(
-            JacocoAgentJar.class,
-            this.project.services.get(FileOperations.class)
-        )
+        final JacocoAgentJar agent = this.jacocoAgentJar
         agent.agentConf = coverageConfig
         coverageConfig.defaultDependencies({ final DependencySet deps ->
             deps.add(this.project.dependencies.create(JACOCO_AGENT))
@@ -298,6 +289,41 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
                 }
             }
         }
+    }
+
+    /**
+     * Gets the Jacoco agent.
+     *
+     * @return the agent
+     */
+    private JacocoAgentJar getJacocoAgentJar() {
+        try {
+            return this.instantiator.newInstance(
+                JacocoAgentJar.class,
+                this.project.services.get(FileOperations.class)
+            )
+        } catch (final Exception ignored) {
+            // Fix for old Gradle versions.
+            return this.instantiator.newInstance(
+                JacocoAgentJar.class,
+                this.project
+            )
+        }
+    }
+
+    /**
+     * Gets the commit hash from the command line arguments.
+     *
+     * @return the commit hash
+     */
+    private String getCommitHash() {
+        if (!this.project.hasProperty(PROPERTY_COMMIT)) {
+            throw new IllegalArgumentException(
+                String.format('Missing required argument: %s', PROPERTY_COMMIT)
+            )
+        }
+
+        return project[PROPERTY_COMMIT]
     }
 
     /**
