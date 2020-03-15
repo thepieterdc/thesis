@@ -10,7 +10,6 @@ package io.github.thepieterdc.velocity.junit.tasks
 import groovyx.net.http.ContentType
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.Method
-import org.apache.http.entity.mime.MultipartEntityBuilder
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
@@ -18,7 +17,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import java.util.function.Supplier
-
 /**
  * Task that uploads zip file to the server for analysis.
  */
@@ -28,7 +26,7 @@ class VelocityUploadTask extends DefaultTask {
     public static final String TASK_NAME = 'velocityUpload'
 
     @Input
-    File coverageLogs = null
+    File coverage = null
 
     Supplier<Long> runIdGetter
 
@@ -59,14 +57,9 @@ class VelocityUploadTask extends DefaultTask {
 
         // Upload the coverage logs.
         http = new HTTPBuilder(String.format("%s", this.server))
-        http.request(Method.POST) { final request ->
+        http.request(Method.POST, ContentType.JSON) { final request ->
             uri.path = String.format('/runs/%d/coverage', this.runIdGetter.get())
-            requestContentType = 'multipart/form-data'
-
-            headers.'Accept' = 'application/json'
-
-            request.entity = MultipartEntityBuilder.create()
-                .addBinaryBody('coverage', this.coverageLogs).build()
+            body = this.coverage.text
 
             response.failure = { final resp ->
                 throw new RuntimeException(String.valueOf(resp.status))

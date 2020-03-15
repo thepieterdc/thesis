@@ -15,7 +15,6 @@ import org.gradle.api.artifacts.DependencySet
 import org.gradle.api.internal.file.FileOperations
 import org.gradle.api.internal.project.ProjectInternal
 import org.gradle.api.plugins.JavaPluginConvention
-import org.gradle.api.tasks.bundling.Zip
 import org.gradle.internal.jacoco.JacocoAgentJar
 import org.gradle.internal.reflect.Instantiator
 import org.gradle.language.base.plugins.LifecycleBasePlugin
@@ -41,10 +40,9 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
     private static final String TASK_ZIP_NAME = 'velocityZip'
 
     private static final String VELOCITY_DIR = 'velocity'
-    private static final String VELOCITY_COVERAGE_DIR = 'coverage'
-    private static final String VELOCITY_COVERAGE_LOGS = 'coverage-logs.zip'
+    private static final String VELOCITY_COVERAGE_FILE = 'test-coverage.json'
     private static final String VELOCITY_COVERAGE_RAW_DIR = 'coverage-raw'
-    private static final String VELOCITY_TEST_OUTPUT_FILE = 'results.json'
+    private static final String VELOCITY_TEST_OUTPUT_FILE = 'test-results.json'
 
     private static final String VELOCITY_SERVER = 'http://localhost:8080'
 
@@ -92,22 +90,16 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
             baseDirectory, VELOCITY_COVERAGE_RAW_DIR
         ))
 
-        // Processed coverage outputs.
-        final File processedCoverageOutput = fileOps.mkdir(String.format('%s/%s',
-            baseDirectory, VELOCITY_COVERAGE_DIR
-        ))
-
-        // Zip archive.
-        final File coverageLogs = new File(String.format('%s/%s',
-            baseDirectory, VELOCITY_COVERAGE_LOGS
+        // Processed coverage output.
+        final File processedCoverageOutputFile = new File(String.format('%s/%s',
+            baseDirectory, VELOCITY_COVERAGE_FILE
         ))
 
         this.configureCreateRunTask(ext)
         this.configureGetOrderTask()
         this.configureTestTask(testOutputFile, coverageOutput)
-        this.configureProcessTask(coverageOutput, processedCoverageOutput)
-        this.configureZipTask(processedCoverageOutput, coverageLogs)
-        this.configureUploadTask(testOutputFile, coverageLogs)
+        this.configureProcessTask(coverageOutput, processedCoverageOutputFile)
+        this.configureUploadTask(testOutputFile, processedCoverageOutputFile)
 
         // Configure the call graph.
         project.tasks
@@ -115,9 +107,6 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
             .finalizedBy(VelocityProcessTask.TASK_NAME)
         project.tasks
             .findByName(VelocityProcessTask.TASK_NAME)
-            .finalizedBy(TASK_ZIP_NAME)
-        project.tasks
-            .findByName(TASK_ZIP_NAME)
             .finalizedBy(VelocityUploadTask.TASK_NAME)
     }
 
@@ -172,11 +161,6 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
      */
     private void configureProcessTask(final File coverageInput,
                                       final File processedCoverageOutput) {
-        // Create a function that generates output files.
-        final Function<String, File> outputCreator = {
-            final name -> new File(String.format('%s/%s.xml', processedCoverageOutput.path, name))
-        }
-
         // Get the compiled java output path.
         final File[] outputs = this.project.convention
             .getPlugin(JavaPluginConvention.class)
@@ -189,12 +173,12 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
             VelocityProcessTask.TASK_NAME,
             VelocityProcessTask.class,
             { final VelocityProcessTask task ->
-                task.description = 'Parses .exec reports into .xml'
+                task.description = 'Parses .exec reports into a json file.'
                 task.group = LifecycleBasePlugin.VERIFICATION_GROUP
 
                 task.classpath = outputs
-                task.destinationGenerator = outputCreator
                 task.inputDirectory = coverageInput
+                task.outputFile = processedCoverageOutput
             }
         )
     }
@@ -255,40 +239,24 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
      * Configures the upload task.
      *
      * @param testResults the json file that contains the test results
-     * @param coverageLogs zip archive containing test xml files
+     * @param coverageData the json file that contains the coverage data
      */
     private void configureUploadTask(final File testResults,
-                                     final File coverageLogs) {
+                                     final File coverageData) {
         // Add the upload task.
         this.project.tasks.register(
             VelocityUploadTask.TASK_NAME,
             VelocityUploadTask.class,
             { final VelocityUploadTask task ->
-                task.description = 'Uploads zip files to the server for analysis'
+                task.description = 'Uploads the test results and coverage to the server for analysis'
                 task.group = LifecycleBasePlugin.VERIFICATION_GROUP
 
-                task.coverageLogs = coverageLogs
+                task.coverage = coverageData
                 task.runIdGetter = this.&getRunId
                 task.server = VELOCITY_SERVER
                 task.testResults = testResults
             }
         )
-    }
-
-    /**
-     * Configures the zip task.
-     */
-    private void configureZipTask(final File processedCoverageOutputs,
-                                  final File zipFile) {
-        // Add the zip task.
-        this.project.configure(this.project) {
-            task(type: Zip, description: 'Combines the test results and coverage reports into a .zip archive', TASK_ZIP_NAME) {
-                archiveName = zipFile
-                from(processedCoverageOutputs) {
-                    include '*.xml'
-                }
-            }
-        }
     }
 
     /**

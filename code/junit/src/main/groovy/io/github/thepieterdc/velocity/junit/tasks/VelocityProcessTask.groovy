@@ -7,20 +7,15 @@
  */
 package io.github.thepieterdc.velocity.junit.tasks
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import io.github.thepieterdc.velocity.junit.coverage.TestCoverage
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
-import org.jacoco.core.analysis.Analyzer
-import org.jacoco.core.analysis.CoverageBuilder
-import org.jacoco.core.analysis.IBundleCoverage
+import org.jacoco.core.analysis.*
 import org.jacoco.core.tools.ExecFileLoader
-import org.jacoco.report.IReportVisitor
-import org.jacoco.report.MultiSourceFileLocator
-import org.jacoco.report.xml.XMLFormatter
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-
-import java.util.function.Function
 
 /**
  * Task that parses .exec files to xml.
@@ -33,10 +28,11 @@ class VelocityProcessTask extends DefaultTask {
     @Input
     File[] classpath = []
 
-    Function<String, File> destinationGenerator = null
-
     @Input
     File inputDirectory = null
+
+    @Input
+    File outputFile = null
 
     @TaskAction
     def parse() {
@@ -47,9 +43,14 @@ class VelocityProcessTask extends DefaultTask {
             .listFiles({ final _, final file -> file.endsWith('.exec') } as FilenameFilter)
 
         // Parse the logs.
+        final Collection<TestCoverage> coverage = new HashSet<>()
         for (final File file : files) {
-            this.parseFile(file)
+            coverage.add(this.parseFile(file))
         }
+
+        // Combine the logs into one json file.
+        final ObjectMapper mapper = new ObjectMapper()
+        mapper.writeValue(this.outputFile, coverage)
 
         LOG.info('Parsed all logs.')
     }
@@ -57,12 +58,13 @@ class VelocityProcessTask extends DefaultTask {
     /**
      * Parses a single file.
      *
-     * @param file the input file
+     * @param testOutput the input file
+     * @return coverage data for the given test
      */
-    private void parseFile(final File file) {
+    private TestCoverage parseFile(final File testOutput) {
         // Load the execution data.
         final ExecFileLoader loader = new ExecFileLoader()
-        loader.load(file)
+        loader.load(testOutput)
 
         // Analyze the execution data.
         final CoverageBuilder builder = new CoverageBuilder()
@@ -72,17 +74,44 @@ class VelocityProcessTask extends DefaultTask {
                 analyzer.analyzeAll(classFile)
             }
         }
-        final IBundleCoverage coverage = builder.getBundle("Velocity report")
+        final IBundleCoverage coverageBundle = builder.getBundle("Velocity report")
 
-        // Get the xml filename.
-        final String outputFileName = file.name.substring(0, file.name.length() - 5)
-        final File outputXml = this.destinationGenerator.apply(outputFileName)
+        // Create new coverage data.
+        final TestCoverage coverage = new TestCoverage(
+            loader.sessionInfoStore.infos[0].id
+        )
 
-        // Write the xml report.
-        final IReportVisitor xmlFormatter = new XMLFormatter()
-            .createVisitor(new FileOutputStream(outputXml))
-        xmlFormatter.visitInfo(loader.sessionInfoStore.infos, loader.executionDataStore.contents)
-        xmlFormatter.visitBundle(coverage, new MultiSourceFileLocator(4))
-        xmlFormatter.visitEnd()
+        // Iterate over the packages in the bundle.
+        coverageBundle.packages.forEach { final pkg ->
+            // Iterate over the source files in the package.
+            pkg.sourceFiles.forEach { final source ->
+                final String fileName = source.name
+
+                // Iterate over the lines in the file.
+                final int lastLine = source.lastLine
+                int startBlock = 0
+                for (int lineNo = source.firstLine; lineNo <= lastLine; ++lineNo) {
+                    final ILine line = source.getLine(lineNo)
+                    if (line.status == ICounter.EMPTY || line.status == ICounter.NOT_COVERED) {
+                        // The current line is not covered.
+                        if (startBlock != 0) {
+                            // We were in an ongoing cover block.
+                            coverage.cover(fileName, startBlock, lineNo - 1)
+                            startBlock = 0
+                        }
+                    } else if (startBlock == 0) {
+                        // Current line is covered and not in an ongoing block.
+                        startBlock = lineNo
+                    }
+                }
+
+                // Close the final block.
+                if (startBlock != 0) {
+                    coverage.cover(fileName, startBlock, lastLine)
+                }
+            }
+        }
+
+        return coverage
     }
 }
