@@ -22,16 +22,6 @@ namespace coverage {
         pqxx::connection &db;
         const tests::manager &tests;
 
-        /**
-         * Parses the coverage results of one file and inserts it into the
-         * database. A coverage path is only updated if it does not yet exist,
-         * or if the test was successful.
-         *
-         * @param run current test run
-         * @param contents contents of the file to parse
-         */
-        void parse(std::uint_fast64_t run, const std::string &contents) const;
-
     public:
         /**
          * manager constructor.
@@ -66,22 +56,11 @@ namespace coverage {
          * test was successful.
          *
          * @param run current test run
-         * @param zip archive containing the coverage results
-         * @return amount of files parsed
-         */
-        std::size_t parse_all(std::uint_fast64_t run, std::FILE *zip) const;
-
-        /**
-         * Parses the coverage results and inserts them into the database. A
-         * coverage path is only updated if it does not yet exist, or if the
-         * test was successful.
-         *
-         * @param run current test run
-         * @param path folder containing the coverage results
+         * @param data coverage data
          * @return amount of files parsed
          */
         [[nodiscard]] std::size_t
-        parse_all(std::uint_fast64_t run, const std::string &path) const;
+        parse(std::uint_fast64_t run, json data) const;
     };
 }
 

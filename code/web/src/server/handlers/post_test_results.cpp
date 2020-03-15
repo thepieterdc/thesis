@@ -18,18 +18,18 @@ bool handle_post_test_results(struct mg_connection *conn,
     web::response resp;
 
     // Get the run.
-    const auto opt_run = runs.find(run_id);
-    if (!opt_run.has_value()) {
+    const auto run = runs.find(run_id);
+    if (!run.has_value()) {
         resp.code = 404;
         resp.send(conn);
         return true;
     }
 
     // Save the test results.
-    const auto parsed = tests.parse(*(*opt_run), std::move(body));
+    const auto parsed = tests.parse(**run, std::move(body));
 
     // Finish the response.
-    resp.code = 204;
+    resp.code = 200;
     resp.body_json({{"parsed", parsed}});
     resp.send(conn);
 

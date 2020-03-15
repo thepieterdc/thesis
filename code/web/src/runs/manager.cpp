@@ -7,7 +7,6 @@
  */
 
 #include <iostream>
-#include <sstream>
 #include <pqxx/transaction>
 #include "manager.h"
 

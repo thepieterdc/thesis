@@ -197,6 +197,7 @@ modules.xml
 # Executable
 create-run
 get-order
-parse-coverage
+test-coverage
 test-results
-./server
+server
+!server/

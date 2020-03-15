@@ -6,7 +6,6 @@
  * https://github.com/thepieterdc/thesis/
  */
 
-#include <iostream>
 #include <regex>
 #include <stdexcept>
 #include <utility>
@@ -27,77 +26,33 @@ void web::server::handle(struct mg_connection *conn, int ev, void *ev_data) {
     const auto *server = static_cast<web::server *>(conn->mgr->user_data);
 
     // Handle the event.
-    switch (ev) {
-        // Multi-part HTTP request.
-        case MG_EV_HTTP_MULTIPART_REQUEST: {
-            // Parse the request.
-            auto *const msg = static_cast<http_message *>(ev_data);
-            const auto method = std::string(msg->method.p, msg->method.len);
-            const auto uri = std::string(msg->uri.p, msg->uri.len);
+    if (ev == MG_EV_HTTP_REQUEST) {
+        // Parse the request.
+        auto *const msg = static_cast<http_message *>(ev_data);
+        const auto method = std::string(msg->method.p, msg->method.len);
+        const auto uri = std::string(msg->uri.p, msg->uri.len);
 
-            util::logging::notice("%s %s", method.c_str(), uri.c_str());
+        util::logging::notice("%s %s", method.c_str(), uri.c_str());
 
-            if (method == "POST") {
-                if (server->handle_post(conn, uri, nullptr)) {
-                    return;
-                }
+        // Handle the request.
+        if (method == "GET") {
+            if (server->handle_get(conn, uri)) {
+                return;
             }
+        } else if (method == "POST") {
+            // Parse the postbody.
+            const auto body = json::parse(
+                    std::string(msg->body.p, msg->body.len));
 
-            // Event was not handled -> Send 404.
-            web::response resp;
-            resp.code = 404;
-            resp.send(conn);
-
-            break;
-        }
-
-            // Multi-part data chunk.
-        case MG_EV_HTTP_PART_DATA: {
-            // Parse the request.
-            auto *const multipart = static_cast<mg_http_multipart_part *>(
-                    ev_data);
-
-            // Handle the request.
-            handle_coverage_data(conn, multipart);
-            break;
-        }
-
-            // Multi-part data end.
-        case MG_EV_HTTP_PART_END: {
-            // Handle the request.
-            handle_coverage_finish(conn, server->coverage);
-            break;
-        }
-
-            // Regular HTTP request.
-        case MG_EV_HTTP_REQUEST: {
-            // Parse the request.
-            auto *const msg = static_cast<http_message *>(ev_data);
-            const auto method = std::string(msg->method.p, msg->method.len);
-            const auto uri = std::string(msg->uri.p, msg->uri.len);
-
-            util::logging::notice("%s %s", method.c_str(), uri.c_str());
-
-            // Handle the request.
-            if (method == "GET") {
-                if (server->handle_get(conn, uri)) {
-                    return;
-                }
-            } else if (method == "POST") {
-                // Parse the postbody.
-                const auto body = json::parse(
-                        std::string(msg->body.p, msg->body.len));
-
-                if (server->handle_post(conn, uri, body)) {
-                    return;
-                }
+            if (server->handle_post(conn, uri, body)) {
+                return;
             }
-
-            // Event was not handled -> Send 404.
-            web::response resp;
-            resp.code = 404;
-            resp.send(conn);
         }
+
+        // Event was not handled -> Send 404.
+        web::response resp;
+        resp.code = 404;
+        resp.send(conn);
     }
 }
 
@@ -143,7 +98,8 @@ web::server::handle_post(struct mg_connection *conn, const std::string &uri,
         const auto run_id = std::stoi(matches[1].str());
 
         // Handle the request.
-        return handle_post_coverage(conn, run_id);
+        return handle_post_coverage(conn, run_id, std::move(body),
+                                    this->coverage);
     } else if (std::regex_search(uri, matches, test_results_regex)) {
         // Find the run id.
         const auto run_id = std::stoi(matches[1].str());

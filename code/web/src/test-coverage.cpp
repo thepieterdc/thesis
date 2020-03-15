@@ -20,24 +20,22 @@
  * @return successful
  */
 int main(int argc, char **argv) {
-    if (argc != 4) {
-        util::logging::error(
-                "Syntax: %s database.db run_id folder_with_xmlfiles",
-                argv[0]);
+    if (argc != 3) {
+        util::logging::error("Syntax: %s db_string run_id", argv[0]);
         return EXIT_FAILURE;
     }
 
-    // Argument parsing.
-    const auto run = std::stoi(argv[2]);
-    const auto coverage_logs = std::string(argv[3]);
-
     // Create a database connection.
-    const auto db = database::connection::connect(argv[1]);
+    const auto db = database::connect(argv[1]);
+
+    // Parse the coverage data.
+    json coverage_data;
+    std::cin >> coverage_data;
 
     // Parse the coverage results and insert them into the database.
     const auto tests_mgr = tests::manager(*db);
     const auto coverage_parsed = coverage::manager(*db, tests_mgr)
-            .parse_all(run, coverage_logs);
+            .parse(std::stoi(argv[2]), coverage_data);
 
     // Print the parsed test results.
     util::logging::success("Parsed %d coverage reports.", coverage_parsed);

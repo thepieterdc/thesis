@@ -61,14 +61,14 @@ add_executable(get-order src/get-order.cpp ${database_SRC} ${runs_SRC} ${tests_S
 target_include_directories(get-order PUBLIC ${JSON_INCLUDE_DIRS})
 target_link_libraries(get-order pqxx)
 
-add_executable(parse-coverage src/parse-coverage.cpp ${coverage_SRC} ${database_SRC} ${tests_SRC} ${util_SRC})
-target_include_directories(parse-coverage PUBLIC ${JSON_INCLUDE_DIRS} ${ZIPPP_INCLUDE_DIRS})
-target_link_libraries(parse-coverage archive pugixml pqxx stdc++fs)
-
 add_executable(server src/server.cpp ${coverage_SRC} ${database_SRC} ${repositories_SRC} ${runs_SRC} ${server_SRC} ${tests_SRC} ${util_SRC})
 target_include_directories(server PUBLIC ${JSON_INCLUDE_DIRS} ${MONGOOSE_INCLUDE_DIRS})
-target_link_libraries(server archive ${MONGOOSE_LIBRARIES} pugixml pqxx stdc++fs)
+target_link_libraries(server ${MONGOOSE_LIBRARIES} pqxx)
 
-add_executable(test-results src/test-results.cpp ${database_SRC} ${tests_SRC} ${util_SRC})
+add_executable(test-coverage src/test-coverage.cpp ${coverage_SRC} ${database_SRC} ${tests_SRC} ${util_SRC})
+target_include_directories(test-coverage PUBLIC ${JSON_INCLUDE_DIRS} ${ZIPPP_INCLUDE_DIRS})
+target_link_libraries(test-coverage pqxx)
+
+add_executable(test-results src/test-results.cpp ${database_SRC} ${runs_SRC} ${tests_SRC} ${util_SRC})
 target_include_directories(test-results PUBLIC ${JSON_INCLUDE_DIRS})
 target_link_libraries(test-results pqxx)

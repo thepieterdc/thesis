@@ -11,6 +11,7 @@
 #include "database/connection.h"
 #include "util/logging.h"
 #include "tests/manager.h"
+#include "runs/manager.h"
 
 using json = nlohmann::json;
 
@@ -23,22 +24,31 @@ using json = nlohmann::json;
  */
 int main(int argc, char **argv) {
     if (argc != 3) {
-        util::logging::error("Syntax: %s database.db run_id", argv[0]);
+        util::logging::error("Syntax: %s db_string run_id", argv[0]);
         return EXIT_FAILURE;
     }
 
-    // Argument parsing.
-    const auto run = std::stoi(argv[2]);
-
     // Create a database connection.
-    const auto db = database::connection::connect(argv[1]);
+    const auto db = database::connect(argv[1]);
+
+    // Create managers.
+    const auto runs = runs::manager(*db);
+
+    // Find the run.
+    const auto run_id = std::stoi(argv[2]);
+    const auto run = runs.find(run_id);
+    if (!run.has_value()) {
+        // Run not found.
+        util::logging::error("Run not found: %d", run_id);
+        return EXIT_FAILURE;
+    }
 
     // Parse the test results.
     json test_results;
     std::cin >> test_results;
 
     // Save the test results to the database.
-    const auto results_parsed = tests::manager(*db).parse(run, test_results);
+    const auto results_parsed = tests::manager(*db).parse(**run, test_results);
 
     // Print the parsed test results.
     util::logging::success("Parsed %d test results.", results_parsed);

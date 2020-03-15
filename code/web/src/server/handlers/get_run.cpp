@@ -16,22 +16,19 @@ bool handle_get_run(struct mg_connection *conn, const std::uint_fast64_t run,
     web::response resp;
 
     // Get the order if it exists.
-    const auto opt_order = runs.find_order(run);
-    if (opt_order.has_value()) {
-        // Order is known.
-        const auto &order_list = opt_order.value();
-
+    const auto order_list = runs.find_order(run);
+    if (order_list.has_value()) {
         // Parse the order.
         std::list<std::string> order;
         bool valid = true;
-        for (const auto &it : order_list) {
+        for (const auto &it : *order_list) {
             // Get the test with the given id.
-            const auto opt_test = tests.find(it);
+            const auto test = tests.find(it);
 
             // Validate the result.
-            if (opt_test.has_value()) {
+            if (test.has_value()) {
                 // Add the test case name to the list.
-                order.push_back(opt_test.value()->testcase);
+                order.push_back((*test)->testcase);
             } else {
                 // Unknown test.
                 util::logging::error(

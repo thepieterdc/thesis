@@ -12,40 +12,16 @@
 #include <string>
 #include "../../coverage/manager.h"
 
-struct coverage_upload_data {
-    std::uint_fast64_t run;
-    char *buf;
-    std::FILE *fp;
-    std::size_t size;
-};
-
-/**
- * Handles incoming multipart data chunks.
- *
- * @param conn the connection
- * @param data the data
- * @return true if handled
- */
-bool handle_coverage_data(struct mg_connection *conn,
-                          mg_http_multipart_part *multipart);
-
-/**
- * Handles incoming multipart data.
- *
- * @param conn the connection
- * @param data the data
- * @return true if handled
- */
-bool handle_coverage_finish(struct mg_connection *conn,
-                            const coverage::manager &coverage);
-
 /**
  * Handles the POST request that starts coverage uploading.
  *
  * @param conn connection
  * @param run id of the run
+ * @param body the post body
+ * @param coverage coverage manager
  * @return true if handled
  */
-bool handle_post_coverage(struct mg_connection *conn, std::uint_fast64_t run);
+bool handle_post_coverage(struct mg_connection *conn, std::uint_fast64_t run,
+                          json body, const coverage::manager &coverage);
 
 #endif /* WEB_WEB_HANDLERS_POST_COVERAGE_H */
