@@ -49,15 +49,6 @@ namespace tests {
         virtual ~manager() = default;
 
         /**
-         * Finds a test by the name of the testcase.
-         *
-         * @param testcase the name of the testcase
-         * @return the test if found
-         */
-        std::optional<std::shared_ptr<tests::test>>
-        find(const std::string &testcase) const;
-
-        /**
          * Finds a test by its id.
          *
          * @param id the id of the testcase
@@ -65,6 +56,16 @@ namespace tests {
          */
         std::optional<std::shared_ptr<tests::test>>
         find(const std::uint_fast64_t id) const;
+
+        /**
+         * Finds a test by the name of the testcase.
+         *
+         * @param repository the id of the repository
+         * @param testcase the name of the testcase
+         * @return the test if found
+         */
+        std::optional<std::shared_ptr<tests::test>>
+        find(std::uint_fast64_t repository, const std::string &testcase) const;
 
         /**
          * Finds a test result by the name of the testcase.

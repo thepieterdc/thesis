@@ -25,7 +25,7 @@ tests::manager::manager(pqxx::connection &db) : db(db) {
     this->db.prepare(PREPARED_TESTS_FIND_ID,
                      "SELECT testcase FROM tests WHERE id=$1 LIMIT 1");
     this->db.prepare(PREPARED_TESTS_FIND_TESTCASE,
-                     "SELECT id FROM tests WHERE testcase=$1 LIMIT 1");
+                     "SELECT id FROM tests WHERE testcase=$1 AND repository_id=$2 LIMIT 1");
     this->db.prepare(PREPARED_TEST_RESULTS_CREATE,
                      "INSERT INTO tests_results (run_id, test_id, failed) VALUES($1, $2, $3)"
     );
@@ -55,30 +55,6 @@ tests::manager::create(const std::uint_fast64_t repository,
 }
 
 std::optional<std::shared_ptr<tests::test>>
-tests::manager::find(const std::string &testcase) const {
-    // Start a transaction.
-    pqxx::work tx(this->db);
-
-    // Attempt to find the test with the given testcase name.
-    const auto result = tx.prepared(PREPARED_TESTS_FIND_TESTCASE)(testcase)
-            .exec();
-
-    // Commit the transaction.
-    tx.commit();
-
-    // Validate the result of the query.
-    if (!result.empty()) {
-        return std::make_optional(std::shared_ptr<tests::test>(new test(
-                result[0]["id"].as<std::uint_fast64_t>(),
-                testcase
-        )));
-    }
-
-    // Test was not found.
-    return std::nullopt;
-}
-
-std::optional<std::shared_ptr<tests::test>>
 tests::manager::find(const std::uint_fast64_t test_id) const {
     // Start a transaction.
     pqxx::work tx(this->db);
@@ -94,6 +70,31 @@ tests::manager::find(const std::uint_fast64_t test_id) const {
         return std::make_optional(std::shared_ptr<tests::test>(new test(
                 test_id,
                 result[0]["testcase"].as<std::string>()
+        )));
+    }
+
+    // Test was not found.
+    return std::nullopt;
+}
+
+std::optional<std::shared_ptr<tests::test>>
+tests::manager::find(const std::uint_fast64_t repository,
+                     const std::string &testcase) const {
+    // Start a transaction.
+    pqxx::work tx(this->db);
+
+    // Attempt to find the test with the given testcase name.
+    const auto result = tx.prepared(PREPARED_TESTS_FIND_TESTCASE)
+            (testcase)(repository).exec();
+
+    // Commit the transaction.
+    tx.commit();
+
+    // Validate the result of the query.
+    if (!result.empty()) {
+        return std::make_optional(std::shared_ptr<tests::test>(new test(
+                result[0]["id"].as<std::uint_fast64_t>(),
+                testcase
         )));
     }
 
@@ -134,7 +135,7 @@ tests::manager::parse(const runs::run &run, json results) const {
     // Iterate over the test results.
     for (json::iterator it = results.begin(); it != results.end(); ++it) {
         // Get the id of the test case.
-        const auto opt_test = this->find(it.key());
+        const auto opt_test = this->find(run.repository_id, it.key());
         const auto test = opt_test.has_value()
                           ? *opt_test
                           : this->create(run.repository_id, it.key());
