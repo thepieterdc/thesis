@@ -7,6 +7,7 @@
  */
 package io.github.thepieterdc.velocity.junit.test
 
+
 import io.github.thepieterdc.velocity.junit.util.FileClassLoader
 import org.gradle.api.internal.tasks.testing.TestClassProcessor
 import org.gradle.api.internal.tasks.testing.TestClassRunInfo
@@ -17,7 +18,6 @@ import org.slf4j.LoggerFactory
 import java.lang.reflect.Method
 import java.util.function.Function
 import java.util.stream.Collectors
-
 /**
  * Processes test classes and executes tests.
  */

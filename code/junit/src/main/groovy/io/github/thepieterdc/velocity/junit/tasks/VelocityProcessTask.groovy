@@ -8,7 +8,9 @@
 package io.github.thepieterdc.velocity.junit.tasks
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import io.github.thepieterdc.velocity.junit.VelocityPluginExtension
 import io.github.thepieterdc.velocity.junit.coverage.TestCoverage
+import io.github.thepieterdc.velocity.junit.util.PathUtil
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
@@ -27,6 +29,8 @@ class VelocityProcessTask extends DefaultTask {
 
     @Input
     File[] classpath = []
+
+    VelocityPluginExtension extension
 
     @Input
     File inputDirectory = null
@@ -85,7 +89,11 @@ class VelocityProcessTask extends DefaultTask {
         coverageBundle.packages.forEach { final pkg ->
             // Iterate over the source files in the package.
             pkg.sourceFiles.forEach { final source ->
-                final String fileName = String.format('%s/%s', pkg.name, source.name)
+                final String fileName = String.format('%s%s/%s',
+                    PathUtil.sanitize(extension.base),
+                    pkg.name,
+                    source.name
+                )
 
                 // Iterate over the lines in the file.
                 final int lastLine = source.lastLine

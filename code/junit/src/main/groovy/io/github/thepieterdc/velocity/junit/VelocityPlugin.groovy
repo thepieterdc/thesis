@@ -98,7 +98,7 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
         this.configureCreateRunTask(ext)
         this.configureGetOrderTask()
         this.configureTestTask(testOutputFile, coverageOutput)
-        this.configureProcessTask(coverageOutput, processedCoverageOutputFile)
+        this.configureProcessTask(ext, coverageOutput, processedCoverageOutputFile)
         this.configureUploadTask(testOutputFile, processedCoverageOutputFile)
 
         // Configure the call graph.
@@ -159,7 +159,8 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
     /**
      * Configures the process task.
      */
-    private void configureProcessTask(final File coverageInput,
+    private void configureProcessTask(final VelocityPluginExtension ext,
+                                      final File coverageInput,
                                       final File processedCoverageOutput) {
         // Get the compiled java output path.
         final File[] outputs = this.project.convention
@@ -177,6 +178,7 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
                 task.group = LifecycleBasePlugin.VERIFICATION_GROUP
 
                 task.classpath = outputs
+                task.extension = ext
                 task.inputDirectory = coverageInput
                 task.outputFile = processedCoverageOutput
             }

@@ -31,6 +31,7 @@ dependencies {
 }
 
 velocity {
+    base 'src/main/java/'
     repository 'https://github.com/thepieterdc/random-java'
 }
 

@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory
 
 import java.util.function.Consumer
 import java.util.function.Supplier
+
 /**
  * Task that creates a new run on a Velocity server.
  */
@@ -44,7 +45,8 @@ class VelocityCreateRunTask extends DefaultTask {
         final HTTPBuilder http = new HTTPBuilder(String.format("%s", this.server))
         http.request(Method.POST, ContentType.JSON) {
             uri.path = '/runs'
-            body = ['commit_hash': commitHashGetter.get(), 'repository': extension.repository]
+            body = ['commit_hash': commitHashGetter.get(),
+                    'repository' : extension.repository]
 
             response.success = { final resp, final json ->
                 this.runIdSetter.accept(json['id'])
