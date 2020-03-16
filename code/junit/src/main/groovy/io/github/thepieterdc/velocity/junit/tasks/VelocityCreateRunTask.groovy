@@ -11,6 +11,7 @@ import groovyx.net.http.ContentType
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.Method
 import io.github.thepieterdc.velocity.junit.VelocityPluginExtension
+import io.github.thepieterdc.velocity.junit.util.PathUtil
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory
 
 import java.util.function.Consumer
 import java.util.function.Supplier
+
 /**
  * Task that creates a new run on a Velocity server.
  */
@@ -44,7 +46,9 @@ class VelocityCreateRunTask extends DefaultTask {
         final HTTPBuilder http = new HTTPBuilder(String.format("%s", this.server))
         http.request(Method.POST, ContentType.JSON) {
             uri.path = '/runs'
-            body = ['commit_hash': commitHashGetter.get(), 'repository': extension.repository]
+            body = ['commit_hash': commitHashGetter.get(),
+                    'base'       : PathUtil.sanitize(extension.base),
+                    'repository' : extension.repository]
 
             response.success = { final resp, final json ->
                 this.runIdSetter.accept(json['id'])
