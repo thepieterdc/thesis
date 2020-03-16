@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Velocity order predictor."""
+"""Velocity predictors predictor."""
 import re
 import sys
 

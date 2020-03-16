@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Velocity order predictor."""
+"""Velocity predictors predictor."""
 from src.entities.code_block import CodeBlock
 
 __author__ = "Pieter De Clercq"

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-"""Velocity order predictor."""
-from typing import Optional, List, Set
+"""Velocity predictors predictor."""
+from typing import Optional, List, Set, Tuple, Iterable
 
 import psycopg2
 
@@ -28,29 +28,6 @@ class PostgresDatabase(AbstractDatabase):
         """
         self.__connection = psycopg2.connect(conn_str)
 
-    def get_tests_by_coverage(self, run: Run, blocks: List[CodeBlock]) -> \
-        Set[CodeBlock]:
-        cursor = self.__connection.cursor()
-        ret = set()
-
-        # Iterate over every block.
-        for block in blocks:
-            # Find all tests that cover this block.
-            cursor.execute(
-                "SELECT t.id,tc.from_line,tc.to_line FROM tests_coverage tc "
-                "INNER JOIN tests t on tc.test_id = t.id WHERE "
-                "t.repository_id=%s AND tc.sourcefile=%s AND tc.from_line <= "
-                "%s AND %s <= tc.to_line",
-                (run.repository.id, block.file, block.to_line, block.from_line))
-
-            # Add the coverage
-            ret |= {
-                Test(row[0], CodeBlock(block.file, row[1], row[2]))
-                for row in cursor.fetchall()
-            }
-
-        return ret
-
     def get_run_by_id(self, id: int) -> Optional[Run]:
         cursor = self.__connection.cursor()
         cursor.execute(
@@ -69,7 +46,42 @@ class PostgresDatabase(AbstractDatabase):
             return Run.from_cursor(run_result, repository)
 
         cursor.close()
+
+        # Run not found.
         return None
+
+    def get_test_ids(self, repository: Repository) -> Iterable[int]:
+        cursor = self.__connection.cursor()
+        cursor.execute("SELECT id FROM tests WHERE repository_id=%s",
+                       (repository.id,))
+
+        # Iterate over every test
+        for row in cursor.fetchall():
+            yield row[0]
+        cursor.close()
+
+    def get_tests_by_coverage(self, run: Run, blocks: List[CodeBlock]) -> \
+        Iterable[Tuple[Test, CodeBlock]]:
+        cursor = self.__connection.cursor()
+
+        # Iterate over every block.
+        for block in blocks:
+            # Find all tests that cover this block.
+            cursor.execute(
+                "SELECT t.id,tc.from_line,tc.to_line FROM tests_coverage tc "
+                "INNER JOIN tests t on tc.test_id = t.id WHERE "
+                "t.repository_id=%s AND tc.sourcefile=%s AND tc.from_line <= "
+                "%s AND %s <= tc.to_line",
+                (run.repository.id, block.file, block.to_line, block.from_line))
+
+            # Add the coverage
+            for row in cursor.fetchall():
+                yield (
+                    Test(row[0], CodeBlock(block.file, row[1], row[2])),
+                    block
+                )
+
+        cursor.close()
 
     def update_run_set_order(self, run: Run, order: List[int]) -> None:
         cursor = self.__connection.cursor()

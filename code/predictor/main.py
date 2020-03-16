@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Velocity order predictor."""
+"""Velocity predictors predictor."""
+from src.predictors.run_all_tests import RunAllTests
 
 __author__ = "Pieter De Clercq"
 __license__ = "MIT"
@@ -10,6 +11,18 @@ import logging
 import sys
 
 from src.database.postgres_database import PostgresDatabase
+
+
+def get_run_id():
+    """
+    Gets the run id, either from the arguments or by asking it to the user.
+
+    :return: the run id
+    """
+    if len(sys.argv) < 3:
+        return int(input("Run id: "))
+    return int(sys.argv[2])
+
 
 # Set-up the logger.
 logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s',
@@ -20,10 +33,8 @@ if len(sys.argv) < 2:
     logging.error(f'Syntax: {sys.argv[0]} database_string run_id')
     exit(1)
 
-if len(sys.argv) < 3:
-    run_id = int(input("Run id: "))
-else:
-    run_id = int(sys.argv[2])
+# Get the run id.
+run_id = get_run_id()
 
 # Create a database connection.
 db = PostgresDatabase(sys.argv[1])
@@ -42,13 +53,25 @@ logging.info(f'Repository: {run.repository}')
 changes = list(run.repository.changes(run.commit))
 
 # Fetch the tests that cover the changed files.
-relevant_tests = list(db.get_tests_by_coverage(run, changes))
-logging.info(f'Found {len(relevant_tests)} tests covering the changed files.')
+relevant_tests = set(db.get_tests_by_coverage(run, changes))
+relevant_test_ids = set(test[0].id for test in relevant_tests)
+all_tests = set(db.get_test_ids(run.repository))
+logging.info(
+    f"Found {len(relevant_test_ids)} tests covering the changed files, out of {len(all_tests)} total tests for this repository.")
 
-# Determine the order in which the tests should be executed.
-order = []
-logging.info('Order determined.')
+# Set-up the predictors.
+predictors = [RunAllTests()]
+logging.info(f"Using {len(predictors)} available predictors.")
 
-# Save the order to the database.
+# Pick a predictor.
+predictor = predictors[0]
+logging.info(f"Chosen predictor: {predictor.__class__.__name__}")
+
+# Make a prediction.
+order = predictor.predict(all_tests, relevant_tests)
+
+logging.info(f"Order predicted: {order}")
+
+# Save the prediction to the database.
 db.update_run_set_order(run, order)
 logging.info('Order saved to the database.')
