@@ -19,9 +19,9 @@
  * @return successful
  */
 int main(int argc, char **argv) {
-    if (argc != 4) {
+    if (argc != 5) {
         util::logging::error(
-                "Syntax: %s db_string repository_url commit_hash", argv[0]);
+                "Syntax: %s db_string repository_url base_path commit_hash", argv[0]);
         return EXIT_FAILURE;
     }
 
@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
                             : repositories.create(argv[2]);
 
     // Create the run.
-    const auto run = runs::manager(*db).create(repository, argv[3]);
+    const auto run = runs::manager(*db).create(repository, argv[3], argv[4]);
 
     // Print the created job.
     util::logging::success("Run #%d created.", run->id);

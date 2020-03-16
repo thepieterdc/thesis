@@ -37,11 +37,13 @@ namespace runs {
          * Creates a new run.
          *
          * @param repository id of the repository
+         * @param base_path base path of the sources
          * @param commit_hash hash of the commit that triggered this run
          * @return the created run
          */
         [[nodiscard]] std::shared_ptr<runs::run> create(
                 std::uint_fast64_t repository,
+                const std::string &base_path,
                 const std::string &commit_hash) const;
 
         /**

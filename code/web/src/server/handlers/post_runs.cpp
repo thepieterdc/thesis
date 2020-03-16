@@ -17,7 +17,8 @@ bool handle_post_runs(struct mg_connection *conn,
     web::response resp;
 
     // Find the repository.
-    if (body["commit_hash"].is_null() || body["repository"].is_null()) {
+    if (body["base"].is_null() || body["commit_hash"].is_null() ||
+        body["repository"].is_null()) {
         resp.code = 400;
         resp.send(conn);
         return true;
@@ -31,8 +32,9 @@ bool handle_post_runs(struct mg_connection *conn,
                             : repositories.create(repository_url);
 
     // Create the run.
+    const auto base_path = body["base"].get<std::string>();
     const auto commit_hash = body["commit_hash"].get<std::string>();
-    const auto run = runs.create(repository, commit_hash);
+    const auto run = runs.create(repository, base_path, commit_hash);
 
     // Build the response body.
     json respbody = {{"id", run->id}};
