@@ -85,7 +85,7 @@ class VelocityProcessTask extends DefaultTask {
         coverageBundle.packages.forEach { final pkg ->
             // Iterate over the source files in the package.
             pkg.sourceFiles.forEach { final source ->
-                final String fileName = source.name
+                final String fileName = String.format('%s/%s', pkg.name, source.name)
 
                 // Iterate over the lines in the file.
                 final int lastLine = source.lastLine

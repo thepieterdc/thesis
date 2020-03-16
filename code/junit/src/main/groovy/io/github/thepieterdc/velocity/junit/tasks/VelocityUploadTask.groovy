@@ -57,7 +57,7 @@ class VelocityUploadTask extends DefaultTask {
 
         // Upload the coverage logs.
         http = new HTTPBuilder(String.format("%s", this.server))
-        http.request(Method.POST, ContentType.JSON) { final request ->
+        http.request(Method.POST, ContentType.JSON ) { final request ->
             uri.path = String.format('/runs/%d/coverage', this.runIdGetter.get())
             body = this.coverage.text
 
