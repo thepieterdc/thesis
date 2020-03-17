@@ -5,20 +5,18 @@
 __author__ = "Pieter De Clercq"
 __license__ = "MIT"
 
+import git
 import logging
 import tempfile
 from typing import Iterable
 
-import git
-
-from src.entities.code_block import CodeBlock
-from src.git.clone_progress_logger import CloneProgressLogger
-from src.git.util import parse_changes
+from entities import CodeBlock
+from clone import CloneProgressLogger, parse_changes
 
 
 class Repository:
     """
-    A git repository.
+    A clone repository.
     """
 
     def __init__(self, id: int, repository_url: str):

@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
 """Velocity predictors predictor."""
-from typing import Optional, List, Set, Tuple, Iterable
+from typing import Optional, List, Tuple, Iterable, Generator
 
 import psycopg2
 
-from src.database.abstract_database import AbstractDatabase
-from src.entities.code_block import CodeBlock
-from src.entities.repository import Repository
-from src.entities.run import Run
-from src.entities.test import Test
+from database.abstract_database import AbstractDatabase
+from entities import CodeBlock
+from entities import Repository
+from entities import Run
+from entities import Test
 
 __author__ = "Pieter De Clercq"
 __license__ = "MIT"
@@ -50,18 +50,30 @@ class PostgresDatabase(AbstractDatabase):
         # Run not found.
         return None
 
-    def get_test_ids(self, repository: Repository) -> Iterable[int]:
+    def get_tests(self, repository: Repository) -> \
+        Generator[Tuple[int, CodeBlock], None, None]:
+        cursor = self.__connection.cursor()
+        cursor.execute(
+            "SELECT test_id, sourcefile, from_line, to_line FROM tests_coverage"
+        )
+
+        # Iterate over every test.
+        for row in cursor.fetchall():
+            yield (row[0], CodeBlock(row[1], row[2], row[3]))
+
+    def get_test_ids(self, repository: Repository) -> \
+        Generator[int, None, None]:
         cursor = self.__connection.cursor()
         cursor.execute("SELECT id FROM tests WHERE repository_id=%s",
                        (repository.id,))
 
-        # Iterate over every test
+        # Iterate over every test.
         for row in cursor.fetchall():
             yield row[0]
         cursor.close()
 
     def get_tests_by_coverage(self, run: Run, blocks: List[CodeBlock]) -> \
-        Iterable[Tuple[Test, CodeBlock]]:
+        Generator[Tuple[Test, CodeBlock], None, None]:
         cursor = self.__connection.cursor()
 
         # Iterate over every block.

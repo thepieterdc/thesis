@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 """Velocity predictors predictor."""
-from src.predictors.run_all_tests import RunAllTests
 
 __author__ = "Pieter De Clercq"
 __license__ = "MIT"
@@ -10,7 +9,8 @@ __license__ = "MIT"
 import logging
 import sys
 
-from src.database.postgres_database import PostgresDatabase
+from database import PostgresDatabase
+from predictors import AllInOrder, AllRandom, GreedyCoverAll, AffectedRandom
 
 
 def get_run_id():
@@ -49,28 +49,32 @@ if not run:
 logging.info(f'Run found.')
 logging.info(f'Repository: {run.repository}')
 
-# Get the changes in this commit.
-changes = list(run.repository.changes(run.commit))
+# Get the affected code in this commit.
+affected_code = list(run.repository.changes(run.commit))
 
 # Fetch the tests that cover the changed files.
-relevant_tests = set(db.get_tests_by_coverage(run, changes))
-relevant_test_ids = set(test[0].id for test in relevant_tests)
-all_tests = set(db.get_test_ids(run.repository))
+affected_tests = set(db.get_tests_by_coverage(run, affected_code))
+affected_test_ids = set(test[0].id for test in affected_tests)
+all_tests = set(db.get_tests(run.repository))
+all_test_ids = set(t[0] for t in all_tests)
 logging.info(
-    f"Found {len(relevant_test_ids)} tests covering the changed files, out of {len(all_tests)} total tests for this repository.")
+    f"Found {len(affected_test_ids)} tests covering the changed files, out of {len(all_test_ids)} total tests for this repository.")
 
 # Set-up the predictors.
-predictors = [RunAllTests()]
-logging.info(f"Using {len(predictors)} available predictors.")
-
-# Pick a predictor.
-predictor = predictors[0]
-logging.info(f"Chosen predictor: {predictor.__class__.__name__}")
+predictors = [
+    AffectedRandom(affected_test_ids),
+    AllInOrder(all_test_ids),
+    AllRandom(all_test_ids),
+    GreedyCoverAll(all_tests),
+]
+logging.info(f'Using {len(predictors)} available predictors.')
 
 # Make a prediction.
-order = predictor.predict(all_tests, relevant_tests)
-
-logging.info(f"Order predicted: {order}")
+order = None
+for predictor in predictors:
+    logging.info(f'Predictor: {predictor.__class__.__name__}')
+    order = list(predictor.predict())
+    logging.info(f"Order predicted: {order}")
 
 # Save the prediction to the database.
 db.update_run_set_order(run, order)

@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 
 """Velocity predictors predictor."""
-import re
-import sys
 
 __author__ = "Pieter De Clercq"
 __license__ = "MIT"
 
-from typing import Tuple, List
+import re
+import sys
+from typing import Generator, Tuple
 
 match_regex = re.compile(r'@@ -(\d+),(\d+) ')
 
 
-def parse_changes(diff: bytes):
+def parse_changes(diff: bytes) -> Generator[Tuple[int, int], None, None]:
     """
     Parses the changed lines from a diff.
 

@@ -26,17 +26,19 @@ class AbstractDatabase:
         :param id: the id of the run to get
         :return: the run
         """
-        raise Exception("get_run_by_id() is not implemented.")
+        return NotImplemented
 
     @abstractmethod
-    def get_test_ids(self, repository: Repository) -> Iterable[int]:
+    def get_tests(self, repository: Repository) -> \
+        Iterable[Tuple[int, CodeBlock]]:
         """
-        Gets the ids of the tests in this repository.
+        Gets the tests in this repository.
 
         :param repository: the repository
-        :return: the test ids
+        :return: tuples of the test id and a covered block. the same test be
+                 returned multiple times, once for every covered block
         """
-        raise Exception("get_test_ids() is not implemented.")
+        return NotImplemented
 
     @abstractmethod
     def get_tests_by_coverage(self, run: Run, blocks: List[CodeBlock]) -> \
@@ -48,7 +50,7 @@ class AbstractDatabase:
         :param blocks: list of code ranges
         :return: tests that cover the given code blocks
         """
-        raise Exception("get_tests_by_coverage() is not implemented.")
+        return NotImplemented
 
     @abstractmethod
     def update_run_set_order(self, run: Run, order: List[int]) -> None:
@@ -59,4 +61,4 @@ class AbstractDatabase:
         :param order: the predictors
         :return: nothing
         """
-        raise Exception("update_run_set_order() is not implemented.")
+        return NotImplemented

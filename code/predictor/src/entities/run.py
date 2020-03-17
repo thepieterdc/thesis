@@ -5,7 +5,7 @@
 __author__ = "Pieter De Clercq"
 __license__ = "MIT"
 
-from src.entities.repository import Repository
+from entities import Repository
 
 
 class Run:
@@ -40,7 +40,7 @@ class Run:
         Creates a new Run object from the given cursor and repository.
 
         :param run_cursor: run cursor
-        :param repository: git repository
+        :param repository: clone repository
         :return: run instance
         """
         return Run(run_cursor[0], run_cursor[2], repository)

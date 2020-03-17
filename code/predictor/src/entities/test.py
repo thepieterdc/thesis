@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
 """Velocity predictors predictor."""
-from src.entities.code_block import CodeBlock
 
 __author__ = "Pieter De Clercq"
 __license__ = "MIT"
 
-from src.entities.repository import Repository
+from entities import CodeBlock
 
 
 class Test:

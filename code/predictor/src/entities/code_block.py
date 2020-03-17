@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """Velocity predictors predictor."""
+from entities.code_line import CodeLine
 
 __author__ = "Pieter De Clercq"
 __license__ = "MIT"
@@ -21,6 +22,7 @@ class CodeBlock:
         """
         self.__file = file
         self.__from_line = from_line
+        self.__iter_cursor = 0
         self.__to_line = to_line
 
     @property
@@ -41,8 +43,23 @@ class CodeBlock:
         """
         return self.__from_line
 
+    def __iter__(self) -> 'CodeBlock':
+        self.__iter_cursor = self.__from_line
+        return self
+
+    def __next__(self) -> CodeLine:
+        if self.__iter_cursor <= self.__to_line:
+            result = self.__iter_cursor
+            self.__iter_cursor += 1
+            return CodeLine(self.__file, result)
+
+        raise StopIteration
+
+    def __repr__(self):
+        return f"{self.__file}:{self.__from_line}-{self.__to_line}"
+
     def __str__(self):
-        return f"CodeBlock({self.__file}, {self.__from_line} - {self.__to_line})"
+        return f"CodeBlock({self.__file}:{self.__from_line}-{self.__to_line})"
 
     @property
     def to_line(self) -> int:
