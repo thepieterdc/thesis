@@ -8,25 +8,28 @@ __license__ = "MIT"
 from collections import defaultdict
 from typing import Tuple, Iterable, Generator
 
-from entities import CodeBlock
-from predictors.abstract_predictor import AbstractPredictor
+from src.entities.code_block import CodeBlock
+from src.predictors.abstract_predictor import AbstractPredictor
 
 
-class GreedyCoverAll(AbstractPredictor):
+class GreedyCoverAffected(AbstractPredictor):
     """
-    Predictor that ranks all tests based on the amount of additional coverage
+    Predictor that ranks tests based on the amount of coverage
     they can provide.
 
     Greedy algorithm (Singh et al. 2016)
     """
 
-    def __init__(self, all_tests: Iterable[Tuple[int, CodeBlock]]):
+    def __init__(self, affected_code: Iterable[CodeBlock],
+                 all_tests: Iterable[Tuple[int, CodeBlock]]):
         """
-        GreedyCoverAll constructor.
+        GreedyCoverAffected constructor.
 
+        :param affected_code: affected code blocks
         :param all_tests: all the tests
         """
         super().__init__()
+        self.__affected_code = affected_code
         self.__all_tests = all_tests
 
     def predict(self) -> Generator[int, None, None]:
@@ -36,7 +39,13 @@ class GreedyCoverAll(AbstractPredictor):
             for line in cov:
                 tests_lines[test].add(line)
 
-        # While there are tests remaining:
+        # Create a set of coverage lines of the affected code.
+        affected_lines = set(line for b in self.__affected_code for line in b)
+
+        # Remove non-affected lines from the test lines.
+        tests_lines = {t: v & affected_lines for (t, v) in tests_lines.items()}
+
+        # While there are lines and tests remaining:
         while tests_lines:
             # Find the test that adds the most uncovered lines. This needs to be
             # computed twice to guarantee a deterministic order.

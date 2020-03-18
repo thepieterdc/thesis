@@ -10,7 +10,8 @@ import logging
 import sys
 
 from database import PostgresDatabase
-from predictors import AllInOrder, AllRandom, GreedyCoverAll, AffectedRandom
+from predictors import AllInOrder, AllRandom, GreedyCoverAll, AffectedRandom, \
+    GreedyCoverAffected
 
 
 def get_run_id():
@@ -65,6 +66,7 @@ predictors = [
     AffectedRandom(affected_test_ids),
     AllInOrder(all_test_ids),
     AllRandom(all_test_ids),
+    GreedyCoverAffected(affected_code, all_tests),
     GreedyCoverAll(all_tests),
 ]
 logging.info(f'Using {len(predictors)} available predictors.')
