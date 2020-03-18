@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """Velocity predictors predictor."""
-from typing import Optional, List, Tuple, Iterable, Generator
+from collections import defaultdict
+from typing import Optional, List, Tuple, Iterable, Generator, Dict, Set
 
 import psycopg2
 
@@ -50,50 +51,42 @@ class PostgresDatabase(AbstractDatabase):
         # Run not found.
         return None
 
-    def get_tests(self, repository: Repository) -> \
-        Generator[Tuple[int, CodeBlock], None, None]:
+    def get_tests(self, repository: Repository) -> Dict[int, Set[CodeBlock]]:
         cursor = self.__connection.cursor()
         cursor.execute(
             "SELECT test_id, sourcefile, from_line, to_line FROM tests_coverage"
         )
 
         # Iterate over every test.
+        ret = defaultdict(set)
         for row in cursor.fetchall():
-            yield (row[0], CodeBlock(row[1], row[2], row[3]))
+            ret[row[0]].add(CodeBlock(row[1], row[2], row[3]))
 
-    def get_test_ids(self, repository: Repository) -> \
-        Generator[int, None, None]:
-        cursor = self.__connection.cursor()
-        cursor.execute("SELECT id FROM tests WHERE repository_id=%s",
-                       (repository.id,))
-
-        # Iterate over every test.
-        for row in cursor.fetchall():
-            yield row[0]
-        cursor.close()
+        return ret
 
     def get_tests_by_coverage(self, run: Run, blocks: List[CodeBlock]) -> \
-        Generator[Tuple[Test, CodeBlock], None, None]:
+        Dict[Test, Set[CodeBlock]]:
         cursor = self.__connection.cursor()
 
+        ret = defaultdict(set)
+
         # Iterate over every block.
-        for block in blocks:
+        for b in blocks:
             # Find all tests that cover this block.
             cursor.execute(
                 "SELECT t.id,tc.from_line,tc.to_line FROM tests_coverage tc "
                 "INNER JOIN tests t on tc.test_id = t.id WHERE "
                 "t.repository_id=%s AND tc.sourcefile=%s AND tc.from_line <= "
                 "%s AND %s <= tc.to_line",
-                (run.repository.id, block.file, block.to_line, block.from_line))
+                (run.repository.id, b.file, b.to_line, b.from_line))
 
             # Add the coverage
             for row in cursor.fetchall():
-                yield (
-                    Test(row[0], CodeBlock(block.file, row[1], row[2])),
-                    block
-                )
+                ret[Test(row[0], CodeBlock(b.file, row[1], row[2]))].add(b)
 
+        # Return the result.
         cursor.close()
+        return ret
 
     def update_run_set_order(self, run: Run, order: List[int]) -> None:
         cursor = self.__connection.cursor()

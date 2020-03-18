@@ -6,7 +6,7 @@ __author__ = "Pieter De Clercq"
 __license__ = "MIT"
 
 from collections import defaultdict
-from typing import Tuple, Iterable, Generator
+from typing import Tuple, Iterable, Generator, Set, Dict
 
 from entities import CodeBlock
 from predictors.abstract_predictor import AbstractPredictor
@@ -20,7 +20,7 @@ class GreedyCoverAll(AbstractPredictor):
     Greedy algorithm (Singh et al. 2016)
     """
 
-    def __init__(self, all_tests: Iterable[Tuple[int, CodeBlock]]):
+    def __init__(self, all_tests: Dict[int, Set[CodeBlock]]):
         """
         GreedyCoverAll constructor.
 
@@ -31,10 +31,10 @@ class GreedyCoverAll(AbstractPredictor):
 
     def predict(self) -> Generator[int, None, None]:
         # Create a map of the tests to their coverage lines.
-        tests_lines = defaultdict(set)
-        for (test, cov) in self.__all_tests:
-            for line in cov:
-                tests_lines[test].add(line)
+        tests_lines = {
+            test: set(line for line in cov)
+            for test, covs in self.__all_tests.items() for cov in covs
+        }
 
         # While there are tests remaining:
         while tests_lines:
@@ -52,6 +52,3 @@ class GreedyCoverAll(AbstractPredictor):
             # Mark the lines in the cover set of the test as covered.
             for test in tests_lines.keys():
                 tests_lines[test] -= max_cov
-
-            # Remove tests that do not add any additional coverage.
-            tests_lines = {t: v for (t, v) in tests_lines.items() if v}

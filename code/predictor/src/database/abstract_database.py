@@ -2,7 +2,7 @@
 
 """Velocity predictors predictor."""
 from abc import abstractmethod
-from typing import Optional, List, Set, Iterable, Tuple
+from typing import Optional, List, Set, Iterable, Tuple, Dict
 
 from src.entities.code_block import CodeBlock
 from src.entities.repository import Repository
@@ -29,8 +29,7 @@ class AbstractDatabase:
         return NotImplemented
 
     @abstractmethod
-    def get_tests(self, repository: Repository) -> \
-        Iterable[Tuple[int, CodeBlock]]:
+    def get_tests(self, repository: Repository) -> Dict[int, Set[CodeBlock]]:
         """
         Gets the tests in this repository.
 
@@ -42,7 +41,7 @@ class AbstractDatabase:
 
     @abstractmethod
     def get_tests_by_coverage(self, run: Run, blocks: List[CodeBlock]) -> \
-        Iterable[Tuple[Test, CodeBlock]]:
+        Dict[Test, Set[CodeBlock]]:
         """
         Gets the tests that provide coverage for the given list of blocks.
 

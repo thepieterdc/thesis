@@ -47,6 +47,9 @@ class CodeBlock:
         self.__iter_cursor = self.__from_line
         return self
 
+    def __len__(self):
+        return self.__to_line - self.__from_line + 1
+
     def __next__(self) -> CodeLine:
         if self.__iter_cursor <= self.__to_line:
             result = self.__iter_cursor
