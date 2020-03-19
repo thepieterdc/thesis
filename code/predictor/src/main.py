@@ -82,6 +82,13 @@ for predictor in predictors:
     logging.info(f'Predictor: {predictor.__class__.__name__}')
     order = list(predictor.predict())
     logging.info(f"Order predicted: {order}")
+    logging.info("First 4 test names:")
+    for t in order[:4]:
+        logging.info(db.get_test_by_id(t))
+    logging.info("")
+    logging.info("")
+    logging.info("")
+
 
 # Save the prediction to the database.
 db.update_run_set_order(run, order)

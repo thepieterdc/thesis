@@ -131,6 +131,7 @@ class Alpha(AbstractPredictor):
             # Return the test.
             yield max_test
             del tests_lines[max_test]
+            affected_test_ids -= {max_test}
 
             # Mark the lines in the cover set of the test as covered.
             for test in tests_lines.keys():

@@ -31,6 +31,10 @@ class Rocket(AbstractPredictor):
         self.__all_test_results = all_test_results
 
     def predict(self) -> Iterable[int]:
+        # Failsafe for in case the tests have not yet been parsed.
+        if not self.__all_test_results:
+            return []
+
         # Determine the maximal amount of historical results to consider.
         m = min(
             max(len(t) for t in self.__all_test_results.values()),

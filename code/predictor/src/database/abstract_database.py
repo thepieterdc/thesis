@@ -50,6 +50,16 @@ class AbstractDatabase:
         return NotImplemented
 
     @abstractmethod
+    def get_test_by_id(self, id: int) -> Optional[str]:
+        """
+        Gets the given test.
+
+        :param id: the id of the test to get
+        :return: the test
+        """
+        return NotImplemented
+
+    @abstractmethod
     def get_test_results(self, repository: Repository) -> \
         Dict[int, Tuple[TestResult]]:
         """

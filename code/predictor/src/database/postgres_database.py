@@ -92,6 +92,19 @@ class PostgresDatabase(AbstractDatabase):
         # Iterate over the results.
         return set(Test(id, blocks) for id, blocks in ret.items())
 
+    def get_test_by_id(self, id: int) -> Optional[str]:
+        cursor = self.__connection.cursor()
+        cursor.execute(
+            "SELECT testcase FROM tests WHERE id=%s",
+            (id,))
+        test_result = cursor.fetchone()
+
+        if test_result:
+            return test_result[0]
+
+        # Test not found.
+        return None
+
     def get_test_results(self, repository: Repository) -> \
         Dict[int, Tuple[TestResult]]:
         cursor = self.__connection.cursor()
