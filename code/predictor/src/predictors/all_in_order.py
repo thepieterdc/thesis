@@ -7,6 +7,7 @@ __license__ = "MIT"
 
 from typing import Set, Iterable
 
+from entities import Test
 from src.predictors.abstract_predictor import AbstractPredictor
 
 
@@ -15,14 +16,14 @@ class AllInOrder(AbstractPredictor):
     "Predictor" that simply executes all tests in order.
     """
 
-    def __init__(self, all_test_ids: Set[int]):
+    def __init__(self, all_tests: Set[Test]):
         """
         AllInOrder constructor.
 
-        :param all_test_ids: ids of all the tests
+        :param all_tests: all the tests
         """
         super().__init__()
-        self.__all_test_ids = all_test_ids
+        self.__all_tests = all_tests
 
     def predict(self) -> Iterable[int]:
-        return list(sorted(self.__all_test_ids))
+        return list(sorted(test.id for test in self.__all_tests))

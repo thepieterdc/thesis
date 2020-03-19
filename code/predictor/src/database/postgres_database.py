@@ -51,7 +51,7 @@ class PostgresDatabase(AbstractDatabase):
         # Run not found.
         return None
 
-    def get_tests(self, repository: Repository) -> Dict[int, Set[CodeBlock]]:
+    def get_tests(self, repository: Repository) -> Set[Test]:
         cursor = self.__connection.cursor()
         cursor.execute(
             "SELECT test_id, sourcefile, from_line, to_line FROM tests_coverage"
@@ -61,11 +61,13 @@ class PostgresDatabase(AbstractDatabase):
         ret = defaultdict(set)
         for row in cursor.fetchall():
             ret[row[0]].add(CodeBlock(row[1], row[2], row[3]))
+        cursor.close()
 
-        return ret
+        # Iterate over the results.
+        return set(Test(id, blocks) for id, blocks in ret.items())
 
     def get_tests_by_coverage(self, run: Run, blocks: List[CodeBlock]) -> \
-        Dict[Test, Set[CodeBlock]]:
+        Set[Test]:
         cursor = self.__connection.cursor()
 
         ret = defaultdict(set)
@@ -82,11 +84,28 @@ class PostgresDatabase(AbstractDatabase):
 
             # Add the coverage
             for row in cursor.fetchall():
-                ret[Test(row[0], CodeBlock(b.file, row[1], row[2]))].add(b)
+                ret[row[0]].add(CodeBlock(b.file, row[1], row[2]))
+
+        cursor.close()
+
+        # Iterate over the results.
+        return set(Test(id, blocks) for id, blocks in ret.items())
+
+    def get_test_results(self, repository: Repository) -> \
+        Dict[int, Tuple[bool]]:
+        cursor = self.__connection.cursor()
+        cursor.execute(
+            "SELECT t.id, tr.failed FROM tests t INNER JOIN tests_results tr on t.id = tr.test_id WHERE t.repository_id=%s ORDER BY tr.id DESC",
+            (repository.id,))
+
+        # Iterate over every test.
+        ret = defaultdict(list)
+        for row in cursor.fetchall():
+            ret[row[0]].append(not row[1])
 
         # Return the result.
         cursor.close()
-        return ret
+        return {test: tuple(results) for test, results in ret.items()}
 
     def update_run_set_order(self, run: Run, order: List[int]) -> None:
         cursor = self.__connection.cursor()

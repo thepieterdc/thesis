@@ -11,7 +11,7 @@ import sys
 
 from database import PostgresDatabase
 from predictors import AllInOrder, AllRandom, GreedyCoverAll, AffectedRandom, \
-    GreedyCoverAffected, HGSAll, HGSAffected
+    GreedyCoverAffected, HGSAll, HGSAffected, Rocket
 
 
 def get_run_id():
@@ -55,21 +55,21 @@ affected_code = list(run.repository.changes(run.commit))
 
 # Fetch the tests that cover the changed files.
 affected_tests = db.get_tests_by_coverage(run, affected_code)
-affected_test_ids = set(test.id for test in affected_tests.keys())
 all_tests = db.get_tests(run.repository)
-all_test_ids = set(all_tests.keys())
+all_test_results = db.get_test_results(run.repository)
 logging.info(
-    f"Found {len(affected_test_ids)} tests covering the changed files, out of {len(all_test_ids)} total tests for this repository.")
+    f"Found {len(affected_tests)} tests covering the changed files, out of {len(all_tests)} total tests for this repository.")
 
 # Set-up the predictors.
 predictors = [
-    AffectedRandom(affected_test_ids),
-    AllInOrder(all_test_ids),
-    AllRandom(all_test_ids),
+    AffectedRandom(affected_tests),
+    AllInOrder(all_tests),
+    AllRandom(all_tests),
     GreedyCoverAffected(affected_code, all_tests),
     GreedyCoverAll(all_tests),
     HGSAffected(affected_tests),
-    HGSAll(all_tests)
+    HGSAll(all_tests),
+    Rocket(all_test_results)
 ]
 logging.info(f'Using {len(predictors)} available predictors.')
 

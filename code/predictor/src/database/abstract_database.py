@@ -29,7 +29,7 @@ class AbstractDatabase:
         return NotImplemented
 
     @abstractmethod
-    def get_tests(self, repository: Repository) -> Dict[int, Set[CodeBlock]]:
+    def get_tests(self, repository: Repository) -> Set[Test]:
         """
         Gets the tests in this repository.
 
@@ -41,7 +41,7 @@ class AbstractDatabase:
 
     @abstractmethod
     def get_tests_by_coverage(self, run: Run, blocks: List[CodeBlock]) -> \
-        Dict[Test, Set[CodeBlock]]:
+        Set[Test]:
         """
         Gets the tests that provide coverage for the given list of blocks.
 
@@ -50,6 +50,18 @@ class AbstractDatabase:
         :return: tests that cover the given code blocks
         """
         return NotImplemented
+
+    @abstractmethod
+    def get_test_results(self, repository: Repository) -> \
+        Dict[int, Tuple[bool]]:
+        """
+        Gets the historical results of all tests in the repository, ordered by
+        time of execution (descending - latest result first).
+
+        :param repository: the repository to find the tests for
+        :return: the tests
+        """
+        raise NotImplemented
 
     @abstractmethod
     def update_run_set_order(self, run: Run, order: List[int]) -> None:

@@ -5,6 +5,8 @@
 __author__ = "Pieter De Clercq"
 __license__ = "MIT"
 
+from typing import Set
+
 from entities import CodeBlock
 
 
@@ -13,18 +15,18 @@ class Test:
     A test.
     """
 
-    def __init__(self, id: int, coverage: CodeBlock):
+    def __init__(self, id: int, coverage: Set[CodeBlock]):
         """
         Test constructor.
 
         :param id: run id
-        :param coverage: block of code that is covered by this test
+        :param coverage: blocks of code that are covered by this test
         """
         self.__coverage = coverage
         self.__id = id
 
     @property
-    def coverage(self) -> CodeBlock:
+    def coverage(self) -> Set[CodeBlock]:
         """
         coverage accessor.
 
@@ -42,4 +44,4 @@ class Test:
         return self.__id
 
     def __str__(self):
-        return f"Test({self.__id}, {self.__coverage})"
+        return f"Test({self.__id})"

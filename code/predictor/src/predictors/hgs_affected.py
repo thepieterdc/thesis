@@ -20,7 +20,7 @@ class HGSAffected(AbstractPredictor):
     HGS algorithm (Harrold et al. 1993)
     """
 
-    def __init__(self, affected_tests: Dict[Test, Set[CodeBlock]]):
+    def __init__(self, affected_tests: Set[Test]):
         """
         HGSAll constructor.
 
@@ -32,11 +32,11 @@ class HGSAffected(AbstractPredictor):
     def predict(self) -> Generator[int, None, None]:
         # Create a map of the code lines to their tests.
         lines_tests = defaultdict(set)
-        for (test, covs) in self.__affected_tests.items():
-            test_cov_lines = sum(len(cov) for cov in covs)
-            for cov in covs:
+        for test in self.__affected_tests:
+            test_cov_lines = sum(len(cov) for cov in test.coverage)
+            for cov in test.coverage:
                 for line in cov:
-                    lines_tests[line].add((test, test_cov_lines))
+                    lines_tests[line].add((test.id, test_cov_lines))
 
         # Reduce the amount of lines by joining mutual sets.
         test_requirements = set(self.__reduce_requirements(lines_tests))
@@ -63,7 +63,7 @@ class HGSAffected(AbstractPredictor):
 
         # Return all the t sets ordered on their cardinality.
         for t in sorted(ret, key=operator.itemgetter(1), reverse=True):
-            yield t[0].id
+            yield t[0]
 
     @staticmethod
     def __reduce_requirements(lines: Dict[CodeLine, Set[Tuple[int, int]]]) -> \

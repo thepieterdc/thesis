@@ -8,6 +8,7 @@ __license__ = "MIT"
 from collections import defaultdict
 from typing import Tuple, Iterable, Generator, Set, Dict
 
+from entities import Test
 from src.entities.code_block import CodeBlock
 from src.predictors.abstract_predictor import AbstractPredictor
 
@@ -21,7 +22,7 @@ class GreedyCoverAffected(AbstractPredictor):
     """
 
     def __init__(self, affected_code: Iterable[CodeBlock],
-                 all_tests: Dict[int, Set[CodeBlock]]):
+                 all_tests: Set[Test]):
         """
         GreedyCoverAffected constructor.
 
@@ -35,8 +36,8 @@ class GreedyCoverAffected(AbstractPredictor):
     def predict(self) -> Generator[int, None, None]:
         # Create a map of the tests to their coverage lines.
         tests_lines = {
-            test: set(line for line in cov)
-            for test, covs in self.__all_tests.items() for cov in covs
+            test.id: set(line for line in cov)
+            for test in self.__all_tests for cov in test.coverage
         }
 
         # Create a set of coverage lines of the affected code.

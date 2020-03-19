@@ -8,7 +8,7 @@ __license__ = "MIT"
 from collections import defaultdict
 from typing import Tuple, Iterable, Generator, Set, Dict
 
-from entities import CodeBlock
+from entities import CodeBlock, Test
 from predictors.abstract_predictor import AbstractPredictor
 
 
@@ -20,7 +20,7 @@ class GreedyCoverAll(AbstractPredictor):
     Greedy algorithm (Singh et al. 2016)
     """
 
-    def __init__(self, all_tests: Dict[int, Set[CodeBlock]]):
+    def __init__(self, all_tests: Set[Test]):
         """
         GreedyCoverAll constructor.
 
@@ -32,8 +32,8 @@ class GreedyCoverAll(AbstractPredictor):
     def predict(self) -> Generator[int, None, None]:
         # Create a map of the tests to their coverage lines.
         tests_lines = {
-            test: set(line for line in cov)
-            for test, covs in self.__all_tests.items() for cov in covs
+            test.id: set(line for line in cov)
+            for test in self.__all_tests for cov in test.coverage
         }
 
         # While there are tests remaining:

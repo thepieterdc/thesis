@@ -9,7 +9,7 @@ import operator
 from collections import defaultdict
 from typing import Generator, Set, Dict, Tuple
 
-from entities import CodeBlock, CodeLine
+from entities import CodeBlock, CodeLine, Test
 from predictors.abstract_predictor import AbstractPredictor
 
 
@@ -20,7 +20,7 @@ class HGSAll(AbstractPredictor):
     HGS algorithm (Harrold et al. 1993)
     """
 
-    def __init__(self, all_tests: Dict[int, Set[CodeBlock]]):
+    def __init__(self, all_tests: Set[Test]):
         """
         HGSAll constructor.
 
@@ -32,11 +32,11 @@ class HGSAll(AbstractPredictor):
     def predict(self) -> Generator[int, None, None]:
         # Create a map of the code lines to their tests.
         lines_tests = defaultdict(set)
-        for (test, covs) in self.__all_tests.items():
-            test_cov_lines = sum(len(cov) for cov in covs)
-            for cov in covs:
+        for test in self.__all_tests:
+            test_cov_lines = sum(len(cov) for cov in test.coverage)
+            for cov in test.coverage:
                 for line in cov:
-                    lines_tests[line].add((test, test_cov_lines))
+                    lines_tests[line].add((test.id, test_cov_lines))
 
         # Reduce the amount of lines by joining mutual sets.
         test_requirements = set(self.__reduce_requirements(lines_tests))

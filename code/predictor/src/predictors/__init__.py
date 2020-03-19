@@ -5,3 +5,4 @@ from .greedy_cover_affected import GreedyCoverAffected
 from .greedy_cover_all import GreedyCoverAll
 from .hgs_all import HGSAll
 from .hgs_affected import HGSAffected
+from .rocket import Rocket
