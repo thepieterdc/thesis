@@ -32,6 +32,7 @@ dependencies {
 
 velocity {
     base 'src/main/java/'
+    pollingFrequency 1000
     repository 'https://github.com/thepieterdc/random-java'
     server 'http://172.19.0.3:8080'
 }

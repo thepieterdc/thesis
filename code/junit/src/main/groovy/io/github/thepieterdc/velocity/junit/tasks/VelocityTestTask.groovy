@@ -106,8 +106,6 @@ class VelocityTestTask extends Test {
             this.testLogging.showStandardStreams = true
             this.executor = this.createTestExecuter()
             super.executeTests()
-        } catch (final Exception error) {
-            throw error;
         } finally {
             // Write the test results.
             listener.write(this.results)
