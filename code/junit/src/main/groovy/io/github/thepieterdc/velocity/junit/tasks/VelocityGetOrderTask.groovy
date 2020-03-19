@@ -62,7 +62,9 @@ class VelocityGetOrderTask extends DefaultTask {
             }
 
             // Delay to retry.
-            Thread.sleep(5000L)
+            Thread.sleep(
+                Math.min(1000L, Math.max(0, extension.pollingFrequency))
+            )
         }
     }
 }
