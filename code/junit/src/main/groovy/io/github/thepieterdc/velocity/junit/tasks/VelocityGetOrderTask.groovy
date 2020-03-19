@@ -10,6 +10,7 @@ package io.github.thepieterdc.velocity.junit.tasks
 import groovyx.net.http.ContentType
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.Method
+import io.github.thepieterdc.velocity.junit.VelocityPluginExtension
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
@@ -27,6 +28,8 @@ class VelocityGetOrderTask extends DefaultTask {
 
     public static final String TASK_NAME = 'velocityGetOrder'
 
+    VelocityPluginExtension extension
+
     Consumer<List<String>> orderSetter
 
     Supplier<Long> runIdGetter
@@ -42,7 +45,7 @@ class VelocityGetOrderTask extends DefaultTask {
         boolean found = false
 
         while (!found) {
-            final HTTPBuilder http = new HTTPBuilder(String.format("%s", this.server))
+            final HTTPBuilder http = new HTTPBuilder(extension.server)
             http.request(Method.GET, ContentType.JSON) {
                 uri.path = String.format('/runs/%d', this.runIdGetter.get())
 

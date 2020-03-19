@@ -10,4 +10,5 @@ package io.github.thepieterdc.velocity.junit
 class VelocityPluginExtension {
     String base
     String repository
+    String server
 }

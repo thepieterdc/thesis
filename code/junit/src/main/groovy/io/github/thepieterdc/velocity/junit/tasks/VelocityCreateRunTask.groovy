@@ -12,14 +12,12 @@ import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.Method
 import io.github.thepieterdc.velocity.junit.VelocityPluginExtension
 import org.gradle.api.DefaultTask
-import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import java.util.function.Consumer
 import java.util.function.Supplier
-
 /**
  * Task that creates a new run on a Velocity server.
  */
@@ -34,15 +32,12 @@ class VelocityCreateRunTask extends DefaultTask {
 
     VelocityPluginExtension extension
 
-    @Input
-    String server = ""
-
     @TaskAction
     def create() {
         LOG.info('Creating run.')
 
         // Create a http client.
-        final HTTPBuilder http = new HTTPBuilder(String.format("%s", this.server))
+        final HTTPBuilder http = new HTTPBuilder(extension.server)
         http.request(Method.POST, ContentType.JSON) {
             uri.path = '/runs'
             body = ['commit_hash': commitHashGetter.get(),

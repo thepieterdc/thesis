@@ -44,8 +44,6 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
     private static final String VELOCITY_COVERAGE_RAW_DIR = 'coverage-raw'
     private static final String VELOCITY_TEST_OUTPUT_FILE = 'test-results.json'
 
-    private static final String VELOCITY_SERVER = 'http://localhost:8080'
-
     private final Instantiator instantiator
     private ProjectInternal project
 
@@ -96,10 +94,10 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
         ))
 
         this.configureCreateRunTask(ext)
-        this.configureGetOrderTask()
+        this.configureGetOrderTask(ext)
         this.configureTestTask(testOutputFile, coverageOutput)
         this.configureProcessTask(ext, coverageOutput, processedCoverageOutputFile)
-        this.configureUploadTask(testOutputFile, processedCoverageOutputFile)
+        this.configureUploadTask(ext, testOutputFile, processedCoverageOutputFile)
 
         // Configure the call graph.
         project.tasks
@@ -128,7 +126,6 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
                 task.commitHashGetter = this.&getCommitHash
                 task.extension = ext
                 task.runIdSetter = this.&setRunId
-                task.server = VELOCITY_SERVER
 
                 task.dependsOn 'cleanTest'
             }
@@ -137,8 +134,10 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
 
     /**
      * Configures the get order task.
+     *
+     * @param ext plugin extension
      */
-    private void configureGetOrderTask() {
+    private void configureGetOrderTask(final VelocityPluginExtension ext) {
         // Add the create run task.
         this.project.tasks.register(
             VelocityGetOrderTask.TASK_NAME,
@@ -147,9 +146,9 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
                 task.description = 'Gets the order for the current run.'
                 task.group = LifecycleBasePlugin.VERIFICATION_GROUP
 
+                task.extension = ext
                 task.orderSetter = this.&setOrder
                 task.runIdGetter = this.&getRunId
-                task.server = VELOCITY_SERVER
 
                 task.dependsOn VelocityCreateRunTask.TASK_NAME
             }
@@ -240,10 +239,12 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
     /**
      * Configures the upload task.
      *
+     * @param ext plugin extension
      * @param testResults the json file that contains the test results
      * @param coverageData the json file that contains the coverage data
      */
-    private void configureUploadTask(final File testResults,
+    private void configureUploadTask(final VelocityPluginExtension ext,
+                                     final File testResults,
                                      final File coverageData) {
         // Add the upload task.
         this.project.tasks.register(
@@ -254,8 +255,8 @@ class VelocityPlugin implements Plugin<ProjectInternal> {
                 task.group = LifecycleBasePlugin.VERIFICATION_GROUP
 
                 task.coverage = coverageData
+                task.extension = ext
                 task.runIdGetter = this.&getRunId
-                task.server = VELOCITY_SERVER
                 task.testResults = testResults
             }
         )

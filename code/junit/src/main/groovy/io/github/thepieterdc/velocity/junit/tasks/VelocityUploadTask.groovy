@@ -10,6 +10,7 @@ package io.github.thepieterdc.velocity.junit.tasks
 import groovyx.net.http.ContentType
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.Method
+import io.github.thepieterdc.velocity.junit.VelocityPluginExtension
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
@@ -28,6 +29,8 @@ class VelocityUploadTask extends DefaultTask {
     @Input
     File coverage = null
 
+    VelocityPluginExtension extension
+
     Supplier<Long> runIdGetter
 
     @Input
@@ -41,7 +44,7 @@ class VelocityUploadTask extends DefaultTask {
         LOG.info('Uploading test results.')
 
         // Upload the test results.
-        HTTPBuilder http = new HTTPBuilder(String.format("%s", this.server))
+        HTTPBuilder http = new HTTPBuilder(extension.server)
         http.request(Method.POST, ContentType.JSON) {
             uri.path = String.format('/runs/%d/test-results', this.runIdGetter.get())
             body = this.testResults.text
