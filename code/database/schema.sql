@@ -18,7 +18,7 @@ create table runs
 			primary key,
 	commit_hash text not null,
 	testorder text,
-	repository_id integer not null
+	repository_id bigint not null
 		constraint runs_repositories_id_fk
 			references repositories,
 	created_at timestamp default now() not null
@@ -32,7 +32,7 @@ create table tests
 		constraint tests_pk
 			primary key,
 	testcase text not null,
-	repository_id integer not null
+	repository_id bigint not null
 		constraint tests_repositories_id_fk
 			references repositories
 );
@@ -47,7 +47,7 @@ create table tests_coverage
 	sourcefile text not null,
 	from_line integer not null,
 	to_line integer not null,
-	test_id integer not null
+	test_id bigint not null
 		constraint tests_coverage_tests_id_fk
 			references tests
 );
@@ -60,10 +60,11 @@ create table tests_results
 		constraint tests_results_pk
 			primary key,
 	failed boolean not null,
-	run_id integer
+        duration bigint not null,
+	run_id bigint not null
 		constraint tests_results_runs_id_fk
 			references runs,
-	test_id integer
+	test_id bigint not null
 		constraint tests_results_tests_id_fk
 			references tests
 );

@@ -27,7 +27,7 @@ tests::manager::manager(pqxx::connection &db) : db(db) {
     this->db.prepare(PREPARED_TESTS_FIND_TESTCASE,
                      "SELECT id FROM tests WHERE testcase=$1 AND repository_id=$2 LIMIT 1");
     this->db.prepare(PREPARED_TEST_RESULTS_CREATE,
-                     "INSERT INTO tests_results (run_id, test_id, failed) VALUES($1, $2, $3)"
+                     "INSERT INTO tests_results (run_id, test_id, duration, failed) VALUES($1, $2, $3, $4)"
     );
     this->db.prepare(PREPARED_TEST_RESULTS_FIND,
                      "SELECT tr.failed,tr.id,tr.run_id,tr.test_id FROM tests_results tr INNER JOIN tests t ON (tr.test_id = t.id) WHERE t.testcase=$1 AND tr.run_id=$2 LIMIT 1"
@@ -131,7 +131,7 @@ tests::manager::find_result(const std::uint_fast64_t run,
 }
 
 std::size_t
-tests::manager::parse(const runs::run &run, json results) const {
+tests::manager::parse_results(const runs::run &run, json results) const {
     // Iterate over the test results.
     for (json::iterator it = results.begin(); it != results.end(); ++it) {
         // Get the id of the test case.
@@ -142,10 +142,12 @@ tests::manager::parse(const runs::run &run, json results) const {
 
         // Start a transaction.
         pqxx::work tx(this->db);
+        const auto duration = it.value()["duration"].get<std::uint_fast64_t>();
+        const auto result = it.value()["result"].get<bool>();
 
         // Insert the test result in the database.
-        tx.prepared(PREPARED_TEST_RESULTS_CREATE)(run.id)(test->id)(!it.value())
-                .exec();
+        tx.prepared(PREPARED_TEST_RESULTS_CREATE)
+                (run.id)(test->id)(duration)(!result).exec();
 
         // Commit the transaction.
         tx.commit();

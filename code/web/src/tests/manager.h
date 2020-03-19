@@ -84,7 +84,7 @@ namespace tests {
          * @param results the json test results
          * @return amount of test cases inserted
          */
-        std::size_t parse(const runs::run &run, json results) const;
+        std::size_t parse_results(const runs::run &run, json results) const;
     };
 }
 

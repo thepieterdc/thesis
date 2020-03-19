@@ -48,7 +48,8 @@ int main(int argc, char **argv) {
     std::cin >> test_results;
 
     // Save the test results to the database.
-    const auto results_parsed = tests::manager(*db).parse(**run, test_results);
+    const auto results_parsed = tests::manager(*db)
+            .parse_results(**run, test_results);
 
     // Print the parsed test results.
     util::logging::success("Parsed %d test results.", results_parsed);

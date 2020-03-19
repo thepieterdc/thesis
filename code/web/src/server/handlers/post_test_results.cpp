@@ -26,7 +26,7 @@ bool handle_post_test_results(struct mg_connection *conn,
     }
 
     // Save the test results.
-    const auto parsed = tests.parse(**run, std::move(body));
+    const auto parsed = tests.parse_results(**run, std::move(body));
 
     // Finish the response.
     resp.code = 200;
