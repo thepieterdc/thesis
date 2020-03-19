@@ -44,7 +44,12 @@ class Repository:
 
             # Checkout the required commit.
             logging.info('Finding commit...')
-            commit = repo.commit(commit_hash)
+            try:
+                commit = repo.commit(commit_hash)
+            except Exception:
+                logging.error(f'Commit {commit_hash} was not found.')
+                exit(3)
+
             message = commit.message.replace("\n", "\\n")
             logging.info(f'Checked out #{commit.hexsha[:7]} - {message}')
 

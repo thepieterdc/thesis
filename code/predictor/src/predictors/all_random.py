@@ -9,7 +9,7 @@ import random
 from typing import Set, Iterable
 
 from entities import Test
-from src.predictors.abstract_predictor import AbstractPredictor
+from predictors.abstract_predictor import AbstractPredictor
 
 
 class AllRandom(AbstractPredictor):

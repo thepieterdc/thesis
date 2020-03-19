@@ -7,7 +7,7 @@ from typing import Optional, List, Tuple, Iterable, Generator, Dict, Set
 import psycopg2
 
 from database.abstract_database import AbstractDatabase
-from entities import CodeBlock
+from entities import CodeBlock, TestResult
 from entities import Repository
 from entities import Run
 from entities import Test
@@ -54,7 +54,8 @@ class PostgresDatabase(AbstractDatabase):
     def get_tests(self, repository: Repository) -> Set[Test]:
         cursor = self.__connection.cursor()
         cursor.execute(
-            "SELECT test_id, sourcefile, from_line, to_line FROM tests_coverage"
+            "SELECT test_id, sourcefile, from_line, to_line FROM tests_coverage tc INNER JOIN tests t on tc.test_id = t.id WHERE t.repository_id=%s",
+            (repository.id, )
         )
 
         # Iterate over every test.
@@ -92,16 +93,16 @@ class PostgresDatabase(AbstractDatabase):
         return set(Test(id, blocks) for id, blocks in ret.items())
 
     def get_test_results(self, repository: Repository) -> \
-        Dict[int, Tuple[bool]]:
+        Dict[int, Tuple[TestResult]]:
         cursor = self.__connection.cursor()
         cursor.execute(
-            "SELECT t.id, tr.failed FROM tests t INNER JOIN tests_results tr on t.id = tr.test_id WHERE t.repository_id=%s ORDER BY tr.id DESC",
+            "SELECT t.id, tr.failed, tr.duration FROM tests t INNER JOIN tests_results tr on t.id = tr.test_id WHERE t.repository_id=%s ORDER BY tr.id DESC",
             (repository.id,))
 
         # Iterate over every test.
         ret = defaultdict(list)
         for row in cursor.fetchall():
-            ret[row[0]].append(not row[1])
+            ret[row[0]].append(TestResult(row[2], row[1]))
 
         # Return the result.
         cursor.close()

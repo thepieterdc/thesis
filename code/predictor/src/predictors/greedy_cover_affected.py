@@ -8,9 +8,8 @@ __license__ = "MIT"
 from collections import defaultdict
 from typing import Tuple, Iterable, Generator, Set, Dict
 
-from entities import Test
-from src.entities.code_block import CodeBlock
-from src.predictors.abstract_predictor import AbstractPredictor
+from entities import CodeBlock, Test
+from predictors.abstract_predictor import AbstractPredictor
 
 
 class GreedyCoverAffected(AbstractPredictor):

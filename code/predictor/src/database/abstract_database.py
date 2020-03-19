@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 
 """Velocity predictors predictor."""
-from abc import abstractmethod
-from typing import Optional, List, Set, Iterable, Tuple, Dict
-
-from src.entities.code_block import CodeBlock
-from src.entities.repository import Repository
-from src.entities.run import Run
-from src.entities.test import Test
 
 __author__ = "Pieter De Clercq"
 __license__ = "MIT"
+
+from abc import abstractmethod
+from typing import Optional, List, Set, Iterable, Tuple, Dict
+
+from entities import CodeBlock, Repository, Run, Test, TestResult
 
 
 class AbstractDatabase:
@@ -53,13 +51,13 @@ class AbstractDatabase:
 
     @abstractmethod
     def get_test_results(self, repository: Repository) -> \
-        Dict[int, Tuple[bool]]:
+        Dict[int, Tuple[TestResult]]:
         """
         Gets the historical results of all tests in the repository, ordered by
-        time of execution (descending - latest result first).
+        timestamp of execution (descending - latest result first).
 
         :param repository: the repository to find the tests for
-        :return: the tests
+        :return: the test results
         """
         raise NotImplemented
 

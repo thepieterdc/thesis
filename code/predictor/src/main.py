@@ -11,7 +11,7 @@ import sys
 
 from database import PostgresDatabase
 from predictors import AllInOrder, AllRandom, GreedyCoverAll, AffectedRandom, \
-    GreedyCoverAffected, HGSAll, HGSAffected, Rocket
+    GreedyCoverAffected, HGSAll, HGSAffected, Rocket, Alpha, GreedyTimeAll
 
 
 def get_run_id():
@@ -64,9 +64,12 @@ logging.info(
 predictors = [
     AffectedRandom(affected_tests),
     AllInOrder(all_tests),
+    Alpha(all_tests, affected_tests, all_test_results),
     AllRandom(all_tests),
     GreedyCoverAffected(affected_code, all_tests),
     GreedyCoverAll(all_tests),
+    GreedyCoverAll(all_tests),
+    GreedyTimeAll(all_test_results),
     HGSAffected(affected_tests),
     HGSAll(all_tests),
     Rocket(all_test_results)
