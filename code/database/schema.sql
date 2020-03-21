@@ -17,7 +17,7 @@ create table runs
 		constraint runs_pk
 			primary key,
 	commit_hash text not null,
-	testorder text,
+	predicted boolean default false,
 	repository_id bigint not null
 		constraint runs_repositories_id_fk
 			references repositories,
@@ -41,15 +41,14 @@ alter table tests owner to velocity;
 
 create table tests_coverage
 (
-	id serial not null
-		constraint tests_coverage_pk
-			primary key,
 	sourcefile text not null,
 	from_line integer not null,
 	to_line integer not null,
 	test_id bigint not null
 		constraint tests_coverage_tests_id_fk
-			references tests
+			references tests,
+	constraint tests_coverage_pkey
+		primary key (sourcefile, from_line, to_line, test_id)
 );
 
 alter table tests_coverage owner to velocity;
@@ -60,7 +59,7 @@ create table tests_results
 		constraint tests_results_pk
 			primary key,
 	failed boolean not null,
-        duration bigint not null,
+	duration bigint not null,
 	run_id bigint not null
 		constraint tests_results_runs_id_fk
 			references runs,
@@ -70,3 +69,47 @@ create table tests_results
 );
 
 alter table tests_results owner to velocity;
+
+create table predictors
+(
+	id serial not null
+		constraint predictors_pk
+			primary key,
+	name text not null
+		constraint predictors_name_key
+			unique
+);
+
+alter table predictors owner to velocity;
+
+create table predictors_scores
+(
+	repository_id integer not null
+		constraint predictors_scores_repositories_id_fk
+			references repositories,
+	predictor_id integer not null
+		constraint predictors_scores_predictors_id_fk
+			references predictors,
+	score integer default 0,
+	constraint predictors_scores_pkey
+		primary key (predictor_id, repository_id)
+);
+
+alter table predictors_scores owner to velocity;
+
+create table predictions
+(
+	run_id integer not null
+		constraint predictions_runs_id_fk
+			references runs,
+	predictor_id integer not null
+		constraint predictions_predictors_id_fk
+			references predictors,
+	prediction text not null,
+	constraint predictions_pkey
+		primary key (predictor_id, run_id)
+);
+
+alter table predictions owner to velocity;
+
+
