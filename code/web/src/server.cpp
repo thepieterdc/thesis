@@ -31,13 +31,15 @@ int main(int argc, char **argv) {
     const auto db = database::connect(argv[1]);
 
     // Create managers.
+    const auto predictions = predictions::manager(*db);
     const auto repositories = repositories::manager(*db);
     const auto runs = runs::manager(*db);
     const auto tests = tests::manager(*db);
     const auto coverage = coverage::manager(*db, tests);
 
     // Create the webserver.
-    auto server = web::server(port, repositories, runs, tests, coverage);
+    auto server = web::server(port, coverage, predictions, repositories, runs,
+                              tests);
 
     // Start the webserver.
     server.start();

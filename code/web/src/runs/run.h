@@ -23,12 +23,15 @@ namespace runs {
          * @param id id of the run
          * @param repository_id if of the repository
          */
-        run(std::uint_fast64_t id, std::uint_fast64_t repository_id) :
+        run(std::uint_fast64_t id, bool predicted,
+            std::uint_fast64_t repository_id) :
                 id(id),
+                predicted(predicted),
                 repository_id(repository_id) {};
 
     public:
         const std::uint_fast64_t id;
+        const bool predicted;
         const std::uint_fast64_t repository_id;
 
         /**

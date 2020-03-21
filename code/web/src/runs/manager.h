@@ -9,7 +9,6 @@
 #ifndef WEB_RUNS_MANAGER_H
 #define WEB_RUNS_MANAGER_H
 
-#include <list>
 #include "../database/connection.h"
 #include "run.h"
 
@@ -52,15 +51,6 @@ namespace runs {
          */
         [[nodiscard]] std::optional<std::shared_ptr<runs::run>>
         find(std::uint_fast64_t id) const;
-
-        /**
-         * Gets the order that was calculated for the given run.
-         *
-         * @param run the id of the run
-         * @return the order if it exists
-         */
-        [[nodiscard]] std::optional<std::list<std::uint_fast64_t>>
-        find_order(std::uint_fast64_t run) const;
     };
 }
 

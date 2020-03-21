@@ -12,6 +12,7 @@
 #include "util/logging.h"
 #include "tests/manager.h"
 #include "runs/manager.h"
+#include "predictions/manager.h"
 
 using json = nlohmann::json;
 
@@ -28,22 +29,29 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-    // Argument parsing.
-    const auto run = std::stoi(argv[2]);
-
     // Create a database connection.
     const auto db = database::connect(argv[1]);
 
     // Create managers.
+    const auto predictions = predictions::manager(*db);
     const auto runs = runs::manager(*db);
     const auto tests = tests::manager(*db);
 
-    // Get the order.
-    const auto order_list = runs.find_order(run);
+    // Find the run.
+    const auto run_id = std::stoi(argv[2]);
+    const auto run = runs.find(run_id);
+    if (!run.has_value()) {
+        // Run not found.
+        util::logging::error("Run not found: %d", run_id);
+        return EXIT_FAILURE;
+    }
+
+    // Find the order.
+    const auto order_list = predictions.find_selected(**run);
     if (order_list.has_value()) {
         // Parse the order.
         std::list<std::string> order;
-        for (const auto &it : *order_list) {
+        for (const auto &it : (**order_list).get_order()) {
             // Get the test with the given id.
             const auto test = tests.find(it);
 
@@ -65,7 +73,7 @@ int main(int argc, char **argv) {
         std::cout << output << std::endl;
     } else {
         // Order is not yet known.
-        util::logging::error("Order not yet known for run #%d", run);
+        util::logging::error("Order not yet known for run #%d", (*run)->id);
         return EXIT_FAILURE;
     }
 

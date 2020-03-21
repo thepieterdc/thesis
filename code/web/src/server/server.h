@@ -15,6 +15,7 @@
 #include "../runs/manager.h"
 #include "../coverage/manager.h"
 #include "../repositories/manager.h"
+#include "../predictions/manager.h"
 
 using json = nlohmann::json;
 
@@ -27,6 +28,7 @@ namespace web {
         const std::uint_fast16_t port;
 
         const coverage::manager &coverage;
+        const predictions::manager &predictions;
         const repositories::manager &repositories;
         const runs::manager &runs;
         const tests::manager &tests;
@@ -74,10 +76,11 @@ namespace web {
          * @param coverage coverage manager
          */
         explicit server(std::uint_fast16_t port,
+                        const coverage::manager &coverage,
+                        const predictions::manager &predictions,
                         const repositories::manager &repositories,
                         const runs::manager &runs,
-                        const tests::manager &tests,
-                        const coverage::manager &coverage);
+                        const tests::manager &tests);
 
         /**
          * server destructor.

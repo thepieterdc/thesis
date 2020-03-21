@@ -105,7 +105,8 @@ create table predictions
 	predictor_id integer not null
 		constraint predictions_predictors_id_fk
 			references predictors,
-	prediction text not null,
+	testorder text not null,
+	selected boolean default false,
 	constraint predictions_pkey
 		primary key (predictor_id, run_id)
 );

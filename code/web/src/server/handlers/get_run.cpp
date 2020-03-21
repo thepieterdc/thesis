@@ -9,19 +9,30 @@
 #include "get_run.h"
 #include "../response.h"
 #include "../../util/logging.h"
+#include "../../predictions/manager.h"
 
-bool handle_get_run(struct mg_connection *conn, const std::uint_fast64_t run,
+bool handle_get_run(struct mg_connection *conn, const std::uint_fast64_t run_id,
+                    const predictions::manager &predictions,
                     const runs::manager &runs, const tests::manager &tests) {
     // Create the response.
     web::response resp;
 
+    // Find the run.
+    const auto run = runs.find(run_id);
+    if (!run.has_value()) {
+        // Run not found.
+        resp.code = 404;
+        resp.send(conn);
+        return true;
+    }
+
     // Get the order if it exists.
-    const auto order_list = runs.find_order(run);
+    const auto order_list = predictions.find_selected(**run);
     if (order_list.has_value()) {
         // Parse the order.
         std::list<std::string> order;
         bool valid = true;
-        for (const auto &it : *order_list) {
+        for (const auto &it : (*order_list)->get_order()) {
             // Get the test with the given id.
             const auto test = tests.find(it);
 

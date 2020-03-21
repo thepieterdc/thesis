@@ -68,7 +68,8 @@ bool web::server::handle_get(struct mg_connection *conn,
             const auto run = std::stoi(matches[1].str());
 
             // Handle the request.
-            return handle_get_run(conn, run, this->runs, this->tests);
+            return handle_get_run(conn, run, this->predictions, this->runs,
+                                  this->tests);
         } catch (std::invalid_argument &e) {
             // Create the response.
             web::response resp;
@@ -113,12 +114,14 @@ web::server::handle_post(struct mg_connection *conn, const std::string &uri,
 }
 
 web::server::server(const std::uint_fast16_t port,
+                    const coverage::manager &coverage,
+                    const predictions::manager &predictions,
                     const repositories::manager &repositories,
                     const runs::manager &runs,
-                    const tests::manager &tests,
-                    const coverage::manager &coverage) :
+                    const tests::manager &tests) :
         port(port),
         coverage(coverage),
+        predictions(predictions),
         repositories(repositories),
         runs(runs),
         tests(tests) {
