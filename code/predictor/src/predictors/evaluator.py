@@ -48,7 +48,6 @@ class Evaluator:
 
         # Failsafe in case no predictor was found.
         if not selected or not self.__valid_predictor(selected):
-            logging.info(selected)
             selected = AllInOrder.__name__
 
         # Make a prediction.
