@@ -7,8 +7,11 @@
  */
 
 #include "database/connection.h"
+#include "predictions/meta_predictor.h"
+#include "predictions/manager.h"
+#include "runs/manager.h"
+#include "tests/manager.h"
 #include "util/logging.h"
-#include "server/server.h"
 
 /**
  * Main entrypoint.
@@ -19,31 +22,30 @@
  */
 int main(int argc, char **argv) {
     if (argc != 3) {
-        util::logging::error("Syntax: %s db_string port", argv[0]);
+        util::logging::error("Syntax: %s db_string run_id", argv[0]);
         return EXIT_FAILURE;
     }
-
-    // Argument parsing.
-    const auto port = std::stoi(argv[2]);
 
     // Create a database connection.
     const auto db = database::connect(argv[1]);
 
     // Create managers.
     const auto predictions = predictions::manager(*db);
-    const auto repositories = repositories::manager(*db);
     const auto runs = runs::manager(*db);
     const auto tests = tests::manager(*db);
-    const auto coverage = coverage::manager(*db, tests);
-    const auto meta_predictor = predictions::meta_predictor(*db, predictions,
-                                                            tests);
+    const auto meta_predictor = predictions::meta_predictor(
+            *db, predictions, tests);
 
-    // Create the webserver.
-    const auto server = web::server(port, coverage, meta_predictor, predictions,
-                                    repositories, runs, tests);
+    // Find the run.
+    const auto run_id = std::stoi(argv[2]);
+    const auto run = runs.find(run_id);
+    if (!run.has_value()) {
+        // Run not found.
+        util::logging::error("Run not found: %d", run_id);
+        return EXIT_FAILURE;
+    }
 
-    // Start the webserver.
-    server.start();
+    meta_predictor.update(**run);
 
     return EXIT_SUCCESS;
 }

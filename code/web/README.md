@@ -1,16 +1,5 @@
-# analyser
+# web
 
-## Create a test run
-```shell script
-./create-run ${database.db}
-```
+## Building
 
-## Save test results
-```shell script
-cat ${results.json} | ./test-results ${run_id} ${database.db}
-```
-
-## Parse coverage results
-```shell script
-./parse-coverage ${database.db} ${folder_containing_xmlfiles}
-```
+Place the cplex installer in the `cplex/` directory under the name `cplex_install.bin`

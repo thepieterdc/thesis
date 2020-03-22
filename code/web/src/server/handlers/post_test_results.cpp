@@ -6,12 +6,24 @@
  * https://github.com/thepieterdc/thesis/
  */
 
+#include <thread>
 #include "post_test_results.h"
 #include "../response.h"
+
+/**
+ * Updates the prediction scores for the given run.
+ *
+ * @param mp the meta predictor instance
+ * @param run the run
+ */
+void update_mp(const predictions::meta_predictor &mp, const runs::run &run) {
+    mp.update(run);
+}
 
 bool handle_post_test_results(struct mg_connection *conn,
                               const std::uint_fast64_t run_id,
                               json body,
+                              const predictions::meta_predictor &meta_predictor,
                               const runs::manager &runs,
                               const tests::manager &tests) {
     // Create the response.
@@ -27,6 +39,10 @@ bool handle_post_test_results(struct mg_connection *conn,
 
     // Save the test results.
     const auto parsed = tests.parse_results(**run, std::move(body));
+
+    // Run the meta predictor.
+    std::thread mp_thread(update_mp, meta_predictor, **run);
+    mp_thread.detach();
 
     // Finish the response.
     resp.code = 200;

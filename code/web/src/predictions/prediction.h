@@ -12,37 +12,47 @@
 #include <list>
 #include <string>
 #include <utility>
+#include "../tests/manager.h"
 
 namespace predictions {
+    // Forward declaration.
+    class prediction;
+
+    using prediction_ptr = std::shared_ptr<predictions::prediction>;
+
     /**
      * A prediction.
      */
     class prediction {
     private:
-        const std::string testorder;
-
         friend class manager;
 
         /**
          * prediction constructor.
          *
+         * @param predictor the id of the predictor
          * @param testorder the predicted order
          */
-        explicit prediction(std::string testorder) :
-                testorder(std::move(testorder)) {};
+        explicit prediction(std::uint_fast64_t predictor,
+                            const std::string &testorder);
 
     public:
+        const std::uint_fast64_t predictor;
+        std::vector<std::uint_fast64_t> testorder;
+
         /**
          * prediction destructor.
          */
         virtual ~prediction() = default;
 
         /**
-         * Gets the order that was predicted.
+         * Calculates the duration until the first failure.
          *
-         * @return the order
+         * @param results the test results
+         * @return the duration until the first failure
          */
-        [[nodiscard]] std::list<std::uint_fast64_t> get_order() const;
+        [[nodiscard]] std::uint_fast64_t
+        first_failure(const tests::test_results &results) const;
     };
 }
 

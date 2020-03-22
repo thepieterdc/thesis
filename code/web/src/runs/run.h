@@ -9,6 +9,8 @@
 #ifndef WEB_RUNS_RUN_H
 #define WEB_RUNS_RUN_H
 
+#include <cstdint>
+
 namespace runs {
     /**
      * A test run.

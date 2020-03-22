@@ -107,7 +107,8 @@ web::server::handle_post(struct mg_connection *conn, const std::string &uri,
 
         // Handle the request.
         return handle_post_test_results(conn, run_id, std::move(body),
-                                        this->runs, this->tests);
+                                        this->meta_predictor, this->runs,
+                                        this->tests);
     }
 
     return false;
@@ -115,12 +116,15 @@ web::server::handle_post(struct mg_connection *conn, const std::string &uri,
 
 web::server::server(const std::uint_fast16_t port,
                     const coverage::manager &coverage,
+                    const predictions::meta_predictor &meta_predictor,
                     const predictions::manager &predictions,
                     const repositories::manager &repositories,
                     const runs::manager &runs,
                     const tests::manager &tests) :
         port(port),
+        running(true),
         coverage(coverage),
+        meta_predictor(meta_predictor),
         predictions(predictions),
         repositories(repositories),
         runs(runs),
@@ -140,6 +144,7 @@ web::server::server(const std::uint_fast16_t port,
 }
 
 web::server::~server() {
+    this->running = false;
     if (this->mgr != nullptr) {
         mg_mgr_free(this->mgr);
         free(this->mgr);
@@ -147,9 +152,9 @@ web::server::~server() {
     }
 }
 
-void web::server::start() {
+void web::server::start() const {
     util::logging::notice("Listening on port %d.", this->port);
-    while (true) {
+    while (this->running) {
         mg_mgr_poll(this->mgr, 100);
     }
 }

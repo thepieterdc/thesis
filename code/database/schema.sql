@@ -84,13 +84,16 @@ alter table predictors owner to velocity;
 
 create table predictors_scores
 (
-	repository_id integer not null
+	repository_id bigint not null
 		constraint predictors_scores_repositories_id_fk
 			references repositories,
-	predictor_id integer not null
+	predictor_id bigint not null
 		constraint predictors_scores_predictors_id_fk
 			references predictors,
-	score integer default 0,
+	score bigint default 0,
+	run_id bigint not null
+		constraint predictors_scores_runs_id_fk
+			references runs,
 	constraint predictors_scores_pkey
 		primary key (predictor_id, repository_id)
 );
@@ -99,10 +102,10 @@ alter table predictors_scores owner to velocity;
 
 create table predictions
 (
-	run_id integer not null
+	run_id bigint not null
 		constraint predictions_runs_id_fk
 			references runs,
-	predictor_id integer not null
+	predictor_id bigint not null
 		constraint predictions_predictors_id_fk
 			references predictors,
 	testorder text not null,

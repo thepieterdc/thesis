@@ -9,19 +9,31 @@
 #include <sstream>
 #include "prediction.h"
 
-std::list<std::uint_fast64_t> predictions::prediction::get_order() const {
-    // Create a new list.
-    std::list<std::uint_fast64_t> order;
+using prediction = predictions::prediction;
 
+prediction::prediction(std::uint_fast64_t predictor,
+                       const std::string &testorder) :
+        predictor(predictor) {
     // Parse the order string.
-    std::istringstream iss(this->testorder);
+    std::istringstream iss(testorder);
     std::string test_id_str;
     // Iterate over the test ids.
     while (std::getline(iss, test_id_str, ',')) {
         // Parse the id to a number.
-        order.push_back(std::stoi(test_id_str));
+        this->testorder.push_back(std::stoi(test_id_str));
+    }
+}
+
+std::uint_fast64_t
+prediction::first_failure(const tests::test_results& results) const {
+    uint_fast64_t ret = 0;
+    for (const auto &it : this->testorder) {
+        const auto& result = results.at(it);
+        if (result->failed) {
+            return ret;
+        }
+        ret += result->duration;
     }
 
-    // Return the parsed order.
-    return order;
+    return ret;
 }

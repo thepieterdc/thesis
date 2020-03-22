@@ -27,12 +27,12 @@ bool handle_get_run(struct mg_connection *conn, const std::uint_fast64_t run_id,
     }
 
     // Get the order if it exists.
-    const auto order_list = predictions.find_selected(**run);
-    if (order_list.has_value()) {
+    const auto prediction = predictions.find_selected(**run);
+    if (prediction.has_value()) {
         // Parse the order.
         std::list<std::string> order;
         bool valid = true;
-        for (const auto &it : (*order_list)->get_order()) {
+        for (const auto &it : (*prediction)->testorder) {
             // Get the test with the given id.
             const auto test = tests.find(it);
 

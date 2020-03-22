@@ -18,6 +18,9 @@
 using json = nlohmann::json;
 
 namespace tests {
+    using test_results =
+    std::map<std::uint_fast64_t, std::shared_ptr<tests::test_result>>;
+
     /**
      * Manages tests.
      */
@@ -32,8 +35,9 @@ namespace tests {
          * @param testcase the name of the testcase
          * @return the created test
          */
-        std::shared_ptr<tests::test> create(const std::uint_fast64_t repository,
-                                            const std::string &testcase) const;
+        [[nodiscard]] std::shared_ptr<tests::test>
+        create(std::uint_fast64_t repository,
+               const std::string &testcase) const;
 
     public:
         /**
@@ -54,8 +58,8 @@ namespace tests {
          * @param id the id of the testcase
          * @return the test if found
          */
-        std::optional<std::shared_ptr<tests::test>>
-        find(const std::uint_fast64_t id) const;
+        [[nodiscard]] std::optional<std::shared_ptr<tests::test>>
+        find(std::uint_fast64_t id) const;
 
         /**
          * Finds a test by the name of the testcase.
@@ -64,8 +68,16 @@ namespace tests {
          * @param testcase the name of the testcase
          * @return the test if found
          */
-        std::optional<std::shared_ptr<tests::test>>
+        [[nodiscard]] std::optional<std::shared_ptr<tests::test>>
         find(std::uint_fast64_t repository, const std::string &testcase) const;
+
+        /**
+         * Finds all test results of the given run.
+         *
+         * @param run the run
+         * @return the test results
+         */
+        [[nodiscard]] test_results find_results(std::uint_fast64_t run) const;
 
         /**
          * Finds a test result by the name of the testcase.
@@ -74,7 +86,7 @@ namespace tests {
          * @param testcase the name of the testcase
          * @return the test result if found
          */
-        std::optional<std::shared_ptr<tests::test_result>>
+        [[nodiscard]] std::optional<std::shared_ptr<tests::test_result>>
         find_result(std::uint_fast64_t run, const std::string &testcase) const;
 
         /**
@@ -84,7 +96,8 @@ namespace tests {
          * @param results the json test results
          * @return amount of test cases inserted
          */
-        std::size_t parse_results(const runs::run &run, json results) const;
+        [[nodiscard]] std::size_t
+        parse_results(const runs::run &run, json results) const;
     };
 }
 

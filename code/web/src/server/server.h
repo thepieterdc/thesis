@@ -16,6 +16,7 @@
 #include "../coverage/manager.h"
 #include "../repositories/manager.h"
 #include "../predictions/manager.h"
+#include "../predictions/meta_predictor.h"
 
 using json = nlohmann::json;
 
@@ -26,8 +27,10 @@ namespace web {
     class server {
     private:
         const std::uint_fast16_t port;
+        bool running;
 
         const coverage::manager &coverage;
+        const predictions::meta_predictor &meta_predictor;
         const predictions::manager &predictions;
         const repositories::manager &repositories;
         const runs::manager &runs;
@@ -70,6 +73,7 @@ namespace web {
          * server constructor.
          *
          * @param port web server port
+         * @param meta_predictor meta predictor
          * @param repositories repositories manager
          * @param runs runs manager
          * @param tests tests manager
@@ -77,6 +81,7 @@ namespace web {
          */
         explicit server(std::uint_fast16_t port,
                         const coverage::manager &coverage,
+                        const predictions::meta_predictor &meta_predictor,
                         const predictions::manager &predictions,
                         const repositories::manager &repositories,
                         const runs::manager &runs,
@@ -90,7 +95,7 @@ namespace web {
         /**
          * Starts the server.
          */
-        void start();
+        void start() const;
     };
 }
 

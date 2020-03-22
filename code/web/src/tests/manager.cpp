@@ -8,7 +8,7 @@
 
 #include <json.hpp>
 #include <iostream>
-#include <pqxx/transaction>
+#include <pqxx/pqxx>
 #include "manager.h"
 
 using json = nlohmann::json;
@@ -17,7 +17,8 @@ using json = nlohmann::json;
 #define PREPARED_TESTS_FIND_ID "tests_find_id"
 #define PREPARED_TESTS_FIND_TESTCASE "tests_find_testcase"
 #define PREPARED_TEST_RESULTS_CREATE "test_results_create"
-#define PREPARED_TEST_RESULTS_FIND "test_results_find"
+#define PREPARED_TEST_RESULT_FIND "test_results_find"
+#define PREPARED_TEST_RESULTS_FIND "test_results_find_all"
 
 tests::manager::manager(pqxx::connection &db) : db(db) {
     this->db.prepare(PREPARED_TESTS_CREATE,
@@ -29,8 +30,11 @@ tests::manager::manager(pqxx::connection &db) : db(db) {
     this->db.prepare(PREPARED_TEST_RESULTS_CREATE,
                      "INSERT INTO tests_results (run_id, test_id, duration, failed) VALUES($1, $2, $3, $4)"
     );
+    this->db.prepare(PREPARED_TEST_RESULT_FIND,
+                     "SELECT tr.duration,tr.failed,tr.id,tr.run_id,tr.test_id FROM tests_results tr INNER JOIN tests t ON (tr.test_id = t.id) WHERE t.testcase=$1 AND tr.run_id=$2 LIMIT 1"
+    );
     this->db.prepare(PREPARED_TEST_RESULTS_FIND,
-                     "SELECT tr.failed,tr.id,tr.run_id,tr.test_id FROM tests_results tr INNER JOIN tests t ON (tr.test_id = t.id) WHERE t.testcase=$1 AND tr.run_id=$2 LIMIT 1"
+                     "SELECT * FROM tests_results WHERE run_id=$1"
     );
 }
 
@@ -102,6 +106,36 @@ tests::manager::find(const std::uint_fast64_t repository,
     return std::nullopt;
 }
 
+tests::test_results
+tests::manager::find_results(const std::uint_fast64_t run) const {
+    // Start a transaction.
+    pqxx::work tx(this->db);
+
+    // Attempt to find the test with the given id.
+    const auto result = tx.prepared(PREPARED_TEST_RESULTS_FIND)(run).exec();
+
+    // Commit the transaction.
+    tx.commit();
+
+    // Create the return map.
+    tests::test_results ret;
+
+    // Iterate over the results.
+    for (const auto &it : result) {
+        const auto test_id = it["test_id"].as<std::uint_fast64_t>();
+        const auto tr = std::shared_ptr<tests::test_result>(new test_result(
+                it["id"].as<std::uint_fast64_t>(),
+                it["run_id"].as<std::uint_fast64_t>(),
+                test_id,
+                it["duration"].as<std::uint_fast64_t>(),
+                it["failed"].as<bool>()
+        ));
+        ret[test_id] = tr;
+    }
+
+    return ret;
+}
+
 std::optional<std::shared_ptr<tests::test_result>>
 tests::manager::find_result(const std::uint_fast64_t run,
                             const std::string &testcase) const {
@@ -109,7 +143,7 @@ tests::manager::find_result(const std::uint_fast64_t run,
     pqxx::work tx(this->db);
 
     // Attempt to find the test with the given id.
-    const auto result = tx.prepared(PREPARED_TEST_RESULTS_FIND)(testcase)(run)
+    const auto result = tx.prepared(PREPARED_TEST_RESULT_FIND)(testcase)(run)
             .exec();
 
     // Commit the transaction.
@@ -119,10 +153,11 @@ tests::manager::find_result(const std::uint_fast64_t run,
     if (!result.empty()) {
         return std::make_optional(std::shared_ptr<tests::test_result>(
                 new test_result(
-                        result[0][1].as<std::uint_fast64_t>(),
                         result[0][2].as<std::uint_fast64_t>(),
                         result[0][3].as<std::uint_fast64_t>(),
-                        result[0][0].as<bool>())
+                        result[0][4].as<std::uint_fast64_t>(),
+                        result[0][1].as<bool>(),
+                        result[0][0].as<std::uint_fast64_t>())
         ));
     }
 

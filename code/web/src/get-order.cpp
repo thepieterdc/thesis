@@ -46,12 +46,12 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-    // Find the order.
-    const auto order_list = predictions.find_selected(**run);
-    if (order_list.has_value()) {
+    // Find the selected prediction.
+    const auto prediction = predictions.find_selected(**run);
+    if (prediction.has_value()) {
         // Parse the order.
-        std::list<std::string> order;
-        for (const auto &it : (**order_list).get_order()) {
+        std::vector<std::string> order;
+        for (const auto &it : (**prediction).testorder) {
             // Get the test with the given id.
             const auto test = tests.find(it);
 

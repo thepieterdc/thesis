@@ -14,6 +14,9 @@
 #include "prediction.h"
 
 namespace predictions {
+    using predictions_list =
+    std::vector<std::shared_ptr<predictions::prediction>>;
+
     /**
      * Manages predictions.
      */
@@ -34,12 +37,20 @@ namespace predictions {
         virtual ~manager() = default;
 
         /**
-         * Finds the id of the repository with the given url.
+         * Finds all predictions of the given run.
          *
-         * @param url the url of the repository to find
-         * @return the id if it exists
+         * @param run the run
+         * @return the predictions
          */
-        [[nodiscard]] std::optional<std::shared_ptr<predictions::prediction>>
+        [[nodiscard]] predictions_list find_all(const runs::run &run) const;
+
+        /**
+         * Finds the selected prediction of the given run.
+         *
+         * @param run the run
+         * @return the prediction if found
+         */
+        [[nodiscard]] std::optional<predictions::prediction_ptr>
         find_selected(const runs::run &run) const;
     };
 }

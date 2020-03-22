@@ -61,13 +61,17 @@ file(GLOB util_SRC
 add_executable(create-run src/create-run.cpp ${database_SRC} ${repositories_SRC} ${runs_SRC} ${util_SRC})
 target_link_libraries(create-run pqxx)
 
+add_executable(evaluate src/evaluate.cpp ${database_SRC} ${predictions_SRC} ${runs_SRC} ${tests_SRC} ${util_SRC})
+target_include_directories(evaluate PUBLIC ${JSON_INCLUDE_DIRS})
+target_link_libraries(evaluate pqxx)
+
 add_executable(get-order src/get-order.cpp ${database_SRC} ${predictions_SRC} ${runs_SRC} ${tests_SRC} ${util_SRC})
 target_include_directories(get-order PUBLIC ${JSON_INCLUDE_DIRS})
 target_link_libraries(get-order pqxx)
 
 add_executable(server src/server.cpp ${coverage_SRC} ${database_SRC} ${predictions_SRC} ${repositories_SRC} ${runs_SRC} ${server_SRC} ${tests_SRC} ${util_SRC})
 target_include_directories(server PUBLIC ${JSON_INCLUDE_DIRS} ${MONGOOSE_INCLUDE_DIRS})
-target_link_libraries(server ${MONGOOSE_LIBRARIES} pqxx)
+target_link_libraries(server ${MONGOOSE_LIBRARIES} pqxx pthread)
 
 add_executable(test-coverage src/test-coverage.cpp ${coverage_SRC} ${database_SRC} ${tests_SRC} ${util_SRC})
 target_include_directories(test-coverage PUBLIC ${JSON_INCLUDE_DIRS} ${ZIPPP_INCLUDE_DIRS})

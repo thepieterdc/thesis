@@ -196,8 +196,12 @@ modules.xml
 
 # Executable
 create-run
+evaluate
 get-order
 test-coverage
 test-results
 server
 !server/
+
+# Cplex
+cplex/cplex_install.bin
