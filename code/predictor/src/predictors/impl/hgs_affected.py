@@ -9,30 +9,31 @@ import operator
 from collections import defaultdict
 from typing import Generator, Set, Dict, Tuple
 
-from entities import CodeBlock, CodeLine, Test
+from entities import CodeLine, Test
 from predictors.abstract_predictor import AbstractPredictor
 
 
-class HGSAll(AbstractPredictor):
+class HGSAffected(AbstractPredictor):
     """
-    Predictor that ranks all tests using the HGS algorithm.
+    Predictor that ranks the affected tests using the HGS algorithm.
 
     HGS algorithm (Harrold et al. 1993)
     """
 
-    def __init__(self, all_tests: Set[Test]):
+    def __init__(self, all_tests: Set[Test], affected_tests: Set[Test]):
         """
-        HGSAll constructor.
+        HGSAffected constructor.
 
         :param all_tests: all the tests
+        :param affected_tests: the affected tests
         """
-        super().__init__()
-        self.__all_tests = all_tests
+        super().__init__(all_tests)
+        self.__affected_tests = affected_tests
 
     def predict(self) -> Generator[int, None, None]:
         # Create a map of the code lines to their tests.
         lines_tests = defaultdict(set)
-        for test in self.__all_tests:
+        for test in self.__affected_tests:
             test_cov_lines = sum(len(cov) for cov in test.coverage)
             for cov in test.coverage:
                 for line in cov:
@@ -53,7 +54,6 @@ class HGSAll(AbstractPredictor):
             min_sets = {t[0] for t in test_requirements if len(t) == min_card}
             min_sets_ids = {t[0] for t in min_sets}
 
-            # Execute all the t sets.
             ret |= min_sets
 
             # Remove the returned sets from the requirements.
@@ -62,9 +62,15 @@ class HGSAll(AbstractPredictor):
                 for req in test_requirements
             }))
 
-        # Return all the sets ordered on their cardinality.
+        # Return all the t sets ordered on their cardinality.
         for t in sorted(ret, key=operator.itemgetter(1), reverse=True):
             yield t[0]
+
+        # Return all the remaining tests.
+        all_test_ids = set(test.id for test in self.all_tests)
+        ret_ids = set(t[0] for t in ret)
+        for t in all_test_ids - ret_ids:
+            yield t
 
     @staticmethod
     def __reduce_requirements(lines: Dict[CodeLine, Set[Tuple[int, int]]]) -> \

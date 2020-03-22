@@ -22,8 +22,7 @@ class AllInOrder(AbstractPredictor):
 
         :param all_tests: all the tests
         """
-        super().__init__()
-        self.__all_tests = all_tests
+        super().__init__(all_tests)
 
     def predict(self) -> Iterable[int]:
-        return list(sorted(test.id for test in self.__all_tests))
+        return list(sorted(test.id for test in self.all_tests))

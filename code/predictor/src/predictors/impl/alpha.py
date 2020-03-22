@@ -5,9 +5,8 @@
 __author__ = "Pieter De Clercq"
 __license__ = "MIT"
 
-import random
 from functools import reduce
-from typing import Set, Iterable, Tuple, Dict, Generator
+from typing import Set, Tuple, Dict, Generator
 
 from entities import Test, TestResult
 from predictors.abstract_predictor import AbstractPredictor
@@ -28,9 +27,8 @@ class Alpha(AbstractPredictor):
         :param affected_tests: the tests that cover changed parts of the code
         :param test_results: results of every test
         """
-        super().__init__()
+        super().__init__(all_tests)
         self.__affected_tests = affected_tests
-        self.__all_tests = all_tests
         self.__test_results = test_results
 
     def __average_duration(self, test: Test) -> int:
@@ -71,17 +69,18 @@ class Alpha(AbstractPredictor):
     def predict(self) -> Generator[int, None, None]:
         # Store the average duration per test.
         test_durations = {
-            t.id: self.__average_duration(t) for t in self.__all_tests
+            t.id: self.__average_duration(t) for t in self.all_tests
         }
 
         # Create a map of the tests to their coverage lines.
         tests_lines = {
             test.id: set(line for line in cov)
-            for test in self.__all_tests for cov in test.coverage
+            for test in self.all_tests for cov in test.coverage
         }
 
         # Store the ids of the tests.
         affected_test_ids = set(t.id for t in self.__affected_tests)
+        all_test_ids = set(t.id for t in self.all_tests)
         failing_test_ids = set(self.__failing_tests())
 
         # Execute all the failing affected tests, sorted by their duration.
@@ -100,6 +99,7 @@ class Alpha(AbstractPredictor):
             # Remove them from the candidates.
             del tests_lines[test]
             affected_test_ids -= {test}
+            all_test_ids -= {test}
             failing_test_ids -= {test}
 
         # Execute all the failing tests, sorted by their duration.
@@ -114,6 +114,7 @@ class Alpha(AbstractPredictor):
             # Remove them from the candidates.
             del tests_lines[test]
             affected_test_ids -= {test}
+            all_test_ids -= {test}
 
         # Execute the affected tests, sorted by their coverage.
         while affected_test_ids:
@@ -132,6 +133,7 @@ class Alpha(AbstractPredictor):
             yield max_test
             del tests_lines[max_test]
             affected_test_ids -= {max_test}
+            all_test_ids -= {max_test}
 
             # Mark the lines in the cover set of the test as covered.
             for test in tests_lines.keys():
@@ -155,7 +157,12 @@ class Alpha(AbstractPredictor):
             # Return the test.
             yield max_test
             del tests_lines[max_test]
+            all_test_ids -= {max_test}
 
             # Mark the lines in the cover set of the test as covered.
             for test in tests_lines.keys():
                 tests_lines[test] -= max_cov
+
+        # Execute all remaining tests that will not contribute anything.
+        for t in all_test_ids:
+            yield t

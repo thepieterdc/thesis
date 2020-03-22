@@ -29,6 +29,72 @@ class PostgresDatabase(AbstractDatabase):
         """
         self.__connection = psycopg2.connect(conn_str)
 
+    def create_prediction(self, run: Run, predictor_name: str, order: List[int],
+                          predictor_selected: bool) -> None:
+        # Find the predictor.
+        predictor = self.__get_predictor(predictor_name)
+        if not predictor:
+            predictor = self.__create_predictor(predictor_name)
+
+        # Parse the order to a string.
+        order_str = ",".join(map(str, order))
+
+        # Insert the prediction into the database.
+        cursor = self.__connection.cursor()
+        cursor.execute(
+            "INSERT INTO predictions (run_id, predictor_id, testorder, selected) VALUES (%s, %s, %s, %s)",
+            (run.id, predictor, order_str, predictor_selected))
+        self.__connection.commit()
+
+        # Close the connection.
+        cursor.close()
+
+    def __create_predictor(self, name: str) -> Optional[int]:
+        """
+        Creates a predictor with the given name.
+
+        :param name: the name
+        :return: the id of the created predictor
+        """
+        cursor = self.__connection.cursor()
+        cursor.execute("INSERT INTO predictors (name) VALUES (%s) RETURNING id",
+                       (name,))
+        self.__connection.commit()
+        create_result = cursor.fetchone()
+
+        # Close the connection.
+        cursor.close()
+
+        return create_result[0]
+
+    def __get_predictor(self, name: str) -> Optional[int]:
+        """
+        Gets the id of the predictor with the given name.
+
+        :param name: the name
+        :return: the id of the predictor if it exists
+        """
+        cursor = self.__connection.cursor()
+        cursor.execute("SELECT id FROM predictors WHERE name=%s", (name,))
+        predictor_result = cursor.fetchone()
+
+        # Close the connection.
+        cursor.close()
+
+        return None if not predictor_result else predictor_result[0]
+
+    def get_preferred_predictor(self, repository: Repository) -> Optional[str]:
+        cursor = self.__connection.cursor()
+        cursor.execute(
+            "SELECT p.name FROM predictors_scores ps INNER JOIN predictors p ON ps.predictor_id = p.id WHERE repository_id=%s ORDER BY score DESC LIMIT 1",
+            (repository.id,))
+        result = cursor.fetchone()
+
+        # Close the connection.
+        cursor.close()
+
+        return None if not result else result[0]
+
     def get_run_by_id(self, id: int) -> Optional[Run]:
         cursor = self.__connection.cursor()
         cursor.execute(
@@ -55,7 +121,7 @@ class PostgresDatabase(AbstractDatabase):
         cursor = self.__connection.cursor()
         cursor.execute(
             "SELECT test_id, sourcefile, from_line, to_line FROM tests_coverage tc INNER JOIN tests t on tc.test_id = t.id WHERE t.repository_id=%s",
-            (repository.id, )
+            (repository.id,)
         )
 
         # Iterate over every test.
@@ -121,9 +187,33 @@ class PostgresDatabase(AbstractDatabase):
         cursor.close()
         return {test: tuple(results) for test, results in ret.items()}
 
-    def update_run_set_order(self, run: Run, order: List[int]) -> None:
+    def get_unpredicted_run(self) -> Optional[Run]:
         cursor = self.__connection.cursor()
-        cursor.execute("UPDATE runs SET testorder = %s WHERE id=%s",
-                       (",".join(map(str, order)), run.id))
+        cursor.execute(
+            "SELECT id, repository_id, commit_hash FROM runs WHERE predicted=false"
+        )
+        run_result = cursor.fetchone()
+
+        if run_result:
+            cursor.execute(
+                "SELECT id, url FROM repositories WHERE id=%s",
+                (run_result[1],))
+
+            # Return the found run.
+            repository = Repository(*cursor.fetchone())
+            cursor.close()
+            return Run.from_cursor(run_result, repository)
+
+        cursor.close()
+
+        # No run was found.
+        return None
+
+    def run_predicted(self, run: Run) -> None:
+        cursor = self.__connection.cursor()
+        cursor.execute("UPDATE runs SET predicted=true WHERE id=%s",
+                       (run.id,))
         self.__connection.commit()
+
+        # Close the connection.
         cursor.close()

@@ -17,6 +17,29 @@ class AbstractDatabase:
     """
 
     @abstractmethod
+    def create_prediction(self, run: Run, predictor_name: str, order: List[int],
+                          predictor_selected: bool) -> None:
+        """
+        Creates a prediction in the database.
+
+        :param run: the run
+        :param predictor_name: the name of the predictor
+        :param order: the predicted order
+        :param predictor_selected: the selected predictor
+        """
+        raise NotImplemented
+
+    @abstractmethod
+    def get_preferred_predictor(self, repository: Repository) -> Optional[str]:
+        """
+        Gets the name of the preferred predictor.
+
+        :param repository: the repository
+        :return: the preferred predictor if any
+        """
+        raise NotImplemented
+
+    @abstractmethod
     def get_run_by_id(self, id: int) -> Optional[Run]:
         """
         Gets the given run.
@@ -24,7 +47,7 @@ class AbstractDatabase:
         :param id: the id of the run to get
         :return: the run
         """
-        return NotImplemented
+        raise NotImplemented
 
     @abstractmethod
     def get_tests(self, repository: Repository) -> Set[Test]:
@@ -35,7 +58,7 @@ class AbstractDatabase:
         :return: tuples of the test id and a covered block. the same test be
                  returned multiple times, once for every covered block
         """
-        return NotImplemented
+        raise NotImplemented
 
     @abstractmethod
     def get_tests_by_coverage(self, run: Run, blocks: List[CodeBlock]) -> \
@@ -47,7 +70,7 @@ class AbstractDatabase:
         :param blocks: list of code ranges
         :return: tests that cover the given code blocks
         """
-        return NotImplemented
+        raise NotImplemented
 
     @abstractmethod
     def get_test_by_id(self, id: int) -> Optional[str]:
@@ -57,7 +80,7 @@ class AbstractDatabase:
         :param id: the id of the test to get
         :return: the test
         """
-        return NotImplemented
+        raise NotImplemented
 
     @abstractmethod
     def get_test_results(self, repository: Repository) -> \
@@ -72,12 +95,19 @@ class AbstractDatabase:
         raise NotImplemented
 
     @abstractmethod
-    def update_run_set_order(self, run: Run, order: List[int]) -> None:
+    def get_unpredicted_run(self) -> Optional[Run]:
         """
-        Saves the given predictors to the database.
+        Gets the first unpredicted run.
 
-        :param run: the corresponding run
-        :param order: the predictors
-        :return: nothing
+        :return: the run if any
         """
-        return NotImplemented
+        raise NotImplemented
+
+    @abstractmethod
+    def run_predicted(self, run: Run) -> None:
+        """
+        Marks the run as predicted.
+
+        :param run: the run
+        """
+        raise NotImplemented

@@ -6,10 +6,11 @@ __author__ = "Pieter De Clercq"
 __license__ = "MIT"
 
 import operator
-from typing import Set, Iterable, Tuple, Dict
+from typing import Iterable, Tuple, Dict, Set
 
-from entities import TestResult
 import numpy as np
+
+from entities import TestResult, Test
 from predictors.abstract_predictor import AbstractPredictor
 
 
@@ -21,13 +22,14 @@ class Rocket(AbstractPredictor):
     """
     MAX_HISTORY_THRESHOLD = 10
 
-    def __init__(self, all_test_results: Dict[int, Tuple[TestResult]]):
+    def __init__(self, all_tests: Set[Test], all_test_results: Dict[int, Tuple[TestResult]]):
         """
         Rocket constructor.
 
+        :param all_tests: all the tests
         :param all_test_results: results of all tests
         """
-        super().__init__()
+        super().__init__(all_tests)
         self.__all_test_results = all_test_results
 
     def predict(self) -> Iterable[int]:

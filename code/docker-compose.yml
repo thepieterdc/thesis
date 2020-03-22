@@ -10,6 +10,13 @@ services:
     build: 'predictor/'
     depends_on:
       - database
+    entrypoint: /usr/bin/entrypoint-cli.sh
+
+  predictor:
+    build: 'predictor/'
+    depends_on:
+      - database
+    entrypoint: /usr/bin/entrypoint-daemon.sh
 
   web:
     build: './web'

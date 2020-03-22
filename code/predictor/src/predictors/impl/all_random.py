@@ -23,11 +23,10 @@ class AllRandom(AbstractPredictor):
 
         :param all_tests: all the tests
         """
-        super().__init__()
-        self.__all_tests = all_tests
+        super().__init__(all_tests)
 
     def predict(self) -> Iterable[int]:
         # Shuffle the list of all tests.
-        tests = list(test.id for test in self.__all_tests)
+        tests = list(test.id for test in self.all_tests)
         random.shuffle(tests)
         return tests

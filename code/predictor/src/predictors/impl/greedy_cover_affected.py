@@ -5,8 +5,7 @@
 __author__ = "Pieter De Clercq"
 __license__ = "MIT"
 
-from collections import defaultdict
-from typing import Tuple, Iterable, Generator, Set, Dict
+from typing import Iterable, Generator, Set
 
 from entities import CodeBlock, Test
 from predictors.abstract_predictor import AbstractPredictor
@@ -28,16 +27,18 @@ class GreedyCoverAffected(AbstractPredictor):
         :param affected_code: affected code blocks
         :param all_tests: all the tests
         """
-        super().__init__()
+        super().__init__(all_tests)
         self.__affected_code = affected_code
-        self.__all_tests = all_tests
 
     def predict(self) -> Generator[int, None, None]:
         # Create a map of the tests to their coverage lines.
         tests_lines = {
             test.id: set(line for line in cov)
-            for test in self.__all_tests for cov in test.coverage
+            for test in self.all_tests for cov in test.coverage
         }
+
+        # Store all tests.
+        all_test_ids = set(t.id for t in self.all_tests)
 
         # Create a set of coverage lines of the affected code.
         affected_lines = set(line for b in self.__affected_code for line in b)
@@ -57,7 +58,12 @@ class GreedyCoverAffected(AbstractPredictor):
             # Return the test.
             del tests_lines[max_test]
             yield max_test
+            all_test_ids -= {max_test}
 
             # Mark the lines in the cover set of the test as covered.
             for test in tests_lines.keys():
                 tests_lines[test] -= max_cov
+
+        # Execute all remaining tests.
+        for t in all_test_ids:
+            yield t

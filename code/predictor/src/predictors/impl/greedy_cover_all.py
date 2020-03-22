@@ -5,10 +5,9 @@
 __author__ = "Pieter De Clercq"
 __license__ = "MIT"
 
-from collections import defaultdict
-from typing import Tuple, Iterable, Generator, Set, Dict
+from typing import Generator, Set
 
-from entities import CodeBlock, Test
+from entities import Test
 from predictors.abstract_predictor import AbstractPredictor
 
 
@@ -26,14 +25,13 @@ class GreedyCoverAll(AbstractPredictor):
 
         :param all_tests: all the tests
         """
-        super().__init__()
-        self.__all_tests = all_tests
+        super().__init__(all_tests)
 
     def predict(self) -> Generator[int, None, None]:
         # Create a map of the tests to their coverage lines.
         tests_lines = {
             test.id: set(line for line in cov)
-            for test in self.__all_tests for cov in test.coverage
+            for test in self.all_tests for cov in test.coverage
         }
 
         # While there are tests remaining:

@@ -6,11 +6,10 @@ __author__ = "Pieter De Clercq"
 __license__ = "MIT"
 
 import operator
-from collections import defaultdict
 from functools import reduce
-from typing import Tuple, Iterable, Generator, Set, Dict
+from typing import Tuple, Generator, Dict, Set
 
-from entities import CodeBlock, Test, TestResult
+from entities import TestResult, Test
 from predictors.abstract_predictor import AbstractPredictor
 
 
@@ -21,16 +20,19 @@ class GreedyTimeAll(AbstractPredictor):
     are omitted.
     """
 
-    def __init__(self, test_results: Dict[int, Tuple[TestResult]]):
+    def __init__(self, all_tests: Set[Test],
+                 test_results: Dict[int, Tuple[TestResult]]):
         """
         GreedyTimeAll constructor.
 
+        :param all_tests: all the tests
         :param test_results: results of every test
         """
-        super().__init__()
+        super().__init__(all_tests)
         self.__test_results = test_results
 
-    def average_duration(self, results: Tuple[TestResult]) -> int:
+    @staticmethod
+    def average_duration(results: Tuple[TestResult]) -> int:
         """
         Calculates the average test duration in nanoseconds.
 
@@ -55,7 +57,7 @@ class GreedyTimeAll(AbstractPredictor):
     def predict(self) -> Generator[int, None, None]:
         # Find the average duration per test.
         test_durations = (
-            (t, self.average_duration(v)) for t, v in
+            (t, GreedyTimeAll.average_duration(v)) for t, v in
             self.__test_results.items()
         )
 

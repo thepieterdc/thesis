@@ -10,8 +10,8 @@ import logging
 import sys
 
 from database import PostgresDatabase
-from predictors import AllInOrder, AllRandom, GreedyCoverAll, AffectedRandom, \
-    GreedyCoverAffected, HGSAll, HGSAffected, Rocket, Alpha, GreedyTimeAll
+from predictors import create_all_predictors
+from predictors.evaluator import Evaluator
 
 
 def get_run_id():
@@ -61,42 +61,18 @@ logging.info(
     f"Found {len(affected_tests)} tests covering the changed files, out of {len(all_tests)} total tests for this repository.")
 
 # Set-up the predictors.
-predictors = [
-    AffectedRandom(affected_tests),
-    AllInOrder(all_tests),
-    Alpha(all_tests, affected_tests, all_test_results),
-    AllRandom(all_tests),
-    GreedyCoverAffected(affected_code, all_tests),
-    GreedyCoverAll(all_tests),
-    GreedyCoverAll(all_tests),
-    GreedyTimeAll(all_test_results),
-    HGSAffected(affected_tests),
-    HGSAll(all_tests),
-    Rocket(all_test_results)
-]
+predictors = create_all_predictors(all_tests, affected_tests, all_test_results,
+                                   affected_code)
 logging.info(
     f'Using {len(predictors)} available predictors: {", ".join(p.__class__.__name__ for p in predictors)}')
 
-# Pick a predictor to use.
-selected_predictor = ""
-while not any(p.__class__.__name__ == selected_predictor for p in predictors):
-    selected_predictor = input("Predictor? ")
+# Ask whether to save the prediction to the database.
+save_resp = input('Enter "SAVE" to save the results to the database: ').lower()
+save = save_resp == 'save'
+if save:
+    logging.info('Results will be saved to the database.')
+else:
+    logging.info('Results will not be saved to the database.')
 
-# Make a prediction.
-selected_order = []
-for predictor in predictors:
-    logging.info(f'Predictor: {predictor.__class__.__name__}')
-    order = list(predictor.predict())
-    logging.info(f"Order predicted: {order}")
-    logging.info("First 4 test names:")
-    for t in order[:4]:
-        logging.info(db.get_test_by_id(t))
-    logging.info("")
-    logging.info("")
-    logging.info("")
-    if predictor.__class__.__name__ == selected_predictor:
-        selected_order = order
-
-# Save the prediction to the database.
-db.update_run_set_order(run, selected_order)
-logging.info('Order saved to the database.')
+# Create an evaluator and evaluate the run.
+Evaluator(db, predictors, run, not save, True, True).evaluate()
