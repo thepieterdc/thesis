@@ -27,6 +27,6 @@ final class ImmutableSet {
      * @return the set
      */
     static <T> Set<T> create(final Iterable<T> iterable) {
-        return StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toUnmodifiableSet())
+        return StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toSet())
     }
 }
