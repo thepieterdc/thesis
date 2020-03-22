@@ -34,23 +34,16 @@ import org.gradle.internal.time.Clock;
 import org.junit.runner.Description;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 /**
  * Custom event listener for JUnit. This listener tracks the coverage.
  */
 public class VelocityJUnitListener extends RunListener {
-    private static final Logger LOG = LoggerFactory.getLogger(VelocityJUnitListener.class);
-    
-    private static final Pattern DESCRIPTOR_PATTERN = Pattern.compile("(.*)\\((.*)\\)(\\[\\d+])?", Pattern.DOTALL);
     private final IdGenerator<?> idGenerator;
     private final TestResultProcessor resultProcessor;
     private final Clock clock;
@@ -130,7 +123,9 @@ public class VelocityJUnitListener extends RunListener {
     
     private TestDescriptorInternal nullSafeDescriptor(final Object id,
                                                       final Description description) {
-        final String methodName = Objects.requireNonNullElse(description.getMethodName(), "classMethod");
+        final String methodName = description.getMethodName() == null
+            ? "classMethod"
+            : description.getMethodName();
         return new DefaultTestDescriptor(id, description.getClassName(), methodName);
     }
     
