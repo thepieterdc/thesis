@@ -41,14 +41,14 @@ class VelocityTestResultListener implements TestListener {
     void beforeTest(final TestDescriptor testDescriptor) {
         // Assume that the test will fail.
         final String name = String.format('%s.%s', testDescriptor.className, testDescriptor.name)
-        this.durations[name] = System.nanoTime()
+        this.durations[name] = System.currentTimeMillis()
         this.results[name] = false
     }
 
     @Override
     void afterTest(final TestDescriptor testDescriptor, final TestResult result) {
         final String name = String.format('%s.%s', testDescriptor.className, testDescriptor.name)
-        this.durations[name] = System.nanoTime() - this.durations[name]
+        this.durations[name] = System.currentTimeMillis() - this.durations[name]
         this.results[name] = result.resultType == TestResult.ResultType.SUCCESS
     }
 
