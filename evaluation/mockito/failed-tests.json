@@ -1,0 +1,866 @@
+[
+  {
+    "commit": "d4918d9dff0077fcfe818575a6f6c6fd900635bf",
+    "build": 32705280,
+    "job": 32705281,
+    "tests": [
+      "org.mockitousage.misuse.DetectingFinalMethodsTest"
+    ]
+  },
+  {
+    "commit": "3c2d61751e1b31babede6875c8868ed8b8d43706",
+    "build": 36303224,
+    "job": 36303225,
+    "tests": [
+      "org.mockitousage.misuse.DetectingFinalMethodsTest"
+    ]
+  },
+  {
+    "commit": "c138d2ca7b7e685a63062b403629cc11a88c7d37",
+    "build": 136931591,
+    "job": 136931592,
+    "tests": [
+      "org.concurrentmockito.ThreadsRunAllTestsHalfManualTest",
+      "org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest"
+    ]
+  },
+  {
+    "commit": "21b0eb71271b1a4d63c11bc23988686b32250e42",
+    "build": 32722250,
+    "job": 32722251,
+    "tests": [
+      "org.mockitousage.misuse.DetectingFinalMethodsTest"
+    ]
+  },
+  {
+    "commit": "26a34ae60eb1e9720d6fc6e687e3940650579cae",
+    "build": 138708091,
+    "job": 138708092,
+    "tests": [
+      "org.mockitousage.verification.VerificationWithTimeoutTest"
+    ]
+  },
+  {
+    "commit": "8e136da2034e412df90b6fd12248aa92bf078560",
+    "build": 146802066,
+    "job": 146802067,
+    "tests": [
+      "org.mockitousage.junitrunner.UnusedStubsExceptionMessageTest"
+    ]
+  },
+  {
+    "commit": "557483307b9b49437015805ec300b1f45cc11b3c",
+    "build": 32788616,
+    "job": 32788617,
+    "tests": [
+      "org.mockito.verification.TimeoutTest"
+    ]
+  },
+  {
+    "commit": "3da645d2d38e6be82bdcd2ee2bb7abf08deb74d9",
+    "build": 138326204,
+    "job": 138326205,
+    "tests": [
+      "org.mockitousage.verification.VerificationAfterDelayTest"
+    ]
+  },
+  {
+    "commit": "19ee92fb5ba7dbbc0f98e1e281be50f76522cef7",
+    "build": 125007762,
+    "job": 125007763,
+    "tests": [
+      "org.mockitousage.verification.VerificationWithTimeoutTest",
+      "org.mockitousage.verification.VerificationWithTimeoutTest",
+      "org.mockitousage.verification.VerificationWithTimeoutTest",
+      "org.mockitousage.verification.VerificationWithTimeoutTest",
+      "org.mockitousage.verification.VerificationAfterDelayTest",
+      "org.mockitousage.verification.VerificationAfterDelayTest"
+    ]
+  },
+  {
+    "commit": "4e834c59264267d34a3078c3c02f79dff2dc920b",
+    "build": 32709083,
+    "job": 32709084,
+    "tests": [
+      "org.mockitousage.misuse.DetectingFinalMethodsTest"
+    ]
+  },
+  {
+    "commit": "771d9a87706bf4f4eb5df669713b7a77378a7429",
+    "build": 14898422,
+    "job": 14898423,
+    "tests": [
+      "org.mockitousage.misuse.DetectingFinalMethodsTest"
+    ]
+  },
+  {
+    "commit": "5dd0f71ae37f75f3abc9b3d9ba7ad5cb4b79f38a",
+    "build": 143754675,
+    "job": 143754676,
+    "tests": [
+      "org.mockitousage.verification.VerificationWithTimeoutTest"
+    ]
+  },
+  {
+    "commit": "5e052cbbab5fe7a2249b1e7d12a17b77d39f8507",
+    "build": 14898391,
+    "job": 14898392,
+    "tests": [
+      "org.mockitousage.bugs.ParentClassNotPublicVeryWeirdBugTest"
+    ]
+  },
+  {
+    "commit": "f4e0fcfb1656fb6070d574a6579b0c9357786e73",
+    "build": 32704304,
+    "job": 32704305,
+    "tests": [
+      "org.mockitousage.misuse.DetectingFinalMethodsTest"
+    ]
+  },
+  {
+    "commit": "3fa07eae7a5bad624babdc832c7a3e7c3cfd52bd",
+    "build": 125157766,
+    "job": 125157767,
+    "tests": [
+      "org.mockitousage.verification.VerificationAfterDelayTest"
+    ]
+  },
+  {
+    "commit": "4c4cbac535daca69be0baba84be77b2dd0662d84",
+    "build": 14896626,
+    "job": 14896627,
+    "tests": [
+      "org.mockitoutil.ClassLoadersTest",
+      "org.mockitoutil.ClassLoadersTest",
+      "org.mockitousage.bugs.ParentClassNotPublicVeryWeirdBugTest"
+    ]
+  },
+  {
+    "commit": "67f9af6e23b88ee8b0bf5c3040620b9362cf0a36",
+    "build": 30501138,
+    "job": 30501139,
+    "tests": [
+      "org.mockito.verification.TimeoutTest"
+    ]
+  },
+  {
+    "commit": "1db985e9d8ed16fa19064a8a63a375bf41c0697c",
+    "build": 32723060,
+    "job": 32723061,
+    "tests": [
+      "org.mockitousage.misuse.DetectingFinalMethodsTest"
+    ]
+  },
+  {
+    "commit": "b1d270c2bb0705741bbe33c8ea4f2b9dead48334",
+    "build": 138781357,
+    "job": 138781358,
+    "tests": [
+      "org.mockitousage.stacktrace.StackTraceFilteringTest",
+      "org.mockitousage.stacktrace.StackTraceFilteringTest",
+      "org.mockitousage.stacktrace.StackTraceFilteringTest",
+      "org.mockitousage.stacktrace.StackTraceFilteringTest",
+      "org.mockitousage.stacktrace.StackTraceFilteringTest",
+      "org.mockitousage.stacktrace.PointingStackTraceToActualInvocationChunkInOrderTest",
+      "org.mockitousage.stacktrace.PointingStackTraceToActualInvocationChunkInOrderTest",
+      "org.mockitousage.stacktrace.PointingStackTraceToActualInvocationChunkInOrderTest",
+      "org.mockitousage.stacktrace.PointingStackTraceToActualInvocationChunkInOrderTest",
+      "org.mockitousage.stacktrace.PointingStackTraceToActualInvocationTest",
+      "org.mockitousage.stacktrace.PointingStackTraceToActualInvocationTest",
+      "org.mockitousage.stacktrace.PointingStackTraceToActualInvocationInOrderTest",
+      "org.mockitousage.stacktrace.PointingStackTraceToActualInvocationInOrderTest",
+      "org.mockitousage.stacktrace.PointingStackTraceToActualInvocationInOrderTest",
+      "org.mockitousage.stacktrace.PointingStackTraceToActualInvocationInOrderTest",
+      "org.mockitousage.stacktrace.PointingStackTraceToActualInvocationInOrderTest",
+      "org.mockitousage.stacktrace.PointingStackTraceToActualInvocationInOrderTest",
+      "org.mockitousage.stacktrace.ClickableStackTracesWhenFrameworkMisusedTest",
+      "org.mockitousage.stacktrace.ClickableStackTracesWhenFrameworkMisusedTest",
+      "org.mockitousage.stacktrace.ClickableStackTracesTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.BasicVerificationInOrderTest",
+      "org.mockitousage.verification.VerificationInOrderTest",
+      "org.mockitousage.verification.VerificationInOrderTest",
+      "org.mockitousage.verification.VerificationInOrderTest",
+      "org.mockitousage.verification.VerificationInOrderTest",
+      "org.mockitousage.verification.VerificationWithTimeoutTest",
+      "org.mockitousage.verification.VerificationWithTimeoutTest",
+      "org.mockitousage.verification.VerificationWithTimeoutTest",
+      "org.mockitousage.verification.VerificationWithTimeoutTest",
+      "org.mockitousage.verification.VerificationWithTimeoutTest",
+      "org.mockitousage.verification.VerificationWithTimeoutTest",
+      "org.mockitousage.verification.VerificationWithTimeoutTest",
+      "org.mockitousage.verification.VerificationWithTimeoutTest",
+      "org.mockitousage.verification.SelectedMocksInOrderVerificationTest",
+      "org.mockitousage.verification.SelectedMocksInOrderVerificationTest",
+      "org.mockitousage.verification.SelectedMocksInOrderVerificationTest",
+      "org.mockitousage.verification.SelectedMocksInOrderVerificationTest",
+      "org.mockitousage.verification.SelectedMocksInOrderVerificationTest",
+      "org.mockitousage.verification.SelectedMocksInOrderVerificationTest",
+      "org.mockitousage.verification.SelectedMocksInOrderVerificationTest",
+      "org.mockitousage.verification.BasicVerificationTest",
+      "org.mockitousage.verification.BasicVerificationTest",
+      "org.mockitousage.verification.BasicVerificationTest",
+      "org.mockitousage.verification.BasicVerificationTest",
+      "org.mockitousage.verification.BasicVerificationTest",
+      "org.mockitousage.verification.BasicVerificationTest",
+      "org.mockitousage.verification.VerificationAfterDelayTest",
+      "org.mockitousage.verification.VerificationAfterDelayTest",
+      "org.mockitousage.verification.VerificationAfterDelayTest",
+      "org.mockitousage.verification.VerificationAfterDelayTest",
+      "org.mockitousage.verification.PrintingVerboseTypesWithArgumentsTest",
+      "org.mockitousage.verification.PrintingVerboseTypesWithArgumentsTest",
+      "org.mockitousage.verification.PrintingVerboseTypesWithArgumentsTest",
+      "org.mockitousage.verification.PrintingVerboseTypesWithArgumentsTest",
+      "org.mockitousage.verification.PrintingVerboseTypesWithArgumentsTest",
+      "org.mockitousage.verification.FindingRedundantInvocationsInOrderTest",
+      "org.mockitousage.verification.FindingRedundantInvocationsInOrderTest",
+      "org.mockitousage.verification.FindingRedundantInvocationsInOrderTest",
+      "org.mockitousage.verification.FindingRedundantInvocationsInOrderTest",
+      "org.mockitousage.verification.VerificationExcludingStubsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesOnVerificationInOrderErrorsTest",
+      "org.mockitousage.verification.DescriptiveMessagesOnVerificationInOrderErrorsTest",
+      "org.mockitousage.verification.DescriptiveMessagesOnVerificationInOrderErrorsTest",
+      "org.mockitousage.verification.DescriptiveMessagesOnVerificationInOrderErrorsTest",
+      "org.mockitousage.verification.DescriptiveMessagesOnVerificationInOrderErrorsTest",
+      "org.mockitousage.verification.DescriptiveMessagesOnVerificationInOrderErrorsTest",
+      "org.mockitousage.verification.DescriptiveMessagesOnVerificationInOrderErrorsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenTimesXVerificationFailsTest",
+      "org.mockitousage.verification.DescriptiveMessagesWhenTimesXVerificationFailsTest",
+      "org.mockitousage.verification.ExactNumberOfTimesVerificationTest",
+      "org.mockitousage.verification.ExactNumberOfTimesVerificationTest",
+      "org.mockitousage.verification.ExactNumberOfTimesVerificationTest",
+      "org.mockitousage.verification.ExactNumberOfTimesVerificationTest",
+      "org.mockitousage.verification.ExactNumberOfTimesVerificationTest",
+      "org.mockitousage.verification.ExactNumberOfTimesVerificationTest",
+      "org.mockitousage.verification.OnlyVerificationTest",
+      "org.mockitousage.verification.OnlyVerificationTest",
+      "org.mockitousage.verification.OnlyVerificationTest",
+      "org.mockitousage.verification.OnlyVerificationTest",
+      "org.mockitousage.verification.VerificationUsingMatchersTest",
+      "org.mockitousage.verification.VerificationUsingMatchersTest",
+      "org.mockitousage.verification.OrdinaryVerificationPrintsAllInteractionsTest",
+      "org.mockitousage.verification.OrdinaryVerificationPrintsAllInteractionsTest",
+      "org.mockitousage.verification.OrdinaryVerificationPrintsAllInteractionsTest",
+      "org.mockitousage.verification.AtLeastXVerificationTest",
+      "org.mockitousage.verification.VerificationInOrderMixedWithOrdiraryVerificationTest",
+      "org.mockitousage.verification.VerificationInOrderMixedWithOrdiraryVerificationTest",
+      "org.mockitousage.verification.VerificationInOrderMixedWithOrdiraryVerificationTest",
+      "org.mockitousage.verification.NoMoreInteractionsVerificationTest",
+      "org.mockitousage.verification.NoMoreInteractionsVerificationTest",
+      "org.mockitousage.verification.NoMoreInteractionsVerificationTest",
+      "org.mockitousage.verification.NoMoreInteractionsVerificationTest",
+      "org.mockitousage.verification.NoMoreInteractionsVerificationTest",
+      "org.mockitousage.verification.RelaxedVerificationInOrderTest",
+      "org.mockitousage.verification.RelaxedVerificationInOrderTest",
+      "org.mockitousage.verification.RelaxedVerificationInOrderTest",
+      "org.mockitousage.verification.RelaxedVerificationInOrderTest",
+      "org.mockitousage.verification.RelaxedVerificationInOrderTest",
+      "org.mockitousage.verification.RelaxedVerificationInOrderTest",
+      "org.mockitousage.verification.RelaxedVerificationInOrderTest",
+      "org.mockitousage.verification.RelaxedVerificationInOrderTest",
+      "org.mockitousage.verification.RelaxedVerificationInOrderTest",
+      "org.mockitousage.verification.RelaxedVerificationInOrderTest",
+      "org.mockitousage.verification.RelaxedVerificationInOrderTest",
+      "org.mockitousage.verification.RelaxedVerificationInOrderTest",
+      "org.mockitousage.verification.VerificationInOrderWithCallsTest",
+      "org.mockitousage.verification.VerificationInOrderWithCallsTest",
+      "org.mockitousage.verification.VerificationInOrderWithCallsTest",
+      "org.mockitousage.verification.VerificationInOrderWithCallsTest",
+      "org.mockitousage.verification.VerificationInOrderWithCallsTest",
+      "org.mockitousage.verification.VerificationInOrderWithCallsTest",
+      "org.mockitousage.verification.VerificationInOrderWithCallsTest",
+      "org.mockitousage.verification.VerificationInOrderWithCallsTest",
+      "org.mockitousage.verification.VerificationInOrderWithCallsTest",
+      "org.mockitousage.verification.VerificationInOrderWithCallsTest",
+      "org.mockitousage.verification.VerificationInOrderWithCallsTest",
+      "org.mockitousage.verification.AtMostXVerificationTest",
+      "org.mockitousage.junitrule.VerificationCollectorImplTest",
+      "org.mockitousage.junitrule.VerificationCollectorImplTest",
+      "org.mockitousage.junitrule.VerificationCollectorImplTest",
+      "org.mockitousage.junitrule.VerificationCollectorImplTest",
+      "org.mockitousage.junitrule.VerificationCollectorImplTest",
+      "org.mockitousage.basicapi.MocksCreationTest",
+      "org.mockitousage.basicapi.UsingVarargsTest",
+      "org.mockitousage.basicapi.UsingVarargsTest",
+      "org.mockitousage.basicapi.UsingVarargsTest",
+      "org.mockitousage.basicapi.ResetTest",
+      "org.mockitousage.misuse.ExplicitFrameworkValidationTest",
+      "org.mockitousage.misuse.ExplicitFrameworkValidationTest",
+      "org.mockitousage.misuse.DetectingMisusedMatchersTest",
+      "org.mockitousage.misuse.DetectingFinalMethodsTest",
+      "org.mockitousage.matchers.HamcrestMatchersTest",
+      "org.mockitousage.matchers.InvalidUseOfMatchersTest",
+      "org.mockitousage.matchers.InvalidUseOfMatchersTest",
+      "org.mockitousage.matchers.CustomMatcherDoesYieldCCETest",
+      "org.mockitousage.matchers.MatchersTest",
+      "org.mockitousage.matchers.MatchersTest",
+      "org.mockitousage.matchers.MatchersTest",
+      "org.mockitousage.matchers.CustomMatchersTest",
+      "org.mockitousage.matchers.CustomMatchersTest",
+      "org.mockitousage.matchers.ReflectionMatchersTest",
+      "org.mockitousage.matchers.ReflectionMatchersTest",
+      "org.mockitousage.matchers.ReflectionMatchersTest",
+      "org.mockitousage.matchers.ReflectionMatchersTest",
+      "org.mockitousage.matchers.ReflectionMatchersTest",
+      "org.mockitousage.matchers.VerificationAndStubbingUsingMatchersTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.stubbing.StubbingWithThrowablesTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.BasicStubbingTest",
+      "org.mockitousage.stubbing.StubbingUsingDoReturnTest",
+      "org.mockitousage.stubbing.SmartNullsStubbingTest",
+      "org.mockitousage.stubbing.SmartNullsStubbingTest",
+      "org.mockitousage.stubbing.SmartNullsStubbingTest",
+      "org.mockitousage.stubbing.SmartNullsStubbingTest",
+      "org.mockitousage.stubbing.SmartNullsStubbingTest",
+      "org.mockitousage.stubbing.SmartNullsStubbingTest",
+      "org.mockitousage.puzzlers.OverloadingPuzzleTest",
+      "org.mockitousage.customization.BDDMockitoTest",
+      "org.mockitousage.customization.BDDMockitoTest",
+      "org.mockitousage.customization.BDDMockitoTest",
+      "org.mockitousage.customization.BDDMockitoTest",
+      "org.mockitousage.customization.BDDMockitoTest",
+      "org.mockitousage.debugging.PrintingInvocationsWhenStubNotUsedTest",
+      "org.mockitousage.spies.SpyingOnRealObjectsTest",
+      "org.mockitousage.spies.SpyingOnRealObjectsTest",
+      "org.mockitousage.spies.SpyingOnRealObjectsTest",
+      "org.mockitousage.bugs.ActualInvocationHasNullArgumentNPEBugTest",
+      "org.mockitousage.bugs.NPEWithCertainMatchersTest",
+      "org.mockitousage.bugs.NPEWithCertainMatchersTest",
+      "org.mockitousage.bugs.ClassCastExOnVerifyZeroInteractionsTest",
+      "org.mockitousage.bugs.ConcurrentModificationExceptionOnMultiThreadedVerificationTest",
+      "org.mockitousage.bugs.IOOBExceptionShouldNotBeThrownWhenNotCodingFluentlyTest",
+      "org.mockitousage.bugs.VerifyingWithAnExtraCallToADifferentMockTest",
+      "org.mockitousage.bugs.SpyShouldHaveNiceNameTest",
+      "org.mockitousage.bugs.varargs.VarargsNotPlayingWithAnyObjectTest",
+      "org.concurrentmockito.ThreadsRunAllTestsHalfManualTest",
+      "org.mockito.internal.InvalidStateDetectionTest",
+      "org.mockito.internal.InvalidStateDetectionTest",
+      "org.mockito.internal.InvalidStateDetectionTest",
+      "org.mockito.internal.InvalidStateDetectionTest",
+      "org.mockito.internal.InvalidStateDetectionTest",
+      "org.mockito.internal.verification.VerificationWithDescriptionTest",
+      "org.mockito.internal.verification.NoMoreInteractionsTest",
+      "org.mockito.internal.verification.NoMoreInteractionsTest",
+      "org.mockito.internal.verification.NoMoreInteractionsTest",
+      "org.mockito.internal.verification.NoMoreInteractionsTest",
+      "org.mockito.internal.verification.OnlyTest",
+      "org.mockito.internal.verification.checkers.MissingInvocationCheckerTest",
+      "org.mockito.internal.verification.checkers.MissingInvocationCheckerTest",
+      "org.mockito.internal.verification.checkers.MissingInvocationInOrderCheckerTest",
+      "org.mockito.internal.verification.checkers.MissingInvocationInOrderCheckerTest",
+      "org.mockito.internal.verification.checkers.MissingInvocationInOrderCheckerTest",
+      "org.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest",
+      "org.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest",
+      "org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest",
+      "org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest",
+      "org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest",
+      "org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest",
+      "org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest",
+      "org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsSmartNullsTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsSmartNullsTest",
+      "org.mockito.internal.progress.MockingProgressImplTest",
+      "org.mockito.internal.junit.JUnitRuleTest",
+      "org.mockito.exceptions.ReporterTest",
+      "org.mockito.exceptions.ReporterTest",
+      "org.mockito.exceptions.ReporterTest"
+    ]
+  },
+  {
+    "commit": "c5c7e8afc1fc8fcfb785294d0cad7cbdfc56b18e",
+    "build": 138331164,
+    "job": 138331165,
+    "tests": [
+      "org.mockitousage.verification.PrintingVerboseTypesWithArgumentsTest",
+      "org.mockitousage.verification.PrintingVerboseTypesWithArgumentsTest",
+      "org.mockitousage.verification.PrintingVerboseTypesWithArgumentsTest",
+      "org.mockitousage.verification.PrintingVerboseTypesWithArgumentsTest",
+      "org.mockitousage.serialization.DeepStubsSerializableTest",
+      "org.mockitousage.serialization.DeepStubsSerializableTest",
+      "org.mockitousage.serialization.DeepStubsSerializableTest",
+      "org.mockitousage.basicapi.MocksCreationTest",
+      "org.mockitousage.basicapi.MockingMultipleInterfacesTest",
+      "org.mockitousage.basicapi.ReplacingObjectMethodsTest",
+      "org.mockitousage.basicapi.MockingDetailsTest",
+      "org.mockitousage.basicapi.MockingDetailsTest",
+      "org.mockitousage.basicapi.MockingDetailsTest",
+      "org.mockitousage.basicapi.UsingVarargsTest",
+      "org.mockitousage.basicapi.UsingVarargsTest",
+      "org.mockitousage.basicapi.UsingVarargsTest",
+      "org.mockitousage.basicapi.UsingVarargsTest",
+      "org.mockitousage.basicapi.UsingVarargsTest",
+      "org.mockitousage.basicapi.UsingVarargsTest",
+      "org.mockitousage.basicapi.UsingVarargsTest",
+      "org.mockitousage.basicapi.UsingVarargsTest",
+      "org.mockitousage.basicapi.UsingVarargsTest",
+      "org.mockitousage.basicapi.UsingVarargsTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.basicapi.MocksSerializationForAnnotationTest",
+      "org.mockitousage.packageprotected.MockingPackageProtectedTest",
+      "org.mockitousage.misuse.SpyStubbingMisuseTest",
+      "org.mockitousage.misuse.DetectingMisusedMatchersTest",
+      "org.mockitousage.misuse.DetectingMisusedMatchersTest",
+      "org.mockitousage.misuse.DetectingMisusedMatchersTest",
+      "org.mockitousage.misuse.DetectingFinalMethodsTest",
+      "org.mockitousage.misuse.DescriptiveMessagesOnMisuseTest",
+      "org.mockitousage.misuse.InvalidUsageTest",
+      "org.mockitousage.matchers.ReflectionMatchersTest",
+      "org.mockitousage.matchers.ReflectionMatchersTest",
+      "org.mockitousage.matchers.ReflectionMatchersTest",
+      "org.mockitousage.matchers.ReflectionMatchersTest",
+      "org.mockitousage.matchers.ReflectionMatchersTest",
+      "org.mockitousage.matchers.ReflectionMatchersTest",
+      "org.mockitousage.matchers.ReflectionMatchersTest",
+      "org.mockitousage.matchers.ReflectionMatchersTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.CapturingArgumentsTest",
+      "org.mockitousage.matchers.GenericMatchersTest",
+      "org.mockitousage.stubbing.ReturningDefaultValuesTest",
+      "org.mockitousage.stubbing.ReturningDefaultValuesTest",
+      "org.mockitousage.stubbing.StubbingReturnsSelfTest",
+      "org.mockitousage.stubbing.StubbingReturnsSelfTest",
+      "org.mockitousage.stubbing.StubbingReturnsSelfTest",
+      "org.mockitousage.stubbing.StubbingReturnsSelfTest",
+      "org.mockitousage.stubbing.StubbingReturnsSelfTest",
+      "org.mockitousage.stubbing.StubbingReturnsSelfTest",
+      "org.mockitousage.stubbing.StubbingReturnsSelfTest",
+      "org.mockitousage.stubbing.StubbingReturnsSelfTest",
+      "org.mockitousage.stubbing.StubbingReturnsSelfTest",
+      "org.mockitousage.stubbing.CallingRealMethodTest",
+      "org.mockitousage.stubbing.CallingRealMethodTest",
+      "org.mockitousage.stubbing.CallingRealMethodTest",
+      "org.mockitousage.stubbing.CallingRealMethodTest",
+      "org.mockitousage.stubbing.CallingRealMethodTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.DeepStubbingTest",
+      "org.mockitousage.stubbing.BasicStubbingTest",
+      "org.mockitousage.stubbing.SmartNullsStubbingTest",
+      "org.mockitousage.stubbing.SmartNullsStubbingTest",
+      "org.mockitousage.stubbing.SmartNullsStubbingTest",
+      "org.mockitousage.stubbing.SmartNullsStubbingTest",
+      "org.mockitousage.puzzlers.BridgeMethodPuzzleTest",
+      "org.mockitousage.puzzlers.OverloadingPuzzleTest",
+      "org.mockitousage.PlaygroundWithDemoOfUnclonedParametersProblemTest",
+      "org.mockitousage.PlaygroundWithDemoOfUnclonedParametersProblemTest",
+      "org.mockitousage.customization.BDDMockitoTest",
+      "org.mockitousage.customization.BDDMockitoTest",
+      "org.mockitousage.customization.BDDMockitoTest",
+      "org.mockitousage.customization.BDDMockitoTest",
+      "org.mockitousage.customization.BDDMockitoTest",
+      "org.mockitousage.debugging.InvocationListenerCallbackTest",
+      "org.mockitousage.debugging.InvocationListenerCallbackTest",
+      "org.mockitousage.debugging.InvocationListenerCallbackTest",
+      "org.mockitousage.debugging.VerboseLoggingOfInvocationsOnMockTest",
+      "org.mockitousage.debugging.PrintingInvocationsWhenStubNotUsedTest",
+      "org.mockitousage.debugging.PrintingInvocationsDetectsUnusedStubTest",
+      "org.mockitousage.debugging.PrintingInvocationsWhenEverythingOkTest",
+      "org.mockitousage.constructor.CreatingMocksWithConstructorTest",
+      "org.mockitousage.constructor.CreatingMocksWithConstructorTest",
+      "org.mockitousage.constructor.CreatingMocksWithConstructorTest",
+      "org.mockitousage.constructor.CreatingMocksWithConstructorTest",
+      "org.mockitousage.constructor.CreatingMocksWithConstructorTest",
+      "org.mockitousage.constructor.CreatingMocksWithConstructorTest",
+      "org.mockitousage.constructor.CreatingMocksWithConstructorTest",
+      "org.mockitousage.constructor.CreatingMocksWithConstructorTest",
+      "org.mockitousage.spies.StubbingSpiesDoesNotYieldNPETest",
+      "org.mockitousage.spies.PartialMockingWithSpiesTest",
+      "org.mockitousage.spies.PartialMockingWithSpiesTest",
+      "org.mockitousage.spies.PartialMockingWithSpiesTest",
+      "org.mockitousage.spies.PartialMockingWithSpiesTest",
+      "org.mockitousage.spies.PartialMockingWithSpiesTest",
+      "org.mockitousage.spies.PartialMockingWithSpiesTest",
+      "org.mockitousage.spies.PartialMockingWithSpiesTest",
+      "org.mockitousage.spies.SpyingOnRealObjectsTest",
+      "org.mockitousage.annotation.SpyAnnotationTest",
+      "org.mockitousage.annotation.SpyAnnotationTest",
+      "org.mockitousage.annotation.SpyAnnotationTest",
+      "org.mockitousage.annotation.SpyAnnotationTest",
+      "org.mockitousage.annotation.SpyAnnotationTest",
+      "org.mockitousage.annotation.SpyAnnotationTest",
+      "org.mockitousage.annotation.SpyAnnotationTest",
+      "org.mockitousage.annotation.SpyAnnotationTest",
+      "org.mockitousage.annotation.SpyAnnotationTest",
+      "org.mockitousage.annotation.SpyAnnotationTest",
+      "org.mockitousage.annotation.InjectionOfInlinedMockDeclarationTest",
+      "org.mockitousage.annotation.InjectionOfInlinedMockDeclarationTest",
+      "org.mockitousage.annotation.InjectionOfInlinedMockDeclarationTest",
+      "org.mockitousage.annotation.InjectionOfInlinedMockDeclarationTest",
+      "org.mockitousage.annotation.MockInjectionUsingSetterOrPropertyTest",
+      "org.mockitousage.annotation.MockInjectionUsingSetterOrPropertyTest",
+      "org.mockitousage.annotation.MockInjectionUsingSetterOrPropertyTest",
+      "org.mockitousage.annotation.MockInjectionUsingSetterOrPropertyTest",
+      "org.mockitousage.annotation.MockInjectionUsingSetterOrPropertyTest",
+      "org.mockitousage.annotation.MockInjectionUsingSetterOrPropertyTest",
+      "org.mockitousage.annotation.MockInjectionUsingSetterOrPropertyTest",
+      "org.mockitousage.annotation.MockInjectionUsingSetterOrPropertyTest",
+      "org.mockitousage.annotation.MockInjectionUsingSetterOrPropertyTest",
+      "org.mockitousage.annotation.MockInjectionUsingSetterOrPropertyTest",
+      "org.mockitousage.annotation.MockInjectionUsingSetterOrPropertyTest",
+      "org.mockitousage.annotation.MockInjectionUsingSetterOrPropertyTest",
+      "org.mockitousage.annotation.MockInjectionUsingSetterOrPropertyTest",
+      "org.mockitousage.annotation.DeprecatedAnnotationEngineApiTest",
+      "org.mockitousage.annotation.DeprecatedAnnotationEngineApiTest",
+      "org.mockitousage.bugs.AIOOBExceptionWithAtLeastTest",
+      "org.mockitousage.bugs.ShouldNotDeadlockAnswerExecutionTest",
+      "org.mockitousage.bugs.ShouldNotDeadlockAnswerExecutionTest",
+      "org.mockitousage.bugs.varargs.VarargsNotPlayingWithAnyObjectTest",
+      "org.mockitousage.bugs.varargs.VarargsNotPlayingWithAnyObjectTest",
+      "org.mockitousage.bugs.varargs.VarargsNotPlayingWithAnyObjectTest",
+      "org.mockitousage.bugs.varargs.VarargsErrorWhenCallingRealMethodTest",
+      "org.mockitousage.bugs.CaptorAnnotationAutoboxingTest",
+      "org.mockitousage.bugs.CaptorAnnotationAutoboxingTest",
+      "org.mockitousage.bugs.NPEOnAnyClassMatcherAutounboxTest",
+      "org.mockitousage.bugs.deepstubs.DeepStubFailingWhenGenericNestedAsRawTypeTest",
+      "org.mockitousage.bugs.creation.ConstructorInvokingMethodShouldNotRaiseExceptionTest",
+      "org.mockitousage.bugs.creation.ConstructorInvokingMethodShouldNotRaiseExceptionTest",
+      "org.mockitousage.bugs.creation.ConstructorInvokingMethodShouldNotRaiseExceptionTest",
+      "org.mockitousage.bugs.NPEWhenMockingThrowablesTest",
+      "org.concurrentmockito.ThreadsRunAllTestsHalfManualTest",
+      "org.mockito.internal.handler.InvocationNotifierHandlerTest",
+      "org.mockito.internal.util.reflection.GenericArrayReturnTypeTest",
+      "org.mockito.internal.util.collections.HashCodeAndEqualsSafeSetTest",
+      "org.mockito.internal.util.collections.HashCodeAndEqualsSafeSetTest",
+      "org.mockito.internal.util.collections.HashCodeAndEqualsSafeSetTest",
+      "org.mockito.internal.util.collections.HashCodeAndEqualsSafeSetTest",
+      "org.mockito.internal.util.collections.HashCodeAndEqualsSafeSetTest",
+      "org.mockito.internal.util.collections.HashCodeAndEqualsSafeSetTest",
+      "org.mockito.internal.util.collections.HashCodeAndEqualsSafeSetTest",
+      "org.mockito.internal.util.collections.HashCodeAndEqualsSafeSetTest",
+      "org.mockito.internal.util.collections.HashCodeAndEqualsSafeSetTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsMocksTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsMocksTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsMocksTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsMocksTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsMocksTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsGenericDeepStubsTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsGenericDeepStubsTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsGenericDeepStubsTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsGenericDeepStubsTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsGenericDeepStubsTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsGenericDeepStubsTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsGenericDeepStubsTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsGenericDeepStubsTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsSmartNullsTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsSmartNullsTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsSmartNullsTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsSmartNullsTest",
+      "org.mockito.internal.stubbing.defaultanswers.ReturnsSmartNullsTest",
+      "org.mockito.internal.stubbing.defaultanswers.ForwardsInvocationsTest",
+      "org.mockito.internal.stubbing.defaultanswers.ForwardsInvocationsTest",
+      "org.mockito.internal.creation.bytebuddy.ByteBuddyMockMakerTest",
+      "org.mockito.internal.creation.bytebuddy.ByteBuddyMockMakerTest",
+      "org.mockito.internal.creation.bytebuddy.ByteBuddyMockMakerTest",
+      "org.mockito.internal.creation.bytebuddy.ByteBuddyMockMakerTest",
+      "org.mockito.internal.creation.bytebuddy.ByteBuddyMockMakerTest",
+      "org.mockito.internal.creation.bytebuddy.ByteBuddyMockMakerTest"
+    ]
+  },
+  {
+    "commit": "530b3f97c0f411b44aa5b2998110dd49bdbdb367",
+    "build": 14896666,
+    "job": 14896667,
+    "tests": [
+      "org.mockitoutil.ClassLoadersTest",
+      "org.mockitoutil.ClassLoadersTest"
+    ]
+  },
+  {
+    "commit": "8fc9b5da2156cc8c038f2e2431459127b0901e1f",
+    "build": 147253538,
+    "job": 147253539,
+    "tests": [
+      "org.mockitousage.verification.VerificationWithTimeoutTest"
+    ]
+  },
+  {
+    "commit": "7dffb07dc11f3a7e314d671219a83b1673bcb134",
+    "build": 107600323,
+    "job": 107600324,
+    "tests": [
+      "org.concurrentmockito.ThreadsRunAllTestsHalfManualTest"
+    ]
+  },
+  {
+    "commit": "1e569e1701755ba9fcf28e060e1bb0f8e2205520",
+    "build": 37309390,
+    "job": 37309391,
+    "tests": [
+      "org.mockito.junit.MockitoJUnitRuleTest"
+    ]
+  },
+  {
+    "commit": "7f3a64a1702ae9fce811e138cfa796c2a8c13583",
+    "build": 138705658,
+    "job": 138705659,
+    "tests": [
+      "org.mockitousage.verification.VerificationWithTimeoutTest"
+    ]
+  },
+  {
+    "commit": "9caea2b929ef9cad82ee5c50852452a21084c8b5",
+    "build": 32705094,
+    "job": 32705095,
+    "tests": [
+      "org.mockitousage.verification.VerificationAfterDelayTest"
+    ]
+  },
+  {
+    "commit": "38aac60f41c1533e0fab74e633bbfe5ec1af1d5d",
+    "build": 33446973,
+    "job": 33446974,
+    "tests": [
+      "org.mockitousage.misuse.DetectingFinalMethodsTest"
+    ]
+  },
+  {
+    "commit": "6607ff62c863e9d0f8856811cf0d58b0f11ca429",
+    "build": 32793891,
+    "job": 32793892,
+    "tests": [
+      "org.mockitousage.misuse.DetectingFinalMethodsTest"
+    ]
+  },
+  {
+    "commit": "a616ac4a55ca5e6fc3c9913b3a20dc52da8fe88d",
+    "build": 41831620,
+    "job": 41831621,
+    "tests": [
+      "org.mockitousage.constructor.CreatingMocksWithConstructorTest",
+      "org.mockitousage.constructor.CreatingMocksWithConstructorTest",
+      "org.mockitousage.constructor.CreatingMocksWithConstructorTest"
+    ]
+  },
+  {
+    "commit": "ec81f2cfe4e87d9a5552511d99dc45c8bc056df4",
+    "build": 32780557,
+    "job": 32780558,
+    "tests": [
+      "org.mockito.verification.TimeoutTest"
+    ]
+  },
+  {
+    "commit": "500519aac4cc13770aa47c1eb7d28e905c27e7aa",
+    "build": 32742437,
+    "job": 32742438,
+    "tests": [
+      "org.mockitousage.verification.VerificationAfterDelayTest"
+    ]
+  },
+  {
+    "commit": "c8f85a9d6c2b3f0e61ddafdc8688d9f0f8ea65d9",
+    "build": 41109991,
+    "job": 41109992,
+    "tests": [
+      "org.mockitousage.bugs.ParentClassNotPublicTest"
+    ]
+  },
+  {
+    "commit": "58a9d2933acfbfd74f2001d8d035ecf55f1ad390",
+    "build": 147249131,
+    "job": 147249132,
+    "tests": [
+      "org.mockitousage.verification.VerificationWithTimeoutTest"
+    ]
+  },
+  {
+    "commit": "f4b1bb051c74578fe9d5162c0f7061fe358eb969",
+    "build": 32802649,
+    "job": 32802650,
+    "tests": [
+      "org.mockito.verification.TimeoutTest"
+    ]
+  },
+  {
+    "commit": "29ff6b6f80d91fd9ead2a9298686d8a8849ad161",
+    "build": 102600961,
+    "job": 102600962,
+    "tests": [
+      "org.mockitousage.junitrule.VerificationCollectorImplTest"
+    ]
+  },
+  {
+    "commit": "4e108fcb470f2683a2fd1607c952e96edb099c7b",
+    "build": 139572662,
+    "job": 139572664,
+    "tests": [
+      "org.mockitousage.verification.VerificationWithTimeoutTest"
+    ]
+  },
+  {
+    "commit": "cb6821e2fd7ec80ac2654f439cf8463f437d5bc2",
+    "build": 29440690,
+    "job": 29440691,
+    "tests": [
+      "org.mockitousage.bugs.ParentClassNotPublicVeryWeirdBugTest"
+    ]
+  },
+  {
+    "commit": "d36fce040d812072490e4b7e595cd71bc2b38038",
+    "build": 68759625,
+    "job": 68759626,
+    "tests": [
+      "org.mockitousage.verification.VerificationAfterDelayTest"
+    ]
+  },
+  {
+    "commit": "9a68ef84048dd9c4bb4e4fb8fe59e6f7c43cb20f",
+    "build": 148189852,
+    "job": 148189853,
+    "tests": [
+      "org.mockitousage.verification.VerificationWithTimeoutTest"
+    ]
+  },
+  {
+    "commit": "fd50a61cd28c72c5199d325e23c126c476ce7702",
+    "build": 32826456,
+    "job": 32826457,
+    "tests": [
+      "org.mockitousage.misuse.DetectingFinalMethodsTest"
+    ]
+  },
+  {
+    "commit": "98d83ecc13f441265581cc3571f8035bf4cdf9a5",
+    "build": 146799023,
+    "job": 146799024,
+    "tests": [
+      "org.mockitousage.junitrunner.UnusedStubsExceptionMessageTest"
+    ]
+  },
+  {
+    "commit": "cb645cfd157eaaed61436dda012d95f2fd7ec7fe",
+    "build": 65332627,
+    "job": 65332628,
+    "tests": [
+      "org.concurrentmockito.ThreadsRunAllTestsHalfManualTest",
+      "org.mockitousage.basicapi.MockingMultipleInterfacesTest",
+      "org.mockito.internal.creation.bytebuddy.CachingMockBytecodeGeneratorTest"
+    ]
+  },
+  {
+    "commit": "a938557a7f789339aa7baf87b6a334e2d8b0dbef",
+    "build": 14923479,
+    "job": 14923480,
+    "tests": [
+      "org.mockitousage.bugs.ParentClassNotPublicVeryWeirdBugTest"
+    ]
+  },
+  {
+    "commit": "f6f60e5b2683e0f7abcfb5f48ac6f55705fa73d0",
+    "build": 148158123,
+    "job": 148158124,
+    "tests": [
+      "org.mockitousage.verification.VerificationWithTimeoutTest"
+    ]
+  }
+]
