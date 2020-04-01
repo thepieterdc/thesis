@@ -1,0 +1,59 @@
+% !TeX root = ../../thesis.tex
+
+\subsection{Test Suite Assessment}
+
+\subsubsection{Coverage}
+\noindent The most frequently used metric to measure the effectiveness and thoroughness of a test suite is the \emph{code coverage} or \emph{test coverage} \cite[p.~467]{8016712}. The test coverage is expressed as a percentage and indicates which fraction of the application code is affected by code in the test suite. Internally, this works by augmenting every statement in the application code using binary instrumentation. A hook is inserted before and after every statement to keep track of which statements are executed during tests. Many different criteria exist to interpret these instrumentation results and thus to express the fraction of covered code \cite{Myers:2011:AST:2161638}, the most commonly used ones are \emph{statement coverage} and \emph{branch coverage}.
+
+\paragraph*{Statement coverage} expresses the fraction of code statements that are executed in any test of the test suite \cite{6588537}, out of all executable statements in the application code. Analogously, the fraction of lines covered by a test may be used to calculate the \emph{line coverage} percentage. Since one statement can span multiple lines and one line may also contain more than one statement, both of these criteria implicitly represent the same value. Statement coverage is heavily criticised in literature \cite[p.~37]{Myers:2011:AST:2161638}, since it is possible to achieve a statement coverage percentage of 100\% on a code fragment which can be proven to be incorrect. Consider the code fragment in \autoref{lst:statement-coverage-fail}. If a test would call the \texttt{example}-function with arguments $\{a = 1, b = 2\}$, the test will pass and every statement will be covered, resulting in a statement coverage of 100\%. However, it is clear to see that if the function would be called with arguments $\{a = 0, b = 0\}$, a \emph{division-by-zero} error would be raised, resulting in a crash. This very short example already indicates that statement coverage is not trustworthy, yet it may still be useful for other purposes, such as detecting unreachable code which may safely be removed.
+
+\begin{listing}
+	\begin{lstlisting}[language=C]
+		int example(int a, int b) {
+			if (a == 0 || b != 0) {
+				return a / b;
+			}
+		}
+	\end{lstlisting}
+	\captionsetup{skip=-2pt}
+	\caption{Example of irrelevant statement coverage in C.}
+	\label{lst:statement-coverage-fail}
+\end{listing}
+
+\paragraph*{Branch coverage} on the other hand, requires that every branch of a conditional statement is traversed at least once \cite[p.~37]{Myers:2011:AST:2161638}. For an \texttt{if}-statement, this results in two tests being required, one for every possible outcome of the condition (\texttt{true} or \texttt{false}). For a \texttt{loop}-statement, this requires a test case in which the loop body is never executed and another test case in which the loop body is always executed. Remark that while this criterion is stronger than statement coverage, it is still not sufficiently strong to detect the bug in \autoref{lst:statement-coverage-fail}. In order to mitigate this, \emph{multiple-condition coverage} \cite[p.~40]{Myers:2011:AST:2161638} is used. This criterion requires that for every conditional statement, every possible combination of subexpressions is evaluated at least once. Applied to \autoref{lst:statement-coverage-fail}, the \texttt{if}-statement is only covered if the following four cases are tested, which is sufficient to detect the bug.
+\begin{itemize}
+	\item $a = 0, b = 0$
+	\item $a = 0, b \neq 0$
+	\item $a \neq 0, b = 0$
+	\item $a \neq 0, b \neq 0$
+\end{itemize}
+
+\noindent It should be self-evident that achieving and maintaining a coverage percentage of 100\% at all times is critical. However, this does not necessarily imply that all lines, statements or branches need to be covered explicitly \cite{dein_2019}. Some parts of the code might simply be irrelevant or untestable. Examples include wrapper or delegation methods that simply call a library function. All major programming languages have frameworks and libraries available to collect coverage information during test execution, and each of these frameworks allows the developer to exclude parts of the code from the final coverage calculation. As of today, the most popular options are JaCoCo\footnote{\url{https://www.jacoco.org/jacoco/}} for Java, coverage.py\footnote{\url{https://github.com/nedbat/coveragepy}} for Python and simplecov\footnote{\url{https://github.com/colszowka/simplecov}} for Ruby. These frameworks are able to generate in-depth statistics on which parts of the code are covered and which parts require more tests, as illustrated in \autoref{fig:coverage-statistics}.
+
+\subsubsection{Mutation testing}
+Whereas code coverage can be used to identify whether or not a part of the code is affected by the tests, \emph{mutation testing} \cite{5487526} can be used to determine the resilience of the test suite. This technique creates several syntactically different instances of the source code, referred to as \emph{mutants}. These mutants can be obtained by applying one or more \emph{mutation operators} to the code. These mutation operators are aimed at simulating typical mistakes that developers tend to make, including the introduction of off-by-one errors, removal of statements, logical connector replacement, etc. The \emph{mutation order} refers to the amount of mutation operators that have been applied to a single instance of code. Typically no more than four operators are used simultaneously.
+
+Leg proces uit.
+
+TODO ADD FIGUUR 2 VAN P3 mutation testing om process te tonen
+
+Bereken score (toon formule)
+
+Ideaal moet score 100\% zijn bij perfecte test suite.
+
+\begin{figure}[htbp!]
+	\centering
+	\subfloat[JaCoCo coverage report of \url{https://github.com/thepieterdc/dodona-api-java}]{%
+		\includegraphics[clip,width=\textwidth]{assets/coverage-jacoco.pdf}
+	}
+	\newline
+	\subfloat[coverage.py report of \url{https://github.com/codecov/example-python}]{%
+		\includegraphics[clip,width=\textwidth]{assets/coverage-coveragepy.pdf}
+	}
+	\newline
+	\subfloat[simplecov report of \url{https://github.com/dodona-edu/dodona}]{%
+		\includegraphics[clip,width=\textwidth]{assets/coverage-simplecov.pdf}
+	}
+	\caption{Statistics from Code coverage tools}
+	\label{fig:coverage-statistics}
+\end{figure}

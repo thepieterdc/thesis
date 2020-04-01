@@ -1,4 +1,4 @@
-name: Latex
+name: LaTeX
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: blang/latex
+      image: janstuemmel/latex
 
     steps:
     - uses: actions/checkout@v1
