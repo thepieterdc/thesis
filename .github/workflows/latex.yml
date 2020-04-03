@@ -14,13 +14,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Install packages
+      run: |
+        apt-get update
+        apt-get install poppler-utils
     - name: Compile paper
       working-directory: ./paper
       run: |
         latexmk --shell-escape -pdf thesis.tex
-    - name: Wordcount
+    - name: Count words
       working-directory: ./paper
-      run: sh wordcount.sh  
+      run: sh wordcount.sh
     - uses: actions/upload-artifact@master
       with:
         name: paper.pdf
