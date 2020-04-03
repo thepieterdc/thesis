@@ -18,6 +18,9 @@ jobs:
       working-directory: ./paper
       run: |
         latexmk --shell-escape -pdf thesis.tex
+    - name: Wordcount
+      working-directory: ./paper
+      run: sh wordcount.sh  
     - uses: actions/upload-artifact@master
       with:
         name: paper.pdf
