@@ -1,6 +1,21 @@
 % !TeX root = ../thesis.tex
 
 \section{Algorithms}
-In \autoref{ssec:tsm} I have already mentioned that applying Test Suite Minimisation is essentially the same as finding the minimal hitting set of the test suite and the set of requirements, which is an NP-complete problem. Therefore, we require the use of \emph{heuristics} that are already known to literature to solve other, related problems. A heuristic is an experience-based method that can be used to solve a hard to compute problem by finding a fast approximation \cite{6588537}. However, the found solution will mostly be suboptimal or might sometimes even fail to find any solution at all.
+In \autoref{ssec:tsm} I have already mentioned that applying Test Suite Minimisation is essentially the same as finding the minimal hitting set of the test suite and the set of requirements, which is an NP-complete problem. Therefore, we require the use of \emph{heuristics} that are already known to literature to solve other, related problems. A heuristic is an experience-based method that can be used to solve a hard to compute problem by finding a fast approximation \cite{6588537}. However, the found solution will mostly be suboptimal or might sometimes even fail to find any solution at all. Below I will discuss a selection of these algorithms, it should be noted however that the names of the variables might have been changed for the sake of consistency. The following naming convention will be used:
+
+\begin{itemize}
+	\item $C$: the set of all lines in the application source code that are covered by at least one test case $t \in TS$.
+		\begin{itemize}
+			\item $CT_l$ denotes the set of all tests $t \in TS$ that cover source code line $l \in C$.
+		\end{itemize}
+	\item $RS$: the set of test cases that have been selected by the algorithm.
+	\item $TS$: the set of all test cases in the test suite.
+		\begin{itemize}
+			\item $TL_t$ denotes the set of all source code lines that are covered by test $t \in TS$.
+		\end{itemize}
+\end{itemize}
 
 \input{related-work/algorithms/greedy.tex}
+\newpage
+\input{related-work/algorithms/hgs.tex}
+\input{related-work/algorithms/rocket.tex}

@@ -42,7 +42,7 @@ Whereas code coverage can be used to identify whether or not a part of the code 
 	\label{fig:mutation-testing}
 \end{figure}
 
-\noindent After every mutant has either been killed or marked equivalent to the original problem, a \emph{mutation score} is calculated using \autoref{eq:mutant-score}. In a perfect test suite, this score should be equal to 1, indicating that the test suite was able to detect every mutant. 
+\noindent After every mutant has either been killed or marked equivalent to the original problem, the test suite is assigned a \emph{mutation score} which is calculated using \autoref{eq:mutant-score}. In an ideal test suite, this score should be equal to 1, indicating that the test suite was able to detect every mutant. 
 
 \begin{equation}\label{eq:mutant-score}
 	\text{Mutant Score} = \frac{\text{killed mutants}}{\text{non-equivalent mutants}}

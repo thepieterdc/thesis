@@ -2,7 +2,7 @@
 
 \subsection{\tsm{}}
 \label{ssec:tsm}
-\tsm{}, also referred to as \emph{Test Suite Reduction}, aims to reduce the size of the test suite by permanently removing redundant tests. This problem is formally defined by Rothermel in \autoref{def:tsm} \cite{10.1002/stv.430}. 
+\tsm{}, also referred to as \emph{Test Suite Reduction}, aims to reduce the size of the test suite by permanently removing redundant tests. This problem is formally defined by Rothermel in \autoref{def:tsm} \cite{10.1002/stv.430} and illustrated in \autoref{fig:tsm}. 
 
 \begin{definition}[\tsm{}]
 \label{def:tsm}
@@ -15,6 +15,14 @@
 
 \noindent \tsm{} is then defined as the task of finding a set $T'$ of test cases $t_j \in T$ that satisfies all requirements $r_i$.
 \end{definition}
+
+
+\begin{figure}[htbp!]
+	\centering
+	\includegraphics[width=0.45\textwidth]{assets/placeholder.pdf}
+	\caption{\tsm{}}
+	\label{fig:tsm}
+\end{figure}
 
 \noindent If we apply this definition to the concepts introduced in \autoref{chap:software-engineering}, the requirements $R$ can be interpreted as lines in the codebase that must be covered. With respect to the definition, a requirement can be satisfied by any test $t_j$ that belongs to subset $T_i$ of $T$. Observe that the problem of finding $T'$ is closely related to the \emph{hitting set problem} (\autoref{def:hitting-set}) \cite{10.1002/stv.430}.
 
