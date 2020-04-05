@@ -1,0 +1,14 @@
+% !TeX root = ../../thesis.tex
+
+\subsection{HGS}
+The second algorithm was created by Harrold, Gupta and Soffa \cite{hgs}. This algorithm constructs the minimal hitting set of the test suite in an iterative fashion. As opposed to the greedy algorithm (\autoref{ssec:alg-greedy}), the HGS algorithm considers the set $CT_l$ instead of the $TL_t$ set to obtain a list of test cases that cover all source code lines. The pseudocode for this algorithm is provided in Algorithm \autoref{alg:hgs}.\\
+
+\noindent Similar to the previous algorithm, an empty set $RS$ is constructed in which the selected test cases will be stored. The algorithm begins by iterating over every source code line $l \in C$ and constructing the corresponding set of covering test cases $CT_l$. Next, the algorithm selects every set $CT_l$ of which the cardinality is equal to 1 and adds these to $RS$. This corresponds to every test case that covers a line of code, which is only covered by that test case. Subsequently, the lines that are covered by any of the selected test cases are removed from $C$. This process is repeated for an incremented cardinality, until every line in $C$ is covered. Since the sets $CT_l$ will now contain more than one test case, the algorithm needs to make a choice on which test case to select. The authors have chosen that the test case that occurs in the most $CT_l$ sets is preferred. In the event of a tie, this choice is deferred until the next iteration. The time complexity of this algorithm is $O(n * MAX\_CARD)$, where $n$ corresponds to the amount of source code lines and $MAX\_CARD$ refers to the cardinality of the largest $CT_l$ set.
+
+\begin{algorithm}[h!]
+\caption{HGS algorithm}
+\label{alg:hgs}
+\begin{algorithmic}[1]
+	\State TODO (see hgs paper p276)
+\end{algorithmic}
+\end{algorithm}
