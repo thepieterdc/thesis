@@ -4,7 +4,7 @@
 \label{ssec:alg-rocket}
 In contrast to the previously discussed algorithms which focused on \tsm{}, the ROCKET algorithm is tailored for \tcp{}. This algorithm was presented by Marijan, Gotlieb and Sen \cite{6676952} as part of a case study to improve the testing efficiency of industrial video conferencing software. Unlike the previous algorithms that only take code coverage into account, this algorithm also considers historical failure data and test execution time. The objective of this algorithm is twofold: select the test cases with the highest consecutive failure rate, whilst also maximising the number of executed test cases in a limited time frame\footnote{This timeframe is a domain-specific constraint for this particular industry case and will be omitted in this thesis}. Since this is a prioritisation algorithm rather than a minimisation algorithm, it yields a total ordering of all the test cases in the test suite, ordered using a weighted function.\\
 
-\noindent (TODO describe the algorithm)
+The algorithm takes four inputs. 
 
 \begin{algorithm}[h!]
 \caption{ROCKET algorithm}
