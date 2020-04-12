@@ -1,0 +1,25 @@
+% !TeX root = ../../thesis.tex
+
+\subsection{Gradle and JUnit}
+Gradle\footnote{\url{https://gradle.org}} is a dependency manager and application framework for Java, Groovy and Kotlin projects. Gradle supports multiple plugins to automate tedious tasks, such as configuration management, testing and deploying. One of the supported testing integrations is \junit{\footnote{\url{https://junit.org}}, which is the most widely used unit testing framework by Java developers. \junit{} 5 is the newest version which is still actively being developed as of today. The framework is integrated as the testing framework of choice in several other Java libraries and frameworks, such as Android and Spring. \junit{} offers mediocre support for features that optimise the execution of the test cases, especially when used in conjunction with Gradle. The following three key features are available:
+\begin{enumerate}
+	\item \textbf{Parallel test execution:} JUnit comes bundled with multiple test processors that are responsible for processing test classes and to execute the test cases. One of these test processors is the \texttt{MaxNParallelTestClassProcessor}, which is capable of running a configurable amount of test cases in parallel. This results in a major speed-up of the overall test suite execution.
+
+	\item \textbf{Prioritise failed test cases:} Another test class processor which is provided by Gradle, is the \texttt{RunPreviousFailedFirstTestClassProcessor}. This processor will prioritise test cases that have failed in the previous run, similar to the idea of the ROCKET-algorithm (\autoref{ssec:alg-rocket}), albeit without taking into account the duration of these test cases.
+	
+	\item \textbf{Test order specification:} JUnit allows the user to specify the order in which test cases will be executed\footnote{\url{https://junit.org/junit5/docs/current/user-guide/\#writing-tests-test-execution-order}}. By default, a random yet deterministic order is used. The order can be manipulated by annotating the test class with the \texttt{@TestMethodOrder}-annotation, or by annotating individual test cases with the \texttt{@Order(int)}-annotation. This feature can only be used to alter the order of test cases within the same test class, it is not possible to perform inter-test class reordering. This feature could be used to sort test cases based on their execution time.
+\end{enumerate}
+
+\begin{figure}[htbp!]
+	\centering
+	\begin{minipage}{.45\textwidth}
+		\centering
+		\includegraphics[width=0.8\textwidth]{assets/gradle.pdf}
+		\caption{Logo of Gradle}
+	\end{minipage}
+	\begin{minipage}{.45\textwidth}
+		\centering
+		\includegraphics[width=0.6\textwidth]{assets/junit.pdf}
+		\caption{Logo of JUnit 5}
+	\end{minipage}
+\end{figure}

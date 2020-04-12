@@ -12,7 +12,7 @@ The second algorithm was created by Harrold, Gupta and Soffa \cite{hgs}. This al
 \begin{algorithmic}[1]
 	\State {\bfseries Input:} Distinct test groups $T_1, \dots T_n \in CDT$, containing test cases from $TS$.
 	\State {\bfseries Output:} Subset $RS \subseteq TS$ of tests to execute.
-	\State $marked \gets array[1 \dots n]$ (initially $false$)
+	\State $marked \gets array[1 \dots n]$ \Comment{initially $false$}
 	\State $MAX\_CARD \gets max \{Card(T_i) \vert T_i \in CDT\}$
 	\State $RS \gets \bigcup \{ T_i \vert Card(T_i) = 1 \}$
 	\ForAll{$T_i \in CDT$}
@@ -49,7 +49,7 @@ The second algorithm was created by Harrold, Gupta and Soffa \cite{hgs}. This al
 		
 		\If{$|tests| = 1$} \Return $tests[0]$
 		\ElsIf{$|tests| = MAX\_CARD$} \Return $tests[0]$
-		\Else\mbox{} \Return $SelectTest(size+1, tests)$
+		\Else{} \Return $SelectTest(size+1, tests)$
 		\EndIf
 	\EndFunction
 \end{algorithmic}
