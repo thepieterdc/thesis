@@ -1,6 +1,6 @@
 % !TeX root = ../../thesis.tex
 
-\subsection{Gradle and JUnit}
+\subsection{Gradle and JUnit}\label{ssec:relatedwork-gradle-junit}
 Gradle\footnote{\url{https://gradle.org}} is a dependency manager and application framework for Java, Groovy and Kotlin projects. Gradle supports multiple plugins to automate tedious tasks, such as configuration management, testing and deploying. One of the supported testing integrations is \junit{\footnote{\url{https://junit.org}}, which is the most widely used unit testing framework by Java developers. \junit{} 5 is the newest version which is still actively being developed as of today. The framework is integrated as the testing framework of choice in several other Java libraries and frameworks, such as Android and Spring. \junit{} offers mediocre support for features that optimise the execution of the test cases, especially when used in conjunction with Gradle. The following three key features are available:
 \begin{enumerate}
 	\item \textbf{Parallel test execution:} JUnit comes bundled with multiple test processors that are responsible for processing test classes and to execute the test cases. One of these test processors is the \texttt{MaxNParallelTestClassProcessor}, which is capable of running a configurable amount of test cases in parallel. This results in a major speed-up of the overall test suite execution.
