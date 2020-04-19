@@ -1,4 +1,53 @@
 % !TeX root = ../thesis.tex
 
 \section{Alpha algorithm}
-// TODO leg algoritme uit net zoals bij related work.
+Besides the algorithms which have been presented in \autoref{sec:relatedwork-algorithms}, an additional algorithm has been implemented: the \emph{Alpha} algorithm. This was constructed by examining the philosophy behind every discussed algorithm and subsequently combining the best ideas into a novel prioritisation algorithm. The specification below will assume the same naming convention as described in \autoref{def:alg-naming}. The pseudocode is provided in Algorithm \ref{alg:alpha}\\
+
+\noindent The algorithm takes the following inputs:
+\begin{itemize}
+	\item the set of all $n$ test cases: $TS = \{T_1, \dots, T_n\}$
+	
+	\item the set of $m$ \emph{affected} test cases: $AS = \{A_1, \dots, A_m\} \subseteq TS$. A test case $A$ is considered ``affected'' if any source code line which is covered by $A$ has been modified or removed in the commit that is being predicted.
+	
+	\item $C$: the set of all lines in the application source code, for which a test case $t \in TS$ exists that covers this line and that has not yet been prioritised. Initially, this set contains every covered source code line.
+	
+	\item the failure status of every test case, for every past execution out of $k$ executions of that test case: $F = \{F_1, \dots, F_n\}$, where $F_i = \{f_1, \dots, f_k\}$. $F_{tj} = 1$ implies that test case $t$ has failed in execution $j$.
+	
+	\item the execution time of test case $t \in TS$ for run $r \in [1 \dots k]$, in milliseconds: $D_{tr}$.
+\end{itemize}
+
+\noindent The first step of the algorithm is to determine the execution time $E_t$ of every test case $t$. This execution time is calculated as the average of the durations of every successful (i.e.) execution of $t$, since a test case will be prematurely aborted upon the first failed assertion, which introduces bias in the duration timings. In case $t$ has never been executed successfully, the average is computed over every execution of $t$.
+
+\[
+E_t = \left\{
+\begin{array}{rl}
+avg(\{D_{ti} \vert i \in [1 \dots k], F_{ti} = 0\}) & \exists j \in [1 \dots k] : F_{ti} = 0 \\
+avg(\{D_{ti} \vert i \in [1 \dots k]\}) & \text{otherwise}
+\end{array}
+\right\}
+\]
+
+\noindent (TODO vermeld hier ergens bij dat eerste stap afgeleid is uit ROCKET)\\
+\noindent (TODO vermeld ergens dat test groups beschouwd worden ipv individuele test cases zoals in HGS)\\
+
+\noindent Next, the algorithm executes every affected test case that has also failed at least once in its three previous executions. This reflects the behaviour of a developer attempting to resolve the bug that caused the test case to fail. Specifically executing \emph{affected} failing test cases first is required in case multiple test cases are failing and the developer is solving resolving these one by one. In case there are multiple affected failing test cases, the test cases are prioritised according to ascending execution time. $C$ is updated after every considered test case.\\
+
+\noindent Afterwards, the same step is repeated for every failed, but unaffected test case, again ordered by ascending execution time. Where the previous step helps developers to get fast feedback about whether or not the specific failing test case they were working on has been resolved, this step ensures that other failing test cases are not forgotten and are executed early in the run as well. After every prioritised test case, $C$ is updated by subtracting the code lines that are covered by at least one of these test cases.\\
+
+(TODO)
+
+\begin{itemize}
+	\item Research (zie travistorrent in result sectie) heeft aangetoond dat maar bepaald percentage (reken uit; vrij laag) van test cases faalt $\Rightarrow$ In meeste situaties zal deze stap het meeste tijd in beslag nemen: voer alle affected test cases uit die niet gefaald zijn (want gefaalde zijn hierboven al uitgevoerd geweest), op volgorde van de resterende intersectie met C aangezien dat geupdate is geweest $\Rightarrow$ mogelijks schiet er niet eens meer een affected test case over ~ idee uit greedy algoritme
+	
+	\item Daarna, voer alle test cases uit die lijnen coveren die nog steeds niet gecoverd zijn op volgorde van grootste intersectie met C.
+	
+	\item Daarna, voer al de rest uit, als er nog iets is. $\Rightarrow$ Deze tests zijn eigenlijk redundant
+\end{itemize}
+
+\begin{algorithm}[h!]
+	\caption{Alpha algorithm for \tcp{}}
+	\label{alg:alpha}
+	\begin{algorithmic}[1]
+		\State TODO
+	\end{algorithmic}
+\end{algorithm}
