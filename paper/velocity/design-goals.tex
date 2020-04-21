@@ -1,9 +1,11 @@
 % !TeX root = ../thesis.tex
 
 \section{Design goals}
-\velocity{} has been implemented with three design goals in mind:
+\velocity{} has been implemented with four design goals in mind:
 \begin{enumerate}
 	\item \textbf{Extensibility:} It should be possible and straightforward to support additional \CI{} systems, programming languages and test frameworks. Subsequently, a clear interface should be provided to integrate additional prioritisation algorithms.
+	
+	\item \textbf{Minimally invasive:} Integrating \velocity{} into an existing test suite should not require drastic changes to any of the test cases.
 	
 	\item \textbf{Language agnosticism:} This design goal is related to the framework being extensible. The implemented tools should not need to be aware of the programming language of the source code, nor the used test framework.
 	

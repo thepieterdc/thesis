@@ -67,7 +67,7 @@ $$P_j = \sum_{i = 1 \dots m} MF[i, j] * \omega_i$$
 	\ForAll{$i \in 1 \dots m$}
 		\State $MF[i] \gets array[1 \dots n]$
 		\ForAll{$j \in 1 \dots n$}
-			\If{test $T_j$ failed in run $(current - i)$} $MF[i][j] \gets -1$
+			\If{test case $T_j$ failed in run $(current - i)$} $MF[i][j] \gets -1$
 			\Else{} $MF[i][j] \gets 1$
 			\EndIf
 		\EndFor

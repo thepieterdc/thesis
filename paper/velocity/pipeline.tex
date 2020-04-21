@@ -1,14 +1,41 @@
 % !TeX root = ../thesis.tex
 
 \section{Pipeline}
-(TODO zoom in op elke stap uit bovenstaande figuur)
+This section will elaborate on the individual steps of the pipeline. The steps will be discussed by manually executing the pipeline that has hypothetically been implemented on a Java project. For the sake of simplicity, this explanation will assume a steady-state situation, ensuring the existence of at least one completed run of this project in the database at the controller side.
+
+\subsection{Initialisation}
+As was explained before, the provided Java implementation of the agent was designed to be used in conjunction with Gradle. In order to integrate \velocity{} into a Gradle project, the build script (\texttt{build.gradle}) should be modified in two places. The first change is to include and apply the plugin in the header of the file. Afterwards, the plugin requires three properties to be configured:
+\begin{itemize}
+	\item \texttt{base} the path to the Java source files, relative to the location of the build script. This will typically resemble \texttt{src/main/java}.
+	
+	\item \texttt{repository} the url to the git repository at which the project is hosted. This is required in subsequent steps of the pipeline, to detect which code lines have been changed in the commit currently being analysed.
+	
+	\item \texttt{server} the url at which the controller can be reached.
+\end{itemize}
+
+\noindent \autoref{lst:pipeline-buildgradle} contains a minimal integration of the agent in a Gradle build script, applied to a library for generating random numbers\footnote{\url{https://github.com/thepieterdc/random-java}}}. The controller is hosted at the same host as the agent and is accessible at port \texttt{8080}.
+
+\lstinputlisting[caption=Minimal Gradle buildscript, label=lst:pipeline-buildgradle, language=Groovy]{assets/listings/build.gradle}
+
+- started door commit hash mee te geven (doorzoek history ofzo)
+
+- create run at controller
+- storage in database
+
+\subsection{Prediction}
+- bespreek predictor daemon
+- bespreek de 10 algoritmes
+- bespreek de metapredictor
+
+\subsection{Test case execution}
+- executor
+
+\subsection{Post analysis}
+- bereken duration
+- bereken coverage
+- update metapredictor
 
 % for interpreting the changed 
-
-
-
-%design goal 2 geimplementeerd via REST interface (leg rest uit)
-
 
 %This chapter will start by providing a high-level overview of the implemented architecture, followed by 
 
