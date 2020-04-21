@@ -3,28 +3,30 @@
 \section{Alpha algorithm}
 Besides the algorithms which have been presented in \autoref{sec:relatedwork-algorithms}, an additional algorithm has been implemented: the \emph{Alpha} algorithm. This was constructed by examining the philosophy behind every discussed algorithm and subsequently combining the best ideas into a novel prioritisation algorithm. The specification below will assume the same naming convention as described in \autoref{def:alg-naming}. The pseudocode is provided in Algorithm \ref{alg:alpha}\\
 
-\noindent The algorithm takes the following inputs:
+\noindent The algorithm consumes the following inputs:
 \begin{itemize}
 	\item the set of all $n$ test cases: $TS = \{T_1, \dots, T_n\}$
 	
-	\item the set of $m$ \emph{affected} test cases: $AS = \{A_1, \dots, A_m\} \subseteq TS$. A test case $A$ is considered ``affected'' if any source code line which is covered by $A$ has been modified or removed in the commit that is being predicted.
+	\item the set of $m$ \emph{affected} test cases: $AS = \{T_1, \dots, T_m\} \subseteq TS$. A test case $t$ is considered ``affected'' if any source code line which is covered by $t$ has been modified or removed in the commit that is being predicted.
 	
 	\item $C$: the set of all lines in the application source code, for which a test case $t \in TS$ exists that covers this line and that has not yet been prioritised. Initially, this set contains every covered source code line.
 	
-	\item the failure status of every test case, for every past execution out of $k$ executions of that test case: $F = \{F_1, \dots, F_n\}$, where $F_i = \{f_1, \dots, f_k\}$. $F_{tj} = 1$ implies that test case $t$ has failed in execution $j$.
+	\item the failure status of every test case, for every past execution out of $k$ executions of that test case: $F = \{F_1, \dots, F_n\}$, where $F_i = \{f_1, \dots, f_k\}$. $F_{tj} = 1$ implies that test case $t$ has failed in execution $current - j$.
 	
 	\item the execution time of test case $t \in TS$ for run $r \in [1 \dots k]$, in milliseconds: $D_{tr}$.
+	
+	\item for every test case $t \in TS$, the set $TL_t$ is composed of all source code lines that are covered by test case $t$.
 \end{itemize}
 
 \noindent The first step of the algorithm is to determine the execution time $E_t$ of every test case $t$. This execution time is calculated as the average of the durations of every successful (i.e.) execution of $t$, since a test case will be prematurely aborted upon the first failed assertion, which introduces bias in the duration timings. In case $t$ has never been executed successfully, the average is computed over every execution of $t$.
 
 \[
-E_t = \left\{
-\begin{array}{rl}
-avg(\{D_{ti} \vert i \in [1 \dots k], F_{ti} = 0\}) & \exists j \in [1 \dots k] : F_{ti} = 0 \\
-avg(\{D_{ti} \vert i \in [1 \dots k]\}) & \text{otherwise}
-\end{array}
-\right\}
+	E_t = \left.
+	\begin{cases}
+		\overline{\{D_{ti} \vert i \in [1 \dots k], F_{ti} = 0\}} & \exists j \in [1 \dots k], F_{tj} = 0 \\
+		\overline{\{D_{ti} \vert i \in [1 \dots k]\}} & \text{otherwise} \\
+	\end{cases}
+	\right.
 \]
 
 \noindent Next, the algorithm executes every affected test case that has also failed at least once in its three previous executions. This reflects the behaviour of a developer attempting to resolve the bug that caused the test case to fail. Specifically executing \emph{affected} failing test cases first is required in case multiple test cases are failing and the developer is resolving these one by one, an idea which was extracted from the ROCKET algorithm (\autoref{ssec:alg-rocket}). In case there are multiple affected failing test cases, the test cases are prioritised by increasing execution time. After every selected test case, $C$ is updated by subtracting the code lines that have been covered by at least one of these test cases.\\
@@ -43,35 +45,71 @@ avg(\{D_{ti} \vert i \in [1 \dots k]\}) & \text{otherwise}
 \begin{algorithmic}[1]
 	\State {\bfseries Input:} Set $TS = \{T_1, \dots, T_n\}$ of all test cases,
 	
-	Execution time $E$ of every test case,
+	Set $AS = \{T_1, \dots T_m\} \subseteq TS$ of affected test cases,
 	
-	Failure status $FS$ for each test case over the previous $m$ successive iterations.
-	\State {\bfseries Output:} Priority of test cases $P$.
+	Set $C$ of all source code lines that are covered by any $t \in TS$,
+	
+	Execution times $D_{tr}$ of every test case $t$, over all $k$ runs $r$ of that test case,
+	
+	Failure status $FS$ for each test case over the previous $m$ successive iterations,
+	
+	Sets $TL = \{TL_1, \dots, TL_n\}$ of all source code lines that are covered by test case $t \in TS$.
+	
+	\State {\bfseries Output:} Ordered list $P$ of $n$ test cases and their priorities.
 	\State $P \gets array[1 \dots n]$ \Comment{initially $0$}
-	\State $MF \gets array[1 \dots m]$
-	\ForAll{$i \in 1 \dots m$}
-	\State $MF[i] \gets array[1 \dots n]$
-	\ForAll{$j \in 1 \dots n$}
-	\If{test $T_j$ failed in run $(current - i)$} $MF[i][j] \gets -1$
-	\Else{} $MF[i][j] \gets 1$
-	\EndIf
+	\State $i \gets n$
+	\State $FTS \gets \{t \vert t \in TS \wedge (F[t][1] = 1 \vee F[t][2] = 1 \vee F[t][3] = 1)\}$
+	\State $AFTS \gets AS \cap FTS$
+	
+	\ForAll{$t \in AFTS$} \Comment{sorted by execution time in $E$ (ascending)}
+		\State $C \gets C \setminus TL[t]$
+		\State $P[t] \gets i$
+		\State $i \gets i - 1$
 	\EndFor
+	
+	\State $FTS \gets FTS \setminus AFTS$
+	\ForAll{$t \in FTS$} \Comment{sorted by execution time in $E$ (ascending)}
+		\State $C \gets C \setminus TL[t]$
+		\State $P[t] \gets i$
+		\State $i \gets i - 1$
 	\EndFor
-	\ForAll{$j \in 1 \dots n$}
-	\ForAll{$i \in 1 \dots m$}
-	\If{$i = 1$} $P[j] \gets P[j] + (MF[i][j] * 0.7)$
-	\ElsIf{$i = 2$} $P[j] \gets P[j] + (MF[i][j] * 0.2)$
-	\Else{} $P[j] + (MF[i][j] * 0.1)$
-	\EndIf
-	\EndFor
-	\EndFor
-	\State $Q \gets \{P[j] \vert j \in 1 \dots n\}$ \Comment{distinct priorities}
-	\State $G \gets array[1 \dots Card(Q)]$ \Comment{initially empty sets}
-	\ForAll{$j \in 1 \dots n$}
-	\State $p \gets P[j]$
-	\State $G[p] \gets G[p] \cup \{j\}$
-	\EndFor
-	\State Sort every group in $G$ based on ascending execution time in $E$.
-	\State Sort $P$ according to which group it belongs and its position within that group.
+	
+	\State $AS \gets AS \setminus FTS$
+	\While{$AS \neq \emptyset$}
+		\State $t\_max \gets AS[1]$ \Comment{any element from $AS$}
+		\State $tl\_max \gets \emptyset$
+		
+		\ForAll{$t \in AS$}
+			\State $tl\_current \gets C \cap TL_{t}$
+			\If{$|tl\_current| > |tl\_max|$}
+				\State $t\_max \gets t$
+				\State $tl\_max \gets tl\_current$
+			\EndIf
+		\EndFor
+		
+		\State $C \gets C \setminus tl\_max$
+		\State $P[t] \gets i$
+		\State $i \gets i - 1$
+	\EndWhile
+	
+	\State $TS \gets TS \setminus (AS \cup FTS)$
+	\While{$TS \neq \emptyset$}
+		\State $t\_max \gets TS[1]$ \Comment{any element from $TS$}
+		\State $tl\_max \gets \emptyset$
+		
+		\ForAll{$t \in TS$}
+			\State $tl\_current \gets C \cap TL_{t}$
+			\If{$|tl\_current| > |tl\_max|$}
+				\State $t\_max \gets t$
+				\State $tl\_max \gets tl\_current$
+			\EndIf
+		\EndFor
+		
+		\State $C \gets C \setminus tl\_max$
+		\State $P[t] \gets i$
+		\State $i \gets i - 1$
+	\EndWhile
+	\Return $P$
+	
 \end{algorithmic}
 \end{algorithm}

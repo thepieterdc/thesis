@@ -1,0 +1,17 @@
+buildscript {
+    dependencies {
+        classpath 'io.github.thepieterdc.velocity:velocity-junit:0.0.1-SNAPSHOT'
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+apply plugin: 'velocity-junit'
+
+velocity {
+    base 'src/main/java/'
+    repository 'https://github.com/thepieterdc/random-java'
+    server 'http://localhost:8080'
+}
