@@ -1,6 +1,6 @@
 % !TeX root = ../thesis.tex
 
-\section{Alpha algorithm}
+\section{Alpha algorithm}\label{sec:velocity-alpha}
 Besides the algorithms which have been presented in \autoref{sec:relatedwork-algorithms}, an additional algorithm has been implemented: the \emph{Alpha} algorithm. This was constructed by examining the philosophy behind every discussed algorithm and subsequently combining the best ideas into a novel prioritisation algorithm. The specification below will assume the same naming convention as described in \autoref{def:alg-naming}. The pseudocode is provided in Algorithm \ref{alg:alpha}\\
 
 \noindent The algorithm consumes the following inputs:
@@ -33,13 +33,13 @@ Besides the algorithms which have been presented in \autoref{sec:relatedwork-alg
 
 \noindent Afterwards, the same operation is repeated for every failed but unaffected test case, likewise ordered by increasing execution time. Where the previous step helps developers to get fast feedback about whether or not the specific failing test case they were working on has been resolved, this step ensures that other failing test cases are not forgotten and are executed early in the run as well. Similar to the previous step, $C$ is again updated after every prioritised test case.\\
 
-\noindent Research (TODO reference) has indicated that on average, only a small fraction (TODO PERCENTAGE \%) of all test runs will contain failed tests, resulting in the previous two steps not being executed at all. Therefore, the most time should be dedicated to executing test cases that cover affected code lines. More specifically, the next step of the algorithm executes every affected test case, sorted by decreasing cardinality of the intersection between $C$ and the lines which are covered by the test case. Conforming to the prior two steps, $C$ is also updated to reflect the selected test case. As a consequence of these updates, the cardinalities of these intersections change after every update, which will ultimately lead to affected tests not strictly requiring to be executed. This idea has been adopted from the Greedy algorithm \autoref{ssec:alg-greedy}.\\
+\noindent Research (TODO reference HS5) has indicated that on average, only a small fraction (TODO HS5 PERCENTAGE \%) of all test runs will contain failed tests, resulting in the previous two steps not being executed at all. Therefore, the most time should be dedicated to executing test cases that cover affected code lines. More specifically, the next step of the algorithm executes every affected test case, sorted by decreasing cardinality of the intersection between $C$ and the lines which are covered by the test case. Conforming to the prior two steps, $C$ is also updated to reflect the selected test case. As a consequence of these updates, the cardinalities of these intersections change after every update, which will ultimately lead to affected tests not strictly requiring to be executed. This idea has been adopted from the Greedy algorithm \autoref{ssec:alg-greedy}.\\
 
 \noindent In the penultimate step, the previous operation is repeated in an identical fashion for the remaining test cases, similarly ordered by the cardinality of the intersection with the remaining uncovered lines in $C$.\\
 
 \noindent Finally, the algorithm selects every test case which had not yet been prioritised. Notice that these test cases do not contribute to the test coverage, as every test case that would incur additional coverage would have been prioritised already in the previous step. Subsequently, these test cases are actually redundant and are therefore candidates for removal by \tsm{}. However, since this is a prioritisation algorithm, these tests will still be executed and prioritised by increasing execution time.
 
-\begin{algorithm}[h!]
+\begin{algorithm}[htbp]
 \caption{Alpha algorithm for \tcp{}}
 \label{alg:alpha}
 \begin{algorithmic}[1]

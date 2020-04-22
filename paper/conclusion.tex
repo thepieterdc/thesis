@@ -12,3 +12,45 @@
 - Hou rekening met wat er gebeurt als tests zelf worden aangepast -> beschouw dit ook als een change in de gecoverde code
 
 - Niet zeker wat er gebeurt met additions (ipv modifications/deletions) aan source code lines.
+
+- Idee: Combineer meerdere predictions ipv ze apart te gebruiken?
+
+- Gebruik een saturerende counter ipv te blijven increasen/decreasen, voor het geval de codebase zich aanpast in de toekomst
+
+%(TODO)
+
+%- Implementatiedetails van algoritmes
+
+%- Uitwerking: nog onder voorbehoud (2e semester)
+
+%- Metapredictor: Voer alle algoritmes eens uit en rangschik ze volgens hoe goed ze het voorspeld hebben
+
+%- Scoringsmechanisme: Nog bepalen
+
+%- Junit: https://www.baeldung.com/junit-5-test-order
+
+%\subsection{Architectuur}
+%- Commit
+%- POST /commit
+%data: parent commit hash, huidige commit hash
+%result: volgorde van tests
+%- voer tests uit in gegeven volgorde
+%- POST /result
+%data: huidige commit hash, gefaalde tests
+
+%\subsection{Junit-reorder}
+%- Orde vastleggen in yaml files (plaats voorbeeld)
+%- Out of the box support om tests binnen eenzelfde klasse in volgorde uit te voeren, maar niet class-wide support
+%- Na elke uitvoering van een test wordt een nieuwe processor aangemaakt met een filter op de methodnaam, dit heeft als nadeel dat hergebruiken van initialisaties niet gaat. Misschien hier nog iets op vinden
+%- Parallelliseren momenteel niet gesupport, geen idee hoe dat zou werken met een volgorde (kan niet gewoon verdelen in volgorde want stel dat 1 test heel lang duurt dan is die volgorde niet meer juist)
+%- Shortcuts genomen wegens problemen met gradle (shaded jars) -> bepaalde JUnit functionaliteit weggegooid (vooral @Ignored annotatie)
+
+%Na elke uitvoering van test wordt coverage data bijgehouden om later te analyseren door test processor hack (maak hier zo'n mooi ding van).
+
+%Coverage data formaat optimaliseren zodat xmlfile niet gigantisch groot wordt -> done
+
+%Algoritmes aanpassen zodat branches ook rekening mee gehouden wordt (stel dat test A lijn 5 covert en test B ook, maar lijn 5 is een if-statement met 2 condities en test A triggert enkel de eerste conditie, dan zal test B met lagere prioriteit worden uitgevoerd of zelfs niet omdat de lijn al gecoverd is) -> eventueel via mutator die branches naar lijnen uitsplitst in zowel tests als source
+
+%Andere programmeertalen kunnen op zelfde manier door tests sequentieel uit te voeren
+
+%<https://rubygems.org/gems/reverse_coverage/
