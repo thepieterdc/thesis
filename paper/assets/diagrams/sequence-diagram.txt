@@ -1,0 +1,58 @@
+actor Agent
+participant Controller
+database Database
+participant Predictor
+participant "Meta predictor" as MP
+
+[->Agent: <align:center>Run\nthe test suite</align>
+activate Agent
+
+Agent->Controller: Initiate run
+activate Controller
+Controller->Database: Create unpredicted run
+Agent<<--Controller: Request ID
+deactivate Controller
+
+Agent->Controller: <align:center>Get\npredicted order</align>
+activate Controller
+Controller->Database: <align:center>Fetch predicted\n test case order</align>
+activate Database
+
+group Prediction
+activate Predictor
+Predictor->Database: Fetch unpredicted runs
+activate Database
+Predictor<<--Database: Unpredicted run
+deactivate Database
+box over Predictor: <align:center>Predict order\nfor every algorithm</align>
+Predictor->MP: <align:center>Determine\npreferred predictor</align>
+activate MP
+Predictor<<--MP: Final prediction
+deactivate MP
+Predictor->>Database: Save predictions
+deactivate Predictor
+end
+
+Controller<<--Database:Predicted order
+deactivate Database
+Agent<<--Controller: Predicted order
+deactivate Controller
+
+box over Agent: <align:center>Execute tests\nin order</align>
+box over Agent: <align:center>Process coverage\nper test case</align>
+Agent->>Controller: <align:center>Send results,\nexecution times</align>
+activate Controller
+deactivate Agent
+
+group Update Meta Predictor
+Controller->>MP: Score predictions
+activate MP
+deactivate Controller
+MP->Database: <align:center>Get current scores</align>
+activate Database
+MP<<--Database: Current scores
+deactivate Database
+box over MP: <align:center>Rank\nperformance</align>
+MP->>Database: <align:center>Save new scores</align>
+deactivate MP
+end
