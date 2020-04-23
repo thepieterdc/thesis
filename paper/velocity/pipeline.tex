@@ -24,7 +24,7 @@ As was explained before, the provided Java implementation of the agent was desig
 \subsection{Prediction}
 The prediction of the test execution order is performed by the predictor daemon. This daemon continuously polls the database to fetch new test runs that need to be predicted. When a new test run is detected, the predictor executes every available prediction algorithm in order to obtain multiple prioritised test sequences. The following algorithms are available:
 
-\paragraph*{AllInOrder} The first algorithm will simply prioritise every test case alphabetically and will be used for for benchmarking purposes in \autoref{chap:results}.
+\paragraph*{AllInOrder} The first algorithm will simply prioritise every test case alphabetically and will be used for for benchmarking purposes in \autoref{chap:evaluation}.
 
 \paragraph*{AllRandom} The second algorithm has also been implemented for benchmarking purposes. This algorithm will ``prioritise'' every test case arbitrarily.
 
