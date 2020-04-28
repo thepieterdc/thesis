@@ -3,29 +3,7 @@
 \chapter{Evaluation}\label{chap:evaluation}
 This chapter will evaluate the performance of the previously discussed \velocity{} framework. In the first section, the projects that will be used in the experiments will be presented. The next section will formally restate the research questions that have been posed in the introduction and extend these. Afterwards, the process of how the data was obtained will be elaborated. The final section will provide answers to the research questions as well as present the results of applying \tcp{} to the test subjects.
 
-\section{Test subjects}
-
-\subsection{Dodona}
-// Leg uit wat dodona is.
-
-
-\section{Research questions}
-The following research questions will be answered in the subsequent sections:
-
-\paragraph*{RQ1: What is the probability that a test run will contain at least one failed test case?}
-The first research question will provide useful insights into whether a typical test run has a tendency towards failure or success. It is expected that a typical test run will succeed.
-
-\paragraph*{RQ2: If a run has failed, what is the probability that the next run will fail as well?}
-The ROCKET algorithm (\autoref{ssec:alg-rocket}) relies on the assumption that if a test case has failed in a given run, it will most likely fail in the subsequent run as well. This research question will investigate the correctness of this hypothesis.
-
-\paragraph*{RQ3: What is the average duration of a test run?}
-Measuring how long it takes to execute a typical test run is required to estimate the benefit of applying any form of test suite optimisation.
-
-\paragraph*{RQ4: What is the performance of applying \tcp{} to Dodona?}
-This research question will investigate how quickly a failing test case in the Dodona project can be discovered using \velocity{}.
-
+\input{evaluation/test-subjects.tex}
+\input{evaluation/research-questions.tex}
 \input{evaluation/data-collection.tex}
-
-\section{Results}
-
-1904.09416.pdf heeft een hele benchmark van 35.000.000 runs
+\input{evaluation/results.tex}

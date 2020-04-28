@@ -1,0 +1,41 @@
+% !TeX root = ../thesis.tex
+
+\section{Results}
+
+\subsection{RQ1: Probability of failure}\label{ssec:results-rq1}
+\autoref{fig:rq1-failure-probability} contains two pie charts that illustrate the amount of failed and successful test runs. The left chart contains the results of the dataset provided by Durieux et al \cite{travisanalysis}. This dataset contains $\SI{4558279}{}$ failed test runs versus $\SI{24323724}{}$ successful runs, which corresponds to a failure probability of $\SI{18.74}{\percent}$. The other pie chart visualises data from the TravisTorrent project. According to this dataset, the run has failed prior to starting the test suite in $\SI{42.89}{\percent}$ of the executions. For the remaining part of the runs, $\SI{225766}{}$ out of $\SI{2114920}{}$ executions contained at least one failed test case, corresponding to a failure percentage of $\SI{10.67}{\percent}$.
+
+\begin{figure}[htbp!]
+	\centering
+	\includegraphics[width=\textwidth]{assets/charts/rq1-failure-probability.pdf}
+	\caption{Probability of test run failure}
+	\label{fig:rq1-failure-probability}
+\end{figure}
+
+\subsection{RQ2: Probability of consecutive failure}
+In order to find consecutive failures, only the TravisTorrent project can be used as every entry in this dataset contains the identifier of the previous build which is required to link consecutive builds. The dataset contains $\SI{211040}{}$ test runs of which the test suite of the preceding test run was both executed and contained at least one failed test case. As illustrated in \autoref{fig:rq2-consecutive-failure}, $\SI{109224}{}$ of these test runs failed as well, versus $\SI{101816}{}$ test runs ($\SI{51.76}{\percent}$) that did succeed.
+
+\begin{figure}[htbp!]
+	\centering
+	\includegraphics[width=\textwidth]{assets/charts/rq2-consecutive-failure.pdf}
+	\caption{Consecutive test run failures on \travisci{}}
+	\label{fig:rq2-consecutive-failure}
+\end{figure}
+
+\subsection{RQ3: Average test run duration}
+
+maak boxplot van 5.3
+
+- tests lager dan 10 seconden werden genegeerd aangezien dit een failure in de setup betekent.
+- de zeer lange tests maken gebruik van mutation testing
+- gegroepeerd per hoeveelheid en genormaliseerd op de y-as
+
+
+\subsection{RQ4: Applying \tcp{} to Dodona}
+
+voor 5.4:
+
+- duration per run
+- failed test cases per run
+- time (ms) until first failed test case
+- time (ms) until first prioritised failed test case
