@@ -2,14 +2,5 @@
 
 \section{Data collection}\label{sec:eval-data}
 
-\subsection{\travisci{} build data}
-In order to answer the first three research questions, build data for several projects hosted on \travisci{} (\autoref{sssec:travisci}) was used. This data was obtained from two sources.\\
-
-\noindent The first source is a database of \SI{35793144} jobs, provided by Durieux et al \cite{travisanalysis}. Due to the magnitude of this dataset (\SI{61.11}{\gibi\byte}), a big data framework is required to parse the log files. In order to collect the required data for the three first research questions, three MapReduce pipelines have been created using the Apache Spark\footnote{\url{https://spark.apache.org/}} framework.\\
-
-
-
-\noindent Additionally, another \SI{3702595} jobs have been analysed from the \emph{TravisTorrent} project. This project \cite{msr17challenge} scrapes the API of \travisci{} and combines this with data obtained from the GitHub API to infer additional information about the test run, such as the programming language and the amount of failed test cases. The creators of TravisTorrent have provided a Google BigQuery\footnote{\url{https://bigquery.cloud.google.com/}} interface to allow querying the dataset. The following queries have been executed:
-
-\subsection{Dodona build data}
-// bespreek dodona instrumenter.
+\input{evaluation/data-collection/travis.tex}
+\input{evaluation/data-collection/dodona.tex}

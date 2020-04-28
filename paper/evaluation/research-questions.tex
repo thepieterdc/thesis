@@ -1,0 +1,16 @@
+% !TeX root = ../thesis.tex
+
+\section{Research questions}
+The following research questions will be answered in the subsequent sections:
+
+\paragraph*{RQ1: What is the probability that a test run will contain at least one failed test case?}
+The first research question will provide useful insights into whether a typical test run has a tendency towards failing or succeeding. It is expected that a typical test run will succeed and therefore that executing every test case is not strictly necessary.
+
+\paragraph*{RQ2: If a test run has failed, what is the probability that the next run will fail as well?}
+The ROCKET algorithm (\autoref{ssec:alg-rocket}) relies on the assumption that if a test case has failed in a given run, it will most likely fail in the subsequent run as well. This research question will investigate the correctness of this hypothesis.
+
+\paragraph*{RQ3: What is the average duration of a test run?}
+Measuring how long it takes to execute a typical test run is required to estimate the benefit of applying any form of test suite optimisation. Only successful test runs should be considered to reduce bias introduced by prematurely aborting execution.
+
+\paragraph*{RQ4: What is the performance impact of applying \tcp{} to Dodona?}
+This research question will investigate how quickly a failing test case in the Dodona project can be discovered using \velocity{}.
