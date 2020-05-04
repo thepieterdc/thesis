@@ -1,0 +1,27 @@
+name: Java
+
+on: push
+
+jobs:
+  build:
+    name: Build
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install packages
+        run: sudo apt-get -y --no-install-recommends install curl unzip
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Build using Gradle
+        run: ./gradlew assemble
+      - name: Runner
+        run: sh runner.sh
+      - uses: actions/upload-artifact@master
+        if: ${{ always() }}
+        with:
+          name: coverage-and-durations
+          path: /tmp/run

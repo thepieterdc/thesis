@@ -21,6 +21,7 @@
 \usepackage{setspace}
 \usepackage[detect-weight=true, binary-units=true, range-phrase=--]{siunitx}
 \usepackage[caption=false]{subfig}
+\usepackage{tabularx}
 \usepackage{titlesec}
 \usepackage{xcolor}
 
@@ -150,3 +151,6 @@
 
 % Custom macros.
 \newcommand{\bolditem}[1]{\item \textbf{#1:}}
+
+% Table columns.
+\newcolumntype{C}{>{\centering\arraybackslash}X}

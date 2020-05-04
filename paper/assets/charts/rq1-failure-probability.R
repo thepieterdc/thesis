@@ -1,7 +1,7 @@
 fn <- function(values, title) {
   labels <- c("Failed", "Passed")
   labels <- paste(labels, " (", values, ")", sep="")
-  pie(values, labels=labels, main=title, col=c("#ffb3ba", "#baffc9"), init.angle = 0)
+  pie(values, labels=labels, main=title, col=c("#ffb3ba", "#baffc9"), init.angle = 0, radius = 1)
 } 
 
 # Display both pie charts side by side.

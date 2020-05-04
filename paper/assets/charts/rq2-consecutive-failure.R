@@ -18,7 +18,7 @@ ggplot(data, aes(x=gh_build_started_at)) +
     direction = "horizontal",
     label.position = "left"
   )) +
-  theme_bw(base_size = 11, base_family = "") %+replace% 
+  theme_bw(base_size = 12, base_family = "") %+replace% 
   theme(axis.ticks = element_blank(), legend.background = element_blank(), 
         legend.position = "bottom", legend.title = element_blank(),
         legend.key = element_blank(), panel.background = element_blank(), 
