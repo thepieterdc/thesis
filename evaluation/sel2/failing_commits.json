@@ -1,0 +1,762 @@
+[
+  {
+    "commit": "34fc2449c5af8b8b4af911989739ab2001e86ba3",
+    "parent": "5b81bcfeb13a591b5004bc28e344ec9725d65bf2",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/NextSimulationRunner.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/events/EndIncreasedSendoutEvent.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/events/EndSendoutEvent.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/events/StartIncreasedSendoutEvent.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/events/StartSendoutEvent.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/events/StartShipToShipEvent.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/events/StartShipToTankEvent.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/events/StartTankToShipEvent.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/exceptions/IncompleteTankTableException.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/managers/DistributionManager.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/managers/ShipVolumeManager.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/managers/TankLevelManager.java"
+    ]
+  },
+  {
+    "commit": "d2a1628feb263672e0471f27938162aa4d965216",
+    "parent": "29602022f25e63d98f0d9589c9b2def00dca87ec",
+    "changes": [
+      "app/backend/src/test/java/be/ugent/vopro5/backend/service/SimulationServiceTest.java"
+    ]
+  },
+  {
+    "commit": "0300826e5770a9ccbf8dfe5785b1d261faf5eaa2",
+    "parent": "4461b5d92fd8d692c68f031319eaa84cd3ddbf0b",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Sendout.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/SimulationControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/TankControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/service/SimulationServiceTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/validation/distribution/DistributionMapValidatorTest.java"
+    ]
+  },
+  {
+    "commit": "4b6491196e5fca8f9afb8e2fa36f1a447508bb42",
+    "parent": "4325911bff142585733c200460d7d0c5acd60fbf",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/managers/DistributionManager.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/simulation/events/EndSendoutEventTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/simulation/events/StartSendoutEventTest.java"
+    ]
+  },
+  {
+    "commit": "8284356d1cd77979c1cee08e3ca1e806744a49a8",
+    "parent": "2b93a7316485b6b435cf8cf0622fb28edddc48e8",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Simulation.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/security/Constants.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/NextSimulationRunner.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/SimulationRunner.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validation/distribution/Distribution.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validation/docking/ShipTimestamps.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validation/interval/TimeInterval.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validation/simulation/TankLevels.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validation/tank/CorrectLevel.java",
+      "app/backend/src/main/resources/application.properties"
+    ]
+  },
+  {
+    "commit": "d2c4f440896f7a540aef83389d2c5242d09414d1",
+    "parent": "faf8b62006828dae9c6b28cb5a65c2b9ff5d871e",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/boot/DummyAccountRunner.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/boot/HelpRunner.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/boot/SeederRunner.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/controller/UserController.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/data/Role.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/exception/deleted/UserDeletedException.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/exception/notfound/ClientNotFoundException.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/exception/notfound/DockingNotFoundException.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/exception/notfound/JettyNotFoundException.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/exception/notfound/SendoutNotFoundException.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/exception/notfound/ShipNotFoundException.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/exception/notfound/SimulationNotFoundException.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/exception/notfound/TankNotFoundException.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/exception/notfound/UserNotFoundException.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/exception/partialresult/PartialSimulationResultException.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/exception/simulation/MissingSimulationEntryException.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/geo/GeoService.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/mail/EmailService.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/AbstractDocking.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Client.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Jetty.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/LogEntry.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Sendout.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Ship.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Simulation.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/SimulationEntry.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/SimulationSendout.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/SimulationShipToShipEntry.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Tank.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/User.java",
+      "app/backend/src/main/resources/application.properties"
+    ]
+  },
+  {
+    "commit": "dc712e270c504f54e300793bd26a885c1890b242",
+    "parent": "be1cd6626fabc525adc6a888c3bd31891a5cdc27",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/NextSimulationRunner.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/managers/DistributionManager.java"
+    ]
+  },
+  {
+    "commit": "7a2130822c5d4ee41d8016bf870cf55a5da3f485",
+    "parent": "f28cbad317f2786d77f0dde0e971719176c151f8",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/NextSimulationRunner.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/SimulationOutput.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/managers/DistributionManager.java"
+    ]
+  },
+  {
+    "commit": "3fef20c72da290370212ecc07cee182068c54714",
+    "parent": "37868c498aef04bf5b8896a9f60f89c3a61a9324",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/LogEntry.java"
+    ]
+  },
+  {
+    "commit": "b78255482f4d7441a860af41141c6f2f94b481cb",
+    "parent": "9f2957cdcaf7b350bab43084fb82ec5bbf4ab317",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Sendout.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/SimulationEntry.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/SimulationSendout.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/util/Database.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validation/distribution/DistributionMapValidator.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validation/distribution/DistributionStringValidator.java"
+    ]
+  },
+  {
+    "commit": "cf4d613940467f64c98ccdd3e3bcedfdb5a12311",
+    "parent": "3e94b5c3ad8a2b3cab79a6c5571204762c107f66",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/NextSimulationRunner.java"
+    ]
+  },
+  {
+    "commit": "6569f3e2621b8232055ee7d0d0f9c8e4d76da938",
+    "parent": "3e83ddad97dd46e2ad4c3ee5fc6ac1d88ae84b4a",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/service/SimulationService.java"
+    ]
+  },
+  {
+    "commit": "3e83ddad97dd46e2ad4c3ee5fc6ac1d88ae84b4a",
+    "parent": "07258181b38b34a83303a3b0ae8c07c1b95ffe08",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Simulation.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/util/Database.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validation/simulation/TankLevelsValidator.java"
+    ]
+  },
+  {
+    "commit": "903d97511cd16ffe908cc188a0b056780191a7c8",
+    "parent": "46804c303afc8ce3bfd0a6649f682295c58dba2d",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/LogEntry.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/model/LogEntryTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/simulation/NextSimulationRunnerTest.java"
+    ]
+  },
+  {
+    "commit": "1885407613ecda03b6d6dd2ff0ab5054033af4a8",
+    "parent": "2f95f2fcdb6a41c50dba8101b29afd5822db4b83",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Sendout.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/model/DockingTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/model/JettyTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/model/SendoutTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/model/TankTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/service/SendoutServiceTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/simulation/events/EndSendoutEventTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/util/DatabaseTest.java"
+    ]
+  },
+  {
+    "commit": "c188de7f931fdaefe2e1b5e9509825d406c5fc9c",
+    "parent": "de756c8f42b0bd49a4fe17b38c0634e724121886",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/events/SimulationEvent.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/simulation/NextSimulationRunnerTest.java"
+    ]
+  },
+  {
+    "commit": "612e216753e5fccd9e49c4b7238b1c29caa90454",
+    "parent": "1c1a24a0d3927b02fab53628c624ca092e5216e5",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/NextSimulationRunner.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/util/Database.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/simulation/NextSimulationRunnerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/simulation/state/SimulationStateTest.java"
+    ]
+  },
+  {
+    "commit": "2fad1e6f9bce00cddebf6d6e39440132582ec381",
+    "parent": "95adfa6fb044222026baaf3adf1f988ec512d9bd",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/RandomSimulationRunner.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/simulation/logging/SimulationLoggerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/util/DatabaseTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/util/NumericTest.java"
+    ]
+  },
+  {
+    "commit": "3777c63cce1aba86d96be7a6517794751f049363",
+    "parent": "82dbe0d919262b5ae7f9d451b35adef827ce96e5",
+    "changes": [
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/AbstractSeederTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/ClientSeederTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/DockingSeederTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/JettySeederTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/SendoutSeederTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/ShipSeederTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/TankSeederTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/UserSeederTest.java"
+    ]
+  },
+  {
+    "commit": "10c6e8b32daa83fb9920b5dfb8302e2a86274a54",
+    "parent": "ecf3bd9761a4a249f0a4ad4fec5ffd20217fb578",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/controller/SimulationController.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/util/Time.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/AbstractControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/SimulationControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/resource/SendoutResourceTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/resource/SimulationResourceTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/util/TimeTest.java"
+    ]
+  },
+  {
+    "commit": "c4dac73f8d65196bf81a3665c76347f7de502000",
+    "parent": "4576c1485ed03e710c933a1ce48f412180b0964a",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Simulation.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/events/AbstractSimulationEvent.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/SimulationControllerTest.java"
+    ]
+  },
+  {
+    "commit": "4576c1485ed03e710c933a1ce48f412180b0964a",
+    "parent": "65d1c5c65c444554cf917570cae2b33298da2708",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/util/Mapping.java"
+    ]
+  },
+  {
+    "commit": "19a248f686490c39f1fa3bf2de34fd99c369b373",
+    "parent": "66aa640b8e2bd4f2e61edc2e622a6f78ee95fced",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/events/AbstractSimulationEvent.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/events/SimulationEvent.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/state/SimulationState.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/SendoutControllerTest.java"
+    ]
+  },
+  {
+    "commit": "d1676cc013eed8e4af41d03fc415145211cb82a6",
+    "parent": "d95ac41ca8b88433f3551d31ab98507ce1e2c4d1",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/AbstractDocking.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/AbstractEntity.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Client.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Docking.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Jetty.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Sendout.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Ship.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Simulation.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Tank.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/User.java"
+    ]
+  },
+  {
+    "commit": "75d39792de4f849edfe5913dfc09d748d77476d9",
+    "parent": "4eb2c6ee67984bfa4435ad4c67565ec2451f5531",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/handler/exception/ConstraintViolationHandler.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/security/Constants.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validator/interval/TimeIntervalValidator.java"
+    ]
+  },
+  {
+    "commit": "d4ef691eb21aa02e4592e3e012abd614ccad5e4e",
+    "parent": "4f9c5eeb6d3ec8e0a59631e3035294df9c30eb1a",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/seeder/AbstractDatabaseSeeder.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/seeder/TankSeeder.java"
+    ]
+  },
+  {
+    "commit": "ff1ad037b9629dcd2f5a824e54b22f468f6c3118",
+    "parent": "0085fed63c6593d3fff1bf4c8543db5455de27fe",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/controller/SimulationController.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/exception/notfound/ClientNotFoundException.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/User.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/repository/ClientRepository.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/seeder/ClientSeeder.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/seeder/TankSeeder.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/service/SimulationDataService.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/service/SimulationService.java"
+    ]
+  },
+  {
+    "commit": "22a02dfb3071657093b568a60e22016cd41f529a",
+    "parent": "3a93b728f873e228517fa5a8c9c3e55949b3091d",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/controller/SimulationController.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/exception/partialresult/PartialResultException.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/exception/partialresult/PartialSimulationResultException.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/handler/exception/PartialResultHandler.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Simulation.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/service/SimulationService.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/SimulationRunner.java"
+    ]
+  },
+  {
+    "commit": "a7a88c80cae13c22f3ecbc9cce5bafe50ab7b944",
+    "parent": "6d331d46060d496c582096f5ca61eb06e9acebd6",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/controller/SimulationController.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Client.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/seeder/ClientSeeder.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/service/ClientService.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/SigveSimulationRunner.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/ClientControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/DockingControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/TankControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/model/ClientTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/model/TankTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/repository/TankRepositoryTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/resource/ClientResourceTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/resource/DockingResourceTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/resource/TankResourceTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/DockingSeederTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/TankSeederTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/service/ClientServiceTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/service/TankServiceTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/simulation/SigveSimulationRunnerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/validator/TankLevelValidatorTest.java"
+    ]
+  },
+  {
+    "commit": "a109e3b51eb9c3f21ba05640ca035c82d4419a94",
+    "parent": "f1547dfd6d7155fbfa4f20289646290f0f82f9b7",
+    "changes": [
+      "app/backend/run-backend.sh",
+      "app/backend/src/main/resources/application.properties"
+    ]
+  },
+  {
+    "commit": "14248e87ad5678f29c2b969798f20b299438fce3",
+    "parent": "85563135ab590e43da72cd5ad5abc1b2b93f6090",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/controller/ClientController.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/controller/TankController.java"
+    ]
+  },
+  {
+    "commit": "85563135ab590e43da72cd5ad5abc1b2b93f6090",
+    "parent": "60ce9c003aeccc0b373c9ed291a41f82edcb4780",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/SimulationRunner.java"
+    ]
+  },
+  {
+    "commit": "fdcab03aa956ffca5614382e84f1808efeb77e90",
+    "parent": "7957c16ebc68b5f8460ce3b063732631127a8ef8",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/User.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/service/UserService.java"
+    ]
+  },
+  {
+    "commit": "5c0d776dda3c18044b1cb6f5f2113d9180c03e9a",
+    "parent": "326016ce2c2b18c42970e56d30af6e43c0b7fcce",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/controller/SimulationController.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/SimulationRunner.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/simulation/SimulationRunnerTest.java"
+    ]
+  },
+  {
+    "commit": "2122d95022eafe17637377dbb8a1271fa001bc66",
+    "parent": "ce680afe59be56d4ced0d3552f80af4ac9eb7d3d",
+    "changes": [
+      "app/backend/src/test/java/be/ugent/vopro5/backend/BackendApplicationTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/LoginControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/model/UserTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/service/DataServiceTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/util/NetworkTest.java"
+    ]
+  },
+  {
+    "commit": "794a5b685b18b35fc464e67c271823efd4438042",
+    "parent": "5e83cfebcfb7cea9b2fb09bc353717ad18170cf3",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/exception/deleted/UserDeletedException.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/User.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/seeder/DockingSeeder.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/seeder/JettySeeder.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/seeder/ShipSeeder.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/seeder/TankSeeder.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/seeder/UserSeeder.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/util/Random.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/AbstractControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/ClientControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/JettyControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/LoginControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/ShipControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/exception/UserDeletedExceptionTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/exception/deleted/UserDeletedExceptionTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/exception/notfound/ClientNotFoundExceptionTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/exception/notfound/JettyNotFoundExceptionTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/exception/notfound/ShipNotFoundExceptionTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/exception/notfound/TankNotFoundExceptionTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/model/UserTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/repository/UserRepositoryTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/AbstractSeederTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/ClientSeederTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/DockingSeederTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/JettySeederTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/ShipSeederTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/TankSeederTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/UserSeederTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/service/ClientServiceTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/service/DataServiceTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/service/JettyServiceTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/service/ShipServiceTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/service/TankServiceTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/service/UserServiceTest.java"
+    ]
+  },
+  {
+    "commit": "0a49f2a4b399dc3e62fe22d69eabba5adcb5ca6f",
+    "parent": "bb81b666c0b9b46111f07e55b8edc6c1179ca4f3",
+    "changes": [
+      "app/backend/build.gradle",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/BackendApplication.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/boot/HelpRunner.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/controller/UserController.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/geo/GeoService.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/geo/package-info.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/mail/EmailService.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/mail/MailContentBuilder.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/mail/package-info.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Docking.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/security/Constants.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/security/JWTAuthorizationFilter.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/seeder/DatabaseSeeder.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/seeder/DockingSeeder.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/seeder/package-info.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/service/UserService.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/util/Mapping.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/util/Network.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/util/Random.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/util/Time.java",
+      "app/backend/src/main/resources/application.properties",
+      "app/backend/src/main/resources/templates/password-changed-admin.html",
+      "app/backend/src/main/resources/templates/password-changed-self.html",
+      "app/backend/src/main/resources/templates/user-created.html",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/AbstractControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/ClientControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/JettyControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/LoginControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/ShipControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/TankControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/UserControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/exception/notfound/UserNotFoundExceptionTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/model/AbstractEntityTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/rule/SmtpServerRule.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/service/UserServiceTest.java",
+      "app/backend/src/test/resources/application.properties"
+    ]
+  },
+  {
+    "commit": "2f4289833b0d64c48c7f81e7e58bf9107fa4caca",
+    "parent": "5927fab6217d8ed08c2b17cafd61cd4c06f2983a",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Docking.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/util/Network.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/DockingControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/util/NetworkTest.java"
+    ]
+  },
+  {
+    "commit": "fb700285c5f4d18acf1793abc3f3423d868b0c5d",
+    "parent": "14e97cd6f477f02c07a126c481f3d9b2809b9274",
+    "changes": [
+      "app/backend/src/main/resources/application.properties",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/exception/notfound/UserNotFoundExceptionTest.java"
+    ]
+  },
+  {
+    "commit": "c0f8d8b73d67f2db307f0113e9427f2ed8d5afd5",
+    "parent": "33bc2fe5b2a07a497a2cc9a749dd6e9e976cf85d",
+    "changes": [
+      "app/backend/src/test/java/be/ugent/vopro5/backend/simulation/RunSimulationTest.java"
+    ]
+  },
+  {
+    "commit": "2bb7b626d3cad6cedb72704a1d0bfeee7611f1b4",
+    "parent": "27bc973d36162c0d96e87fc7ce62b2313687a21f",
+    "changes": [
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/UserControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/service/UserServiceTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/testutilities/auth/Authenticated.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/testutilities/auth/AuthenticationSecurityContext.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/testutilities/rules/SmtpServerRule.java"
+    ]
+  },
+  {
+    "commit": "d926a30faf2c011cd2b666e6c160d5474c35b238",
+    "parent": "27bc973d36162c0d96e87fc7ce62b2313687a21f",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/RunSimulation.java"
+    ]
+  },
+  {
+    "commit": "316e94aa23538463565d542b36327d2ef2d07679",
+    "parent": "905da474b5de0f758767c21217ae3da352e1dc74",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Event.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Sendout.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Simulation.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/SimulationEntry.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Tank.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validator/hashmap/CorrectHashmap.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validator/hashmap/CorrectTankDistribution.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validator/hashmap/HashMapTankDistributionValidator.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validator/hashmap/HashMapValidator.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validator/sendout/CorrectStartEnd.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validator/sendout/StartEndValidator.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validator/simulationEntry/CorrectSimulationEntry.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validator/simulationEntry/SimulationEntryValidator.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validator/tank/CorrectLevel.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/validator/tank/TankLevelValidator.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/model/TankTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/simulation/RunSimulationTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/validator/TankLevelValidatorTest.java"
+    ]
+  },
+  {
+    "commit": "80cd6df147081de4b992330ae76fd0aa692b6eee",
+    "parent": "e421ad8c6007bc53dce8387dfdcd1fb9037c1cd9",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Docking.java"
+    ]
+  },
+  {
+    "commit": "72c145b2d3aa09d1dae4b488ae54b8e095ed8bd8",
+    "parent": "01e4bd06fd252817c9ad6892af302a55aaca4c1c",
+    "changes": [
+      "app/backend/build.gradle",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/BackendApplication.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/boot/HelpRunner.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/controller/UserController.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/geo/GeoService.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/geo/package-info.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/mail/EmailService.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/mail/MailContentBuilder.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/mail/package-info.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/security/Constants.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/security/JWTAuthorizationFilter.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/seeder/DatabaseSeeder.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/seeder/DockingSeeder.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/seeder/package-info.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/service/UserService.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/util/Mapping.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/util/Network.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/util/Random.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/util/Time.java",
+      "app/backend/src/main/resources/application.properties",
+      "app/backend/src/main/resources/templates/password-changed-admin.html",
+      "app/backend/src/main/resources/templates/password-changed-self.html",
+      "app/backend/src/main/resources/templates/user-created.html",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/AbstractControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/ClientControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/JettyControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/ShipControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/TankControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/UserControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/model/AbstractEntityTest.java"
+    ]
+  },
+  {
+    "commit": "8e061bbd7b17339e624b34afa05ca94d4464699d",
+    "parent": "e98487fb02c1d3b48758d116bb097de95f5e4606",
+    "changes": [
+      "app/backend/src/test/java/be/ugent/vopro5/backend/simulation/RunSimulationTest.java"
+    ]
+  },
+  {
+    "commit": "d89fd147cf03b9486ccda0b3acbd564ea1c4b291",
+    "parent": "c638fae1a5ca75c8c2c9c0baad77c9f3c4998c94",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Output.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Simulation.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/SimulationEntry.java"
+    ]
+  },
+  {
+    "commit": "43abb25cbff24e12cddad5e775b5213efcff7cd2",
+    "parent": "bdae925f0c30f1fa53ec9ff54ae8e0103f981488",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/controller/UserController.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/security/JWTAuthenticationFilter.java"
+    ]
+  },
+  {
+    "commit": "2953a15c46557d798274435900cf399c9b5f43c9",
+    "parent": "8ad1bda7ece09b1807d899f8a13573b45008b0e7",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/SimulationEntry.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/simulation/RunSimulation.java"
+    ]
+  },
+  {
+    "commit": "4c78fdf0e7c390362ad24032b63110997de263fe",
+    "parent": "823636bd931e2509590c2ed3aa43a5dc1516df5d",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/controller/UserController.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/security/Constants.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/security/JWTAuthenticationFilter.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/UserControllerTest.java"
+    ]
+  },
+  {
+    "commit": "8ee872018ad973747a9305a0b003fe3cafb40c30",
+    "parent": "da9aed00bea703fc12dfe71a42070babb3274fe5",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/controller/ClientController.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/security/WebSecurity.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/Utilities.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/AbstractControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/LoginControllerTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/UserControllerTest.java"
+    ]
+  },
+  {
+    "commit": "413c738e48cc5ad06417266111e58ef32b06933e",
+    "parent": "fac2ff8eb89d91241274dab8b2114d793c8d10ff",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/controller/UserController.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/service/DataService.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/service/UserService.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/controller/LoginControllerTest.java"
+    ]
+  },
+  {
+    "commit": "ee26113aeaaab7ee2274a464d8c3cc33042a8369",
+    "parent": "7c61b9d4a102efea7425ba9b4206e6c0c5269ef1",
+    "changes": [
+      "app/backend/build.gradle",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/BackendApplication.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/security/Constants.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/security/JWTAuthenticationFilter.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/security/JWTAuthorizationFilter.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/utils/Random.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/utils/package-info.java",
+      "app/backend/src/main/resources/application.properties"
+    ]
+  },
+  {
+    "commit": "6dd12cc27a23764f77c0712841486a451133fde3",
+    "parent": "fbc01f80d259fd13e4c45e6223eb5bcc44fb9c75",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/controller/SimulationController.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/exception/notfound/SimulationNotFoundException.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Sendout.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Simulation.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/repository/SimulationRepository.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/resource/SimulationResource.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/service/SimulationService.java"
+    ]
+  },
+  {
+    "commit": "f1f6e00362aa04a5e6683fc4c20ece317e08d046",
+    "parent": "7414a4af271c0ec9ec5fe76cfb5b4bde1171e7f5",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Tank.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/TankTable.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/TankTableEntry.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/repository/TankTableEntryRepository.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/repository/TankTableRepository.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/resource/TankTableResource.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/service/TankService.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/service/TankTableService.java"
+    ]
+  },
+  {
+    "commit": "03dd9c4c96a239fee6225a18a8d96ea51fc06bb5",
+    "parent": "18449d622b577c83923d044bf31efd92267996f3",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/security/JWTAuthenticationFilter.java"
+    ]
+  },
+  {
+    "commit": "fa6f5fa3bc94f7b5b22aef085a439166989a36ef",
+    "parent": "42ea15b995541005ec4c8bbfb94fdbec0b2885b4",
+    "changes": [
+      "app/backend/src/test/java/be/ugent/vopro5/backend/exception/notfound/UserNotFoundExceptionTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/model/UserTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/repository/UserRepositoryTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/resource/UserResourceTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/seeder/UserSeederTest.java",
+      "app/backend/src/test/java/be/ugent/vopro5/backend/service/UserServiceTest.java"
+    ]
+  },
+  {
+    "commit": "1dfc5ea212e8c5050b730275ef2e5f0af654327c",
+    "parent": "1d6ef9385e5d795b9b135f72599b67190814c84d",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/seeder/UserSeeder.java"
+    ]
+  },
+  {
+    "commit": "f5cb85e8035a59b18092196df86fc93d3d6f94bf",
+    "parent": "44637d570367933c87d5e741f132330d3ef8d68d",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/Docking.java"
+    ]
+  },
+  {
+    "commit": "b1f33f42b8c920d764e300ba46d6aa5e24ab8033",
+    "parent": "293c326c13826c3c8886318a742adb4037e06721",
+    "changes": [
+      "app/backend/build.gradle",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/BackendApplication.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/controller/UserController.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/service/DataService.java",
+      "app/backend/src/main/java/be/ugent/vopro5/backend/service/UserService.java"
+    ]
+  },
+  {
+    "commit": "d73fa61092e74fdf1fb3f9b83bea1c62292f8d81",
+    "parent": "e2ce6eac240656589ae68dfbff69cc9d7ad9a9b5",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/User.java"
+    ]
+  },
+  {
+    "commit": "9cc0662d96eae2150421b05ea63aca891ead38d9",
+    "parent": "c0a31486e898c7932ce1967a451a3de6bb24bf06",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/model/User.java"
+    ]
+  },
+  {
+    "commit": "02b373e8c199a512e5ff8c34df373e1de9ae3e10",
+    "parent": "e21211854c30c294fd73aada0d8f31ee11a32b48",
+    "changes": [
+      "app/backend/src/main/java/be/ugent/vopro5/backend/handler/exception/MethodArgumentNotValidHandler.java"
+    ]
+  }
+]
