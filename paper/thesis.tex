@@ -1,50 +1,149 @@
-\newcommand*{\Root}{..}
-\input{../.latex-common/preamble.tex}
-\renewcommand{\documenttitle}{Paper: Working draft}
+\documentclass[12pt,a4paper,twoside]{book}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[dutch, english]{babel}
+\usepackage{afterpage}
+\usepackage{biblatex}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage[a4paper,plainpages=false]{hyperref}
+\usepackage[automake]{glossaries}
+\usepackage{listings}
+\usepackage[default,scale=0.95]{opensans}
+\usepackage[nottoc]{tocbibind}
+\usepackage{pdfpages}
+\usepackage{setspace}
+\usepackage{titlesec}
 
-% Agile principles.
-\newcommand{\agileprinciple}[2]{\paragraph*{Principle #1: #2}\mbox{}\\}
+\newcommand\blankpage{%
+	\null
+	\thispagestyle{empty}%
+	\addtocounter{page}{-1}%
+	\newpage}
 
-% Add the references.
+% Chapters.
+\titleclass{\chapter}{straight}
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{18pt}{\huge}
+\titlespacing*{\chapter}{0pt}{20pt}{20pt}
+
+\renewcommand{\chaptermark}[1]{\markright{\MakeUppercase{#1}}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection~#1}}
+
+\newcommand{\headerfmt}[1]{\textsl{\textsf{#1}}}
+\newcommand{\headerfmtpage}[1]{\textsf{#1}}
+
+\fancyhf{}
+\fancyhead[LE,RO]{\headerfmtpage{\thepage}}
+\fancyhead[LO]{\headerfmt{\rightmark}}
+\fancyhead[RE]{\headerfmt{\leftmark}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\fancypagestyle{plain}{
+	\fancyhf{}
+	\fancyhead[LE,RO]{\headerfmtpage{\thepage}}
+	\fancyhead[LO]{\headerfmt{\rightmark}}
+	\fancyhead[RE]{\headerfmt{\leftmark}}
+	\renewcommand{\headrulewidth}{0.5pt}
+	\renewcommand{\footrulewidth}{0pt}
+}
+
+\hypersetup{
+	pdfauthor = {Pieter De Clercq},
+	pdftitle = {Optimising Continuous Integration using Test Case Prioritisation},
+	pdfsubject = {Master's dissertation submitted in order to obtain the academic degree of Master of Science in Computer Science, june 2020}
+}
+
+\renewcommand{\lstlistlistingname}{List of \lstlistingname s}
+
+% Add the references resource.
 \addbibresource{references.bib}
 
+\makeglossaries
+
+% Acronyms.
+\newacronym{ci}{CI}{Continuous Integration}
+\newacronym{tcp}{TCP}{Test Case Prioritisation}
+\newacronym{tcs}{TCS}{Test Case Selection}
+\newacronym{tsm}{TSM}{Test Suite Minimisation}
+\newacronym{vcs}{VCS}{Version Control System}
+
 % Macro's
-\newcommand{\CI}{Continuous Integration}
+\newcommand{\CI}{\acrlong{ci}}
 \newcommand{\github}{GitHub}
 \newcommand{\githubactions}{GitHub Actions}
 \newcommand{\junit}{JUnit}
 \newcommand{\travisci}{Travis CI}
-\newcommand{\tsm}{Test Suite Minimisation}
-\newcommand{\tcp}{Test Case Prioritisation}
-\newcommand{\tcs}{Test Case Selection}
+\newcommand{\tcp}{\acrlong{tcp}}
+\newcommand{\tcs}{\acrlong{tcs}}
+\newcommand{\tsm}{\acrlong{tsm}}
 \newcommand{\velocity}{VeloCIty}
 
 \begin{document}
-\input{../.latex-common/titlepage.tex}
 \onehalfspacing
-\input{acknowledgments.tex}
-\newpage
+	
+% Titlepage.
+\frontmatter
+\pagestyle{empty}
+\includepdf[pages=-]{titlepage.pdf}
+
+\blankpage{}
+
+% Admission.
+\input{admission.tex}
+\clearpage
+
+% Acknowledgements.
+\input{acknowledgements.tex}
+
+% Summaries.
+\selectlanguage{english}
+\input{summary/english.tex}
+\clearpage
+\selectlanguage{dutch}
+\input{summary/dutch.tex}
+\clearpage
+\selectlanguage{english}
+
+% Extended abstracts.
+\addcontentsline{toc}{chapter}{Extended abstract}
+\includepdf[pages=-]{abstract-en/extended-abstract.pdf}
+\addcontentsline{toc}{chapter}{Extended abstract (Dutch)}
+\includepdf[pages=-]{abstract-nl/extended-abstract.pdf}
+
+\pagestyle{fancy}
+
+% Vulgarising summary.
+\input{summary/vulgarising.tex}
+\clearpage
+
+\blankpage{}
+
+% ToC.
 \tableofcontents
-\newpage
-\input{abbreviations.tex}
-\newpage
+
+% Corpus.
+\mainmatter
+\input{glossary.tex}
+\clearpage
 \input{introduction.tex}
-\newpage
+\clearpage
 \input{software-engineering.tex}
-\newpage
+\clearpage
 \input{related-work.tex}
-\newpage
+\clearpage
 \input{velocity.tex}
-\newpage
-%\input{other-ways.tex}
-%\newpage
+\clearpage
 \input{evaluation.tex}
-\newpage
+\clearpage
 \input{conclusion.tex}
-\newpage
+\clearpage
 \input{bibliography.tex}
-\newpage
+\clearpage
 \input{list-of-figures.tex}
-\newpage
+\clearpage
+\input{list-of-listings.tex}
+\clearpage
 \input{list-of-tables.tex}
+
 \end{document}
