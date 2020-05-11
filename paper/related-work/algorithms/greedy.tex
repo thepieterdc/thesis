@@ -1,0 +1,35 @@
+% !TeX root = ../../thesis.tex
+
+\subsection{Greedy algorithm}\label{ssec:alg-greedy}
+The first algorithm is a \emph{greedy} heuristic, which was originally designed by Chvatal to find an approximation for the set-covering problem \cite{evaluationoftestsuiteminimization}. A greedy algorithm always makes a locally optimal choice, assuming that this will eventually lead to a globally optimal solution \cite{10.5555/1614191}. Algorithm \ref{alg:tsm-greedy} presents the Greedy algorithm for \tsm{}. The goal of the algorithm is to construct a set of test cases that cover every line in the code, by requiring as few tests as possible.\\
+
+\noindent Initially, the algorithm starts with an empty result set $RS$, the set $TS$ of all test cases and the set $C$ of all coverable source code lines. Furthermore, $TL_t$ denotes the set of source code lines in $C$ that are covered by test case $t \in TS$. Subsequently, the algorithm iteratively selects test cases from $TS$ and adds them to $RS$. The locally optimal choice is to always select the test case that will contribute the most still uncovered lines, ergo the test $t$ for which the cardinality of the intersection between $C$ and $TL_t$ is maximal. After every iteration, the now covered lines $TL_t$ are removed from $C$ and the selection process is repeated until $C$ is empty. Upon running the tests, only the tests in $RS$ must be executed. This algorithm can be converted to make it applicable to \tcp{} by converting the set $RS$ to a list to maintain the order in which the test cases were selected, which is equivalent to the prioritised order of execution.
+
+\begin{algorithm}[h!]
+\caption{Greedy algorithm for \tsm{}}
+\label{alg:tsm-greedy}
+\begin{algorithmic}[1]
+	\State {\bfseries Input:} Set $TS$ of all test cases,
+	
+	Set $C$ of all source code lines that are covered by any $t \in TS$,
+	
+	$TL_t$ the set of all lines are covered by test case $t \in TS$.
+	\State {\bfseries Output:} Subset $RS \subseteq TS$ of tests to execute.
+	\State $RS \gets \emptyset$
+	\While{$C \neq \emptyset$}
+		\State $t\_max \gets 0$
+		\State $tl\_max \gets \emptyset$
+		
+		\ForAll{$t \in TS$}
+			\State $tl\_current \gets C \cap TL_{t}$
+			\If{$|tl\_current| > |tl\_max|$}
+				\State $t\_max \gets t$
+				\State $tl\_max \gets tl\_current$
+			\EndIf
+		\EndFor
+		
+		\State $RS \gets RS \cup \{t\_max\}$
+		\State $C \gets C \setminus tl\_max$
+	\EndWhile
+\end{algorithmic}
+\end{algorithm}

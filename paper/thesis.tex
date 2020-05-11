@@ -3,19 +3,29 @@
 \usepackage[utf8]{inputenc}
 \usepackage[dutch, english]{babel}
 \usepackage{afterpage}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
 \usepackage{biblatex}
 \usepackage{caption}
 \usepackage{fancyhdr}
 \usepackage[a4paper,plainpages=false]{hyperref}
 \usepackage[automake]{glossaries}
 \usepackage{cleveref}
-\usepackage{listings}
+\usepackage{listing}
+\usepackage{listings,lstautogobble}
 \usepackage[default,scale=0.95]{opensans}
 \usepackage[nottoc]{tocbibind}
 \usepackage{pdfpages}
 \usepackage{setspace}
+\usepackage[detect-weight=true, binary-units=true, range-phrase=--]{siunitx}
+\usepackage[caption=false]{subfig}
+\usepackage{tabularx}
 \usepackage{titlesec}
 
+% Blank pages.
 \newcommand\blankpage{%
 	\null
 	\thispagestyle{empty}%
@@ -33,6 +43,7 @@
 \newcommand{\headerfmt}[1]{\textsl{\textsf{#1}}}
 \newcommand{\headerfmtpage}[1]{\textsf{#1}}
 
+% Header/footer.
 \fancyhf{}
 \fancyhead[LE,RO]{\headerfmtpage{\thepage}}
 \fancyhead[LO]{\headerfmt{\rightmark}}
@@ -49,13 +60,60 @@
 	\renewcommand{\footrulewidth}{0pt}
 }
 
+% Meta-information.
 \hypersetup{
 	pdfauthor = {Pieter De Clercq},
 	pdftitle = {Optimising Continuous Integration using Test Case Prioritisation},
 	pdfsubject = {Master's dissertation submitted in order to obtain the academic degree of Master of Science in Computer Science, june 2020}
 }
 
+% Mathematical definitions.
+\theoremstyle{break}
+\newtheorem{definition}{Definition}
+
+% Custom colors
+\definecolor{code-background}{HTML}{EEEEEE}
+\definecolor{code-delim}{RGB}{20,105,176}
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+\definecolor{groovyblue}{HTML}{0000A0}
+\definecolor{groovygreen}{HTML}{008000}
+\colorlet{code-punct}{red!60!black}
+
+% Code listings.
+\lstdefinelanguage{Groovy}[]{Java}{
+	basicstyle=\normalfont\ttfamily,
+	numbers=left,
+	numberstyle=\scriptsize,
+	stepnumber=1,
+	numbersep=8pt,
+	showstringspaces=false,
+	breaklines=true,
+	frame=lines,
+	backgroundcolor=\color{code-background},
+	keywordstyle=\color{groovyblue}\bfseries,
+	stringstyle=\color{groovygreen}\ttfamily,
+	keywords=[3]{each, findAll, groupBy, collect, inject, eachWithIndex},
+	morekeywords={def, as, in, use},
+	moredelim=[is][\textcolor{darkgray}]{\%\%}{\%\%},
+	moredelim=[il][\textcolor{darkgray}]{§§}
+}
+
+\lstset{
+	numbers=left,
+	numberstyle=\scriptsize,
+	stepnumber=1,
+	numbersep=8pt,
+	showstringspaces=false,
+	breaklines=true,
+	frame=lines,
+	backgroundcolor=\color{code-background},
+	autogobble=true
+}
+
 \renewcommand{\lstlistlistingname}{List of \lstlistingname s}
+
+% Table columns.
+\newcolumntype{C}{>{\centering\arraybackslash}X}
 
 % Add the references resource.
 \addbibresource{references.bib}
@@ -79,6 +137,7 @@
 \newcommand{\tcs}{\acrlong{tcs}}
 \newcommand{\tsm}{\acrlong{tsm}}
 \newcommand{\velocity}{VeloCIty}
+\newcommand{\bolditem}[1]{\item \textbf{#1:}}
 
 \begin{document}
 \onehalfspacing

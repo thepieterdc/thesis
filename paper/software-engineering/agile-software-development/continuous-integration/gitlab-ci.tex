@@ -1,0 +1,11 @@
+% !TeX root = ../../../thesis.tex
+
+\subsubsection{GitLab CI}
+GitLab, the main competitor of \github{}, announced its own \CI{} service in late 2012 named GitLab CI\footnote{\url{https://about.gitlab.com/blog/2012/11/13/continuous-integration-server-from-gitlab/}}. GitLab CI builds are configured using \emph{pipelines} and are executed by \emph{GitLab Runners}. These runners are operated by developers on their own infrastructure. Additionally, GitLab also offers the possibility to use \emph{shared runners}, which are hosted by themselves \cite{ciusinggitlab}. Equivalent to the aforementioned \github{} Actions, shared runners can be used for free by public repositories and are bounded by quota for private repositories \cite{gitlabdocs}. A downside of using GitLab CI is the lack of a community-driven plugin system, however this is a planned feature \footnote{\url{https://gitlab.com/gitlab-org/gitlab/issues/15067}}.
+
+\begin{figure}[htbp!]
+	\centering
+	\includegraphics[width=0.40\textwidth]{assets/images/gitlab.pdf}
+	\caption{Logo of GitLab CI (\url{https://gitlab.com/})}
+	\label{fig:gitlab-ci}
+\end{figure}

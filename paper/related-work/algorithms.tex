@@ -1,0 +1,33 @@
+% !TeX root = ../thesis.tex
+
+\section{Algorithms}
+\label{sec:relatedwork-algorithms}
+In \autoref{ssec:tsm} the relation was explained between applying Test Suite Minimisation and finding the minimal hitting set of the test suite and the set of requirements, which is an NP-complete problem. Therefore, the use of \emph{heuristics} is required. A heuristic is an experience-based method that can be used to solve a hard to compute problem by finding a fast approximation \cite{6588537}. However, the found solution will mostly be suboptimal or might sometimes even fail to find any solution at all. Considering its relation to the minimal hitting set problem, heuristics that are known to literature for solving this problem can also be used to implement \tsm{}. A selection of these heuristics will be discussed below. It should be noted however that the used terminology and naming of the variables might have been changed to ensure mutual consistency. Every algorithm has been adapted to adhere to the conventions provided in \autoref{def:alg-naming} and \autoref{def:cardinality}.
+
+\begin{definition}[Naming convention]
+\label{def:alg-naming}
+\mbox{}
+\begin{itemize}
+	\item $C$: the set of all lines in the application source code that are covered by at least one test case $t \in TS$.
+		\begin{itemize}
+			\item $CT_l$ denotes the test group $l$, which corresponds to the set of all tests $t \in TS$ that cover source code line $l \in C$.
+		\end{itemize}
+	\item $RS$: the representative set of test cases, these are the test cases that have been selected by the algorithm.
+	\item $TS$: the set of all test cases in the test suite.
+		\begin{itemize}
+			\item $TL_t$ denotes the set of all source code lines that are covered by test $t \in TS$.
+		\end{itemize}
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Cardinality]
+\label{def:cardinality}
+For a finite set $S$, the cardinality $|S|$ is defined as the number of elements in $S$. In case of potential confusion, the cardinality of $S$ can also be denoted as $Card(S)$.
+\end{definition}
+
+\newpage
+\input{related-work/algorithms/greedy.tex}
+\newpage
+\input{related-work/algorithms/hgs.tex}
+\newpage
+\input{related-work/algorithms/rocket.tex}
