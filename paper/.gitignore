@@ -145,6 +145,8 @@ acs-*.bib
 # luatexja-ruby
 *.ltjruby
 
+*.ist
+
 # makeidx
 *.idx
 *.ilg
@@ -285,3 +287,7 @@ TSWLatexianTemp*
 .nfs*
 
 # End of https://www.gitignore.io/api/linux,latex
+
+# R things
+*.RData
+*.Rhistory

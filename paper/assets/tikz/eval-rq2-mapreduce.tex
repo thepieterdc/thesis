@@ -1,0 +1,48 @@
+\begin{tikzpicture}[every node/.style={thick}]
+\tikzstyle{edge}=[->, very thick]
+% Travis logs.
+\draw[thick] (0, 0) rectangle node[rotate=90] {\textbf{Travis logs}} (1, 4);
+
+% Filter.
+\node[draw] (filter) at (11, 2)
+{\begin{minipage}{3.25cm}\centering\texttt{Filter}\\$state = "passed"$\end{minipage}};
+
+% Logs, Map.
+\foreach \i in {0,1,2} {
+	% Log.
+	\node[draw] (log\i) at (2.25, 0.5 + \i * 1.5) {Log};
+	
+	% Map.
+	\node[ellipse, draw] (map\i) at (4, 0.5 + \i * 1.5) {\texttt{Map}};
+	
+	% Status/Duration tuples.
+	\node[draw] (tuple\i) at (6.75, 0.5 + \i * 1.5)
+	{\begin{minipage}{3cm}\centering Tuples\\$\langle state, duration \rangle$\end{minipage}};
+	
+	% Travis logs -> Log.
+	\draw[edge] (1,2) -- (log\i.west);
+	
+	% Log -> Map.
+	\draw[edge] (log\i) -- (map\i);
+	
+	% Map -> Tuple.
+	\draw[edge] (map\i) -- (tuple\i);
+	
+	% Tuple -> Filter.
+	\draw[edge] (tuple\i.east) -- (filter.west);
+}
+
+% Collect.
+\node[draw] (collect) at (14.50, 2)
+{\begin{minipage}{2.25cm}
+	\centering\textbf{Collect}\\
+	$\langle passed, X_1 \rangle$
+	$\langle passed, X_2 \rangle$\\
+	$\vdots$\\
+	$\langle passed, X_n \rangle$
+\end{minipage}};
+
+% Filter -> Collect.
+\draw[edge] (filter.east) -- (collect.west);
+
+\end{tikzpicture}
