@@ -1,0 +1,15 @@
+% !TeX root = thesis.tex
+
+\begin{appendices}
+\appendix
+\crefalias{chapter}{appendix}
+\addcontentsline{toc}{chapter}{Appendices}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
+
+\chapter{TravisTorrent queries}
+\label{appendix:travistorrent}
+\lstinputlisting[caption=TravisTorrent query: Find the amount of failed runs, label=lst:travistorrent-sql1, language=sql]{assets/listings/travistorrent-failed-runs.sql}
+
+\lstinputlisting[caption=TravisTorrent query: Find the probability of consecutive failures,label=lst:travistorrent-sql2, language=sql]{assets/listings/travistorrent-consecutive-failures.sql}
+
+\end{appendices}

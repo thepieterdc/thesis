@@ -1,5 +1,6 @@
 import json
 from collections import defaultdict
+from random import random
 
 import requests
 
@@ -65,14 +66,14 @@ for run in data:
 
     original_first_failure = min(i for i, e in enumerate(original_sequence) if e in failed_tests)
     first_failed_test['Original'] = original_first_failure
-    first_failed_test_ms['Original'] = sum(parent_durations[d] for d in original_sequence[:original_first_failure])
+    first_failed_test_ms['Original'] = sum(int(parent_durations[d]) for d in original_sequence[:original_first_failure])
 
     for p in predictor_names:
         if p not in first_failed_test:
             first_failed_test[p] = -1
             first_failed_test_ms[p] = -1
 
-    line = [run['commit'], str(sum(parent_durations.values()))]
+    line = [run['commit'], str(int(sum(parent_durations.values())))]
     line += list(map(lambda p: str(first_failed_test[p]), predictor_names))
     line += list(map(lambda p: str(first_failed_test_ms[p]), predictor_names))
     csvdata.append(line)

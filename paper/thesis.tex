@@ -8,22 +8,29 @@
 \usepackage{amsthm}
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
+\usepackage[page]{appendix}
 \usepackage{biblatex}
 \usepackage{caption}
 \usepackage{fancyhdr}
+\usepackage{float}
 \usepackage[a4paper,plainpages=false]{hyperref}
 \usepackage[automake]{glossaries}
 \usepackage{cleveref}
+\usepackage{lipsum}
 \usepackage{listing}
 \usepackage{listings,lstautogobble}
 \usepackage[default,scale=0.95]{opensans}
 \usepackage[nottoc]{tocbibind}
 \usepackage{pdfpages}
 \usepackage{setspace}
-\usepackage[detect-weight=true, binary-units=true, range-phrase=--]{siunitx}
+\usepackage[detect-weight=true, binary-units=true, range-phrase=-]{siunitx}
 \usepackage[caption=false]{subfig}
 \usepackage{tabularx}
+\usepackage{tikz}
 \usepackage{titlesec}
+
+% Tikz libraries.
+\usetikzlibrary{shapes.geometric}
 
 % Blank pages.
 \newcommand\blankpage{%
@@ -106,6 +113,7 @@
 	showstringspaces=false,
 	breaklines=true,
 	frame=lines,
+	captionpos=b,
 	backgroundcolor=\color{code-background},
 	autogobble=true
 }
@@ -120,24 +128,29 @@
 
 \makeglossaries
 
-% Acronyms.
-\newacronym{ci}{CI}{Continuous Integration}
-\newacronym{tcp}{TCP}{Test Case Prioritisation}
-\newacronym{tcs}{TCS}{Test Case Selection}
-\newacronym{tsm}{TSM}{Test Suite Minimisation}
-\newacronym{vcs}{VCS}{Version Control System}
-
 % Macro's
-\newcommand{\CI}{\acrlong{ci}}
+\newcommand{\CI}{Continuous Integration}
 \newcommand{\github}{GitHub}
 \newcommand{\githubactions}{GitHub Actions}
 \newcommand{\junit}{JUnit}
 \newcommand{\travisci}{Travis CI}
-\newcommand{\tcp}{\acrlong{tcp}}
-\newcommand{\tcs}{\acrlong{tcs}}
-\newcommand{\tsm}{\acrlong{tsm}}
+\newcommand{\tcp}{Test Case Prioritisation}
+\newcommand{\tcs}{Test Case Selection}
+\newcommand{\tsm}{Test Suite Minimisation}
+\newcommand{\vcs}{Version Control System}
 \newcommand{\velocity}{VeloCIty}
 \newcommand{\bolditem}[1]{\item \textbf{#1:}}
+
+
+% Acronyms.
+\newacronym{ci}{CI}{\CI}
+\newacronym{tcp}{TCP}{\tcp}
+\newacronym{tcs}{TCS}{\tcs}
+\newacronym{tsm}{TSM}{\tsm}
+\newacronym{vcs}{VCS}{\vcs}
+
+% Glossary items.
+\newglossaryentry{mapreduce}{name={MapReduce},description={a programming paradigm that allows large amounts of data to be processed in a distributed manner}}
 
 \begin{document}
 \onehalfspacing
@@ -158,10 +171,10 @@
 
 % Summaries.
 \selectlanguage{english}
-\input{summary/english.tex}
+%\input{summary/english.tex}
 \clearpage
 \selectlanguage{dutch}
-\input{summary/dutch.tex}
+%\input{summary/dutch.tex}
 \clearpage
 \selectlanguage{english}
 
@@ -171,11 +184,13 @@
 \addcontentsline{toc}{chapter}{Extended abstract (Dutch)}
 \includepdf[pages=-]{abstract-nl/extended-abstract.pdf}
 
-\pagestyle{fancy}
-
 % Vulgarising summary.
+\pagestyle{plain}
+
 \input{summary/vulgarising.tex}
 \clearpage
+
+\pagestyle{fancy}
 
 \blankpage{}
 
@@ -184,6 +199,7 @@
 
 % Corpus.
 \mainmatter
+
 \input{glossary.tex}
 \clearpage
 \input{introduction.tex}
@@ -205,5 +221,7 @@
 \input{list-of-listings.tex}
 \clearpage
 \input{list-of-tables.tex}
+\clearpage
+\input{appendices.tex}
 
 \end{document}

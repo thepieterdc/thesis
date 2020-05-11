@@ -1,0 +1,4 @@
+% !TeX root = ../../thesis.tex
+
+\subsection{Stratego data}
+To integrate \velocity{} with the existing Stratego codebase, the instructions described in \cref{ch:velocity} have been used. Afterwards, to analyse the prediction performance, an approach similar to the previous test subject has been taken. The \github{} API has been used to identify the failed commits and to find their parent (successful) commits. The parent commits have subsequently been modified to use the \velocity{} Java agent and have been executed using \githubactions{}.

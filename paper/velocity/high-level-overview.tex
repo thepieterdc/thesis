@@ -10,7 +10,8 @@ The architecture of the \velocity{} framework consists of seven steps that are p
 	\label{fig:velocity-sequence-diagram}
 \end{figure}
 
-\subsection{Agent}\label{ssec:velocity-frontend}
+\subsection{Agent}
+\label{ssec:velocity-frontend}
 The first component that will be discussed is the agent. This is the only component that depends actively on both the programming language, as well as the used test framework, since it must interact directly with the source code and test suite. For every programming language or test framework that needs to be supported, a different implementation of an agent must be provided. This implementations are however strongly related, so much code can be reused or even shared. In this thesis, an agent was implemented in Java, more specifically as a plugin for the widely used Gradle and JUnit test framework. This combination was previously described in \autoref{ssec:relatedwork-gradle-junit}. This plugin is responsible for running the test suite in a certain prioritised order, which is obtained by communicating with the controller (\autoref{ssec:velocity-controller}). After the test cases have been executed, the plugin sends a feedback report to the controller, where it is analysed.
 
 \subsection{Controller}\label{ssec:velocity-controller}
