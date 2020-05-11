@@ -1,0 +1,92 @@
+% !TeX root = ../../thesis.tex
+
+\subsection{ROCKET algorithm}
+\label{ssec:alg-rocket}
+In contrast to the previously discussed algorithms which focused on \tsm{}, the ROCKET algorithm is tailored for \tcp{}. This algorithm was presented by Marijan, Gotlieb and Sen \cite{6676952} as part of a case study to improve the testing efficiency of industrial video conferencing software. Unlike the previous algorithms that only take code coverage into account, this algorithm also considers historical failure data and test execution time. The objective of this algorithm is twofold: select the test cases with the highest consecutive failure rate, whilst also maximising the number of executed test cases in a limited time frame. The below algorithm has been modified slightly, since the time frame is a domain-specific constraint for this particular industry case and irrelevant for this thesis. Since this is a prioritisation algorithm rather than a selection or minimisation algorithm, it yields a total ordering of all the test cases in the test suite, ordered using a weighted function.\\
+
+\noindent The modified version of the algorithm (pseudocode is provided in Algorithm \autoref{alg:rocket}) takes three inputs:
+\begin{itemize}
+	\item the set of test cases to prioritise $TS = \{T_1, \dots, T_n\}$
+	\item the execution time for each test case $E = \{E_1, \dots, E_n\}$
+	\item the failure status for each test case over the previous $m$ successive executions $F = \{F_1, \dots, F_n\}$, where $F_i = \{f_1, \dots, f_m\}$
+\end{itemize}
+
+\noindent The algorithm starts by creating an array $P$ of length $n$, which contains the priority of each test case. The priority of each test case is initialised at zero. Next, an $m \times n$ failure matrix $MF$ is constructed and filled using the following formula.
+\[
+MF[i, j] = \left\{
+\begin{array}{rl}
+	1 & \text{if test case } T_j \text{ passed in execution } (current - i) \\
+	-1 & \text{if test case } T_j \text{ failed in execution } (current - i) \\
+	\end{array}
+\right.
+\]
+
+\noindent This matrix $MF$ is visualised in \autoref{tbl:rocket-failurematrix}. This table contains the hypothetical failure rates of the last three executions of six test cases.\\
+
+\begin{table}[h]
+\centering
+\begin{tabular}{| l || c | c | c | c | c | c |}
+	\hline
+	\textbf{run} & \textbf{$T_1$} & \textbf{$T_2$} & \textbf{$T_3$} & \textbf{$T_4$} & \textbf{$T_5$} & \textbf{$T_6$}\\\hline
+	$current - 1$ & $1$ & $1$ & $1$ & $1$ & $-1$ & $-1$\\
+	$current - 2$ & $-1$ & $1$ & $-1$ & $-1$ & $1$ & $-1$\\
+	$current - 3$ & $1$ & $1$ & $-1$ & $1$ & $1$ & $-1$\\
+	\hline
+\end{tabular}
+\caption{Visualisation of the failure matrix $MF$.}
+\label{tbl:rocket-failurematrix}
+\end{table}
+
+\noindent Afterwards, $P$ is filled with the cumulative priority of each test case, which is calculated by multiplying its failure rate with a domain-specific weight heuristic $\omega$. This heuristic is used to derive the probability of repeated failures of the same test, given earlier failures. In their paper \cite{6676952}, the authors apply the following weights:
+
+\[
+\omega_i = \left\{
+\begin{array}{rl}
+0.7 & \text{if } i = 1 \\
+0.2 & \text{if } i = 2 \\
+0.1 & \text{if } i >= 3 \\
+\end{array}
+\right.
+\]
+$$P_j = \sum_{i = 1 \dots m} MF[i, j] * \omega_i$$
+
+\noindent Finally, the algorithm groups test cases based on their calculated priority in $P$. Every test case that belongs to the same group is equally relevant for execution in the current test run. However, within every test group the tests will differ in execution time $E$. The final step is to reorder test cases that belong to the same group in such a way that test cases with a shorter duration are executed earlier in the group.
+
+\begin{algorithm}[h!]
+\caption{ROCKET algorithm}
+\label{alg:rocket}
+\begin{algorithmic}[1]
+	\State {\bfseries Input:} Set $TS = \{T_1, \dots, T_n\}$ of all test cases,
+
+	Execution time $E$ of every test case,
+	
+	Failure status $FS$ for each test case over the previous $m$ successive iterations.
+	\State {\bfseries Output:} Priority of test cases $P$.
+	\State $P \gets array[1 \dots n]$ \Comment{initially $0$}
+	\State $MF \gets array[1 \dots m]$
+	\ForAll{$i \in 1 \dots m$}
+		\State $MF[i] \gets array[1 \dots n]$
+		\ForAll{$j \in 1 \dots n$}
+			\If{test case $T_j$ failed in run $(current - i)$} $MF[i][j] \gets -1$
+			\Else{} $MF[i][j] \gets 1$
+			\EndIf
+		\EndFor
+	\EndFor
+	\ForAll{$j \in 1 \dots n$}
+		\ForAll{$i \in 1 \dots m$}
+			\If{$i = 1$} $P[j] \gets P[j] + (MF[i][j] * 0.7)$
+			\ElsIf{$i = 2$} $P[j] \gets P[j] + (MF[i][j] * 0.2)$
+			\Else{} $P[j] + (MF[i][j] * 0.1)$
+			\EndIf
+		\EndFor
+	\EndFor
+	\State $Q \gets \{P[j] \vert j \in 1 \dots n\}$ \Comment{distinct priorities}
+	\State $G \gets array[1 \dots Card(Q)]$ \Comment{initially empty sets}
+	\ForAll{$j \in 1 \dots n$}
+		\State $p \gets P[j]$
+		\State $G[p] \gets G[p] \cup \{j\}$
+	\EndFor
+	\State Sort every group in $G$ based on ascending execution time in $E$.
+	\State Sort $P$ according to which group it belongs and its position within that group.
+\end{algorithmic}
+\end{algorithm}
