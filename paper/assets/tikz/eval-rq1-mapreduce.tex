@@ -9,7 +9,7 @@
 	\node[draw] (log\i) at (2.25, 0.5 + \i * 1.5) {Log};
 	
 	% Map.
-	\node[ellipse, draw] (map\i) at (4, 0.5 + \i * 1.5) {\texttt{Map}};
+	\node[ellipse, draw, fill=bisque!60] (map\i) at (4, 0.5 + \i * 1.5) {\texttt{Map}};
 	
 	% Travis logs -> Log.
 	\draw[edge] (1,2) -- (log\i.west);
@@ -26,7 +26,7 @@
 	{\begin{minipage}{2cm}\centering Tuples\\$\langle \status,1 \rangle$\end{minipage}};
 	
 	% Reduce.
-	\node[ellipse, draw] (reduce\i) at (10, \i * 1.75 - 0.65)
+	\node[ellipse, draw, fill=bisque!60] (reduce\i) at (10, \i * 1.75 - 0.65)
 	{\begin{minipage}{1.25cm}\centering\texttt{Reduce}\\\emph{sum}\end{minipage}};
 	
 	% Status -> Reduce.

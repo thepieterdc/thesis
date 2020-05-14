@@ -30,7 +30,7 @@
 \usepackage{titlesec}
 
 % Tikz libraries.
-\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows,automata,shapes.geometric}
 
 % Blank pages.
 \newcommand\blankpage{%
@@ -79,6 +79,7 @@
 \newtheorem{definition}{Definition}
 
 % Custom colors
+\definecolor{bisque}{HTML}{FFE4C4}
 \definecolor{code-background}{HTML}{EEEEEE}
 \definecolor{code-delim}{RGB}{20,105,176}
 \definecolor{darkgray}{rgb}{.4,.4,.4}
@@ -141,7 +142,6 @@
 \newcommand{\velocity}{VeloCIty}
 \newcommand{\bolditem}[1]{\item \textbf{#1:}}
 
-
 % Acronyms.
 \newacronym{ci}{CI}{\CI}
 \newacronym{tcp}{TCP}{\tcp}
@@ -158,16 +158,16 @@
 % Titlepage.
 \frontmatter
 \pagestyle{empty}
-\includepdf[pages=-]{titlepage.pdf}
+%\includepdf[pages=-]{titlepage.pdf}
 
-\blankpage{}
+%\blankpage{}
 
 % Admission.
-\input{admission.tex}
+%\input{admission.tex}
 \clearpage
 
 % Acknowledgements.
-\input{acknowledgements.tex}
+%\input{acknowledgements.tex}
 
 % Summaries.
 \selectlanguage{english}
@@ -180,48 +180,55 @@
 
 % Extended abstracts.
 \addcontentsline{toc}{chapter}{Extended abstract}
-\includepdf[pages=-]{abstract-en/extended-abstract.pdf}
+%\includepdf[pages=-]{abstract-en/extended-abstract.pdf}
 \addcontentsline{toc}{chapter}{Extended abstract (Dutch)}
-\includepdf[pages=-]{abstract-nl/extended-abstract.pdf}
+%\includepdf[pages=-]{abstract-nl/extended-abstract.pdf}
 
 % Vulgarising summary.
 \pagestyle{plain}
 
-\input{summary/vulgarising.tex}
-\clearpage
+%\input{summary/vulgarising.tex}
+%\clearpage
 
 \pagestyle{fancy}
 
-\blankpage{}
+%\blankpage{}
 
 % ToC.
-\tableofcontents
+%\tableofcontents
 
 % Corpus.
 \mainmatter
 
-\input{glossary.tex}
-\clearpage
-\input{introduction.tex}
-\clearpage
-\input{software-engineering.tex}
-\clearpage
-\input{related-work.tex}
-\clearpage
-\input{velocity.tex}
-\clearpage
-\input{evaluation.tex}
-\clearpage
-\input{conclusion.tex}
-\clearpage
-\input{bibliography.tex}
-\clearpage
-\input{list-of-figures.tex}
-\clearpage
-\input{list-of-listings.tex}
-\clearpage
-\input{list-of-tables.tex}
-\clearpage
-\input{appendices.tex}
+\begin{figure}[htbp!]
+	\centering
+	\input{assets/tikz/saturating-counter.tex}
+	\caption{Saturating counter}
+	\label{fig:saturating-counter}
+\end{figure}
+
+%\input{glossary.tex}
+%\clearpage
+%\input{introduction.tex}
+%\clearpage
+%\input{software-engineering.tex}
+%\clearpage
+%\input{related-work.tex}
+%\clearpage
+%\input{velocity.tex}
+%\clearpage
+%\input{evaluation.tex}
+%\clearpage
+%\input{conclusion.tex}
+%\clearpage
+%\input{bibliography.tex}
+%\clearpage
+%\input{list-of-figures.tex}
+%\clearpage
+%\input{list-of-listings.tex}
+%\clearpage
+%\input{list-of-tables.tex}
+%\clearpage
+%\input{appendices.tex}
 
 \end{document}
