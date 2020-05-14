@@ -4,7 +4,7 @@
 \draw[thick] (0, 0) rectangle node[rotate=90] {\textbf{Travis logs}} (1, 4);
 
 % Filter.
-\node[draw] (filter) at (11, 2)
+\node[draw, fill=bisque!60] (filter) at (11, 2)
 {\begin{minipage}{3.25cm}\centering\texttt{Filter}\\$state = "passed"$\end{minipage}};
 
 % Logs, Map.
@@ -13,7 +13,7 @@
 	\node[draw] (log\i) at (2.25, 0.5 + \i * 1.5) {Log};
 	
 	% Map.
-	\node[ellipse, draw] (map\i) at (4, 0.5 + \i * 1.5) {\texttt{Map}};
+	\node[ellipse, draw, fill=bisque!60] (map\i) at (4, 0.5 + \i * 1.5) {\texttt{Map}};
 	
 	% Status/Duration tuples.
 	\node[draw] (tuple\i) at (6.75, 0.5 + \i * 1.5)
