@@ -12,6 +12,14 @@ headers = {'Accept': 'application/json',
 with open("failing_tests.json", "r") as fh:
     failing_tests = json.load(fh)
 
+branches = set()
+for i in range(1, 10):
+    branch_req = requests.get(f'https://api.github.com/repos/thepieterdc/dodona-analysis/branches?page={i}&per_page=1000',
+                              headers=headers).json()
+    branch_names = set(map(lambda b: b['name'], branch_req))
+    branches |= branch_names
+    print(i)
+
 client = docker.from_env()
 
 for commit in failing_tests:
@@ -26,11 +34,7 @@ for commit in failing_tests:
         parent = commit_req['parents'][0]['sha']
 
         # Find out whether the parent exists.
-        branch_req = requests.get(f'https://api.github.com/repos/thepieterdc/dodona-analysis/branches?per_page=1000',
-                                  headers=headers).json()
-        branch_names = set(map(lambda b: b['name'], branch_req))
-
-        if f'{parent}-instrument' in branch_names:
+        if f'{parent}-instrument' in branches:
             print("Already exists")
             continue
 

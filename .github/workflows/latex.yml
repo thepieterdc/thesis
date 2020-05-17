@@ -3,6 +3,7 @@ name: LaTeX
 on:
   push:
     paths:
+      - '**.yml'
       - '**.tex'
 
 jobs:
@@ -10,14 +11,22 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: janstuemmel/latex
+      image: blang/latex
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@master
     - name: Install packages
       run: |
         apt-get update
-        apt-get install poppler-utils
+        apt-get -y install biber texlive-bibtex-extra texlive-binaries texlive-extra-utils
+    - name: Compile Dutch abstract
+      working-directory: ./paper/abstract-nl
+      run: |
+        latexmk --shell-escape -pdf extended-abstract.tex
+    - name: Compile English abstract
+      working-directory: ./paper/abstract-en
+      run: |
+        latexmk --shell-escape -pdf extended-abstract.tex
     - name: Compile paper
       working-directory: ./paper
       run: |
