@@ -12,7 +12,7 @@ The two pie charts in \Cref{fig:rq1-failure-probability} illustrate the amount o
 	\label{fig:rq1-failure-probability}
 \end{figure}
 
-\subsection{RQ3: Average duration of a test run}
+\subsection{RQ2: Average duration of a test run}
 The dataset by Durieux et al. \cite{travisanalysis} has been refined to only include test runs that did not finish within $\SI{10}{s}$. A lower execution time generally indicates that the test suite did not execute and that a compilation failure has occurred instead. \Cref{tbl:rq2-characteristics} contains the characteristics of the remaining $\SI{24320504}{}$ analysed test runs. The median and average execution times suggest that primarily small projects are \travisci{}, yet the maximum value is very high. \Cref{fig:rq2-durations} confirms that $\SI{71378}{}$ test runs have taken longer than one hour to execute. Further investigation has revealed that these are typically projects which are using mutation testing, such as \texttt{plexus/yaks}\footnote{A Ruby library for hypermedia (\url{https://github.com/plexus/yaks}).}.
 
 \begin{table}[h]
@@ -47,9 +47,9 @@ Because the TravisTorrent project is the only dataset that contains the identifi
 \end{figure}
 
 \subsection{RQ4: Applying \tcp{} to Dodona}
-After executing the $\SI{62}{}$ failed test runs, the log files have been inspected. The log files have revealed that $\SI{9}{}$ test runs have failed because of an error in the configuration, rather than due to a failing test case. These test runs have therefore been omitted from the results because the test suite did not execute. Configuration problems require in-depth contextual information about the project and can therefore not be predicted.\\
+After executing the $\SI{120}{}$ failed test runs, the log files have been inspected. The log files have revealed that $\SI{5}{}$ test runs have failed because of an error in the configuration, rather than due to a failing test case. These test runs have therefore been omitted from the results because the test suite did not execute. Configuration problems require in-depth contextual information about the project and can therefore not be predicted.\\
 
-\noindent \Cref{tbl:rq4-first-failure} contains the amount of executed test cases until the first failure is observed. These results indicate that every predictor but one\footnote{The AllInOrder algorithm can be considered as a  deterministic random algorithm, rather than an actual predictor.}, is capable of performing at least one successful prediction. Furthermore, the maximum amount of executed test cases is lower than the original value, which means that every algorithm is a valid predictor. The data suggests that the Alpha algorithm and the HGS algorithm are the preferred predictors for the Dodona project, while the ROCKET algorithm does not achieve a good performance.
+\noindent \Cref{tbl:rq4-first-failure} contains the amount of executed test cases until the first failure is observed. These results indicate that every predictor is capable of performing at least one successful prediction. Furthermore, the maximum amount of executed test cases is lower than the original value, which means that every algorithm is a valid predictor. The data suggests that the Alpha algorithm and the HGS algorithm are the preferred predictors for the Dodona project, while the ROCKET algorithm does not achieve a good performance.
 
 \begin{table}[h]
 	\centering
@@ -59,31 +59,31 @@ After executing the $\SI{62}{}$ failed test runs, the log files have been inspec
 		
 		\hline
 		
-		\emph{Original} & $\SI{0}{}$ & $\SI{143}{}$ & $\SI{65}{}$ & $\SI{563}{}$\\
+		\emph{Original} & $\SI{0}{}$ & $\SI{155}{}$ & $\SI{78}{}$ & $\SI{563}{}$\\
 		
 		\hline
 		
-		Alpha & $\SI{0}{}$ & $\SI{7}{}$ & $\SI{6}{}$ & $\SI{44}{}$\\
+		Alpha & $\SI{0}{}$ & $\SI{8}{}$ & $\SI{3}{}$ & $\SI{73}{}$\\
 		
 		\hline
-		AffectedRandom & $\SI{0}{}$ & $\SI{82}{}$ & $\SI{18}{}$ & $\SI{428}{}$\\
-		AllInOrder & $\SI{1}{}$ & $\SI{102}{}$ & $\SI{71}{}$ & $\SI{455}{}$\\
-		AllRandom & $\SI{0}{}$ & $\SI{71}{}$ & $\SI{16}{}$ & $\SI{477}{}$\\
-		
-		\hline
-		
-		GreedyCoverAffected & $\SI{31}{}$ & $\SI{307}{}$ & $\SI{296}{}$ & $\SI{446}{}$\\
-		GreedyCoverAll & $\SI{0}{}$ & $\SI{85}{}$ & $\SI{32}{}$ & $\SI{467}{}$\\
-		GreedyTimeAll & $\SI{0}{}$ & $\SI{209}{}$ & $\SI{172}{}$ & $\SI{452}{}$\\
+		AffectedRandom & $\SI{0}{}$ & $\SI{54}{}$ & $\SI{10}{}$ & $\SI{428}{}$\\
+		AllInOrder & $\SI{0}{}$ & $\SI{119}{}$ & $\SI{82}{}$ & $\SI{460}{}$\\
+		AllRandom & $\SI{0}{}$ & $\SI{90}{}$ & $\SI{27}{}$ & $\SI{473}{}$\\
 		
 		\hline
 		
-		HGSAffected & $\SI{0}{}$ & $\SI{54}{}$ & $\SI{10}{}$ & $\SI{511}{}$\\
-		HGSAll & $\SI{0}{}$ & $\SI{109}{}$ & $\SI{6}{}$ & $\SI{487}{}$\\
+		GreedyCoverAffected & $\SI{0}{}$ & $\SI{227}{}$ & $\SI{246}{}$ & $\SI{494}{}$\\
+		GreedyCoverAll & $\SI{0}{}$ & $\SI{98}{}$ & $\SI{33}{}$ & $\SI{514}{}$\\
+		GreedyTimeAll & $\SI{0}{}$ & $\SI{210}{}$ & $\SI{172}{}$ & $\SI{482}{}$\\
 		
 		\hline
 		
-		ROCKET & $\SI{0}{}$ & $\SI{208}{}$ & $\SI{170}{}$ & $\SI{452}{}$\\
+		HGSAffected & $\SI{0}{}$ & $\SI{61}{}$ & $\SI{10}{}$ & $\SI{511}{}$\\
+		HGSAll & $\SI{0}{}$ & $\SI{124}{}$ & $\SI{54}{}$ & $\SI{507}{}$\\
+		
+		\hline
+		
+		ROCKET & $\SI{0}{}$ & $\SI{210}{}$ & $\SI{170}{}$ & $\SI{482}{}$\\
 		
 		\hline
 	\end{tabularx}
@@ -103,13 +103,13 @@ After executing the $\SI{62}{}$ failed test runs, the log files have been inspec
 \begin{figure}[!hbp]
 	\ContinuedFloat
 	\subfloat[Greedy algorithm]{%
-		\includegraphics[width=\textwidth]{assets/charts/rq4-dodona-greedy.pdf}
+		\includegraphics[width=\textwidth]{assets/charts/rq4-dodona-alpha.pdf}
 	}
 \end{figure}
 \begin{figure}[!hbp]
 	\ContinuedFloat
 	\subfloat[HGS algorithm]{%
-		\includegraphics[width=\textwidth]{assets/charts/rq4-dodona-hgs.pdf}
+		\includegraphics[width=\textwidth]{assets/charts/rq4-dodona-alpha.pdf}
 	}
 \end{figure}
 \begin{figure}[!t]
@@ -122,7 +122,6 @@ After executing the $\SI{62}{}$ failed test runs, the log files have been inspec
 	\label{fig:rq4-performance}
 \end{figure}
 
-
 \noindent The duration until the first observed failure is reported in \Cref{tbl:rq4-first-failure-duration}. Observe that the previous table indicates that the ROCKET algorithm does not perform well, while this table suggests otherwise. This behaviour is explained by the objective function of this algorithm, which prioritises test cases with a low execution time to be executed first.
 
 \begin{table}[htbp!]
@@ -133,31 +132,31 @@ After executing the $\SI{62}{}$ failed test runs, the log files have been inspec
 		
 		\hline
 		
-		\emph{Original} & $\SI{0}{\second}$ & $\SI{154}{\second}$ & $\SI{125}{\second}$ & $\SI{622}{\second}$\\
+		\emph{Original} & $\SI{0}{\second}$ & $\SI{135}{\second}$ & $\SI{123}{\second}$ & $\SI{380}{\second}$\\
 		
 		\hline
 		
-		Alpha & $\SI{0}{\second}$ & $\SI{5}{\second}$ & $\SI{0}{\second}$ & $\SI{84}{\second}$\\
+		Alpha & $\SI{0}{\second}$ & $\SI{3}{\second}$ & $\SI{1}{\second}$ & $\SI{33}{\second}$\\
 		
 		\hline
-		AffectedRandom & $\SI{0}{\second}$ & $\SI{64}{\second}$ & $\SI{10}{\second}$ & $\SI{355}{\second}$\\
-		AllInOrder & $\SI{0}{\second}$ & $\SI{177}{\second}$ & $\SI{171}{\second}$ & $\SI{456}{\second}$\\
-		AllRandom & $\SI{0}{\second}$ & $\SI{64}{\second}$ & $\SI{11}{\second}$ & $\SI{611}{\second}$\\
-		
-		\hline
-		
-		GreedyCoverAffected & $\SI{6}{\second}$ & $\SI{123}{\second}$ & $\SI{109}{\second}$ & $\SI{264}{\second}$\\
-		GreedyCoverAll & $\SI{0}{\second}$ & $\SI{60}{\second}$ & $\SI{25}{\second}$ & $\SI{306}{\second}$\\
-		GreedyTimeAll & $\SI{0}{\second}$ & $\SI{44}{\second}$ & $\SI{15}{\second}$ & $\SI{178}{\second}$\\
+		AffectedRandom & $\SI{0}{\second}$ & $\SI{28}{\second}$ & $\SI{5}{\second}$ & $\SI{190}{\second}$\\
+		AllInOrder & $\SI{0}{\second}$ & $\SI{82}{\second}$ & $\SI{71}{\second}$ & $\SI{270}{\second}$\\
+		AllRandom & $\SI{0}{\second}$ & $\SI{43}{\second}$ & $\SI{11}{\second}$ & $\SI{270}{\second}$\\
 		
 		\hline
 		
-		HGSAffected & $\SI{0}{\second}$ & $\SI{58}{\second}$ & $\SI{6}{\second}$ & $\SI{581}{\second}$\\
-		HGSAll & $\SI{0}{\second}$ & $\SI{130}{\second}$ & $\SI{16}{\second}$ & $\SI{578}{\second}$\\
+		GreedyCoverAffected & $\SI{0}{\second}$ & $\SI{88}{\second}$ & $\SI{86}{\second}$ & $\SI{314}{\second}$\\
+		GreedyCoverAll & $\SI{0}{\second}$ & $\SI{46}{\second}$ & $\SI{12}{\second}$ & $\SI{280}{\second}$\\
+		GreedyTimeAll & $\SI{0}{\second}$ & $\SI{55}{\second}$ & $\SI{32}{\second}$ & $\SI{175}{\second}$\\
 		
 		\hline
 		
-		ROCKET & $\SI{0}{\second}$ & $\SI{47}{\second}$ & $\SI{16}{\second}$ & $\SI{178}{\second}$\\
+		HGSAffected & $\SI{0}{\second}$ & $\SI{35}{\second}$ & $\SI{6}{\second}$ & $\SI{356}{\second}$\\
+		HGSAll & $\SI{0}{\second}$ & $\SI{75}{\second}$ & $\SI{34}{\second}$ & $\SI{377}{\second}$\\
+		
+		\hline
+		
+		ROCKET & $\SI{0}{\second}$ & $\SI{54}{\second}$ & $\SI{32}{\second}$ & $\SI{175}{\second}$\\
 		
 		\hline
 	\end{tabularx}
@@ -170,7 +169,7 @@ After executing the $\SI{62}{}$ failed test runs, the log files have been inspec
 \subsection{RQ5: Integrate \velocity{} with Stratego}
 The data collection phase has already proven that the Java agent is compatible with Stratego. Since \velocity{} is not yet able to predict test cases which have been added in the current commit, only $\SI{35}{}$ of the $\SI{54}{}$ failed test runs could be used.\\
 
-\noindent Similar to the previous test subject, \Cref{tbl:rq5-first-failure} enlists how many test cases have been executed before the first failure. The table only considers the four main algorithms, since the actual prediction performance was only secondary to this research question and only a small amount of test runs have been analysed. The results suggest that every algorithm except the ROCKET achieves a high prediction accuracy on this project.
+\noindent Similar to the previous test subject, \Cref{tbl:rq5-first-failure} lists how many test cases have been executed before the first failure. The table only considers the four main algorithms, since the actual prediction performance was only secondary to this research question and only a small amount of test runs have been analysed. The results suggest that every algorithm except the ROCKET achieves a high prediction accuracy on this project.
 
 \begin{table}[h]
 	\centering

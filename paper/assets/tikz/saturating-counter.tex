@@ -1,19 +1,33 @@
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,
-semithick]
+\begin{tikzpicture}[->,>=stealth',auto,node distance=4.5cm,semithick]
 
-\node[state] (A)                    {$q_a$};
-\node[state]         (B) [above right of=A] {$q_b$};
-\node[state]         (D) [below right of=A] {$q_d$};
-\node[state]         (C) [below right of=B] {$q_c$};
-\node[state]         (E) [below of=D]       {$q_e$};
+% Nodes.
+\node[state] (A)
+{\begin{minipage}{2cm}\centering inaccurate\end{minipage}};
+\node[state] (B) [right of=A]
+{\begin{minipage}{2cm}\centering neutral\end{minipage}};
+\node[state] (C) [right of=B]
+{\begin{minipage}{2cm}\centering accurate\end{minipage}};
 
-\path (A) edge              node {0,1,L} (B)
-edge              node {1,1,R} (C)
-(B) edge [loop above] node {1,1,L} (B)
-edge              node {0,1,L} (C)
-(C) edge              node {0,1,L} (D)
-edge [bend left]  node {1,0,R} (E)
-(D) edge [loop below] node {1,1,R} (D)
-edge              node {0,1,R} (A)
-(E) edge [bend left]  node {1,0,R} (A);
+\path
+(A)	edge [bend right=30] node [align=center,below] {above\\average} (B)
+
+(B)	edge [bend right=30] node [align=center,below] {above\\average} (C)
+
+(C) edge [loop right] node [align=center,above=16pt] {above\\average} (C)
+
+(C) edge [bend right=30] node [align=center,above] {below\\average} (B)
+
+(B) edge [bend right=30] node [align=center,above] {below\\average} (A)
+
+(A) edge [loop left] node [align=center,above=16pt] {below\\average} (A);
+
+%\path (A) edge              node {0,1,L} (B)
+%edge              node {1,1,R} (C)
+%(B) edge [loop above] node {1,1,L} (B)
+%edge              node {0,1,L} (C)
+%(C) edge              node {0,1,L} (D)
+%edge [bend left]  node {1,0,R} (E)
+%(D) edge [loop below] node {1,1,R} (D)
+%edge              node {0,1,R} (A)
+%(E) edge [bend left]  node {1,0,R} (A);
 \end{tikzpicture}

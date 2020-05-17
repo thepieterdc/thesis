@@ -94,7 +94,7 @@ sc = spark.sparkContext
 sc.setLogLevel('INFO')
 
 # Load the files into an RDD.
-everything: pyspark.rdd = sc.binaryFiles("/media/pieter/data/thesistests/d/**/*", minPartitions=100)
+everything: pyspark.rdd = sc.binaryFiles("/media/pieter/data/thesistests/d/**/**/*.xml", minPartitions=100)
 
 # Parse the filename.
 files = everything.map(parse_file_name)

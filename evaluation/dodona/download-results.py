@@ -12,7 +12,7 @@ headers = {'Accept': 'application/json',
            'Authorization': f'token {token}',
            'Content-Type': 'application/json'}
 
-for page in range(1, 10):
+for page in range(1, pages):
     url = f"https://api.github.com/repos/thepieterdc/dodona-analysis/actions/runs?page={page}"
     print(f"Fetching {url}")
     contents = requests.get(url, headers=headers).json()
@@ -28,6 +28,10 @@ for page in range(1, 10):
             continue
 
         if os.path.exists(f"/media/pieter/data/thesistests/d/{commit_name}"):
+            print(f"Already exists {commit_name}")
+            continue
+
+        if os.path.exists(f"/media/pieter/data/thesistests/dodona-results-parsed/{commit_name}.json"):
             print(f"Already exists {commit_name}")
             continue
 
