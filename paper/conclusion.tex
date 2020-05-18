@@ -3,47 +3,42 @@
 \chapter{Conclusion}
 \label{ch:conclusion}
 
-The main purpose of this thesis has been to investigate different approaches towards optimising the test suite of a common software project. The concepts of \tsm{}, \tcs{} and \tcp{} have been introduced and accompanying algorithms have been presented. A novel client-server oriented framework for the latter approach has been proposed, as well as a new prioritisation algorithm. Finally, \velocity{} has been applied to the UGent Dodona project, proving its ability to predict test case failure and therefore reduce the execution time of the test suite.\\
+The main objective of this thesis was to study different approaches to optimise the test suite of a typical software project. Three approaches have been introduced to this extend: \tsm{}, \tcs{} and \tcp{}. The latter approach has been implemented successfully using the \velocity{} framework. Furthermore, this framework features the Alpha algorithm as a novel prioritisation algorithm. The performance of the Alpha algorithm has been evaluated, mainly on the UGent Dodona project. The results are promising, resulting in \SI{95}{\percent} fewer executed test cases and \SI{97}{\percent} less time spent waiting for the first test case to fail.\\
 
-\noindent A second purpose of this thesis was to gain useful insights into the behaviour of a typical test suite. These insights have been formulated as three additional research questions, to which answers have been provided in the previous chapter.
+\noindent The second purpose of this thesis was to gain useful insights into the characteristics of a regular test suite, formalised into three research questions. The first question was to estimate the expected failure probability of a test run. To answer this question, data from more than 28 million test runs on Travis-CI has been analysed. This analysis has indicated that \SI{18}{\percent} of those test runs have failed. Additionally, this dataset has been used to answer another question, which was to determine the typical duration of a test run. Statistical analysis has revealed that Travis-CI is mainly used for small projects, with an average test suite duration of seven minutes. \SI{0.20}{\percent} of the test suites take longer than one hour to execute, and some projects use mutation testing. The final question was to examine the probability of consecutive failing test runs. This probability was estimated at \SI{52}{\percent} using a second Travis-CI dataset from the TravisTorrent project\cite{msr17challenge}.
+
+\clearpage
 
 \section{Future work}
 The proposed architecture currently features a Java agent, which supports the prediction of Gradle projects using ten available predictors. However, there is still room for improvements. The paragraphs below will suggest some ideas for possible enhancements.
 
 \subsection{Java agent}
-The existing Java Agent can be extended in multiple ways. The most prominent addition would be to allow test cases to be executed in parallel. At the moment of writing, this is not possible yet. In order to facilitate parallel testing, one must first decide how to schedule the prioritised test cases across multiple threads, since the execution time of a test case varies strongly. One possibility to perform this scheduling is to use the average execution time per test case, which is obtained from prior runs. Alternatively, this can be performed at runtime by using any existing inter-thread communication paradigm such as message passing. On the implementation side of parallelisation, the current \texttt{TestProcessor} should be adapted to inherit from the \texttt{MaxNParallelTestClassProcessor}. A thread pool should ideally be used to reduce the overhead of restarting a new thread for every test case.
+The functionality of the Java agent can be extended in multiple ways. Its current biggest weakness is the lack of support for parallel test case execution. To allow parallel testing, the first problem that must be solved is the scheduling process. Since the execution time of a test case can vary significantly, a coordination mechanism is required to schedule which test case should be executed on which thread. One possibility would be to consider the average execution time per test case, which can be obtained by examining prior runs. Alternatively, the scheduling can be performed at runtime using an existing inter-thread communication paradigm, such as message passing. Specific to the Java agent, implementing parallel execution requires the current \texttt{TestProcessor} to be modified to inherit from the \texttt{MaxNParallelTestClassProcessor}. A thread pool should ideally be used to diminish the overhead of restarting a new thread for every test case.
 
 \subsection{Predictions}
-Further research and improvements to the predictors can be made on four different aspects.\\
+Four different enhancements can be made to the predictors.\\
 
-\noindent The first enhancement is that currently the predictor does not discriminate between a unit test or an integration test. 
-Recall that the scope of a unit test is limited to a small fraction of the application and that its execution time is ideally rather low. An integration test however usually takes longer to execute and tests multiple components of the application at once. The predictor could make use of this distinction and assume that a failure in a unit test has a high probability of resulting in a failed integration test as well, hence prioritising unit tests over integration tests.\\
+\noindent For the first enhancement, the predictor should be able to discriminate between a unit test or an integration test. Recall that the scope of a unit test is limited to a small fraction of the application code and that its execution time is usually low. Contrarily, an integration test usually takes much longer to execute and tests multiple components of the application at once. The predictor should ideally make use of this distinction and assume that a failing unit test will almost certainly result in a failed integration test as well, and as such, prioritise unit tests over integration tests.\\
 
-\noindent Secondly, the prediction algorithms currently take into account which source code lines have either been modified or removed in order to prioritise affected test cases. Likewise, test cases of which the code has been modified should also be considered as candidates for prioritisation, as the changed test case might contain a bug as well.\\
+\noindent Secondly, the prediction algorithms currently take into account which source code lines have either been modified or removed to identify which test cases have been affected. Likewise, a change in the code of the test case itself should also consider that test case affected, as the change might have introduced a bug as well.\\
 
-\noindent A third and unexplored research opportunity is to investigate the joint performance of multiple prediction algorithms combined. This could be integrated with the existing meta predictor. Instead of assigning a score to the entire prediction, multiple predictions could be intermingled using predefined weights.\\
+\noindent A third possible improvement would be to examine the performance of combining multiple prediction algorithms. Currently, the algorithms operate independently from each other, but there might be hidden potential in combining the individual strengths of these algorithms dynamically at runtime. A simple implementation is possible by modifying the existing meta predictor. Instead of assigning a score to the entire prediction, several predictions could be joined using predefined weights from earlier predictions.\\
 
-\noindent The final improvement is to take into account branch coverage in addition to the statement coverage which is currently used. This is a rather complex feature as not every coverage framework is capable of reporting accurately which branches have been covered and which ones have not. A suggested implementation would be to instrument the source code and rewrite every condition of every branch as separate \texttt{if}-statements.
+\noindent Finally, the predictors do not currently consider branch coverage in addition to statement coverage. Not every coverage tool is capable of accurately reporting which branches have been covered, therefore this has not been implemented. Branch coverage can alternatively be supported by instrumenting the source code and rewriting every conditional expression as separate \texttt{if}-statements.
 
 \subsection{Meta predictor}
-The proposed meta predictor increases the score of every predictor which predicted an above-average ranking and decreases the score of the other predictors. However, a possible problem with this approach is that the nature of the source code might evolve and change as time progresses. Using the current updating strategy it will take several test suite invocations for an alternative predictor to be preferred by the meta predictor. If a saturating counter would be used instead (\autoref{fig:saturating-counter}), this would be resolved much more quickly, allowing a more versatile meta predictor.
-
-INSPIRED BY https://en.wikipedia.org/wiki/Branch\_predictor
-
-2-LEVEL
-
-Pik een predictor met de hoogste score
+The current implementation of the meta predictor increments the score of the predictor if the prediction was above-average, and decreases the score otherwise. However, a possible problem with this approach is that the nature of the source code might evolve and change as time progresses. Using the current updating strategy it will take several test suite invocations for an alternative predictor to be preferred by the meta predictor. This effect can be mitigated if a saturating counter would be used instead (\Cref{fig:saturating-counter}). This idea is also used in branch predictors of microprocessors and allows a more versatile meta predictor.
 
 \begin{figure}[htbp!]
 	\centering
 	\input{assets/tikz/saturating-counter.tex}
-	\caption{Saturating counter}
+	\caption{Saturating counter with three states}
 	\label{fig:saturating-counter}
 \end{figure}
 
-In addition to implementing a different update strategy, it might be worth to investigate the use of machine learning or linear programming models as a meta predictor, or even as a prediction algorithm.
+\noindent In addition to implementing a different update strategy, it might be worth to investigate the use of machine learning or linear programming models as a meta predictor, or even as a prediction algorithm.
 
 \subsection{Final enhancements}
-Finally, since some of the implemented algorithms are inherently \tsm{} algorithms rather than prioritisation algorithms, the framework might opt to not execute some test cases at all, whereas now the entire test suite is always executed.\\
+Finally, the architecture might be extended to explicitly support \tsm{}, since several implemented algorithms are minimisation algorithms rather than prioritisation algorithms. Executing fewer test cases will result in further reduced execution times.\\
 
-\noindent Support for other programming languages and frameworks is possible by implementing new agents. The basic implementation is straightforward to restart the test suite after every executed test case, should test case reordering not be supported natively by the test framework.
+\noindent Support for new programming languages and frameworks is possible by implementing a new agent. A naive implementation would be to restart the test suite after every executed test case, should test case reordering not be supported natively by the test framework.
