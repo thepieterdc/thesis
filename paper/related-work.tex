@@ -1,6 +1,6 @@
 % !TeX root = thesis.tex
 
-\chapter{Related work}
+\chapter{Related work [TODO REVISE]}
 \label{ch:related-work}
 In the previous chapter, the paramount importance of frequently integrating one's changes into the upstream repository was emphasised. Additionally, \CI{} was introduced as both a practice and a tool to facilitate this often complex and time-consuming process. \CI{} is, however, not the golden bullet for software engineering, as there is a flip side to applying this practice. After every integration, all of the unit and regression tests in the test suite must be executed to ensure that the integration was successful and that no new bugs have been introduced. As the project evolves, the size of the codebase increases and consequently the amount of tests will increase as well in order to maintain a sufficiently high coverage level. An increase in the size of the test suite will inevitably lead to an increase in test duration \cite{evaluationoftestsuiteminimization}, which imposes an issue of scaling. Walcott, Soffa and Kapfhammer illustrate the magnitude of this problem by providing an example of a codebase consisting of 20.000 lines, for which the tests require up to seven weeks to complete \cite{10.1145/1146238.1146240}.\\
 
