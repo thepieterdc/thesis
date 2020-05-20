@@ -27,6 +27,7 @@
 \usepackage[caption=false]{subfig}
 \usepackage{tabularx}
 \usepackage{tikz}
+\usepackage{tikzscale}
 \usepackage{titlesec}
 
 % Tikz libraries.
@@ -158,43 +159,43 @@
 % Titlepage.
 \frontmatter
 \pagestyle{empty}
-%\includepdf[pages=-]{titlepage.pdf}
+\includepdf[pages=-]{titlepage.pdf}
 
-%\blankpage{}
+\blankpage{}
 
 % Admission.
-%\input{admission.tex}
+\input{admission.tex}
 \clearpage
 
 % Acknowledgements.
-%\input{acknowledgements.tex}
+\input{acknowledgements.tex}
 
 % Summaries.
 \selectlanguage{english}
-%\input{summary/english.tex}
-%\clearpage
+\input{summary/english.tex}
+\clearpage
 \selectlanguage{dutch}
-%\input{summary/dutch.tex}
-%\clearpage
+\input{summary/dutch.tex}
+\clearpage
 \selectlanguage{english}
 
 % Extended abstracts.
 \addcontentsline{toc}{chapter}{Extended abstract}
-%\includepdf[pages=-]{abstract-en/extended-abstract.pdf}
+\includepdf[pages=-]{abstract-en/extended-abstract.pdf}
 \addcontentsline{toc}{chapter}{Extended abstract (Dutch)}
-%\includepdf[pages=-]{abstract-nl/extended-abstract.pdf}
+\includepdf[pages=-]{abstract-nl/extended-abstract.pdf}
 
 % Vulgarising summary.
 \pagestyle{plain}
-%\input{summary/vulgarising.tex}
-%\clearpage
+\input{summary/lay.tex}
+\clearpage
 
 \pagestyle{fancy}
 
-%\blankpage{}
+\blankpage{}
 
 % ToC.
-%\tableofcontents
+\tableofcontents
 
 % Corpus.
 \mainmatter
@@ -204,14 +205,13 @@
 %\input{introduction.tex}
 \clearpage
 \input{software-engineering.tex}
-\clearpage
 \input{related-work.tex}
 \clearpage
 \input{velocity.tex}
 \clearpage
 \input{evaluation.tex}
 \clearpage
-%\input{conclusion.tex}
+\input{conclusion.tex}
 \clearpage
 \input{bibliography.tex}
 \clearpage
