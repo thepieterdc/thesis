@@ -15,4 +15,3 @@ clean:
 
 %.pdf: %.tex
 	 latexmk --shell-escape -pdf $<
-	 latexmk -c
