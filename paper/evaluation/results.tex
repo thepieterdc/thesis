@@ -3,7 +3,7 @@
 \section{Results}
 
 \subsection{RQ1: Probability of failure}\label{ssec:results-rq1}
-The two pie charts in \Cref{fig:rq1-failure-probability} illustrate the amount of failed and successful test runs. The leftmost chart visualises the failure rate in the dataset \cite{travisanalysis} by Durieux et al. $\SI{4558279}{}$ test runs out of the $\SI{28882003}{}$ total runs have failed, which corresponds to a failure probability of $\SI{18.74}{\percent}$. The other pie chart uses data from the TravisTorrent \cite{msr17challenge} project. Since the cause of failure can be inferred from this dataset, it is possible to obtain more accurate results. $\SI{42.89}{\percent}$ of the failed runs are due to a compilation failure where the test suite did not execute. For the remaining part of the runs, $\SI{225766}{}$ out of $\SI{2114920}{}$ executions contain at least one failed test case, corresponding to a failure percentage of $\SI{10.67}{\percent}$.
+The two pie charts in \Cref{fig:rq1-failure-probability} illustrate the amount of failed and successful test runs. The leftmost chart visualises the failure rate in the dataset \cite{travisanalysis} by Durieux et al. $\SI{4558279}{}$ test runs out of the $\SI{28882003}{}$ total runs have failed, which corresponds to a failure probability of $\SI{18.74}{\percent}$. The other pie chart uses data from the TravisTorrent \cite{msr17challenge} project. Since we can infer the cause of failure from this dataset, it is possible to obtain more accurate results. $\SI{42.89}{\percent}$ of the failed runs are due to a compilation failure where the test suite did not execute. For the remaining part of the runs, $\SI{225766}{}$ out of $\SI{2114920}{}$ executions contain at least one failed test case, corresponding to a failure percentage of $\SI{10.67}{\percent}$.
 
 \begin{figure}[htbp!]
 	\centering
@@ -47,9 +47,9 @@ Because the TravisTorrent project is the only dataset that contains the identifi
 \end{figure}
 
 \subsection{RQ4: Applying \tcp{} to Dodona}
-After executing the $\SI{120}{}$ failed test runs, the log files have been inspected. The log files have revealed that $\SI{5}{}$ test runs have failed because of an error in the configuration, rather than due to a failing test case. These test runs have therefore been omitted from the results because the test suite did not execute. Configuration problems require in-depth contextual information about the project and can therefore not be predicted.\\
+After executing the $\SI{120}{}$ failed test runs, the log files have been inspected. These log files have revealed that an error in the configuration was the actual culprit of five failed test runs, rather than a failed test case. These test runs have therefore been omitted from the results because the test suite did not execute. Since configuration-related problems require in-depth contextual information about the project, we cannot automatically predict these.\\
 
-\noindent \Cref{tbl:rq4-first-failure} contains the amount of executed test cases until the first failure is observed. These results indicate that every predictor is capable of performing at least one successful prediction. Furthermore, the maximum amount of executed test cases is lower than the original value, which means that every algorithm is a valid predictor. The data suggests that the Alpha algorithm and the HGS algorithm are the preferred predictors for the Dodona project, while the ROCKET algorithm does not achieve a good performance.
+\noindent \Cref{tbl:rq4-first-failure} contains the amount of executed test cases until we observe the first failure. These results indicate that every predictor is capable of performing at least one successful prediction. Furthermore, the maximum amount of executed test cases is lower than the original value, which means that every algorithm is a valid predictor. The data suggests that the Alpha algorithm and the HGS algorithm are the preferred predictors for the Dodona project. In contrast, the performance of the ROCKET algorithm is rather low.\\
 
 \begin{table}[h]
 	\centering
@@ -118,11 +118,11 @@ After executing the $\SI{120}{}$ failed test runs, the log files have been inspe
 	\subfloat[ROCKET algorithm]{%
 		\includegraphics[width=\textwidth]{assets/charts/rq4-dodona-rocket.pdf}
 	}
-	\caption{Prediction performance on the Dodona project}
+	\caption{Prediction performance on the Dodona project.}
 	\label{fig:rq4-performance}
 \end{figure}
 
-\noindent The duration until the first observed failure is reported in \Cref{tbl:rq4-first-failure-duration}. Observe that the previous table indicates that the ROCKET algorithm does not perform well, while this table suggests otherwise. This behaviour is explained by the objective function of this algorithm, which prioritises test cases with a low execution time to be executed first.
+\noindent The duration until the first observed failure is reported in \Cref{tbl:rq4-first-failure-duration}. Observe that the previous table indicates that the ROCKET algorithm does not perform well, while this table suggests otherwise. We can explain this behaviour by examining the objective function of this algorithm. This function prioritises cases with a low execution time to be executed first.\\
 
 \begin{table}[htbp!]
 	\centering
@@ -160,16 +160,16 @@ After executing the $\SI{120}{}$ failed test runs, the log files have been inspe
 		
 		\hline
 	\end{tabularx}
-	\caption{Duration until the first failure.}
+	\caption{Duration until the first failure for the Dodona project.}
 	\label{tbl:rq4-first-failure-duration}
 \end{table}
 
 \clearpage
 
 \subsection{RQ5: Integrate \velocity{} with Stratego}
-The data collection phase has already proven that the Java agent is compatible with Stratego. Since \velocity{} is not yet able to predict test cases which have been added in the current commit, only $\SI{35}{}$ of the $\SI{54}{}$ failed test runs could be used.\\
+The data collection phase has already proven that the Java agent is compatible with Stratego. Since \velocity{} is not yet able to predict test cases which have been added in the current commit, we can only use $\SI{35}{}$ of the $\SI{54}{}$ failed test runs.\\
 
-\noindent Similar to the previous test subject, \Cref{tbl:rq5-first-failure} lists how many test cases have been executed before the first failure. The table only considers the four main algorithms, since the actual prediction performance was only secondary to this research question and only a small amount of test runs have been analysed. The results suggest that every algorithm except the ROCKET achieves a high prediction accuracy on this project.
+\noindent Similar to the previous test subject, \Cref{tbl:rq5-first-failure} lists how many test cases have been executed before the first observed failure. The table only considers the four main algorithms, since the actual prediction performance was only secondary to this research question, and we have only analysed a small number of test runs. The results suggest that every algorithm except the ROCKET achieves a high prediction accuracy on this project.\\
 
 \begin{table}[h]
 	\centering
@@ -203,7 +203,7 @@ The data collection phase has already proven that the Java agent is compatible w
 	\label{tbl:rq5-first-failure}
 \end{table}
 
-\noindent Even though the performance of the ROCKET algorithm is suboptimal in the previous table, \Cref{tbl:rq5-first-failure-duration} does indicate that it outperforms every other algorithm time-wise. Notice that the predicted sequence of the HGS algorithm takes the longest to execute, while the previous table suggested a good prediction accuracy. The Alpha and Greedy algorithms seem very similar on both the amount of executed test cases, as well as the execution time.
+\noindent Even though the performance of the ROCKET algorithm is suboptimal in the previous table, \Cref{tbl:rq5-first-failure-duration} does indicate that it outperforms every other algorithm time-wise. Notice that the predicted sequence of the HGS algorithm takes the longest to execute, while the previous table suggested a good prediction accuracy. The Alpha and Greedy algorithms seem very similar on both the amount of executed test cases, as well as the execution time. \\
 
 \begin{table}[h]
 	\centering
@@ -237,7 +237,7 @@ The data collection phase has already proven that the Java agent is compatible w
 	\label{tbl:rq5-first-failure-duration}
 \end{table}
 
-\noindent \Cref{fig:rq5-performance} further confirms the above statements. Notice the close resemblance of the charts of the Greedy algorithm and the Alpha algorithm, indicating that almost every test run failure was caused by a different failing test case. The ROCKET algorithm performs better on this project than on Dodona, yet not accurate.
+\noindent \Cref{fig:rq5-performance} further confirms the above statements. Notice the close resemblance of the charts of the Greedy algorithm and the Alpha algorithm, which indicates that a different failing test case is the cause of every test run failure. The ROCKET algorithm performs better on this project than on Dodona, yet not accurate.
 
 \begin{figure}[!hbp]
 	\subfloat[Alpha algorithm]{%
@@ -262,6 +262,6 @@ The data collection phase has already proven that the Java agent is compatible w
 	\subfloat[ROCKET algorithm]{%
 		\includegraphics[width=\textwidth]{assets/charts/rq5-stratego-rocket.pdf}
 	}
-	\caption{Prediction performance on the Stratego project}
+	\caption{Prediction performance on the Stratego project.}
 	\label{fig:rq5-performance}
 \end{figure}

@@ -1,19 +1,19 @@
 % !TeX root = ../thesis.tex
 
 \section{Research questions}
-The following research questions will be answered in the subsequent sections:
+We will answer the following research questions in the subsequent sections:
 
 \paragraph*{RQ1: What is the probability that a test run will contain at least one failed test case?}
-The first research question will provide useful insights into whether a typical test run tends to fail or not. It is expected that the probability of failure will be rather low, indicating that it is not strictly necessary to execute every test case and therefore proving the use of \tsm{}.
+The first research question will provide useful insights into whether a typical test run tends to fail or not. The expectancy is that the probability of failure will be rather low, indicating that it is not strictly necessary to execute every test case and therefore making a case for \tsm{}.
 
 \paragraph*{RQ2: What is the average duration of a test run?}
-Measuring how long it takes to execute a typical test run is required to estimate the benefit of applying any form of test suite optimisation. Only successful test runs should be considered to reduce bias introduced by prematurely aborting the execution.
+Measuring how long it takes to execute a typical test run is required to estimate the benefit of applying any form of test suite optimisation. We will only consider successful test runs, to reduce bias introduced by prematurely aborting the execution.
 
 \paragraph*{RQ3: Suppose that a test run has failed, what is the probability that the next run will fail as well?}
 The ROCKET algorithm (\cref{ssec:alg-rocket}) relies on the assumption that if a test case has failed in a given test run, it is likely to fail in the subsequent run as well. This research question will investigate the correctness of this hypothesis.
 
 \paragraph*{RQ4: How can \tcp{} be applied to Dodona and what is the resulting performance benefit?}
-This research question will investigate the possibility to apply the \velocity{} framework to the Dodona project and analyse how quickly a failing test case can be discovered using the available predictors.
+This research question will investigate the possibility to apply the \velocity{} framework to the Dodona project and analyse how quickly the available predictors can discover a failing test case.
 
 \paragraph*{RQ5: Can the Java agent be applied to Stratego?}
-Since the testing framework used by Stratego should be supported natively by the Java agent, this research question will verify its compatibility. Furthermore, the prediction performance will be analysed, albeit with a small number of appropriate test runs.
+Since the testing framework used by Stratego should be supported natively by the Java agent, this research question will verify its compatibility. Furthermore, we will analyse the prediction performance, albeit with a small number of relevant test runs.
