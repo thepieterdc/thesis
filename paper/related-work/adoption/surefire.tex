@@ -1,0 +1,10 @@
+% !TeX root = ../../thesis.tex
+
+\subsection{Maven Surefire}
+A commonly used alternative to Gradle is Apache Maven\footnote{\url{http://maven.apache.org/}}. This framework also supports executing JUnit test cases using the Surefire plugin. As opposed to Gradle, Surefire does offer multiple options to specify the order in which the test cases will be executed using the \texttt{runOrder} property. Without any configuration, Maven will run the test cases in alphabetical order. By switching the \texttt{runOrder} property to \texttt{failedFirst}, we can tell Maven to prioritise the previously failed test cases. Another supported value is \texttt{balanced}, which orders test cases based on their duration. Finally, we can choose to implement a custom ordering scheme for absolute control.
+
+\begin{figure}[htbp!]
+	\centering
+	\includegraphics[height=0.05\textheight]{assets/images/maven.pdf}
+	\caption{Logo of Maven}
+\end{figure}
