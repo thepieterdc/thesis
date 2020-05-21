@@ -159,59 +159,60 @@
 % Titlepage.
 \frontmatter
 \pagestyle{empty}
-\includepdf[pages=-]{titlepage.pdf}
+%\includepdf[pages=-]{titlepage.pdf}
 
-\blankpage{}
+%\blankpage{}
 
 % Admission.
-\input{admission.tex}
+%\input{admission.tex}
 \clearpage
 
 % Acknowledgements.
-\input{acknowledgements.tex}
+%\input{acknowledgements.tex}
 
 % Summaries.
 \selectlanguage{english}
-\input{summary/english.tex}
+%\input{summary/english.tex}
 \clearpage
 \selectlanguage{dutch}
-\input{summary/dutch.tex}
+%\input{summary/dutch.tex}
 \clearpage
 \selectlanguage{english}
 
 % Extended abstracts.
 \addcontentsline{toc}{chapter}{Extended abstract}
-\includepdf[pages=-]{abstract-en/extended-abstract.pdf}
+%\includepdf[pages=-]{abstract-en/extended-abstract.pdf}
 \addcontentsline{toc}{chapter}{Extended abstract (Dutch)}
-\includepdf[pages=-]{abstract-nl/extended-abstract.pdf}
+%\includepdf[pages=-]{abstract-nl/extended-abstract.pdf}
 
 % Vulgarising summary.
 \pagestyle{plain}
-\input{summary/lay.tex}
+%\input{summary/lay.tex}
 \clearpage
 
 \pagestyle{fancy}
 
-\blankpage{}
+%\blankpage{}
 
 % ToC.
-\tableofcontents
+%\tableofcontents
 
 % Corpus.
 \mainmatter
 
-\input{glossary.tex}
+%\input{glossary.tex}
 \clearpage
 %\input{introduction.tex}
+%\clearpage
+%\input{software-engineering.tex}
 \clearpage
-\input{software-engineering.tex}
 \input{related-work.tex}
 \clearpage
-\input{velocity.tex}
+%\input{velocity.tex}
 \clearpage
-\input{evaluation.tex}
+%\input{evaluation.tex}
 \clearpage
-\input{conclusion.tex}
+%\input{conclusion.tex}
 \clearpage
 \input{bibliography.tex}
 \clearpage
@@ -221,6 +222,6 @@
 \clearpage
 %\input{list-of-tables.tex}
 \clearpage
-\input{appendices.tex}
+%\input{appendices.tex}
 
 \end{document}

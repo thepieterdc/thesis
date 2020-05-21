@@ -1,25 +1,25 @@
 % !TeX root = ../../thesis.tex
 
 \subsection{Gradle and JUnit}\label{ssec:relatedwork-gradle-junit}
-Gradle\footnote{\url{https://gradle.org}} is a dependency manager and application framework for Java, Groovy and Kotlin projects. Gradle supports multiple plugins to automate tedious tasks, such as configuration management, testing and deploying. One of the supported testing integrations is \junit{\footnote{\url{https://junit.org}}, which is the most widely used unit testing framework by Java developers. \junit{} 5 is the newest version which is still actively being developed as of today. The framework is integrated as the testing framework of choice in several other Java libraries and frameworks, such as Android and Spring. \junit{} offers mediocre support for features that optimise the execution of the test cases, especially when used in conjunction with Gradle. The following three key features are available:
+Gradle\footnote{\url{https://gradle.org}} is a dependency manager and development suite for Java, Groovy and Kotlin projects. It supports multiple plugins to automate tedious tasks, such as configuration management, testing and deploying. One of the supported testing integrations is \junit{\footnote{\url{https://junit.org}}, which is the most widely used testing framework by Java developers. \junit{} 5 is the newest version which is still under active development as of today. Several prominent Java libraries and frameworks, such as Android and Spring have integrated \junit{} as the preferred testing framework. The testing framework offers mediocre support for features that optimise the execution of the test suite, primarily when used in conjunction with Gradle. The following three key elements are available:
 \begin{enumerate}
-	\item \textbf{Parallel test execution:} JUnit comes bundled with multiple test processors that are responsible for processing test classes and to execute the test cases. One of these test processors is the \texttt{MaxNParallelTestClassProcessor}, which is capable of running a configurable amount of test cases in parallel. This results in a major speed-up of the overall test suite execution.
+	\item \textbf{Parallel test execution:} The Gradle implementation of JUnit features multiple \emph{test class processors}. A test class processor is a component which processes Java classes to find all the test cases, and eventually to execute them. One of these processors is the \texttt{MaxNParallelTestClassProcessor}, which is capable of running a configurable amount of test cases in parallel. Concurrently executing the test cases results in a significant speed-up of the overall test suite execution.
 
-	\item \textbf{Prioritise failed test cases:} Another test class processor which is provided by Gradle, is the \texttt{RunPreviousFailedFirstTestClassProcessor}. This processor will prioritise test cases that have failed in the previous run, similar to the idea of the ROCKET-algorithm (\autoref{ssec:alg-rocket}), albeit without taking into account the duration of these test cases.
+	\item \textbf{Prioritise failed test cases:} Gradle provides a second useful test class processor: the \texttt{RunPreviousFailedFirstTestClassProcessor}. This processor will prioritise test cases that have failed in the previous run. This practice is similar to the ROCKET-algorithm (\cref{ssec:alg-rocket}), but the processor does not take into account the duration of the test cases.
 	
-	\item \textbf{Test order specification:} JUnit allows the user to specify the order in which test cases will be executed\footnote{\url{https://junit.org/junit5/docs/current/user-guide/\#writing-tests-test-execution-order}}. By default, a random yet deterministic order is used. The order can be manipulated by annotating the test class with the \texttt{@TestMethodOrder}-annotation, or by annotating individual test cases with the \texttt{@Order(int)}-annotation. This feature can only be used to alter the order of test cases within the same test class, it is not possible to perform inter-test class reordering. This feature could be used to sort test cases based on their execution time.
+	\item \textbf{Test order specification:} \junit{} allows us to specify the sequence in which it will execute the test cases. By default, it uses a random yet deterministic order\footnote{\url{https://junit.org/junit5/docs/current/user-guide/\#writing-tests-test-execution-order}}. The order can be manipulated by annotating the test class with the \texttt{@TestMethodOrder}-annotation, or by applying the \texttt{@Order(int)}-annotation to an individual test case. However, we can only use this feature to alter the order of test cases within the same test class. \junit{} does not support inter-test class reordering. We could use this feature to (locally) sort test cases based on their execution time.
 \end{enumerate}
 
 \begin{figure}[htbp!]
 	\centering
 	\begin{minipage}{.45\textwidth}
 		\centering
-		\includegraphics[width=0.8\textwidth]{assets/images/gradle.pdf}
+		\includegraphics[height=0.05\textheight]{assets/images/gradle.pdf}
 		\caption{Logo of Gradle}
 	\end{minipage}
 	\begin{minipage}{.45\textwidth}
 		\centering
-		\includegraphics[width=0.6\textwidth]{assets/images/junit.pdf}
+		\includegraphics[height=0.05\textheight]{assets/images/junit.pdf}
 		\caption{Logo of JUnit 5}
 	\end{minipage}
 \end{figure}

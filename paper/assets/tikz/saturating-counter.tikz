@@ -9,9 +9,9 @@
 {\begin{minipage}{2cm}\centering accurate\end{minipage}};
 
 \path
-(A)	edge [bend right=30] node [align=center,below] {above\\average} (B)
+(A) edge [bend right=30] node [align=center,below] {above\\average} (B)
 
-(B)	edge [bend right=30] node [align=center,below] {above\\average} (C)
+(B) edge [bend right=30] node [align=center,below] {above\\average} (C)
 
 (C) edge [loop right] node [align=center,above=16pt] {above\\average} (C)
 
