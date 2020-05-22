@@ -1,0 +1,37 @@
+% !TeX root = ../../thesis.tex
+
+\begin{tikzpicture}[every node/.style={semithick}]
+\tikzstyle{edge}=[->, thick]
+
+% Test suite.
+\draw[thick] (0, -0.5) rectangle node[rotate=90] {\textbf{Test suite}} (1, 4.5);
+
+% Algorithm.
+\node[draw, fill=bisque!60] (algorithm) at (9.00, 2)
+{\begin{minipage}[c][1.50cm][c]{3cm}\centering TSM\\Algorithm\end{minipage}};
+
+% Original test cases.
+\foreach \i in {1,2,3,4,5} {
+	% Test case.
+	\node[draw] (originaltestcase\i) at (3.50, 5 - \i)
+	{\begin{minipage}[c][0.50cm][c]{2.50cm}\centering Test Case \i\end{minipage}};
+	
+	% Test suite -> Test case.
+	\draw[edge] (1.00, 5 - \i) -- (originaltestcase\i.west);
+	
+	% Test case -> Algorithm.
+	\draw[edge] (originaltestcase\i.east) -- (algorithm);
+}
+
+% Minimised test cases.
+\def\minimisedtestcases{Test Case 2, Test Case 3, Test Case 5}
+\foreach \testcase [count=\i] in \minimisedtestcases {
+	% Test case.
+	\node[draw] (minimisedtestcase\i) at (15.00, 4 - \i)
+	{\begin{minipage}[c][0.50cm][c]{2.50cm}\centering \testcase\end{minipage}};
+	
+	% Algorithm -> Minimised test case.
+	\draw[edge] (algorithm.east) -- (minimisedtestcase\i.west);
+}
+
+\end{tikzpicture}
