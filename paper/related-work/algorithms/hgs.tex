@@ -5,9 +5,11 @@ The second algorithm is the HGS algorithm. The algorithm was named after its cre
 
 \noindent The algorithm consists of two main phases. The first phase begins by constructing an empty representative set $RS$ in which we will store the selected test cases. Subsequently, we iterate over every source code line $c \in C$ to create the corresponding test groups $CT$. As mentioned before, we will reduce this set to $CTD$ for performance reasons and as such, only retain the distinct test groups. Next, we select every test group of which the cardinality is equal to $\SI{1}{}$ and add these to $RS$. The representative set will now contain every test case that covers precisely one line of code, which is exclusively covered by that single test case. Afterwards, we remove every covered line from $C$. The next phase consists of repeating this process for increasing cardinalities until $C$ is empty. However, since the test groups will now contain more than one test case, we need to make a choice on which test case to select. The authors prefer the test case that covers the most remaining lines. In the event of a tie, we defer the choice until the next iteration.\\
 
-\noindent The authors have provided an accompanying calculation of the computational time complexity of this algorithm \cite{hgs}. In addition to the naming convention introduced in \cref{def:alg-naming}, let $n$ denote the number of distinct test groups $CTD$, $nt$ the number of test cases $t \in TS$ and $MAX\_CARD$ the cardinality of the test group with the most test cases. In the HGS algorithm we need to perform two steps repeatedly. The first step involves computing the number of occurrences of every test case $t$ in each test group. Given that there are $n$ distinct test groups and, in the worst-case scenario, each test group can contain $MAX\_CARD$ test cases which we all need to examine once, the computational cost of this step is equal to $O(n * MAX\_CARD)$. For the next step, in order to determine which test case we should include in the representative set $RS$, we need to find all test cases for which the number of occurrences in all test groups is maximal, which requires at most $O(nt * MAX\_CARD)$. Since every repetition of these two steps adds a test case that belongs to at least one out of $n$ test groups to the representative set, the overall runtime of the algorithm is $O(n * (n + nt) * MAX\_CARD)$.\\
+\noindent The authors have provided an accompanying calculation of the computational time complexity of this algorithm \cite{hgs}. In addition to the naming convention introduced in \cref{def:alg-naming}, let $n$ denote the number of distinct test groups $CTD$, $nt$ the number of test cases $t \in TS$ and $MAX\_CARD$ the cardinality of the test group with the most test cases. In the HGS algorithm we need to perform two steps repeatedly. The first step involves computing the number of occurrences of every test case $t$ in each test group. Given that there are $n$ distinct test groups and, in the worst-case scenario, each test group can contain $MAX\_CARD$ test cases which we all need to examine once, the computational cost of this step is equal to $O(n * MAX\_CARD)$. For the next step, in order to determine which test case we should include in the representative set $RS$, we need to find all test cases for which the number of occurrences in all test groups is maximal, which requires at most $O(nt * MAX\_CARD)$. Since every repetition of these two steps adds a test case that belongs to at least one out of $n$ test groups to the representative set, the overall runtime of the algorithm is $O(n * (n + nt) * MAX\_CARD)$.
 
-\begin{algorithm}[h!]
+\clearpage
+
+\begin{algorithm}[ht!]
 \caption{HGS algorithm (\cite{hgs})}
 \label{alg:hgs}
 \begin{algorithmic}[1]
@@ -17,7 +19,9 @@ The second algorithm is the HGS algorithm. The algorithm was named after its cre
 	\State $MAX\_CARD \gets max \{Card(T_i) \vert T_i \in CDT\}$
 	\State $RS \gets \bigcup \{ T_i \vert Card(T_i) = 1 \}$
 	\ForAll{$T_i \in CDT$}
-		\If{$T_i \cap RS \neq \emptyset$} $marked[i] \gets true$ \EndIf
+		\If{$T_i \cap RS \neq \emptyset$}
+			$marked[i] \gets true$
+		\EndIf
 	\EndFor
 	\State $current \gets 1$
 	\While{$current < MAX\_CARD$}
@@ -29,7 +33,9 @@ The second algorithm is the HGS algorithm. The algorithm was named after its cre
 			\ForAll{$T_i \in CDT$}
 				\If{$next \in T_i$}
 					\State $marked[i] = true$
-					\If{$Card(T_1) = MAX\_CARD$} $reduce \gets true$ \EndIf
+					\If{$Card(T_1) = MAX\_CARD$}
+						$reduce \gets true$
+					\EndIf
 				\EndIf
 			\EndFor
 			\If{$reduce$}
@@ -48,9 +54,12 @@ The second algorithm is the HGS algorithm. The algorithm was named after its cre
 		
 		\State $tests \gets \{t \vert t \in list, count[t] = max(count) \}$
 		
-		\If{$|tests| = 1$} \Return $tests[0]$
-		\ElsIf{$|tests| = MAX\_CARD$} \Return $tests[0]$
-		\Else{} \Return $SelectTest(size+1, tests)$
+		\If{$|tests| = 1$}
+			\Return $tests[0]$
+		\ElsIf{$|tests| = MAX\_CARD$}
+			\Return $tests[0]$
+		\Else{}
+			\Return $SelectTest(size+1, tests)$
 		\EndIf
 	\EndFunction
 \end{algorithmic}

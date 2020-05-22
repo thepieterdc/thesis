@@ -1,0 +1,37 @@
+% !TeX root = ../../thesis.tex
+
+\begin{tikzpicture}[every node/.style={semithick}]
+\tikzstyle{edge}=[->, thick]
+
+% Test suite.
+\draw[thick] (0, -0.5) rectangle node[rotate=90] {\textbf{Test suite}} (1, 4.5);
+
+% Algorithm.
+\node[draw, fill=bisque!60] (algorithm) at (9.00, 2)
+{\begin{minipage}[c][1.50cm][c]{3cm}\centering TCP\\Algorithm\end{minipage}};
+
+% Original test cases.
+\foreach \i in {1,2,3,4,5} {
+	% Test case.
+	\node[draw] (originaltestcase\i) at (3.50, 5 - \i)
+	{\begin{minipage}[c][0.50cm][c]{2.50cm}\centering Test Case \i\end{minipage}};
+	
+	% Test suite -> Test case.
+	\draw[edge] (1.00, 5 - \i) -- (originaltestcase\i.west);
+	
+	% Test case -> Algorithm.
+	\draw[edge] (originaltestcase\i.east) -- (algorithm);
+}
+
+% Prioritised test cases.
+\def\prioritisedtestcases{Test Case 4, Test Case 3, Test Case 2, Test Case 5, Test Case 1}
+\foreach \testcase [count=\i] in \prioritisedtestcases {
+	% Test case.
+	\node[draw] (reorderedtestcase\i) at (15.00, 5 - \i)
+	{\begin{minipage}[c][0.50cm][c]{2.50cm}\centering \testcase\end{minipage}};
+	
+	% Algorithm -> Prioritised test case.
+	\draw[edge] (algorithm.east) -- (reorderedtestcase\i.west);
+}
+
+\end{tikzpicture}

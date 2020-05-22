@@ -31,7 +31,7 @@ The third and final algorithm is the ROCKET algorithm. This algorithm has been p
 	\right.
 \]
 
-\noindent \Cref{tbl:rocket-failurematrix} contains an example of this matrix $MF$. In this table, we consider the hypothetical failure rates of the last three executions of six test cases.\\
+\noindent \Cref{tbl:rocket-failurematrix} contains an example of this matrix $MF$. In this table, we consider the hypothetical failure rates of the last two executions of six test cases.
 
 \begin{table}[h]
 \centering
@@ -40,7 +40,6 @@ The third and final algorithm is the ROCKET algorithm. This algorithm has been p
 	\textbf{run} & \textbf{$T_1$} & \textbf{$T_2$} & \textbf{$T_3$} & \textbf{$T_4$} & \textbf{$T_5$} & \textbf{$T_6$}\\\hline
 	$current - 1$ & $1$ & $1$ & $1$ & $1$ & $-1$ & $-1$\\
 	$current - 2$ & $-1$ & $1$ & $-1$ & $-1$ & $1$ & $-1$\\
-	$current - 3$ & $1$ & $1$ & $-1$ & $1$ & $1$ & $-1$\\
 	\hline
 \end{tabular}
 \caption{Example of the failure matrix $MF$.}
@@ -77,16 +76,21 @@ $$P_j = \sum_{i = 1 \dots m} MF[i, j] * \omega_i$$
 	\ForAll{$i \in 1 \dots m$}
 		\State $MF[i] \gets array[1 \dots n]$
 		\ForAll{$j \in 1 \dots n$}
-			\If{$F[j][i] = 1$} $MF[i][j] \gets -1$
-			\Else{} $MF[i][j] \gets 1$
+			\If{$F[j][i] = 1$}
+				$MF[i][j] \gets -1$
+			\Else{}
+				$MF[i][j] \gets 1$
 			\EndIf
 		\EndFor
 	\EndFor
 	\ForAll{$j \in 1 \dots n$}
 		\ForAll{$i \in 1 \dots m$}
-			\If{$i = 1$} $P[j] \gets P[j] + (MF[i][j] * 0.7)$
-			\ElsIf{$i = 2$} $P[j] \gets P[j] + (MF[i][j] * 0.2)$
-			\Else{} $P[j] + (MF[i][j] * 0.1)$
+			\If{$i = 1$}
+				$P[j] \gets P[j] + (MF[i][j] * 0.7)$
+			\ElsIf{$i = 2$}
+				$P[j] \gets P[j] + (MF[i][j] * 0.2)$
+			\Else{}
+				$P[j] + (MF[i][j] * 0.1)$
 			\EndIf
 		\EndFor
 	\EndFor

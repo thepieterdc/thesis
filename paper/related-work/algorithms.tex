@@ -2,7 +2,7 @@
 
 \section{Algorithms}
 \label{sec:relatedwork-algorithms}
-\acrshort{tcp} is essentially an extended version of \acrshort{tsm} since we can first execute the minimised test suite and afterwards the remaining test cases. Additionally, \cref{ssec:tsm} has explained that \acrshort{tsm} is an instance of the minimal hitting set problem, which is an NP-complete problem. Consequently, we know that both \acrshort{tsm} and \acrshort{tcp} are NP-complete problems as well and therefore, we require the use of \emph{heuristics}. A heuristic is an experience-based method that can be applied to solve a hard to compute problem by finding a fast approximation. However, the found solution will mostly be suboptimal, or sometimes the algorithm might even fail to find any solution at all. Given the relation between \acrshort{tsm} and the minimal hitting set problem, we can implement an optimisation algorithm by modifying any known heuristic that finds the minimal hitting set. This paper will now proceed by discussing a selection of these heuristics. The used terminology and the names of the variables have been changed to ensure mutual consistency between the algorithms. Every algorithm has been adapted to adhere to the conventions provided in \cref{def:alg-naming,def:cardinality}.
+\acrshort{tcp} is essentially an extended version of \acrshort{tsm} since we can first execute the minimised test suite and afterwards the remaining test cases. Additionally, \cref{ssec:tsm} has explained that \acrshort{tsm} is an instance of the minimal hitting set problem, which is an NP-complete problem. Consequently, we know that both \acrshort{tsm} and \acrshort{tcp} are NP-complete problems as well and therefore, we require the use of \emph{heuristics}. A heuristic is an experience-based method that can be applied to solve a hard to compute problem by finding a fast approximation \cite{6588537}. However, the found solution will mostly be suboptimal, or sometimes the algorithm might even fail to find any solution at all. Given the relation between \acrshort{tsm} and the minimal hitting set problem, we can implement an optimisation algorithm by modifying any known heuristic that finds the minimal hitting set. This paper will now proceed by discussing a selection of these heuristics. The used terminology and the names of the variables have been changed to ensure mutual consistency between the algorithms. Every algorithm has been adapted to adhere to the conventions provided in \cref{def:alg-naming,def:cardinality}.
 
 \begin{definition}[Naming convention]
 \label{def:alg-naming}
@@ -31,9 +31,8 @@
 For a finite set $S$, the cardinality $|S|$ is defined as the number of elements in $S$. In case of potential confusion, we can use $Card(S)$ to denote the cardinality of $S$.
 \end{definition}
 
-\newpage
 \input{related-work/algorithms/greedy.tex}
-\newpage
+\clearpage
 \input{related-work/algorithms/hgs.tex}
-\newpage
+\clearpage
 \input{related-work/algorithms/rocket.tex}
