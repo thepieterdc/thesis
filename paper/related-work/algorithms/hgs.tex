@@ -5,53 +5,74 @@ The second algorithm is the HGS algorithm. The algorithm was named after its cre
 
 \noindent The algorithm consists of two main phases. The first phase begins by constructing an empty representative set $RS$ in which we will store the selected test cases. Subsequently, we iterate over every source code line $c \in C$ to create the corresponding test groups $CT$. As mentioned before, we will reduce this set to $CTD$ for performance reasons and as such, only retain the distinct test groups. Next, we select every test group of which the cardinality is equal to $\SI{1}{}$ and add these to $RS$. The representative set will now contain every test case that covers precisely one line of code, which is exclusively covered by that single test case. Afterwards, we remove every covered line from $C$. The next phase consists of repeating this process for increasing cardinalities until $C$ is empty. However, since the test groups will now contain more than one test case, we need to make a choice on which test case to select. The authors prefer the test case that covers the most remaining lines. In the event of a tie, we defer the choice until the next iteration.\\
 
-\noindent The authors have provided an accompanying calculation of the computational time complexity of this algorithm \cite{hgs}. In addition to the naming convention introduced in \cref{def:alg-naming}, let $n$ denote the number of distinct test groups $CTD$, $nt$ the number of test cases $t \in TS$ and $MAX\_CARD$ the cardinality of the test group with the most test cases. In the HGS algorithm we need to perform two steps repeatedly. The first step involves computing the number of occurrences of every test case $t$ in each test group. Given that there are $n$ distinct test groups and, in the worst-case scenario, each test group can contain $MAX\_CARD$ test cases which we all need to examine once, the computational cost of this step is equal to $O(n * MAX\_CARD)$. For the next step, in order to determine which test case we should include in the representative set $RS$, we need to find all test cases for which the number of occurrences in all test groups is maximal, which requires at most $O(nt * MAX\_CARD)$. Since every repetition of these two steps adds a test case that belongs to at least one out of $n$ test groups to the representative set, the overall runtime of the algorithm is $O(n * (n + nt) * MAX\_CARD)$.\\
+\noindent The authors have provided an accompanying calculation of the computational time complexity of this algorithm \cite{hgs}. In addition to the naming convention introduced in \cref{def:alg-naming}, let $n$ denote the number of distinct test groups $CTD$, $nt$ the number of test cases $t \in TS$ and $MAX\_CARD$ the cardinality of the test group with the most test cases. In the HGS algorithm we need to perform two steps repeatedly. The first step involves computing the number of occurrences of every test case $t$ in each test group. Given that there are $n$ distinct test groups and, in the worst-case scenario, each test group can contain $MAX\_CARD$ test cases which we all need to examine once, the computational cost of this step is equal to $O(n * MAX\_CARD)$. For the next step, in order to determine which test case we should include in the representative set $RS$, we need to find all test cases for which the number of occurrences in all test groups is maximal, which requires at most $O(nt * MAX\_CARD)$. Since every repetition of these two steps adds a test case that belongs to at least one out of $n$ test groups to the representative set, the overall runtime of the algorithm is $O(n * (n + nt) * MAX\_CARD)$.
 
-\begin{algorithm}[h!]
+\clearpage
+
+\begin{algorithm}[ht!]
 \caption{HGS algorithm (\cite{hgs})}
 \label{alg:hgs}
 \begin{algorithmic}[1]
-	\State {\bfseries Input:} Distinct test groups $T_1, \dots T_n \in CDT$, containing test cases from $TS$.
-	\State {\bfseries Output:} Subset $RS \subseteq TS$ of tests to execute.
-	\State $marked \gets array[1 \dots n]$ \Comment{initially $false$}
-	\State $MAX\_CARD \gets max \{Card(T_i) \vert T_i \in CDT\}$
-	\State $RS \gets \bigcup \{ T_i \vert Card(T_i) = 1 \}$
-	\ForAll{$T_i \in CDT$}
-		\If{$T_i \cap RS \neq \emptyset$} $marked[i] \gets true$ \EndIf
-	\EndFor
-	\State $current \gets 1$
-	\While{$current < MAX\_CARD$}
-		\State $current \gets current + 1$
-		\While{$\exists T_i : Card(T_i) = current, marked[i] = false$}
-			\State $list \gets \{t \vert t \in T_i : Card(T_i) = current, marked[i] = false\}$
-			\State $next \gets SelectTest(current, list)$
-			\State $reduce \gets false$
-			\ForAll{$T_i \in CDT$}
-				\If{$next \in T_i$}
-					\State $marked[i] = true$
-					\If{$Card(T_1) = MAX\_CARD$} $reduce \gets true$ \EndIf
-				\EndIf
-			\EndFor
-			\If{$reduce$}
-				\State $MAX\_CARD \gets max \{Card(T_i) \vert marked[i] = false\}$
-			\EndIf
-			\State $RS \gets RS \cup \{next\}$
-		\EndWhile
-	\EndWhile
+	\Require{distinct test groups $CTD$, total amount of test cases $nt = Card(TS)$}
+	\Ensure{representative set $RS \subseteq TS$ of test cases to execute}
 	
-	\Function{SelectTest}{$size$, $list$}
-		\State $count\gets array[1 \dots nt]$
+	\Function{SelectTest}{$CTD, nt, MAX\_CARD, size, list, marked$}
+		\State $count\gets array[1 \dots nt]$ \Comment{initially $0$}
 		
 		\ForAll{$t \in list$}
-			\State $count[t] \gets |\{T_j \vert t \in T_j, marked[T_j] = false, Card(T_j) = size\}|$
+			\ForAll{$group \in CTD$}
+				\If{$t \in group \wedge \neg marked[group] \wedge Card(group) = size$}
+					\State $count[t] \gets count[t] + 1$
+				\EndIf
+			\EndFor
 		\EndFor
 		
-		\State $tests \gets \{t \vert t \in list, count[t] = max(count) \}$
+		\State $max\_count \gets \Call{max}{count}$
+		\State $tests \gets \{t \vert t \in list \wedge count[t] = max\_count\}$
 		
-		\If{$|tests| = 1$} \Return $tests[0]$
-		\ElsIf{$|tests| = MAX\_CARD$} \Return $tests[0]$
-		\Else{} \Return $SelectTest(size+1, tests)$
+		\If{$|tests| = 1$}
+			\Return $tests[0]$
+		\ElsIf{$|tests| = MAX\_CARD$}
+			\Return $tests[0]$
+		\Else{}
+			\Return $\Call{SelectTest}{CTD, nt, MAX\_CARD, size + 1, tests, marked}$
 		\EndIf
 	\EndFunction
+	
+	\Procedure{HGSTSM}{$CTD, nt$}
+		\State $n \gets Card(CTD)$
+		\State $marked \gets array[1 \dots n]$ \Comment{initially $false$}
+		\State $MAX\_CARD \gets \Call{max}{\{Card(group) \vert group \in CTD\}}$
+		\State $RS \gets \bigcup \{ singleton \vert singleton \in CTD \wedge Card(singleton) = 1 \}$
+		\ForAll{$group \in CTD$}
+			\If{$group \cap RS \neq \emptyset$}
+				\State $marked[group] \gets true$
+			\EndIf
+		\EndFor
+		\State $current \gets 1$
+		\While{$current < MAX\_CARD$}
+			\State $current \gets current + 1$
+			\State $list \gets \{t \vert t \in grp \wedge grp \in CTD \wedge Card(grp) = current \wedge \neg marked[grp]\}$
+			\While{$list \neq \emptyset$}
+				\State $next \gets \Call{SelectTest}{current, list}$
+				\State $reduce \gets false$
+				\ForAll{$group \in CTD$}
+					\If{$next \in group$}
+						\State $marked[group] = true$
+						\If{$Card(group) = MAX\_CARD$}
+							\State $reduce \gets true$
+						\EndIf
+					\EndIf
+				\EndFor
+				\If{$reduce$}
+					\State $MAX\_CARD \gets \Call{max}{\{Card(grp) \vert grp \in CTD \wedge \neg marked[grp]\}}$
+				\EndIf
+				\State $RS \gets RS \cup \{next\}$
+				
+				\State $list \gets \{t \vert t \in grp \wedge grp \in CTD \wedge Card(grp) = current \wedge \neg marked[grp]\}$
+			\EndWhile
+		\EndWhile
+		\State \Return $RS$
+	\EndProcedure
 \end{algorithmic}
 \end{algorithm}

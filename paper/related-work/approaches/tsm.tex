@@ -16,17 +16,7 @@ The first technique is called \acrfull{tsm}, also referred to as \emph{Test Suit
 \noindent Subsequently, we can define \tsm{} as the task of finding a subset $T'$ of test cases $t_j \in T$ that satisfies every requirement $r_i$.
 \end{definition}
 
-
-\begin{figure}[htbp!]
-	\centering
-	\includegraphics[width=0.8\textwidth]{assets/images/approach-tsm.pdf}
-	\caption{\tsm{}}
-	\label{fig:tsm}
-\end{figure}
-
 \noindent If we apply the concepts of the previous chapter to the above definition, we can interpret the set of requirements $R$ as source code lines that must be covered. A requirement $r_i$ can subsequently be satisfied by any test case $t_j \in T$ that belongs to the subset $T_i$. Observe that the problem of finding $T'$ is closely related to the \emph{hitting set problem} (\cref{def:hitting-set}) \cite{10.1002/stv.430}.
-
-\clearpage
 
 \begin{definition}[Hitting Set Problem]
 \label{def:hitting-set}
@@ -41,3 +31,10 @@ The first technique is called \acrfull{tsm}, also referred to as \emph{Test Suit
 \end{definition}
 
 \noindent In the context of \tsm{}, $T'$ corresponds to the hitting set of $T_i$s. In order to effectively minimise the amount of tests in the test suite, $T'$ should be the minimal hitting set \cite{10.1002/stv.430}. Since we can reduce this problem to the NP-complete \emph{Vertex Cover}-problem, we know that this problem is NP-complete as well \cite{10.5555/574848}.
+
+\begin{figure}[htbp!]
+	\centering
+	\includegraphics[width=\textwidth]{assets/tikz/approach-tsm.tikz}
+	\caption{\tsm{}}
+	\label{fig:tsm}
+\end{figure}

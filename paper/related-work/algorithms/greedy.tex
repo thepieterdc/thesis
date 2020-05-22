@@ -3,33 +3,32 @@
 \subsection{Greedy algorithm}\label{ssec:alg-greedy}
 The first algorithm is a \emph{greedy} heuristic, which was initially designed by Chvatal to find an approximation for the set-covering problem \cite{evaluationoftestsuiteminimization}. A greedy algorithm always makes a locally optimal choice, assuming that this will eventually lead to a globally optimal solution \cite{10.5555/1614191}. \Cref{alg:tsm-greedy} presents the Greedy algorithm for \tsm{}. The objective of the algorithm is to construct a set of test cases that cover every line in the code, by requiring as few test cases as possible.\\
 
-\noindent Initially, the algorithm starts with an empty representative set $RS$, the set $TS$ of all test cases and the set $C$ of all coverable source code lines. Furthermore, $TL$ denotes the set of coverage groups as specified in the definition. In essence, the algorithm will iteratively select test cases from $TS$ and add them to $RS$. The locally optimal choice is always to select the test case that will contribute the most still uncovered lines, ergo the test case $T$ for which the cardinality of the intersection between $C$ and $TL_t$ is maximal. After every iteration, we remove the code lines $TL_t$ from $C$, since these are now covered. We repeat this selection process until $C$ is empty, which indicates that we have covered every source code line. Afterwards, when we execute the test suite, we only need to execute test cases in $RS$. We can apply this algorithm to \tcp{} as well, by changing the type of $RS$ to a list instead. We require a list to maintain the insertion order since this is equivalent to the ideal order of execution.
+\noindent Initially, the algorithm starts with an empty representative set $RS$, the set $TS$ of all test cases and the set $C$ of all coverable source code lines. Furthermore, $TL$ denotes the set of coverage groups as specified in the definition. In essence, the algorithm will iteratively select test cases from $TS$ and add them to $RS$. The locally optimal choice is always to select the test case that will contribute the most still uncovered lines, ergo the test case $t$ for which the cardinality of the intersection between $C$ and $TL_t$ is maximal. After every iteration, we remove the code lines $TL_t$ from $C$, since these are now covered. We repeat this selection process until $C$ is empty, which indicates that we have covered every source code line. Afterwards, when we execute the test suite, we only need to execute test cases in $RS$. We can apply this algorithm to \tcp{} as well, by changing the type of $RS$ to a list instead. We require a list to maintain the insertion order since this is equivalent to the ideal order of execution.
 
 \begin{algorithm}[h!]
 \caption{Greedy algorithm for \tsm{}}
 \label{alg:tsm-greedy}
 \begin{algorithmic}[1]
-	\State {\bfseries Input:} Set $TS$ of all test cases,
-	
-	Set $C$ of all source code lines that are covered by any $t \in TS$,
-	
-	$TL_t$ the set of all lines are covered by test case $t \in TS$.
-	\State {\bfseries Output:} Subset $RS \subseteq TS$ of tests to execute.
-	\State $RS \gets \emptyset$
-	\While{$C \neq \emptyset$}
-		\State $t\_max \gets 0$
-		\State $tl\_max \gets \emptyset$
-		
-		\ForAll{$t \in TS$}
-			\State $tl\_current \gets C \cap TL_t$
-			\If{$|tl\_current| > |tl\_max|$}
-				\State $t\_max \gets t$
-				\State $tl\_max \gets tl\_current$
-			\EndIf
-		\EndFor
-		
-		\State $RS \gets RS \cup \{t\_max\}$
-		\State $C \gets C \setminus tl\_max$
-	\EndWhile
+	\Require{the test suite $TS$, all coverable lines $C$, the list of coverage groups $TL$}
+	\Ensure{representative set $RS \subseteq TS$ of test cases to execute}
+	\Procedure{GreedyTSM}{$TS, C, TL$}
+		\State $RS \gets \emptyset$
+		\While{$C \neq \emptyset$}
+			\State $t\_max \gets 0$
+			\State $tl\_max \gets \emptyset$
+			
+			\ForAll{$t \in TS$}
+				\State $tl\_current \gets C \cap TL[t]$
+				\If{$|tl\_current| > |tl\_max|$}
+					\State $t\_max \gets t$
+					\State $tl\_max \gets tl\_current$
+				\EndIf
+			\EndFor
+			
+			\State $RS \gets RS \cup \{t\_max\}$
+			\State $C \gets C \setminus tl\_max$
+		\EndWhile
+		\State \Return $RS$
+	\EndProcedure
 \end{algorithmic}
 \end{algorithm}

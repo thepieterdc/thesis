@@ -1,7 +1,9 @@
 % !TeX root = ../thesis.tex
 
-\section{Alpha algorithm}\label{sec:velocity-alpha}
-Besides the algorithms which have been presented in \autoref{sec:relatedwork-algorithms}, an additional algorithm has been implemented: the \emph{Alpha} algorithm. This was constructed by examining the philosophy behind every discussed algorithm and subsequently combining the best ideas into a novel prioritisation algorithm. The specification below will assume the same naming convention as described in \autoref{def:alg-naming}. The pseudocode is provided in Algorithm \ref{alg:alpha}\\
+\section{Alpha algorithm}
+\label{sec:velocity-alpha}
+
+Besides the earlier presented Greedy, HGS and ROCKET algorithms (\cref{sec:relatedwork-algorithms}), \velocity{} features an additional algorithm. The \emph{Alpha} algorithm has been constructed by examining the individual strengths and weaknesses of the three preceding algorithms and subsequently combining their philosophies into a novel prioritisation algorithm. This paper will now proceed by providing its specification in accordance with the conventions described in \cref{def:alg-naming}. The corresponding pseudocode is listed in \Cref{alg:alpha}.\\
 
 \noindent The algorithm consumes the following inputs:
 \begin{itemize}
@@ -43,11 +45,7 @@ Besides the algorithms which have been presented in \autoref{sec:relatedwork-alg
 \caption{Alpha algorithm for \tcp{}}
 \label{alg:alpha}
 \begin{algorithmic}[1]
-	\State {\bfseries Input:} Set $TS = \{T_1, \dots, T_n\}$ of all test cases,
-	
-	Set $AS = \{T_1, \dots T_m\} \subseteq TS$ of affected test cases,
-	
-	Set $C$ of all source code lines that are covered by any $t \in TS$,
+	\Require{the test suite $TS$, the affected testcases $AS \subseteq TS$, all coverable lines $C$, execution time $E$ of every test case over $k$ runs, failure status $F$}
 	
 	Execution times $D_{tr}$ of every test case $t$, over all $k$ runs $r$ of that test case,
 	
@@ -55,61 +53,64 @@ Besides the algorithms which have been presented in \autoref{sec:relatedwork-alg
 	
 	Sets $TL = \{TL_1, \dots, TL_n\}$ of all source code lines that are covered by test case $t \in TS$.
 	
-	\State {\bfseries Output:} Ordered list $P$ of $n$ test cases and their priorities.
-	\State $P \gets array[1 \dots n]$ \Comment{initially $0$}
-	\State $i \gets n$
-	\State $FTS \gets \{t \vert t \in TS \wedge (F[t][1] = 1 \vee F[t][2] = 1 \vee F[t][3] = 1)\}$
-	\State $AFTS \gets AS \cap FTS$
+	\Ensure{ordered list $P$, sorted by descending priority}
 	
-	\ForAll{$t \in AFTS$} \Comment{sorted by execution time in $E$ (ascending)}
-		\State $C \gets C \setminus TL[t]$
-		\State $P[t] \gets i$
-		\State $i \gets i - 1$
-	\EndFor
-	
-	\State $FTS \gets FTS \setminus AFTS$
-	\ForAll{$t \in FTS$} \Comment{sorted by execution time in $E$ (ascending)}
-		\State $C \gets C \setminus TL[t]$
-		\State $P[t] \gets i$
-		\State $i \gets i - 1$
-	\EndFor
-	
-	\State $AS \gets AS \setminus FTS$
-	\While{$AS \neq \emptyset$}
-		\State $t\_max \gets AS[1]$ \Comment{any element from $AS$}
-		\State $tl\_max \gets \emptyset$
+	\Procedure{AlphaTCP}{TS, AS, C}
 		
-		\ForAll{$t \in AS$}
-			\State $tl\_current \gets C \cap TL_{t}$
-			\If{$|tl\_current| > |tl\_max|$}
-				\State $t\_max \gets t$
-				\State $tl\_max \gets tl\_current$
-			\EndIf
+		\State $P \gets array[1 \dots n]$ \Comment{initially $0$}
+		\State $i \gets n$
+		\State $FTS \gets \{t \vert t \in TS \wedge (F[t][1] = 1 \vee F[t][2] = 1 \vee F[t][3] = 1)\}$
+		\State $AFTS \gets AS \cap FTS$
+		
+		\ForAll{$t \in AFTS$} \Comment{sorted by execution time in $E$ (ascending)}
+			\State $C \gets C \setminus TL[t]$
+			\State $P[t] \gets i$
+			\State $i \gets i - 1$
 		\EndFor
 		
-		\State $C \gets C \setminus tl\_max$
-		\State $P[t] \gets i$
-		\State $i \gets i - 1$
-	\EndWhile
-	
-	\State $TS \gets TS \setminus (AS \cup FTS)$
-	\While{$TS \neq \emptyset$}
-		\State $t\_max \gets TS[1]$ \Comment{any element from $TS$}
-		\State $tl\_max \gets \emptyset$
-		
-		\ForAll{$t \in TS$}
-			\State $tl\_current \gets C \cap TL_{t}$
-			\If{$|tl\_current| > |tl\_max|$}
-				\State $t\_max \gets t$
-				\State $tl\_max \gets tl\_current$
-			\EndIf
+		\State $FTS \gets FTS \setminus AFTS$
+		\ForAll{$t \in FTS$} \Comment{sorted by execution time in $E$ (ascending)}
+			\State $C \gets C \setminus TL[t]$
+			\State $P[t] \gets i$
+			\State $i \gets i - 1$
 		\EndFor
 		
-		\State $C \gets C \setminus tl\_max$
-		\State $P[t] \gets i$
-		\State $i \gets i - 1$
-	\EndWhile
-	\Return $P$
-	
+		\State $AS \gets AS \setminus FTS$
+		\While{$AS \neq \emptyset$}
+			\State $t\_max \gets AS[1]$ \Comment{any element from $AS$}
+			\State $tl\_max \gets \emptyset$
+			
+			\ForAll{$t \in AS$}
+				\State $tl\_current \gets C \cap TL_{t}$
+				\If{$|tl\_current| > |tl\_max|$}
+					\State $t\_max \gets t$
+					\State $tl\_max \gets tl\_current$
+				\EndIf
+			\EndFor
+			
+			\State $C \gets C \setminus tl\_max$
+			\State $P[t] \gets i$
+			\State $i \gets i - 1$
+		\EndWhile
+		
+		\State $TS \gets TS \setminus (AS \cup FTS)$
+		\While{$TS \neq \emptyset$}
+			\State $t\_max \gets TS[1]$ \Comment{any element from $TS$}
+			\State $tl\_max \gets \emptyset$
+			
+			\ForAll{$t \in TS$}
+				\State $tl\_current \gets C \cap TL_{t}$
+				\If{$|tl\_current| > |tl\_max|$}
+					\State $t\_max \gets t$
+					\State $tl\_max \gets tl\_current$
+				\EndIf
+			\EndFor
+			
+			\State $C \gets C \setminus tl\_max$
+			\State $P[t] \gets i$
+			\State $i \gets i - 1$
+		\EndWhile
+		\State \Return $P$
+	\EndProcedure	
 \end{algorithmic}
 \end{algorithm}
