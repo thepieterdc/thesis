@@ -125,6 +125,10 @@
 % Table columns.
 \newcolumntype{C}{>{\centering\arraybackslash}X}
 
+% Pseudocode keywords.
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
 % Add the references resource.
 \addbibresource{references.bib}
 
@@ -206,7 +210,7 @@
 \clearpage
 %\input{software-engineering.tex}
 \clearpage
-%\input{related-work.tex}
+\input{related-work.tex}
 \clearpage
 \input{velocity.tex}
 \clearpage

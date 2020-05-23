@@ -13,54 +13,66 @@ The second algorithm is the HGS algorithm. The algorithm was named after its cre
 \caption{HGS algorithm (\cite{hgs})}
 \label{alg:hgs}
 \begin{algorithmic}[1]
-	\State {\bfseries Input:} Distinct test groups $T_1, \dots T_n \in CDT$, containing test cases from $TS$.
-	\State {\bfseries Output:} Subset $RS \subseteq TS$ of tests to execute.
-	\State $marked \gets array[1 \dots n]$ \Comment{initially $false$}
-	\State $MAX\_CARD \gets max \{Card(T_i) \vert T_i \in CDT\}$
-	\State $RS \gets \bigcup \{ T_i \vert Card(T_i) = 1 \}$
-	\ForAll{$T_i \in CDT$}
-		\If{$T_i \cap RS \neq \emptyset$}
-			$marked[i] \gets true$
-		\EndIf
-	\EndFor
-	\State $current \gets 1$
-	\While{$current < MAX\_CARD$}
-		\State $current \gets current + 1$
-		\While{$\exists T_i : Card(T_i) = current, marked[i] = false$}
-			\State $list \gets \{t \vert t \in T_i : Card(T_i) = current, marked[i] = false\}$
-			\State $next \gets SelectTest(current, list)$
-			\State $reduce \gets false$
-			\ForAll{$T_i \in CDT$}
-				\If{$next \in T_i$}
-					\State $marked[i] = true$
-					\If{$Card(T_1) = MAX\_CARD$}
-						$reduce \gets true$
-					\EndIf
-				\EndIf
-			\EndFor
-			\If{$reduce$}
-				\State $MAX\_CARD \gets max \{Card(T_i) \vert marked[i] = false\}$
-			\EndIf
-			\State $RS \gets RS \cup \{next\}$
-		\EndWhile
-	\EndWhile
+	\Require{distinct test groups $CTD$, total amount of test cases $nt = Card(TS)$}
+	\Ensure{representative set $RS \subseteq TS$ of test cases to execute}
 	
-	\Function{SelectTest}{$size$, $list$}
-		\State $count\gets array[1 \dots nt]$
+	\Function{SelectTest}{$CTD, nt, MAX\_CARD, size, list, marked$}
+		\State $count\gets array[1 \dots nt]$ \Comment{initially $0$}
 		
 		\ForAll{$t \in list$}
-			\State $count[t] \gets |\{T_j \vert t \in T_j, marked[T_j] = false, Card(T_j) = size\}|$
+			\ForAll{$group \in CTD$}
+				\If{$t \in group \wedge \neg marked[group] \wedge Card(group) = size$}
+					\State $count[t] \gets count[t] + 1$
+				\EndIf
+			\EndFor
 		\EndFor
 		
-		\State $tests \gets \{t \vert t \in list, count[t] = max(count) \}$
+		\State $max\_count \gets \Call{max}{count}$
+		\State $tests \gets \{t \vert t \in list \wedge count[t] = max\_count\}$
 		
 		\If{$|tests| = 1$}
 			\Return $tests[0]$
 		\ElsIf{$|tests| = MAX\_CARD$}
 			\Return $tests[0]$
 		\Else{}
-			\Return $SelectTest(size+1, tests)$
+			\Return $\Call{SelectTest}{CTD, nt, MAX\_CARD, size + 1, tests, marked}$
 		\EndIf
 	\EndFunction
+	
+	\Procedure{HGSTSM}{$CTD, nt$}
+		\State $n \gets Card(CTD)$
+		\State $marked \gets array[1 \dots n]$ \Comment{initially $false$}
+		\State $MAX\_CARD \gets \Call{max}{\{Card(group) \vert group \in CTD\}}$
+		\State $RS \gets \bigcup \{ singleton \vert singleton \in CTD \wedge Card(singleton) = 1 \}$
+		\ForAll{$group \in CTD$}
+			\If{$group \cap RS \neq \emptyset$}
+				\State $marked[group] \gets true$
+			\EndIf
+		\EndFor
+		\State $current \gets 1$
+		\While{$current < MAX\_CARD$}
+			\State $current \gets current + 1$
+			\State $list \gets \{t \vert t \in grp \wedge grp \in CTD \wedge Card(grp) = current \wedge \neg marked[grp]\}$
+			\While{$list \neq \emptyset$}
+				\State $next \gets \Call{SelectTest}{current, list}$
+				\State $reduce \gets false$
+				\ForAll{$group \in CTD$}
+					\If{$next \in group$}
+						\State $marked[group] = true$
+						\If{$Card(group) = MAX\_CARD$}
+							\State $reduce \gets true$
+						\EndIf
+					\EndIf
+				\EndFor
+				\If{$reduce$}
+					\State $MAX\_CARD \gets \Call{max}{\{Card(grp) \vert grp \in CTD \wedge \neg marked[grp]\}}$
+				\EndIf
+				\State $RS \gets RS \cup \{next\}$
+				
+				\State $list \gets \{t \vert t \in grp \wedge grp \in CTD \wedge Card(grp) = current \wedge \neg marked[grp]\}$
+			\EndWhile
+		\EndWhile
+		\State \Return $RS$
+	\EndProcedure
 \end{algorithmic}
 \end{algorithm}
