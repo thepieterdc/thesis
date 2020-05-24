@@ -5,7 +5,7 @@
 
 % Filter.
 \node[draw, fill=bisque!60] (filter) at (11, 2)
-{\begin{minipage}{3.25cm}\centering\texttt{Filter}\\$state = "passed"$\end{minipage}};
+{\begin{minipage}{3.25cm}\centering\texttt{Filter}\\$state = ``passed"$\end{minipage}};
 
 % Logs, Map.
 \foreach \i in {0,1,2} {
