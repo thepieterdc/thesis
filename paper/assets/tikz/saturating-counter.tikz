@@ -1,4 +1,4 @@
-\begin{tikzpicture}[->,>=stealth',auto,node distance=4.5cm,semithick]
+\begin{tikzpicture}[->,>=stealth',auto,node distance=4.5cm]
 
 % Nodes.
 \node[state] (A)

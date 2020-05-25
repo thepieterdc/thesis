@@ -1,5 +1,5 @@
-\begin{tikzpicture}[every node/.style={thick}]
-\tikzstyle{edge}=[->, very thick]
+\begin{tikzpicture}
+\tikzstyle{edge}=[->]
 % Travis logs.
 \draw[thick] (0, 0) rectangle node[rotate=90] {\textbf{Travis logs}} (1, 4);
 
