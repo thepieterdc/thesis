@@ -1,8 +1,8 @@
 all: abstracts thesis.pdf
 
 abstracts: clean
-	(cd abstract-en; latexmk --shell-escape -pdf extended-abstract.tex; latexmk -c)
-	(cd abstract-nl; latexmk --shell-escape -pdf extended-abstract.tex; latexmk -c)
+	(cd abstract-en; latexmk --shell-escape -pdf -quiet extended-abstract.tex; latexmk -c)
+	(cd abstract-nl; latexmk --shell-escape -pdf -quiet extended-abstract.tex; latexmk -c)
 
 clean:
 	latexmk -C
@@ -14,4 +14,4 @@ clean:
 	rm -f thesis.synctex.gz
 
 %.pdf: %.tex
-	 latexmk --shell-escape -pdf $<
+	latexmk --shell-escape -pdf -quiet $<

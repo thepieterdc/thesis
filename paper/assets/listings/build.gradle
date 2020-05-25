@@ -4,14 +4,10 @@ buildscript {
     }
 }
 
-plugins {
-    id 'java'
-}
-
 apply plugin: 'velocity-junit'
 
 velocity {
     base 'src/main/java/'
-    repository 'https://github.com/thepieterdc/random-java'
+    repository 'https://github.com/user/my-java-project'
     server 'http://localhost:8080'
 }

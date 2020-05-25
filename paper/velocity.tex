@@ -1,10 +1,14 @@
 % !TeX root = thesis.tex
 
-\chapter{Proposed framework: \velocity{} [TODO REVISE]}
+\chapter{Proposed framework: \velocity{}}
 \label{ch:velocity}
-The implementation part of this thesis consists of a framework and a set of tools, tailored at optimising the test suite as well as providing accompanying metrics and insights. The framework was named \emph{\velocity{}} to reflect its purpose of enhancing the speed at which \CI{} is practised. This paper will now proceed by describing the design goals of the framework. Afterwards, a high-level schematic overview of the implemented architecture will be provided, followed by a more in-depth explanation of every pipeline step. In the final section of this chapter, the \emph{Alpha} algorithm will be presented.
+The implementation part of this thesis will provide a framework and a set of tools, tailored at optimising the test suite as well as providing accompanying metrics and insights. The framework was named \Gls{velocity} to reflect its purpose of enhancing the efficiency and speed of \CI{}. This paper will now proceed by first describing the design goals of the framework, after which a high-level schematic overview of the implemented architecture will be provided. The architecture consists of a seven-step pipeline, divided into three individual components. These steps will be elaborated in more detail in \cref{sec:velocity-pipeline}. Subsequently, the next section will present the \emph{Alpha} algorithm as as a novel prioritisation algorithm, and this chapter will be concluded with a presentation of the analysis tools.
 
 \input{velocity/design-goals.tex}
+\clearpage
 \input{velocity/high-level-overview.tex}
+\clearpage
 \input{velocity/pipeline.tex}
+\clearpage
 \input{velocity/alpha.tex}
+\input{velocity/analysis.tex}

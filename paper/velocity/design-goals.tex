@@ -3,11 +3,11 @@
 \section{Design goals}
 \velocity{} has been implemented with four design goals in mind:
 \begin{enumerate}
-	\item \textbf{Extensibility:} It should be possible and straightforward to support additional \CI{} systems, programming languages and test frameworks. Subsequently, a clear interface should be provided to integrate additional prioritisation algorithms.
+	\item \textbf{Extensibility:} It should be possible and straightforward to support additional CI systems, programming languages and test frameworks. Similarly, a clear interface must be provided to integrate new prioritisation algorithms.
 	
 	\item \textbf{Minimally invasive:} Integrating \velocity{} into an existing test suite should not require drastic changes to any of the test cases.
 	
-	\item \textbf{Language agnosticism:} This design goal is related to the framework being extensible. The implemented tools should not need to be aware of the programming language of the source code, nor the used test framework.
+	\item \textbf{Language agnosticism:} This design goal is related to the extensibility of the framework. The implemented tools should not need to be aware of the programming language of the source code, nor the used test framework.
 	
-	\item \textbf{Self-improvement:} The prioritisation framework supports all of the algorithms presented in \autoref{sec:relatedwork-algorithms}. It is possible that the performance of a given algorithm is strongly dependent on the nature of the project it is being applied to. In order to facilitate this behaviour, the framework should be able to measure the performance of every algorithm and ``learn'' which algorithm offers the best prediction, given a set of source code.
+	\item \textbf{Self-improvement:} The prioritisation framework must support multiple algorithms. However, the performance of an algorithm might be dependent on the nature of the source code. An algorithm may offer a very high accuracy on one project but fall short on another. The framework should decide by itself which algorithm it should prefer, by measuring the performance of a prediction and subsequently infer which algorithm to use for future predictions.
 \end{enumerate}
