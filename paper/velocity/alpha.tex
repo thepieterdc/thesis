@@ -3,24 +3,43 @@
 \section{Alpha algorithm}
 \label{sec:velocity-alpha}
 
-Besides the earlier presented Greedy, HGS and ROCKET algorithms (\cref{sec:relatedwork-algorithms}), \velocity{} features an additional algorithm. The \emph{Alpha} algorithm has been constructed by examining the individual strengths and weaknesses of the three preceding algorithms and subsequently combining their philosophies into a novel prioritisation algorithm. This paper will now proceed by providing its specification in accordance with the conventions described in \cref{def:alg-naming}. The corresponding pseudocode is listed in \Cref{alg:alpha}.\\
+Besides the earlier presented Greedy, HGS and ROCKET algorithms (\cref{sec:relatedwork-algorithms}), a custom algorithm has been implemented. The \emph{Alpha} algorithm has been constructed by examining the individual strengths of the three preceding algorithms and subsequently combining their philosophies into a novel prioritisation algorithm. This paper will now proceed by providing its specification in accordance with the conventions described in \cref{def:alg-naming}. The corresponding pseudocode is listed in \Cref{alg:alpha}.\\
 
 \noindent The algorithm consumes the following inputs:
 \begin{itemize}
-	\item the set of all $n$ test cases: $TS = \{T_1, \dots, T_n\}$
+	\item $TS = \{T_1, \dots, T_n\}$: the set of test cases to prioritise.
 	
-	\item the set of $m$ \emph{affected} test cases: $AS = \{T_1, \dots, T_m\} \subseteq TS$. A test case $t$ is considered ``affected'' if any source code line which is covered by $t$ has been modified or removed in the commit that is being predicted.
+	\item $AS = \{T_1, \dots, T_m\} \subseteq TS$: the set of \emph{affected} test cases. A test case $t$ is considered ``affected'' if $t$ covers any modified source code line in the current commit.
 	
-	\item $C$: the set of all lines in the application source code, for which a test case $t \in TS$ exists that covers this line and that has not yet been prioritised. Initially, this set contains every covered source code line.
+	\item $C = \{c_1, \dots, c_m\}$: the set of all source code lines in the application, that are covered by at least one test case $t \in TS$.
 	
-	\item the failure status of every test case, for every past execution out of $k$ executions of that test case: $F = \{F_1, \dots, F_n\}$, where $F_i = \{f_1, \dots, f_k\}$. $F_{tj} = 1$ implies that test case $t$ has failed in execution $current - j$.
+	\item $F = \begin{bmatrix}
+			F_1 & \dots & F_n
+		\end{bmatrix}$: the failure statuses of each test case.
+			\begin{itemize}
+				\item $F_t = \begin{bmatrix}
+					f_1 & \dots & f_m
+				\end{bmatrix}$: the failure status of test case $t$ over the previous $m$ successive executions. $F_{ij} = 1$ if test case $i$ has failed in execution $(current - j)$, $0$ if it has passed.
+			\end{itemize}
+			
+	\item $D = \begin{bmatrix}
+			D_1 & \dots & D_n
+		\end{bmatrix}$: the execution times of each test case.
+			\begin{itemize}
+				\item $D_t = \begin{bmatrix}
+					d_{t1} & \dots & d_{tm}
+				\end{bmatrix}$: the execution times of test case $t$. $D_{ij}$ corresponds to the duration (in milliseconds) of test case $i$ in execution $(current - j)$.
+			\end{itemize}
 	
-	\item the execution time of test case $t \in TS$ for run $r \in [1 \dots k]$, in milliseconds: $D_{tr}$.
-	
-	\item for every test case $t \in TS$, the set $TL_t$ is composed of all source code lines that are covered by test case $t$.
+	\item $TL = \begin{bmatrix}
+			TL_1 & \dots & TL_n
+		\end{bmatrix}$: the list of coverage groups.
+			\begin{itemize}
+				\item $TL_t = \{c_1, \dots, c_o\} \subseteq C$: the set of all source code lines $c \in C$ that are covered by test case $t \in TS$.
+			\end{itemize}
 \end{itemize}
 
-\noindent The first step of the algorithm is to determine the execution time $E_t$ of every test case $t$. This execution time is calculated as the average of the durations of every successful (i.e.) execution of $t$, since a test case will be prematurely aborted upon the first failed assertion, which introduces bias in the duration timings. In case $t$ has never been executed successfully, the average is computed over every execution of $t$.
+\noindent The algorithm begins by determining the execution time $E_t$ of every test case $t$. To calculate the execution time, we distinguish two cases. If $t$ has passed at least once, we calculate the execution time as the average duration of every successful execution of $t$. In the unlikely event that $t$ has always failed, we compute the average over every execution of $t$. This distinction is mandatory, since a failed test case might have been aborted prematurely, which introduces a bias in the timings.
 
 \[
 	E_t = \left.
@@ -31,32 +50,24 @@ Besides the earlier presented Greedy, HGS and ROCKET algorithms (\cref{sec:relat
 	\right.
 \]
 
-\noindent Next, the algorithm executes every affected test case that has also failed at least once in its three previous executions. This reflects the behaviour of a developer attempting to resolve the bug that caused the test case to fail. Specifically executing \emph{affected} failing test cases first is required in case multiple test cases are failing and the developer is resolving these one by one, an idea which was extracted from the ROCKET algorithm (\autoref{ssec:alg-rocket}). In case there are multiple affected failing test cases, the test cases are prioritised by increasing execution time. After every selected test case, $C$ is updated by subtracting the code lines that have been covered by at least one of these test cases.\\
+\noindent Next, the algorithm executes every affected test case that has also failed at least once in its three previous executions. Consecutive failures reflect the behaviour of a developer attempting to resolve the bug that caused the test case failure in the first run of the chain. By particularly executing the affected failing test cases as early as possible, we anticipate a developer that resolves multiple failures one by one. This idea is also used by the ROCKET algorithm (\cref{ssec:alg-rocket}). If multiple affected test cases are failing, the algorithm sorts those test cases by assigning a higher priority to the test case with the lowest execution time. After every prioritised test case, we update $C$ by subtracting the source code lines that are now covered by that test case.\\
 
-\noindent Afterwards, the same operation is repeated for every failed but unaffected test case, likewise ordered by increasing execution time. Where the previous step helps developers to get fast feedback about whether or not the specific failing test case they were working on has been resolved, this step ensures that other failing test cases are not forgotten and are executed early in the run as well. Similar to the previous step, $C$ is again updated after every prioritised test case.\\
+\noindent Afterwards, we repeat the same procedure for every failed (yet unaffected) test case and likewise use the execution time as a tie-breaker. Where the previous phase helps a developer to get fast feedback about whether or not they have resolved the issue, this phase ensures that the other failing test cases are executed early as well. Similar to the previous step, we again update $C$ after every prioritised test case.\\
 
-\noindent Research (\autoref{ssec:results-rq1}) has indicated that on average, only a small fraction ($\SIrange{10}{20}{\percent}$) of all test runs will contain failed tests, resulting in the previous two steps not being executed at all. Therefore, the most time should be dedicated to executing test cases that cover affected code lines. More specifically, the next step of the algorithm executes every affected test case, sorted by decreasing cardinality of the intersection between $C$ and the lines which are covered by the test case. Conforming to the prior two steps, $C$ is also updated to reflect the selected test case. As a consequence of these updates, the cardinalities of these intersections change after every update, which will ultimately lead to affected tests not strictly requiring to be executed. This idea has been adopted from the Greedy algorithm \autoref{ssec:alg-greedy}.\\
+\noindent Research (\cref{ssec:results-rq1}) has indicated that on average, a minor fraction ($\SIrange{10}{20}{\percent}$) of all test runs will contain a failed test case. As a result, the previous two phases will often not select any test case at all. Therefore, we will now focus on executing test cases that cover affected code lines. More specifically, the third phase of the algorithm will execute every affected test case, sorted by decreasing cardinality of the intersection between $C$ and the test group of that test case. After every selected test case, we will update $C$ as well. Since this phase uses $C$ in the comparison, every selected test case can influence the next selected test case. The update process of $C$ will ultimately lead to some affected test cases not strictly requiring to be executed, similar to the Greedy algorithm (\cref{ssec:alg-greedy}).\\
 
-\noindent In the penultimate step, the previous operation is repeated in an identical fashion for the remaining test cases, similarly ordered by the cardinality of the intersection with the remaining uncovered lines in $C$.\\
+\noindent In the last phase, the algorithm will select the test cases based on the cardinality of the intersection between $C$ and their test group. We repeat this process until $C$ is empty and update $C$ accordingly. When $C$ is empty, the algorithm will yield the remaining test cases. Notice that these test cases will not contribute to the test coverage whatsoever since the previous iteration would already have selected every test case that would incur additional coverage. Subsequently, these test cases are de facto redundant and are therefore candidates for removal by TSM. However, since this is a prioritisation algorithm, these tests will still be executed and prioritised by increasing execution time.
 
-\noindent Finally, the algorithm selects every test case which had not yet been prioritised. Notice that these test cases do not contribute to the test coverage, as every test case that would incur additional coverage would have been prioritised already in the previous step. Subsequently, these test cases are actually redundant and are therefore candidates for removal by \tsm{}. However, since this is a prioritisation algorithm, these tests will still be executed and prioritised by increasing execution time.
-
-\begin{algorithm}[htbp]
+\begin{algorithm}[htbp!]
 \caption{Alpha algorithm for \tcp{}}
 \label{alg:alpha}
 \begin{algorithmic}[1]
-	\Require{the test suite $TS$, the affected testcases $AS \subseteq TS$, all coverable lines $C$, execution time $E$ of every test case over $k$ runs, failure status $F$}
-	
-	Execution times $D_{tr}$ of every test case $t$, over all $k$ runs $r$ of that test case,
-	
-	Failure status $FS$ for each test case over the previous $m$ successive iterations,
-	
-	Sets $TL = \{TL_1, \dots, TL_n\}$ of all source code lines that are covered by test case $t \in TS$.
+	\Require{the test suite $TS$, the affected test cases $AS$, all coverable lines $C$, the failure statuses $F$ for each test case over the previous $m$ executions, the execution times $D$ for each test case over the previous $m$ executions, the list of coverage groups $TL$}
 	
 	\Ensure{ordered list $P$, sorted by descending priority}
 	
-	\Procedure{AlphaTCP}{TS, AS, C}
-		
+	\Procedure{AlphaTCP}{TS, AS, C, F, D, TL}
+		\State Construct $E$ using $D$ as described above.
 		\State $P \gets array[1 \dots n]$ \Comment{initially $0$}
 		\State $i \gets n$
 		\State $FTS \gets \{t \vert t \in TS \wedge (F[t][1] = 1 \vee F[t][2] = 1 \vee F[t][3] = 1)\}$
@@ -114,3 +125,5 @@ Besides the earlier presented Greedy, HGS and ROCKET algorithms (\cref{sec:relat
 	\EndProcedure	
 \end{algorithmic}
 \end{algorithm}
+
+\clearpage

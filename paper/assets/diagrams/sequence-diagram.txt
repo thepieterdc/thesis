@@ -9,7 +9,7 @@ activate Agent
 
 Agent->Controller: Initiate run
 activate Controller
-Controller->Database: Create unpredicted run
+Controller->Database: <align:center>Create\nunpredicted run</align>
 Agent<<--Controller: Request ID
 deactivate Controller
 
@@ -20,7 +20,7 @@ activate Database
 
 group Prediction
 activate Predictor
-Predictor->Database: Fetch unpredicted runs
+Predictor->Database: <align:center>Fetch\nunpredicted runs</align>
 activate Database
 Predictor<<--Database: Unpredicted run
 deactivate Database
