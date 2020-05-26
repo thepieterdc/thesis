@@ -55,16 +55,19 @@ class Repository:
 
             # Get the changes.
             logging.info('Parsing changed files...')
-            changes = commit.diff(commit.parents[0], create_patch=True)
-            amt_changes = len(changes)
-            for idx, item in enumerate(changes):
-                file_name = item.a_path
-                diff = parse_changes(item.diff)
-                logging.info(f'[{idx + 1}/{amt_changes}] Parsed {file_name}.')
+            try:
+                changes = commit.diff(commit.parents[0], create_patch=True)
+                amt_changes = len(changes)
+                for idx, item in enumerate(changes):
+                    file_name = item.a_path
+                    diff = parse_changes(item.diff)
+                    logging.info(f'[{idx + 1}/{amt_changes}] Parsed {file_name}.')
 
-                for change in diff:
-                    start, end = change
-                    yield CodeBlock(file_name, start, end)
+                    for change in diff:
+                        start, end = change
+                        yield CodeBlock(file_name, start, end)
+            except IndexError:
+                return tuple()
 
     @property
     def id(self) -> int:

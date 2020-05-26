@@ -51,9 +51,9 @@ class GreedyCoverAffected(AbstractPredictor):
             # Find the test that adds the most uncovered lines. This needs to be
             # computed twice to guarantee a deterministic order.
             max_cov_amt = max(len(val) for val in tests_lines.values())
-            max_test, max_cov = max(
-                i for i in tests_lines.items() if len(i[1]) == max_cov_amt,
-            )
+            max_test, max_cov = max((
+                i for i in tests_lines.items() if len(i[1]) == max_cov_amt
+            ))
 
             # Return the test.
             del tests_lines[max_test]

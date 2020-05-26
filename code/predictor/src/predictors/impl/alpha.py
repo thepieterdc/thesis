@@ -120,14 +120,14 @@ class Alpha(AbstractPredictor):
         while affected_test_ids:
             # Find the test that adds the most uncovered lines. This needs to be
             # computed twice to guarantee a deterministic order.
-            max_cov_amt = max(
+            max_cov_amt = max((
                 len(v) for k, v in tests_lines.items()
                 if k in affected_test_ids
-            )
-            max_test, max_cov = max(
+            ))
+            max_test, max_cov = max((
                 i for i in tests_lines.items()
-                if len(i[1]) == max_cov_amt and i[0] in affected_test_ids,
-            )
+                if len(i[1]) == max_cov_amt and i[0] in affected_test_ids
+            ))
 
             # Return the test.
             yield max_test
@@ -147,12 +147,12 @@ class Alpha(AbstractPredictor):
         while tests_lines:
             # Find the test that adds the most uncovered lines. This needs to be
             # computed twice to guarantee a deterministic order.
-            max_cov_amt = max(
+            max_cov_amt = max((
                 len(v) for k, v in tests_lines.items()
-            )
-            max_test, max_cov = max(
-                i for i in tests_lines.items() if len(i[1]) == max_cov_amt,
-            )
+            ))
+            max_test, max_cov = max((
+                i for i in tests_lines.items() if len(i[1]) == max_cov_amt
+            ))
 
             # Return the test.
             yield max_test

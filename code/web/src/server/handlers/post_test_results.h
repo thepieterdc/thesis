@@ -26,7 +26,6 @@
 bool handle_post_test_results(struct mg_connection *conn,
                               std::uint_fast64_t run,
                               json body,
-                              const predictions::meta_predictor &meta_predictor,
                               const runs::manager &runs,
                               const tests::manager &tests);
 

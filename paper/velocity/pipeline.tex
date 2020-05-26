@@ -18,7 +18,7 @@ In order to integrate \velocity{} in an existing Gradle project, we must modify 
 
 \lstinputlisting[caption=Minimal Gradle buildscript, label=lst:pipeline-buildgradle, language=Groovy]{assets/listings/build.gradle}
 
-\noindent After we have configured the build script, we can execute the test suite. For the Gradle agent, this involves executing the built-in \texttt{test} task, which commences the pipeline. This task requires an additional argument to be passed, which is the commit hash of the changeset to prioritise. In every discussed CI system, this commit hash is available as an environment variable.\\
+\noindent After we have configured the build script, we can execute the test suite. For the Gradle agent, this involves executing the \texttt{velocity} task, which commences the pipeline. This task requires an additional argument to be passed, which is the commit hash of the changeset to prioritise. In every discussed CI system, this commit hash is available as an environment variable.\\
 
 \noindent The first step in the pipeline is for the agent to initiate a new test run at the controller. The agent can accomplish this by sending a \texttt{POST}-request to the \texttt{/runs} endpoint of the controller, which will reply with an identifier. On the controller side, this request will enqueue a new prioritisation request in the database. At some point in time, the controller, which is continuously polling the database, will see the request and process it in the next step.
 
