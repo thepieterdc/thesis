@@ -83,6 +83,32 @@ class PostgresDatabase(AbstractDatabase):
 
         return None if not predictor_result else predictor_result[0]
 
+    def get_predictions(self, run: Run) -> Tuple[Tuple[str, List[str]], ...]:
+        # Get the test names.
+        tcursor = self.__connection.cursor()
+        tcursor.execute(
+            "SELECT t.id, t.testcase FROM tests t WHERE t.repository_id=%s",
+            (run.repository.id,))
+        test_cases = {int(t[0]): t[1] for t in tcursor.fetchall()}
+        tcursor.close()
+
+        # Get the predictions.
+        cursor = self.__connection.cursor()
+
+        cursor.execute(
+            "SELECT p.name, pr.testorder FROM predictions pr INNER JOIN predictors p on pr.predictor_id = p.id WHERE run_id=%s",
+            (run.id,))
+
+        for resp in cursor.fetchall():
+            name, testorder = resp
+            orders = list(
+                map(lambda d: test_cases[int(d)], testorder.split(",")))
+
+            yield (name, orders)
+
+        # Close the connection.
+        cursor.close()
+
     def get_preferred_predictor(self, repository: Repository) -> Optional[str]:
         cursor = self.__connection.cursor()
         cursor.execute(
@@ -116,6 +142,18 @@ class PostgresDatabase(AbstractDatabase):
 
         # Run not found.
         return None
+
+    def get_scores(self, repository: Repository) -> Tuple[Tuple[str, int], ...]:
+        cursor = self.__connection.cursor()
+        cursor.execute(
+            "SELECT p.name, ps.score FROM predictors_scores ps INNER JOIN predictors p on ps.predictor_id = p.id WHERE ps.repository_id=%s",
+            (repository.id, )
+        )
+
+        yield from cursor.fetchall()
+
+        # Close the connection.
+        cursor.close()
 
     def get_tests(self, repository: Repository) -> Set[Test]:
         cursor = self.__connection.cursor()

@@ -17,7 +17,7 @@ COPY . /apps/
 
 # Compile the application.
 RUN cmake .
-RUN make -j4
+RUN make -j1
 
 # Start the webserver
 CMD dockerize -wait "tcp://database:5432" -timeout 1m ./server "postgres://velocity:velocity@database:5432/velocity" 8080

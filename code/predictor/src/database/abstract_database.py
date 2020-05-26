@@ -6,7 +6,7 @@ __author__ = "Pieter De Clercq"
 __license__ = "MIT"
 
 from abc import abstractmethod
-from typing import Optional, List, Set, Iterable, Tuple, Dict
+from typing import Optional, List, Set, Tuple, Dict
 
 from entities import CodeBlock, Repository, Run, Test, TestResult
 
@@ -30,6 +30,16 @@ class AbstractDatabase:
         raise NotImplemented
 
     @abstractmethod
+    def get_predictions(self, run: Run) -> Tuple[Tuple[str, List[str]], ...]:
+        """
+        Gets the predicted result.
+
+        :param run: the run
+        :return: the predictions
+        """
+        raise NotImplemented
+
+    @abstractmethod
     def get_preferred_predictor(self, repository: Repository) -> Optional[str]:
         """
         Gets the name of the preferred predictor.
@@ -46,6 +56,16 @@ class AbstractDatabase:
 
         :param id: the id of the run to get
         :return: the run
+        """
+        raise NotImplemented
+
+    @abstractmethod
+    def get_scores(self, repository: Repository) -> Tuple[Tuple[str, int], ...]:
+        """
+        Gets the predictor scores.
+
+        :param repository: the repository
+        :return: the predictor scores
         """
         raise NotImplemented
 

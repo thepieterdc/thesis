@@ -1,8 +1,9 @@
 # Set the base image.
-FROM python:3.6-alpine
+FROM python:3.8-slim
 
 # Install required libraries.
-RUN apk add --update build-base git postgresql-dev
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends build-essential git libpq-dev
 RUN pip3 install gitpython numpy psycopg2
 
 # Copy the source files.
