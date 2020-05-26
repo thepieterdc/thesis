@@ -6,7 +6,7 @@ services:
       - '5432:5432'
     restart: always
 
-  predict:
+  cli:
     build: 'predictor/'
     depends_on:
       - database

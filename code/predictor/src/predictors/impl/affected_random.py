@@ -36,5 +36,6 @@ class AffectedRandom(AbstractPredictor):
         remaining_tests = set(
             test.id for test in self.all_tests if test.id not in relevant_tests
         )
+
         for test in remaining_tests:
             yield test

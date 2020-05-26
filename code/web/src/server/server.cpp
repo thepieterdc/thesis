@@ -100,14 +100,14 @@ web::server::handle_post(struct mg_connection *conn, const std::string &uri,
 
         // Handle the request.
         return handle_post_coverage(conn, run_id, std::move(body),
-                                    this->coverage);
+                                    this->coverage, this->meta_predictor, this->runs);
     } else if (std::regex_search(uri, matches, test_results_regex)) {
         // Find the run id.
         const auto run_id = std::stoi(matches[1].str());
 
         // Handle the request.
         return handle_post_test_results(conn, run_id, std::move(body),
-                                        this->meta_predictor, this->runs,
+                                        this->runs,
                                         this->tests);
     }
 
