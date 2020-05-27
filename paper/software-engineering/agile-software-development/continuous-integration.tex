@@ -1,28 +1,28 @@
 % !TeX root = ../../thesis.tex
 
 \subsection{\CI}
-In traditional software development, the design phase typically leads to a representation of the required functionality in multiple, stand-alone modules. Subsequently, every module is implemented separately by individual developers. Afterwards, an attempt is made to integrate all the modules into the final application, an event to which Meyer refers to as the ``Big Bang'' \cite[~p.103]{Meyer2014}. The name \emph{Big Bang} reflects the complex nature of this operation. This can prove to be a challenging operation, because every developer can take unexpected assumptions at the start of the project, which may ultimately result in mutually incompatible components. Furthermore, since the code was written over a span of several weeks to months, the developers often need to rewrite code that they have not touched in a long time. Eventually this will lead to unanticipated delays and costs \cite{SmartJenkinsDefinitive}.\\ 
+In traditional software development, the design phase usually leads to a representation of the required functionality in multiple, stand-alone modules. These modules are then implemented separately by the individual developers and are afterwards integrated into one monolithic application. This operation can prove to be very complicated since every developer can make their assumptions at the start of the project. Ultimately, these assumptions may render the components mutually incompatible. Furthermore, since it can take several weeks to months before this integration takes place, the developers often need to rewrite old code. Eventually, this will lead to unanticipated delays and costs \cite{SmartJenkinsDefinitive}.\\
 
-\noindent Contrarily, agile development methodologies advocate the idea of frequent, yet small deliveries (\autoref{sssec:agilevalue-workingsoftware}). Consequently, this implies that the code is built often and that the modules are integrated multiple times, on a \emph{continuous} basis, rather than just once at the end, thus allowing for early identification of problems \cite{gitlabci}. This practice of frequent builds is referred to as \emph{\CI{}} \cite{martin2014,Meyer2014}. It should be noted that this idea has existed and has been applied before the agile manifesto was written. The first notorious software company that has adopted this practice is Microsoft, already in 1989 \cite[~p.11]{cusumanomicrosoft}. Cusumano reports that Microsoft typically builds the entire application at least once per day \cite[~p.12]{cusumanomicrosoft}, therefore requiring developers to integrate and test their changes multiple times per day.\\
+\noindent Contrarily, agile development methodologies advocate the idea of frequent, yet small deliverables. In order to obtain frequent deliverables, we require to build the code often and integrate the modules multiple times, \emph{continuously}, rather than just once at the end. Another advantage of frequent deliverables is the early identification of problems \cite{gitlabci}. We refer to this practice as \acrfull{ci} \cite{SmartJenkinsDefinitive}. Note that this idea has existed before the creation of the Agile manifesto. The first notorious software company that has adopted CI is Microsoft in 1989 \cite{cusumanomicrosoft}. Cusumano reports that Microsoft typically builds the entire application at least once per day and as such requires developers to integrate and test their changes multiple times per day.\\
 
-\noindent The introduction of \CI{} \texttt{[CI]} in software development has important consequences on the life cycle. Where the waterfall model used a cascading life cycle, \CI{} employs a circular, repetitive structure consisting of three phases, as visualised in \autoref{fig:agile-ci-lifecycle}.
+\noindent The introduction of \CI{} in software development has significant consequences on the life cycle. Where the waterfall model used a cascading life cycle, CI employs a circular, repetitive structure consisting of three phases, as visualised in \Cref{fig:agile-ci-lifecycle}.
 
 \begin{enumerate}
-	\bolditem{Implementation} In the first phase, every developer individually writes code for the module they were assigned to. At a regular interval, the code is committed to the remote repository.
+	\bolditem{Implementation} In the first phase, every developer writes code individually for their assigned module. At a regular interval, the code is committed to the remote repository.
 	
-	\bolditem{Integration} When the code is committed, the developer simultaneously fetches the changes to other modules. Afterwards, the developer must integrate the changes with his own module, to ensure compatibility. In case a conflict occurs, the developer is responsible for its resolution \cite{martin2014}.
+	\bolditem{Integration} When the developer commits their changes, they simultaneously fetch the changes other developers have made to their modules. Afterwards, the developer must integrate these remote changes with their local module to ensure these remain compatible. In case of a conflict, the developer is responsible for resolving this locally \cite{martin2014}.
 	
-	\bolditem{Test} After the module has successfully been integrated, the test suite is run to ensure no bugs have been introduced.
+	\bolditem{Test} After the developer has successfully integrated the remote modules to the locale module, the test suite must be executed to verify that no regressions have been introduced.
 \end{enumerate}
 
 \begin{figure}[htbp!]
 	\centering
 	\includegraphics[width=0.45\textwidth]{assets/images/ci-lifecycle.pdf}
-	\caption{Development Life Cycle with \CI{}}
+	\caption{Development Life Cycle with \CI{}.}
 	\label{fig:agile-ci-lifecycle}
 \end{figure}
 
-\noindent Adopting \CI{} can prove to be a lengthy and repetitive task. Luckily, a variety of tools and frameworks exist to automate this process. Essentially, these tools are typically attached to a version control system (e.g. Git, Mercurial, \dots), using a \texttt{post-receive} hook. Every time a commit is pushed by one of the developers, the CI system is notified, after which the code is automatically built and tests are executed. Optionally, the system can be configured to automatically publish successful runs to the end users, a process referred to as \emph{Continuous Delivery}. I will now proceed by discussing four prominent \CI{} systems.
+\noindent Adopting \CI{} can prove to be a lengthy and repetitive task. Luckily, a variety of tools and frameworks exist to automate this process. These tools are typically attached to a version control system (e.g. Git, Mercurial, \dots) using a \texttt{post-receive} hook \cite{SmartJenkinsDefinitive}. Every time the developers push a commit to the repository, the hook will notify the CI system. The CI system will respond accordingly by automatically building the code and executing the test cases. Optionally, we can configure the CI system to automatically publish successful builds to the end-users, a process referred to as \emph{Continuous Delivery}. This paper will now proceed by discussing four prominent CI systems.
 
 \input{software-engineering/agile-software-development/continuous-integration/jenkins.tex}
 \input{software-engineering/agile-software-development/continuous-integration/github-actions.tex}

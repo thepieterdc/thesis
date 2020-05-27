@@ -2,11 +2,11 @@
 
 \subsubsection{\travisci}
 \label{sssec:travisci}
-The final \CI{} platform which I will discuss is \travisci{}. This \CI{} system was launched in 2011 and can only be used in addition to an existing \github{} repository. \travisci{} build tasks can be configured in a similar fashion as GitLab CI, but the builds can exclusively be executed on their servers. Besides running builds after a commit has been pushed to the repository, it is also possible to schedule daily, weekly or monthly builds using cron jobs. Similar to \github{} Actions, open-source projects can be built at zero cost and a paid plan exists for private repositories \cite{travisanalysis}. It is not possible to create custom plugins, however \travisci{} already features built-in support for a variety of programming languages. In 2020, almost 1 million projects are being built using \travisci{} \cite{travis2020}.
+The final CI platform that will be discussed is \travisci{}. This CI system was launched in 2011 and is only compatible with \github{} repositories. \travisci{} build tasks are configured similarly to GitLab CI but lack support for self-hosted runners. In addition to commit-triggered builds, we can also schedule daily, weekly or monthly builds using \emph{cronjobs}. Similar to \githubactions{}, open-source projects can use this service at zero cost, and a paid plan exists for private repositories \cite{travisanalysis}. It is not possible to create custom plugins, but \travisci{} already features built-in support for a variety of programming languages. In 2020, almost one million projects are using \travisci{} \cite{travis2020}.
 
 \begin{figure}[htbp!]
 	\centering
 	\includegraphics[width=0.40\textwidth]{assets/images/travis-ci.pdf}
-	\caption{Logo of \travisci{} (\url{https://travis-ci.com/})}
+	\caption{Logo of \travisci{} (\url{https://travis-ci.com/}).}
 	\label{fig:travis-ci}
 \end{figure}

@@ -1,11 +1,11 @@
 % !TeX root = ../../../thesis.tex
 
 \subsubsection{\github{} Actions}\label{sssec:github-actions}
-Following the successful beta of \github{} Actions which had started in August 2019, \github{} launched its own \CI{} system later that year in November\footnote{\url{https://github.blog/2019-08-08-github-actions-now-supports-ci-cd/}}. \github{} Actions executes builds in the cloud on servers owned by \github{} and can therefore only be used in conjunction with a \github{} repository, support for \github{} Enterprise repositories is not yet available. The developers can define builds using \emph{workflows} that can be configured to run both on Linux, Windows as well as OSX hosts. Private repositories are allowed a fixed amount of free build minutes per month, while builds of public repositories are always free of charges \cite{githubactions}. Similar to Jenkins, \github{} Actions can be extended with custom plugins. These plugins can be created using either a Docker container, or in native JavaScript, which allows faster execution \cite{aboutgithubactions}. It should be noted however that due to the recent nature of this system, not many plugins have been created yet.
+Following the successful beta of \githubactions{} which had started in August 2019, \github launched its \CI{} system later that year in November\footnote{\url{https://github.blog/2019-08-08-github-actions-now-supports-ci-cd/}}. \githubactions{} executes builds in the cloud on servers owned by \github{}, restricting its use to \github{} repositories. Support for \github{} Enterprise repositories is not currently available. Developers can define builds using workflows, which can run both on Linux, Windows as well as macOS hosts. Private repositories are allowed a fixed amount of free build minutes per month, while builds of public repositories are always free of charges  \cite{githubactions}. Similar to Jenkins, we can extend \githubactions{} with custom plugins. These plugins can be composed either using a Docker container or using native JavaScript \cite{aboutgithubactions}. However, since this service is recent, it does not yet offer many plugins.
 
 \begin{figure}[htbp!]
 	\centering
 	\includegraphics[width=0.5\textwidth]{assets/images/github-actions.pdf}
-	\caption{Logo of \github{} Actions (\url{https://github.com/features/actions})}
+	\caption{Logo of \github{} Actions (\url{https://github.com/features/actions}).}
 	\label{fig:github-actions}
 \end{figure}
