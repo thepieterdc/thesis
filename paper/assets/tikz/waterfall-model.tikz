@@ -1,0 +1,22 @@
+\begin{tikzpicture}
+\tikzstyle{edge}=[->, semithick]
+
+% Phases.
+\def\phases{Requirements, Design, Implementation, Testing, Operation}
+\foreach \phase [count=\i] in \phases {
+	% Phase.
+	\node[draw] (phase\i) at(\i * 3.00, \i * -1.50)
+	{\begin{minipage}[c][0.75cm][c]{3.5cm}\centering \phase \end{minipage}};
+}
+
+% Transitions.
+\draw[edge] (phase1.east) -| (phase2.north);
+\draw[edge] (phase2.east) -| (phase3.north);
+\draw[edge] (phase3.east) -| (phase4.north);
+\draw[edge] (phase4.east) -| (phase5.north);
+\draw[edge] (phase5.west) -| (phase4.south);
+\draw[edge] (phase4.west) -| (phase3.south);
+\draw[edge] (phase3.west) -| (phase2.south);
+\draw[edge] (phase2.west) -| (phase1.south);
+
+\end{tikzpicture}

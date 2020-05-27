@@ -15,7 +15,7 @@
 \usepackage{fancyhdr}
 \usepackage{float}
 \usepackage[final]{hyperref}
-\usepackage[automake]{glossaries}
+\usepackage[acronym,automake,section]{glossaries}
 \usepackage{lipsum}
 \usepackage{listing}
 \usepackage{listings,lstautogobble}
@@ -146,6 +146,8 @@
 \newcommand{\CI}{Continuous Integration}
 \newcommand{\github}{GitHub}
 \newcommand{\githubactions}{GitHub Actions}
+\newcommand{\gitlab}{GitLab}
+\newcommand{\gitlabci}{GitLab CI}
 \newcommand{\junit}{JUnit}
 \newcommand{\travisci}{Travis CI}
 \newcommand{\tcp}{Test Case Prioritisation}
@@ -157,8 +159,11 @@
 
 % Acronyms.
 \newacronym{ci}{CI}{\CI}
+\newacronym{ieee}{IEEE}{The Institute of Electrical and Electronics Engineers}
+\newacronym{sdlc}{SDLC}{Software Development Life Cycle}
 \newacronym{tcp}{TCP}{\tcp}
 \newacronym{tcs}{TCS}{\tcs}
+\newacronym{tdd}{TDD}{Test-driven development}
 \newacronym{tsm}{TSM}{\tsm}
 \newacronym{vcs}{VCS}{\vcs}
 
@@ -174,7 +179,10 @@
 % Glossary items.
 \newglossaryentry{mapreduce}{name={MapReduce},description={a programming paradigm that allows large amounts of data to be processed in a distributed manner}}
 \newglossaryentry{rest}{name={REST},description={Representational State Transfer is an architectural design pattern used by modern web applications. This design pattern encourages standardised communication using existing HTTP methods}}
-\newglossaryentry{velocity}{name={\velocity{}},description={a prioritisation framework which has been implemented in this thesis}}
+\newglossaryentry{regression}{name={regression},description={a feature that was once working as intended but is suddenly malfunctioning}}
+\newglossaryentry{testsuite}{name={test suite},description={the collection of all test cases in an application}}
+\newglossaryentry{blackboxtest}{name={black-box test},description={a test case that was constructed without any knowledge of the function(s) under test}}
+\newglossaryentry{whiteboxtest}{name={white-box test},description={a test case that was constructed after fully inspecting the function(s) under test}}
 
 \begin{document}
 \onehalfspacing
@@ -182,52 +190,52 @@
 % Titlepage.
 \frontmatter
 \pagestyle{empty}
-%\includepdf[pages=-]{titlepage.pdf}
+\includepdf[pages=-]{titlepage.pdf}
 
-%\blankpage{}
+\blankpage{}
 
 % Admission.
-%\input{admission.tex}
+\input{admission.tex}
 \clearpage
 
 % Acknowledgements.
-%\input{acknowledgements.tex}
+\input{acknowledgements.tex}
 
 % Summaries.
 \selectlanguage{english}
-%\input{summary/english.tex}
+\input{summary/english.tex}
 \clearpage
 \selectlanguage{dutch}
-%\input{summary/dutch.tex}
+\input{summary/dutch.tex}
 \clearpage
 \selectlanguage{english}
 
 % Extended abstracts.
 \addcontentsline{toc}{chapter}{Extended abstract}
-%\includepdf[pages=-]{abstract-en/extended-abstract.pdf}
+\includepdf[pages=-]{abstract-en/extended-abstract.pdf}
 \addcontentsline{toc}{chapter}{Extended abstract (Dutch)}
-%\includepdf[pages=-]{abstract-nl/extended-abstract.pdf}
+\includepdf[pages=-]{abstract-nl/extended-abstract.pdf}
 
-% Vulgarising summary.
+% Lay summary.
 \pagestyle{plain}
-%\input{summary/lay.tex}
+\input{summary/lay.tex}
 \clearpage
 
 \pagestyle{fancy}
 
-%\blankpage{}
+\blankpage{}
 
 % ToC.
-%\tableofcontents
+\tableofcontents
 
 % Corpus.
 \mainmatter
 
 \input{glossary.tex}
 \clearpage
-%\input{introduction.tex}
+\input{introduction.tex}
 \clearpage
-%\input{software-engineering.tex}
+\input{software-engineering.tex}
 \clearpage
 \input{related-work.tex}
 \clearpage
@@ -235,16 +243,16 @@
 \clearpage
 \input{evaluation.tex}
 \clearpage
-%\input{conclusion.tex}
+\input{conclusion.tex}
 \clearpage
 \input{bibliography.tex}
 \clearpage
-%\input{list-of-figures.tex}
+\input{list-of-figures.tex}
 \clearpage
-%\input{list-of-listings.tex}
+\input{list-of-listings.tex}
 \clearpage
-%\input{list-of-tables.tex}
+\input{list-of-tables.tex}
 \clearpage
-%\input{appendices.tex}
+\input{appendices.tex}
 
 \end{document}

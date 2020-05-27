@@ -13,5 +13,7 @@ clean:
 	rm -f thesis.run.xml
 	rm -f thesis.synctex.gz
 
-%.pdf: %.tex
-	latexmk --shell-escape -pdf -quiet $<
+thesis.pdf:
+	latexmk --shell-escape -pdf -quiet thesis.tex
+	makeglossaries thesis
+	latexmk --shell-escape -pdf -quiet thesis.tex

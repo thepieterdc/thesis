@@ -1,38 +1,58 @@
 % !TeX root = ../thesis.tex
 
 \section{Software Development Life Cycle}\label{sec:se-sdlc}
-An implementation of the SDLC consists of two major components. First, the process is broken down into several smaller phases. Depending on the nature of the software, it is possible to omit steps or add more steps. I have compiled a simple yet generic approach from multiple sources \cite{2010govardhan, 7106435}, to which most software projects adhere. This approach consists of five phases.
+An implementation of the SDLC typically consists of several phases and a model that describes the transition from every phase to another. Depending on the nature of the software, we can either omit some or add more phases. The five phases below were compiled from multiple sources \cite{2010govardhan, 7106435} and describe a generic approach to which most software projects adhere.
 \begin{enumerate}
-	\bolditem{Requirements phase} This is the initial phase of the development process. During this phase, the developer gets acquainted with the project and compiles a list of the desired functionalities \cite{7106435}. Using this information, the developer eventually decides on the required hardware specifications and possible external software which will need to be acquired.
+	\bolditem{Requirements phase} In the first phase of the development process, the developers acquaint themselves with the project and compile a list of the desired functionalities \cite{7106435}. Subsequently, the developers can decide on the financial details, the required hardware specifications as well as which external software libraries will need to be acquired.
 	
-	\bolditem{Design phase} After the developer has gained sufficient knowledge about the project requirements, they can use this information to draw an architectural design of the application. This design consists of multiple documents, including user stories and UML-diagrams.
+	\bolditem{Design phase} After the developer has gained sufficient knowledge about the project requirements, they can use this information to construct an architectural design of the application. This design consists of multiple documents, such as user stories and UML-diagrams. A user story describes which actions can be performed by which users, whereas a UML-diagram specifies the technical interaction between the individual components.
 	
-	\bolditem{Implementation phase} During this phase, the developer will write code according to the specifications defined in the architectural designs.
+	\bolditem{Implementation phase} In the third phase, the developers will write code according to the specifications defined in the architectural designs.
 	
-	\bolditem{Testing phase} This is the most important phase. During this phase, the implementation is tested to identify potential bugs before the application is used by other users.
+	\bolditem{Testing phase} The fourth phase is the most critical. This phase will require the developers and quality assurance managers to test the implementation of the application thoroughly. The goal of this phase is to identify potential bugs before the application is made available to other users.
 	
-	\bolditem{Operational phase} In the final phase, the project is fully completed and it is integrated in the existing business environment.
+	\bolditem{Operational phase} The final phase marks the completion of the project, after which the developers can integrate it into the existing business environment of their customer.
 \end{enumerate}
 
-\noindent Subsequently, a model is chosen to define how to transition from one phase into another phase. A manifold of models exist \cite{2010govardhan}, each having advantages and disadvantages, but I will consider the basic yet most widely used model, which is the Waterfall model by Benington \cite{united1956symposium}. The initial Waterfall model required every phase to be executed sequentially and in order, cascading. However, this imposes several issues, the most prevalent being the inability to revise design decisions taken in the second phase, when performing the actual implementation in the third phase. To mitigate this, an improved version of the Waterfall model was proposed by Royce \cite{Royce:1987:MDL:41765.41801}. This version allows a phase to transition back to a previous phase (\autoref{fig:waterfall-royce}).
+\noindent After we have identified the phases, we must define the transition from one phase into another phase using a model. Multiple models exist in the literature \cite{2010govardhan}, with each model having its advantages and disadvantages. This thesis will consider the traditional model, which is still widely used as of today. The base of this model is the Waterfall model by Benington  \cite{united1956symposium}. Similar to a real waterfall, this model executes every phase in cascading order. However, this imposes several restrictions. The most prevalent issue is the inability to revise a design decision when performing the actual implementation. To mitigate this problem, Royce has proposed an improved version of the Waterfall model \cite{Royce:1987:MDL:41765.41801}, which does allow a phase to transition back to any preceding phase. \Cref{fig:waterfall-royce} illustrates this updated model.\\
 
 \begin{figure}[htbp!]
-	\centering
-	\includegraphics[width=\textwidth]{assets/images/sdlc.pdf}
+	\includegraphics[width=\textwidth]{assets/tikz/waterfall-model.tikz}
 	\caption{Improved Waterfall model by Royce}
 	\label{fig:waterfall-royce}
 \end{figure}
 
-\noindent In this thesis I will solely focus on the implementation and testing phase, as these are the most time-consuming phases of the entire process. The modification to the Waterfall model by Royce is particularly useful when applied to these two phases, in the context of \emph{software regressions}. A regression \cite{10.1007/978-3-540-77966-7_18} is a feature that was previously working correctly, but is now malfunctioning. This behaviour can have external causes, such as a change in the system clock because of daylight saving time, but can also be the result of a change to another, seemingly unrelated part of the application code \cite{6588537}.\\
+\noindent The focus of this thesis will be on the implementation and testing phases, as these are the most time-consuming phases of the entire process. The modification that Royce has applied to the Waterfall model is particularly useful when applied to these two phases in the context of \emph{software regressions} \cite{10.1007/978-3-540-77966-7_18}. We employ the term ``regression'' when a feature that was once working as intended is suddenly malfunctioning. The culprit of this problem can be a change in the code, but this behaviour can also have an external cause, such as a change in the system clock due to daylight saving time. Sometimes, a regression can even be the result of a change to another, seemingly unrelated part of the application code \cite{6588537}.
 
-\noindent Software regressions and other functional bugs can ultimately incur disastrous effects, such as severe financial loss or damage to the reputation of the software company. The most famous example in history is without any doubt the explosion of the Ariane 5-rocket, which was caused by an integer overflow \cite{581900}. In order to reduce the risk of bugs, malfunctioning components should be detected as soon as possible to proactively defend against potential failures. Because of this reason, the testing phase is to be considered as the most important phase of the entire development process and an application should therefore include sufficient tests. The collection of all tests included in an application, or a smaller chosen subset of certain tests, is referred to as the \emph{test suite}. Tests can be classified in multiple categories, this thesis will consider three distinguishable categories:
+\subsection{Taxonomy of test cases}
 
-\begin{enumerate}
-	\bolditem{Unit test} This is the most basic kind of test. The purpose of a unit test is to verify the behaviour of an individual component \cite{whittaker2000}. The scope of a unit test should be limited to a small and isolated piece of code, such as one function. Unit tests are typically implemented as \emph{white-box tests} \cite[p.~12]{6588537}. A white-box test is constructed by manually inspecting the function under test, to identify important \emph{edge values}. The unit test should then feed these values as arguments to the function under test, to observe its behaviour. Common edge cases include zero, negative numbers, empty arrays or array boundaries that might result in an overflow.
+Software regressions and other functional bugs can ultimately incur disastrous effects, such as severe financial loss or permanent damage to the reputation of the software company. The most famous example in history is without any doubt the explosion of the Ariane 5-rocket, which was caused by an integer overflow \cite{581900}. In order to reduce the risk of bugs, we should be able to detect malfunctioning components as soon as possible to warden the application against potential failures before they occur. Consequently, we must consider the testing phase as the most critical phase of the entire development process and therefore include sufficient test cases in the application. The collection of all the test cases in an application is referred to as the \emph{\gls{testsuite}}. We can distinguish many different types of test cases. This thesis will consider three categories in particular.
+
+\subsubsection{Unit tests}
+This is the most basic test type. The purpose of a unit test is to verify the behaviour of an individual component \cite{whittaker2000}. As a result, the scope of a unit test is limited to a small and isolated piece of code, e.g. one function. Implementation-wise, a unit test is typically an example of a \gls{whiteboxtest} \cite[p.~12]{6588537}. The term white-box indicates that the creator of the test case can manually inspect the code before constructing the test. As such, they can identify necessary edge values or corner cases. Common examples of these edge values include zero, negative numbers, empty arrays or array boundaries that might cause an overflow. Once the developer has identified the edge cases, they can construct the unit test by repeatedly calling the function under test, each time with a different (edge) argument value, and afterwards verifying its behaviour and result. These verifications are referred to as \emph{assertions}. \Cref{lst:se-unit-test} contains an example of a unit test, written in Java using the popular JUnit test framework.
 	
-	\bolditem{Integration test} A more advanced test, an integration test verifies the interaction between multiple individually tested components \cite{whittaker2000}. Examples of integration tests include the communication between the front-end and the back-end side of an application. As opposed to unit tests, an integration test is an example of a \emph{black-box} test \cite[p.~6]{6588537}, meaning that implementation-specific details should be irrelevant or unknown when writing an integration test.
-	
-	\bolditem{Regression test} After a regression has been detected, a regression test \cite[p.~372]{8016712} is added to the test suite. This regression test should replicate the exact conditions and sequence of actions that have caused the regression, to warden the implementation against subsequent failures if the same conditions would reapply in the future.
-\end{enumerate}
+\begin{listing}
+	\lstinputlisting[language=java]{assets/listings/example-unit-test.java}
+	\caption{Example of a Java unit test in JUnit.}
+	\label{lst:se-unit-test}
+\end{listing}
 
-\input{software-engineering/sdlc/tsa.tex}
+\subsubsection{Integration tests}
+The second category involves a more advanced type of tests. An integration test validates the interaction between two or more individual components \cite{whittaker2000}. Ideally, accompanying unit tests should exist that test these components as well. As opposed to the previous unit tests, a developer will usually implement an integration test as a \gls{blackboxtest} \cite[p.~6]{6588537}. A black-box test differs from the earlier white-box tests in the fact that the implementation details of the code under test are irrelevant for the construction of the test. Since a black-box test does not require any details about the code, we can, in fact, construct the integration tests before we implement the actual feature itself. A typical example of an integration test is the communication between the front-end and the back-end side of a web application. Another example is illustrated in \cref{lst:se-integration-test}.
+	
+\begin{listing}
+	\lstinputlisting[language=java]{assets/listings/example-integration-test.java}
+	\caption{Example of a Java integration test in JUnit.}
+	\label{lst:se-integration-test}
+\end{listing}
+
+\subsubsection{Regression tests}
+After a developer has detected a regression in the application, they will add a regression test \cite[p.~372]{8016712} to the test suite. This regression test must replicate the exact conditions and sequence of actions that have triggered the failure. The goal of this test is to prevent similar failures to occur in the future if the same conditions would reapply. An example is provided in \Cref{lst:se-regression-test}.
+
+\clearpage
+
+\begin{listing}
+	\lstinputlisting[language=java]{assets/listings/example-regression-test.java}
+	\caption{Example of a Java regression test in JUnit.}
+	\label{lst:se-regression-test}
+\end{listing}
