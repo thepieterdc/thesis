@@ -1,13 +1,53 @@
 % !TeX root = ../thesis.tex
 
 \section{Analysis}
-todo
+In this last section, we will take a look at the analytical features of the framework. Since the predictor already generates various statistics about the project which are required by the prioritisation algorithm, we can reuse these. The implementation of the analysis tool comprises a stand-alone version of the predictor daemon and supports the following six commands:
 
-CLI version of the predictor
+\paragraph*{\texttt{affected}:} The first command will determine which test cases have been affected by the changes in the given commit. This information is calculated based on the coverage information that the predictor has obtained from its last execution. \Cref{lst:analysis-affected} contains an example output of this command.
 
-- predict run
-- predictions run
-- scores metapredictor of repository
-- durations
-- failures
-- coverage 
+\begin{lstlisting}[language=bash, caption=Example output of the affected-command, label=lst:analysis-affected]
+	(*\bfseries \$ predictor affected https://github.com/author/project f5a23e0*)
+	FooTest.bar
+	FooTest.foo
+\end{lstlisting}
+
+\paragraph*{\texttt{durations}:} The second command will compute the mean execution time of every test case in the repository and return the test cases from slowest to fastest.
+
+\begin{lstlisting}[language=bash, caption=Example output of the durations-command, label=lst:analysis-durations]
+	(*\bfseries \$ predictor durations https://github.com/author/project*)
+	FooTest.foo: 200s
+	OtherBarTest.bar: 100s
+\end{lstlisting}
+
+\paragraph*{\texttt{failures}:} Similar to the previous command, this command will determine the failure ratio of every test case in the repository. This ratio is equivalent to the number of failures, divided by the total amount of executions. Note that this denominator is not the same for every test case, since the test suite may be extended with new test cases. The output (\cref{lst:analysis-failures}) will list the test cases from the highest to the lowest failure rate.
+
+\begin{lstlisting}[language=bash, caption=Example output of the failures-command, label=lst:analysis-failures]
+	(*\bfseries \$ predictor failures https://github.com/author/project*)
+	HelloWorldTest.hello: 25.00%
+	FooBarTest.bar: 10.00%
+\end{lstlisting}
+
+\paragraph*{\texttt{predict}:} This command allows the user to invoke the predictor by hand for the given test run. We can use this to test new algorithms, as opposed to the usual predictor daemon which does not support repeated predictions of the same test run. The result will contain the prioritised order as predicted by every available algorithm. An example output of this command is listed in \cref{lst:analysis-predict}.
+
+\begin{lstlisting}[language=bash, caption=Example output of the predict-command, label=lst:analysis-predict]
+	(*\bfseries \$ predictor predict 1*)
+	HGS: [FooTest.bar, OtherBarTest.bar, HelloWorldTest.hello]
+	Alpha: [HelloWorldTest.hello, FooTest.bar, OtherBarTest.bar]
+\end{lstlisting}
+
+\paragraph*{\texttt{predictions}:} This command allows the user to retrieve historical prediction results. For deterministic algorithms,  this will result in the same output as the previous command (which will rerun the algorithms). However, since some algorithms contain a random factor, we do require a separate command that fetches the prediction of the given run from the database.
+
+\begin{lstlisting}[language=bash, caption=Example output of the predictions-command, label=lst:analysis-predictions]
+	(*\bfseries \$ predictor predictions 3*)
+	HGS: [FooTest.bar, OtherBarTest.bar, HelloWorldTest.hello]
+	AllRandom: [HelloWorldTest.hello, OtherBarTest.bar, FooTest.bar]
+\end{lstlisting}
+	
+\paragraph*{\texttt{scores}:} The final command yields the current score of every prediction algorithm in the meta predictor table, for the given project. The predictor will always return the test sequence that has been predicted by the algorithm with the current highest score. In \cref{lst:analysis-scores} below, this would be the ROCKET algorithm.
+	
+\begin{lstlisting}[language=bash, caption=Example output of the scores-command, label=lst:analysis-scores]
+	(*\bfseries \$ predictor scores https://github.com/author/project*)
+	AllInOrder: -3
+	ROCKET: 7
+	GreedyCoverAffected: 4
+\end{lstlisting}
