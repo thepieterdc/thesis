@@ -16,11 +16,7 @@ In order to integrate \velocity{} in an existing Gradle project, we must modify 
 
 \noindent \Cref{lst:pipeline-buildgradle} contains a minimal integration of the agent in a Gradle build script. The controller is hosted at the same machine as the agent and is reachable at port \texttt{8080}.
 
-\begin{listing}
-	\lstinputlisting[language=Groovy]{assets/listings/build.gradle}
-	\caption{Minimal Gradle buildscript}
-	\label{lst:pipeline-buildgradle}
-\end{listing}
+\lstinputlisting[caption=Minimal Gradle buildscript., label=lst:pipeline-buildgradle, language=Groovy]{assets/listings/build.gradle}
 
 \noindent After we have configured the build script, we can execute the test suite. For the Gradle agent, this involves executing the \texttt{velocity} task, which commences the pipeline. This task requires an additional argument to be passed, which is the commit hash of the changeset to prioritise. In every discussed CI system, this commit hash is available as an environment variable.\\
 
