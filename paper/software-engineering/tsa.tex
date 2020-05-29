@@ -5,19 +5,15 @@
 \subsection{Coverage}
 The most frequently used metric to measure the quantity and thoroughness of a test suite is the \emph{code coverage} or \emph{test coverage} \cite[p.~467]{8016712}. The test coverage indicates which fraction of the application code is hit by at least one test case in the test suite. Internally, a coverage framework calculates the coverage ratio by augmenting every application statement using binary instrumentation. A hook is inserted before and after every statement to detect which statements are executed by the test cases. Many different criteria exist to interpret these results and thus to express the fraction of covered code \cite{Myers:2011:AST:2161638}. The two most commonly used criteria are \emph{statement coverage} and \emph{branch coverage}.
 
-\paragraph*{Statement coverage} Statement coverage expresses the fraction of statements that are executed by any test case in the test suite, over the total amount of statements in the code \cite{6588537}. Similarly, we can calculate the \emph{line coverage} as the fraction of covered code lines. Since one statement can span multiple lines and one line may also contain more than one statement, both of these criteria are intrinsically related. Statement coverage is heavily criticised in literature \cite[p.~37]{Myers:2011:AST:2161638} since it is possible to achieve a statement coverage percentage of $\SI{100}{\percent}$ on code of which we can prove it is malfunctioning. Consider \Cref{lst:statement-coverage-fail}. If a test case would call the example-function with arguments $\{a = 1, b = 2\}$, then the test case will pass, and every statement will be covered, resulting in a statement coverage of $\SI{100}{\percent}$. However, suppose we would call the function with arguments $\{a = 0, b = 0\}$. The first argument matches the first condition of the branch but will trigger a \texttt{division-by-zero} error, even though the previous combination of arguments reported a complete statement coverage. This simple example was already sufficient to illustrate that statement coverage is not trustworthy. However, statement coverage may still prove useful for other purposes, such as detecting unreachable code which we may safely remove.
+\paragraph*{Statement coverage} Statement coverage expresses the fraction of statements that are executed by any test case in the test suite, over the total amount of statements in the code \cite{6588537}. Similarly, we can calculate the \emph{line coverage} as the fraction of covered code lines. Since one statement can span multiple lines and one line may also contain more than one statement, both of these criteria are intrinsically related. Statement coverage is heavily criticised in literature \cite[p.~37]{Myers:2011:AST:2161638} since it is possible to achieve a statement coverage percentage of $\SI{100}{\percent}$ on code of which we can prove it is malfunctioning. Consider \cref{lst:statement-coverage-fail}. If a test case would call the example-function with arguments $\{a = 1, b = 2\}$, then the test case will pass, and every statement will be covered, resulting in a statement coverage of $\SI{100}{\percent}$. However, suppose we would call the function with arguments $\{a = 0, b = 0\}$. The first argument matches the first condition of the branch but will trigger a \texttt{division-by-zero} error, even though the previous combination of arguments reported a complete statement coverage. This simple example was already sufficient to illustrate that statement coverage is not trustworthy. However, statement coverage may still prove useful for other purposes, such as detecting unreachable code which we may safely remove.
 
-\begin{listing}
-	\begin{lstlisting}[language=C]
-		int example(int a, int b) {
-		  if (a == 0 || b != 0) {
-		    return a / b;
-		  }
-		}
-	\end{lstlisting}
-	\caption{Example of irrelevant statement coverage in C.}
-	\label{lst:statement-coverage-fail}
-\end{listing}
+\begin{lstlisting}[caption=Example of irrelevant statement coverage in C.,label=lst:statement-coverage-fail,language=C]
+	int example(int a, int b) {
+ if (a == 0 || b != 0) {
+  return a / b;
+ }
+	}
+\end{lstlisting}
 
 \paragraph*{Branch coverage} requires that the test cases traverse every branch of a conditional statement at least once  \cite[p.~37]{Myers:2011:AST:2161638}. For an \texttt{if}-statement, we require two test cases, one for every possible outcome of the condition (\texttt{true} or \texttt{false}). For a loop-statement, we require at least two test cases as well. One test case should never execute the loop, and the other test case should execute every iteration. Optionally, we can add additional test cases for specific iterations. Observe that, while this criterion is stronger than statement coverage, it will still not detect the bug in \Cref{lst:statement-coverage-fail}. In order to mitigate this, we can use \emph{multiple-condition coverage} \cite[p.~40]{Myers:2011:AST:2161638}. This criterion requires that for every conditional expression, every possible combination of subexpressions is evaluated at least once. If we apply this requirement to \Cref{lst:statement-coverage-fail}, the \texttt{if}-statement will only be covered if we test the following four cases.
 

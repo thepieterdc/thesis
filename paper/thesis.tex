@@ -128,6 +128,7 @@
     escapeinside={(*}{*)}
 }
 
+\renewcommand{\lstlistingname}{Code snippet}
 \renewcommand{\lstlistlistingname}{List of \lstlistingname s}
 
 % Table columns.
@@ -183,6 +184,10 @@
 \newglossaryentry{testsuite}{name={test suite},description={the collection of all test cases in an application}}
 \newglossaryentry{blackboxtest}{name={black-box test},description={a test case that was constructed without any knowledge of the function(s) under test}}
 \newglossaryentry{whiteboxtest}{name={white-box test},description={a test case that was constructed after fully inspecting the function(s) under test}}
+
+% References.
+\crefname{listing}{code snippet}{code snippets}  
+\Crefname{listing}{Code snippet}{Code snippets}
 
 \begin{document}
 \onehalfspacing
