@@ -5,8 +5,8 @@
 \def\phases{Requirements, Design, Implementation, Testing, Operation}
 \foreach \phase [count=\i] in \phases {
 	% Phase.
-	\node[draw] (phase\i) at(\i * 3.00, \i * -1.50)
-	{\begin{minipage}[c][0.75cm][c]{3.5cm}\centering \phase \end{minipage}};
+	\node[draw] (phase\i) at(\i * 3.00, \i * -1.30)
+	{\begin{minipage}[c][0.70cm][c]{3.5cm}\centering \phase \end{minipage}};
 }
 
 % Transitions.
