@@ -9,17 +9,3 @@ Gradle\footnote{\url{https://gradle.org}} is a dependency manager and developmen
 	
 	\item \textbf{Test order specification:} \junit{} allows us to specify the sequence in which it will execute the test cases. By default, it uses a random yet deterministic order\footnote{\url{https://junit.org/junit5/docs/current/user-guide/}}. The order can be manipulated by annotating the test class with the \texttt{@TestMethodOrder}-annotation, or by applying the \texttt{@Order(int)}-annotation to an individual test case. However, we can only use this feature to alter the order of test cases within the same test class. \junit{} does not support inter-test class reordering. We could use this feature to (locally) sort test cases based on their execution time.
 \end{enumerate}
-
-\begin{figure}[htbp!]
-	\centering
-	\begin{minipage}{.45\textwidth}
-		\centering
-		\includegraphics[height=0.05\textheight]{assets/images/gradle.pdf}
-		\caption{Logo of Gradle}
-	\end{minipage}
-	\begin{minipage}{.45\textwidth}
-		\centering
-		\includegraphics[height=0.05\textheight]{assets/images/junit.pdf}
-		\caption{Logo of JUnit 5}
-	\end{minipage}
-\end{figure}

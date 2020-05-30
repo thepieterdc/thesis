@@ -59,7 +59,7 @@ Besides the earlier presented Greedy, HGS and ROCKET algorithms (\cref{sec:relat
 \noindent In the last phase, the algorithm will select the test cases based on the cardinality of the intersection between $C$ and their test group. We repeat this process until $C$ is empty and update $C$ accordingly. When $C$ is empty, the algorithm will yield the remaining test cases. Notice that these test cases will not contribute to the test coverage whatsoever since the previous iteration would already have selected every test case that would incur additional coverage. Subsequently, these test cases are de facto redundant and are therefore candidates for removal by TSM. However, since this is a prioritisation algorithm, these tests will still be executed and prioritised by increasing execution time.
 
 \begin{algorithm}[htbp!]
-\caption{Alpha algorithm for \tcp{}}
+\caption{Alpha algorithm for \tcp{}.}
 \label{alg:alpha}
 \begin{algorithmic}[1]
 	\Require{the test suite $TS$, the affected test cases $AS$, all coverable lines $C$, the failure statuses $F$ for each test case over the previous $m$ executions, the execution times $D$ for each test case over the previous $m$ executions, the list of coverage groups $TL$}

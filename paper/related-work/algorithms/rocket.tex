@@ -62,7 +62,7 @@ $$P_j = \sum_{i = 1 \dots m} MF[i, j] * \omega_i$$
 \noindent Finally, the algorithm groups test cases based on their calculated priority in $P$. Every test case that belongs to the same group is equally relevant for execution in the current test run. However, within every test group, the test cases will differ in execution time $E$. The final step is to reorder test cases that belong to the same group in such a way that test cases with a shorter duration are executed earlier in the group.
 
 \begin{algorithm}[h!]
-\caption{ROCKET algorithm}
+\caption{ROCKET algorithm for \tcp{}.}
 \label{alg:rocket}
 \begin{algorithmic}[1]
 	\Require{the test suite $TS$, the execution times of the test cases $E$, the amount of previous executions to consider $m$, the failure statuses $F$ for each test case over the previous $m$ executions}
