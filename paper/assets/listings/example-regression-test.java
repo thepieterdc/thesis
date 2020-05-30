@@ -1,20 +1,24 @@
 public class ExampleRegressionTest {
-  /**
-   * Regression: comments cannot be removed if a user changes their first
-   * name.
-   */
+  // Regression #439: A user cannot remove their comments after they have changed their first name.
   @Test
   public void testRegression439() {
-    Comment comment = CommentSystem.findById(1);
+    // Authenticate a test user.
+    Session session = UserSystem.login("johndoe", "password");
+    Assert.assertNotNull(session);
+    
+    // Create a comment.
+    String content = "This is a comment by John Doe.";
+    Comment comment = CommentSystem.create(content, session);
     Assert.assertNotNull(comment);
-
-    // Change the first name.
-    Assert.assertEquals("Bert", comment.user.firstName);
-    comment.user.setFirstName("Matthew");
+    
+    // Change the first name of the user.
+    Assert.assertEquals("Bert", session.user.firstName);
+    session.user.setFirstName("Matthew");
+    Assert.assertEquals("Matthew", session.user.firstName);
     Assert.assertEquals("Matthew", comment.user.firstName);
-
+    
     // Try to remove the comment.
-    comment.remove();
+    CommentSystem.remove(comment);
     Assert.assertTrue(comment.removed);
   }
 }

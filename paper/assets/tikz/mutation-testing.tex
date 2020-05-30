@@ -1,0 +1,58 @@
+\begin{tikzpicture}
+\tikzstyle{edge}=[->]
+% Travis logs.
+\draw[thick] (0, 0) rectangle node[rotate=90] {\textbf{Travis logs}} (1, 4);
+
+% Log, Map.
+\foreach \i in {0,1,2} {
+	% Log.
+	\node[draw] (log\i) at (2.25, 0.5 + \i * 1.5) {Log};
+	
+	% Map.
+	\node[ellipse, draw, fill=bisque!60] (map\i) at (4, 0.5 + \i * 1.5) {\texttt{Map}};
+	
+	% Travis logs -> Log.
+	\draw[edge] (1,2) -- (log\i.west);
+	
+	% Log -> Map.
+	\draw[edge] (log\i) -- (map\i);
+}
+
+% Statuses, Reduce.
+\def\statuses{passed, failed}
+\foreach \status [count=\i] in \statuses {
+	% Status Tuple.
+	\node[draw] (status\i) at(7, \i * 1.75 - 0.65)
+	{\begin{minipage}{2cm}\centering Tuples\\$\langle \status,1 \rangle$\end{minipage}};
+	
+	% Reduce.
+	\node[ellipse, draw, fill=bisque!60] (reduce\i) at (10, \i * 1.75 - 0.65)
+	{\begin{minipage}{1.25cm}\centering\texttt{Reduce}\\\emph{sum}\end{minipage}};
+	
+	% Status -> Reduce.
+	\draw[edge] (status\i.east) -- (reduce\i.west);
+}
+
+% Map -> Statuses.
+\foreach \i in {0,1,2} {
+	% Failed.
+	\draw[edge] (map\i.east) -- (status2.west);
+	
+	% Passed.
+	\draw[edge] (map\i.east) -- (status1.west);
+}
+
+% Collect.
+\node[draw] (collect) at (13, 2)
+{\begin{minipage}{2.5cm}
+	\centering\textbf{Collect}\\
+	$\langle failed, X_1 \rangle$
+	$\langle passed, X_2 \rangle$
+\end{minipage}};
+
+% Reduce -> Collect.
+\foreach \i in {1,2} {
+	\draw[edge] (reduce\i.east) -- (collect);
+}
+
+\end{tikzpicture}
