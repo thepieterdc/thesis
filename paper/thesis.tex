@@ -26,6 +26,7 @@
 \usepackage[detect-weight=true, binary-units=true, range-phrase=-]{siunitx}
 \usepackage[caption=false]{subfig}
 \usepackage{tabularx}
+\usepackage{textcomp}
 \usepackage{tikz}
 \usepackage{tikzscale}
 \usepackage{titlesec}
@@ -95,25 +96,6 @@
 \theoremstyle{break}
 \newtheorem{definition}{Definition}
 
-% Code listings.
-\lstdefinelanguage{Groovy}[]{Java}{
-	basicstyle=\ttfamily\selectfont,
-	numbers=left,
-	numberstyle=\scriptsize,
-	stepnumber=1,
-	numbersep=8pt,
-	showstringspaces=false,
-	breaklines=true,
-	frame=lines,
-	backgroundcolor=\color{code-background},
-	keywordstyle=\color{groovyblue}\bfseries,
-	stringstyle=\color{groovygreen}\ttfamily,
-	keywords=[3]{each, findAll, groupBy, collect, inject, eachWithIndex},
-	morekeywords={def, as, in, use},
-	moredelim=[is][\textcolor{darkgray}]{\%\%}{\%\%},
-	moredelim=[il][\textcolor{darkgray}]{§§}
-}
-
 \lstset{
 	numbers=left,
 	numberstyle=\scriptsize,
@@ -125,10 +107,16 @@
 	captionpos=b,
 	backgroundcolor=\color{code-background},
 	autogobble=true,
-    escapeinside={(*}{*)}
+    escapeinside={(*}{*)},
+    upquote=true
 }
 
-\renewcommand{\lstlistingname}{Code snippet}
+% Code listings.
+\lstdefinelanguage{Groovy}[]{Java}{
+	keywords=[9]{buildscript, dependencies, classpath, apply, plugin, velocity, base, repository, server}
+}
+
+\renewcommand{\lstlistingname}{Example}
 \renewcommand{\lstlistlistingname}{List of \lstlistingname s}
 
 % Table columns.
@@ -186,8 +174,8 @@
 \newglossaryentry{whiteboxtest}{name={white-box test},description={a test case that was constructed after fully inspecting the function(s) under test}}
 
 % References.
-\crefname{listing}{code snippet}{code snippets}  
-\Crefname{listing}{Code snippet}{Code snippets}
+\crefname{listing}{example}{examples}  
+\Crefname{listing}{Example}{Examples}
 
 \begin{document}
 \onehalfspacing
@@ -254,9 +242,9 @@
 \clearpage
 \input{list-of-figures.tex}
 \clearpage
-\input{list-of-listings.tex}
-\clearpage
 \input{list-of-tables.tex}
+\clearpage
+\input{list-of-listings.tex}
 \clearpage
 \input{appendices.tex}
 

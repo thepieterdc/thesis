@@ -6,7 +6,7 @@ The first algorithm is a \emph{greedy} heuristic, which was initially designed b
 \noindent Initially, the algorithm starts with an empty representative set $RS$, the set $TS$ of all test cases and the set $C$ of all coverable source code lines. Furthermore, $TL$ denotes the set of coverage groups as specified in the definition. In essence, the algorithm will iteratively select test cases from $TS$ and add them to $RS$. The locally optimal choice is always to select the test case that will contribute the most still uncovered lines, ergo the test case $t$ for which the cardinality of the intersection between $C$ and $TL_t$ is maximal. After every iteration, we remove the code lines $TL_t$ from $C$, since these are now covered. We repeat this selection process until $C$ is empty, which indicates that we have covered every source code line. Afterwards, when we execute the test suite, we only need to execute test cases in $RS$. We can apply this algorithm to \tcp{} as well, by changing the type of $RS$ to a list instead. We require a list to maintain the insertion order since this is equivalent to the ideal order of execution.
 
 \begin{algorithm}[h!]
-\caption{Greedy algorithm for \tsm{}}
+\caption{Greedy algorithm for \tsm{}.}
 \label{alg:tsm-greedy}
 \begin{algorithmic}[1]
 	\Require{the test suite $TS$, all coverable lines $C$, the list of coverage groups $TL$}

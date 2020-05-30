@@ -7,7 +7,7 @@ The most frequently used metric to measure the quantity and thoroughness of a te
 
 \paragraph*{Statement coverage} Statement coverage expresses the fraction of statements that are executed by any test case in the test suite, over the total amount of statements in the code \cite{6588537}. Similarly, we can calculate the \emph{line coverage} as the fraction of covered code lines. Since one statement can span multiple lines and one line may also contain more than one statement, both of these criteria are intrinsically related. Statement coverage is heavily criticised in literature \cite[p.~37]{Myers:2011:AST:2161638} since it is possible to achieve a statement coverage percentage of $\SI{100}{\percent}$ on code of which we can prove it is malfunctioning. Consider \cref{lst:statement-coverage-fail}. If a test case would call the example-function with arguments $\{a = 1, b = 2\}$, then the test case will pass, and every statement will be covered, resulting in a statement coverage of $\SI{100}{\percent}$. However, suppose we would call the function with arguments $\{a = 0, b = 0\}$. The first argument matches the first condition of the branch but will trigger a \texttt{division-by-zero} error, even though the previous combination of arguments reported a complete statement coverage. This simple example was already sufficient to illustrate that statement coverage is not trustworthy. However, statement coverage may still prove useful for other purposes, such as detecting unreachable code which we may safely remove.
 
-\begin{lstlisting}[caption=Example of irrelevant statement coverage in C.,label=lst:statement-coverage-fail,language=C]
+\begin{lstlisting}[caption=Irrelevant statement coverage in C.,label=lst:statement-coverage-fail,language=C]
 	int example(int a, int b) {
  if (a == 0 || b != 0) {
   return a / b;
@@ -34,7 +34,7 @@ The previous section has explained how we can identify which parts of the code r
 \begin{figure}[htbp!]
 	\centering
 	\includegraphics[width=\textwidth]{assets/images/mutation-testing.pdf}
-	\caption{Process of Mutation Testing (based on \cite{Offutt2001})}
+	\caption{Process of Mutation Testing (based on \cite{Offutt2001}).}
 	\label{fig:mutation-testing}
 \end{figure}
 
@@ -57,6 +57,6 @@ The previous section has explained how we can identify which parts of the code r
 	\subfloat[simplecov report of \url{https://github.com/dodona-edu/dodona}]{%
 		\includegraphics[clip,width=\textwidth]{assets/images/coverage-simplecov.pdf}
 	}
-	\caption{Statistics from Code coverage tools}
+	\caption{Statistics from Code coverage tools.}
 	\label{fig:coverage-statistics}
 \end{figure}
