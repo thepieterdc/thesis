@@ -1,0 +1,74 @@
+\begin{tikzpicture}
+\tikzset{
+	edge/.style={->,> = Latex,semithick}
+}
+
+\def\xdiff{2.5cm}
+\def\ydiff{2cm}
+
+% Nodes.
+\node[draw] (program)
+{\begin{minipage}[c][1cm][c]{3.25cm}\centering Program $P$\end{minipage}};
+
+\node[draw] (mutants) [right=\xdiff of program]
+{\begin{minipage}[c][1cm][c]{3.25cm}\centering Mutants $P'$\end{minipage}};
+
+\node[draw] (runtestsprogram) [below=\ydiff of mutants]
+{\begin{minipage}[c][1cm]{3.25cm}\centering Run every test case $t$ on $P$\end{minipage}};
+
+\node[draw] (testcases) [right=\xdiff of runtestsprogram]
+{\begin{minipage}[c][1cm][c]{3.25cm}\centering Test Cases $TS$\end{minipage}};
+
+\node[draw] (validatep) [below=\ydiff of runtestsprogram]
+{\begin{minipage}[c][1cm][c]{3.25cm}\centering Validate correctness of $P$\end{minipage}};
+
+\node[draw] (fixbugs) [left=\xdiff of validatep]
+{\begin{minipage}[c][1cm][c]{3.25cm}\centering Fix bug in $P$\end{minipage}};
+
+\node[draw] (runtestsmutants) [below=\ydiff of validatep]
+{\begin{minipage}[c][1.25cm][c]{3.25cm}\centering Run every test case $t$ on every mutant $p'$\end{minipage}};
+
+\node[draw] (aremutantsdead) [below=\ydiff of runtestsmutants]
+{\begin{minipage}[c][1cm][c]{3.25cm}\centering All mutants killed?\end{minipage}};
+
+\node[draw] (determineequivalence) [right=\xdiff of aremutantsdead]
+{\begin{minipage}[c][1cm][c]{3.25cm}\centering Determine equivalence\end{minipage}};
+
+\node[draw] (quit) [left=\xdiff of aremutantsdead]
+{\begin{minipage}[c][1cm][c]{3.25cm}\centering Quit\end{minipage}};
+
+\draw[edge] (program.east) -- (mutants.west)
+node[midway,above]
+{\begin{minipage}{2cm}\centering Apply mutation operators\end{minipage}};
+
+\draw[edge] (mutants.south) -- (runtestsprogram.north);
+
+\draw[edge] (runtestsprogram.south) -- (validatep.north);
+
+\draw[edge] (validatep.west) -- (fixbugs.east)
+node[midway,above] {Incorrect};
+
+\draw[edge] (fixbugs.north) -- (program.south);
+
+\draw[edge] (validatep.south) -- (runtestsmutants.north)
+node[midway,left]
+{\begin{minipage}[r]{2cm}\hfill Correct\end{minipage}};
+
+\draw[edge] (runtestsmutants.south) -- (aremutantsdead.north);
+
+\draw[edge] (aremutantsdead.west) -- (quit.east)
+node[midway,above] {Yes};
+
+\draw[edge] (aremutantsdead.east) -- (determineequivalence.west)
+node[midway,above] {No};
+
+\draw[edge] (determineequivalence.north) -- (testcases.south)
+node[midway,right,rotate=90,anchor=north]
+{Can add test cases to kill mutants};
+
+\draw[edge] (testcases.west) -- (runtestsprogram.east);
+
+\path (determineequivalence) edge [->,>=Latex,semithick,bend left=25] node [align=center,below]
+{\begin{minipage}{7cm}\centering Every remaining mutant is functionally equivalent to $P$\end{minipage}} (quit);
+
+\end{tikzpicture}

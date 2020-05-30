@@ -1,7 +1,9 @@
 % !TeX root = ../../thesis.tex
 
 \begin{tikzpicture}
-\tikzstyle{edge}=[->]
+\tikzset{
+	edge/.style={->,> = Latex,semithick}
+}
 
 % Test suite.
 \draw[thick] (0, -0.5) rectangle node[rotate=90] {\textbf{Test suite}} (1, 4.5);

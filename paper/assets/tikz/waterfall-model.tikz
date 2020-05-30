@@ -1,5 +1,7 @@
 \begin{tikzpicture}
-\tikzstyle{edge}=[->, semithick]
+\tikzset{
+	edge/.style={->,> = Latex,semithick}
+}
 
 % Phases.
 \def\phases{Requirements, Design, Implementation, Testing, Operation}
