@@ -60,7 +60,7 @@ The previous section has explained how we can identify which parts of the code r
 
 \clearpage
 
-\noindent After every mutant has either been killed or marked equivalent to the original problem, we can calculate the \emph{mutation score} of the test suite using \cref{eq:mutant-score}. In an adequate test suite, this score is equal to $\SI{1}{}$, which indicates that the test suite was able to detect every mutant instantly.
+\noindent After every mutant has either been killed or marked equivalent to the original problem, we can calculate the \emph{mutation score} of the test suite using \Cref{eq:mutant-score}. In an adequate test suite, this score is equal to $\SI{1}{}$, which indicates that the test suite was able to detect every mutant instantly.
 
 \begin{equation}\label{eq:mutant-score}
 	\text{Mutant Score} = \frac{\text{killed mutants}}{\text{non-equivalent mutants}}
@@ -68,7 +68,7 @@ The previous section has explained how we can identify which parts of the code r
 
 \begin{figure}[h!]
 	\centering
-	\input{assets/tikz/mutation-testing.tex}
+	\input{assets/tikz/mutation-testing.tikz}
 	\caption{Process of Mutation Testing (based on \cite{Offutt2001}).}
 	\label{fig:mutation-testing}
 \end{figure}

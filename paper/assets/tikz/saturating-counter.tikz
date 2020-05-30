@@ -1,5 +1,9 @@
 \begin{tikzpicture}[->,>=stealth',auto,node distance=4.5cm]
 
+\tikzset{
+	edge/.style={->,> = Latex,semithick}
+}
+
 % Nodes.
 \node[state] (A)
 {\begin{minipage}{2cm}\centering inaccurate\end{minipage}};
