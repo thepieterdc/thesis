@@ -18,7 +18,7 @@ jobs:
     - name: Install packages
       run: |
         apt-get update
-        apt-get -y install biber texlive-bibtex-extra texlive-binaries texlive-extra-utils
+        apt-get -y install biber poppler-utils texlive-bibtex-extra texlive-binaries texlive-extra-utils
     - name: Compile Dutch abstract
       working-directory: ./paper/abstract-nl
       run: |
