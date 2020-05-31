@@ -23,7 +23,7 @@
 {\begin{minipage}[c][1cm][c]{3.25cm}\centering Validate correctness of $P$\end{minipage}};
 
 \node[draw] (fixbugs) [left=\xdiff of validatep]
-{\begin{minipage}[c][1cm][c]{3.25cm}\centering Fix bug in $P$\end{minipage}};
+{\begin{minipage}[c][1cm][c]{3.25cm}\centering Fix bugs in $P$\end{minipage}};
 
 \node[draw] (runtestsmutants) [below=\ydiff of validatep]
 {\begin{minipage}[c][1.25cm][c]{3.25cm}\centering Run every test case $t$ on every mutant $p'$\end{minipage}};
