@@ -1,4 +1,12 @@
 % !TeX root = ../thesis.tex
 
 \chapter{Summary}
-Summary in English will come here.
+In traditional software engineering, developers typically build the entire application as one monolith by planning, implementing and testing everything sequentially. Each of these steps consumes a considerable amount of time, making software engineering a costly and time-intensive activity. In the wake of the world economic crisis, however, software developers have been forced to diminish their expenses drastically. The most viable way to reduce financial risks is to release a small version of the application as soon as possible and incrementally extend its functionality, a philosophy known as Agile Software Development.\\
+
+\noindent While this approach entails several short-term benefits, a problem will still emerge in the long run. Frequent and shorter release cycles imply the need for automated testing solutions where human interaction is no longer strictly necessary. This process exists under the name of Continuous Integration, although it is not a silver bullet. To fully automate the testing process, the application needs to contain many test cases that guarantee everything is working as intended. \\
+
+\noindent However, since the developers add new features to the application at a rapid pace, the number of test cases will increase at least as fast, since every code change requires at least one test case. As a result, the time it takes to (automatically) execute all the test cases will increase superlinearly as well, nullifying the benefits of maintaining a short release cycle.\\
+
+\noindent The solution to this scalability problem is the introduction of optimisation techniques. This thesis presents three techniques: Test Suite Minimisation, Test Case Selection and Test Case Prioritisation. The objective of the first two techniques is to exclude test cases which will probably not fail from being executed. The latter technique does execute every test case but determines an execution sequence that prioritises test cases based on their probability of failing in the current run.\\
+
+\noindent This technique has been implemented in a framework which features three existing algorithms and one new prioritisation algorithm. Next, the effect of applying this technique has been evaluated on two existing applications. The results are promising, resulting in ten times less executed test cases and up to thirty times faster detection of failing test cases.\\
