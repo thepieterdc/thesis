@@ -1,0 +1,48 @@
+% !TeX root = ../../thesis.tex
+
+\begin{tikzpicture}
+\tikzset{
+	edge/.style={->,> = Latex,semithick}
+}
+
+% Algorithm.
+\node[draw, fill=bisque!60] (algorithm) at (9.375, 1.25)
+{\begin{minipage}[c][2cm][c]{3cm}\centering Test Case Prioritisation\end{minipage}};
+
+% Original test cases.
+\foreach \i in {1,2,3,4,5} {
+	% Test case.
+	\node[draw] (originaltestcase\i) at (3.50, 5 - \i*1.25)
+	{\begin{minipage}[c][0.75cm][c]{3.75cm}\centering Test Case \i\end{minipage}};
+	
+	% Test case -> Algorithm.
+	\draw[edge] (originaltestcase\i.east) -- (algorithm);
+}
+
+% Prioritised test cases.
+% Test case 4 (very likely to fail).
+\node[draw] (reorderedtestcase1) at (15.00, (5 - 1.25)
+{\begin{minipage}[c][0.75cm][c]{3.75cm}\centering Test Case 4\\\textcolor{gray}{(very likely to fail)}\end{minipage}};
+
+% Test case 3 (likely to fail).
+\node[draw] (reorderedtestcase2) at (15.00, 5 - 2.50)
+{\begin{minipage}[c][0.75cm][c]{3.75cm}\centering Test Case 3\\\textcolor{gray}{(likely to fail)}\end{minipage}};
+
+% Test case 2 (neutral).
+\node[draw] (reorderedtestcase3) at (15.00, 5 - 3.75)
+{\begin{minipage}[c][0.75cm][c]{3.75cm}\centering Test Case 2\\\textcolor{gray}{(neutral)}\end{minipage}};
+
+% Test case 5 (unlikely to fail).
+\node[draw] (reorderedtestcase4) at (15.00, 5 - 5)
+{\begin{minipage}[c][0.75cm][c]{3.75cm}\centering Test Case 5\\\textcolor{gray}{(unlikely to fail)}\end{minipage}};
+
+% Test case 1 (very unlikely to fail).
+\node[draw] (reorderedtestcase5) at (15.00, 5 - 6.25)
+{\begin{minipage}[c][0.75cm][c]{3.75cm}\centering Test Case 1\\\textcolor{gray}{(very unlikely to fail)}\end{minipage}};
+
+% Algorithm -> Prioritised test case.
+\foreach \i in {1,2,3,4,5} {	
+	\draw[edge] (algorithm.east) -- (reorderedtestcase\i.west);
+}
+
+\end{tikzpicture}
