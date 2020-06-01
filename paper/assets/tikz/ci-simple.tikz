@@ -1,0 +1,48 @@
+% !TeX root = ../../thesis.tex
+
+\begin{tikzpicture}
+\tikzset{
+	edge/.style={->,> = Latex,semithick}
+}
+
+% Developer.
+\node[draw] (developer) at (0, 0)
+{\begin{minipage}[c][0.5cm][c]{3cm}\centering \faUser[regular]{} Developer \end{minipage}}; 
+
+% CI system.
+\node[draw] (cisystem) at (4, 0)
+{\begin{minipage}[c][0.5cm][c]{3cm}\centering \faHockeyPuck{} CI system\end{minipage}};
+
+% Build.
+\node[draw] (build) at (4.30, -0.75)
+{\begin{minipage}[c][0.5cm][c]{2cm}\centering \faCogs{} Build\end{minipage}};
+
+% Test.
+\node[draw] (test) at (4.30, -1.30)
+{\begin{minipage}[c][0.5cm][c]{2cm}\centering \faTasks{} Test\end{minipage}};
+
+% Publish.
+\node[draw] (publish) at (8, 0)
+{\begin{minipage}[c][0.5cm][c]{3cm}\centering \faGlobe{} Publish\end{minipage}};
+
+% Developer -> CI.
+\draw[edge] (developer.east) -- (cisystem.west)
+node[midway,above] {\faFileCode[regular]{} Changes};
+
+% CI -> Build and Test.
+\draw[edge] (3.25, -0.25) |- (build.west)
+node[midway,above] {};
+\draw[edge] (3.25, -0.25) |- (test.west)
+node[midway,above] {};
+
+% CI -> Publish.
+\draw[edge] (cisystem.east) -- (publish.west)
+node[midway,above] {\faCheck[solid]{} Success};
+
+% CI -> Developer.
+\draw[edge] (cisystem.north) -- ($(cisystem.north) + (0, 0.5)$) -- ($(developer.north) + (0, 0.5)$) node[midway,above] {\faTimes[solid]{} Failure} -- (developer.north);
+
+% Publish -> Developer.
+\draw[edge] (publish.south) -- ($(publish.south) + (0, -1.5)$) -- ($(developer.south) + (0, -1.5)$) node[midway,below] {\faSync[solid]{} Next iteration} -- (developer.south);
+
+\end{tikzpicture}

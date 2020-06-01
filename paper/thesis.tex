@@ -14,6 +14,7 @@
 \usepackage{caption}
 \usepackage{fancyhdr}
 \usepackage{float}
+\usepackage{fontawesome5}
 \usepackage[final]{hyperref}
 \usepackage[acronym,automake,section]{glossaries}
 \usepackage{lipsum}
@@ -34,7 +35,7 @@
 \usepackage{cleveref}
 
 % Tikz libraries.
-\usetikzlibrary{arrows,arrows.meta,automata,shapes.geometric,positioning}
+\usetikzlibrary{arrows,arrows.meta,automata,calc,shapes.geometric,positioning}
 
 % Watermark.
 \SetWatermarkText{Draft}
@@ -189,31 +190,30 @@
 % Titlepage.
 \frontmatter
 \pagestyle{empty}
-\includepdf[pages=-]{titlepage.pdf}
+%\includepdf[pages=-]{titlepage.pdf}
 
 \blankpage{}
 
 % Admission.
-\input{admission.tex}
+%\input{admission.tex}
 \clearpage
 
 % Acknowledgements.
-\input{acknowledgements.tex}
+%\input{acknowledgements.tex}
 
 % Summaries.
 \selectlanguage{english}
-\input{summary/english.tex}
+%\input{summary/english.tex}
 \clearpage
 \selectlanguage{dutch}
-\input{summary/dutch.tex}
+%\input{summary/dutch.tex}
 \clearpage
 \selectlanguage{english}
 
 % Extended abstracts.
 \addcontentsline{toc}{chapter}{Extended abstract}
-\includepdf[pages=-]{abstract-en/extended-abstract.pdf}
-\addcontentsline{toc}{chapter}{Extended abstract (Dutch)}
-\includepdf[pages=-]{abstract-nl/extended-abstract.pdf}
+%\includepdf[pages=-]{abstract-en/extended-abstract.pdf}
+%\includepdf[pages=-]{abstract-nl/extended-abstract.pdf}
 
 % Lay summary.
 \input{summary/lay.tex}
@@ -229,28 +229,28 @@
 % Corpus.
 \mainmatter
 
-\input{glossary.tex}
+%\input{glossary.tex}
 \clearpage
-\input{introduction.tex}
+%\input{introduction.tex}
 \clearpage
-\input{software-engineering.tex}
+%\input{software-engineering.tex}
 \clearpage
-\input{related-work.tex}
+%\input{related-work.tex}
 \clearpage
-\input{velocity.tex}
+%\input{velocity.tex}
 \clearpage
-\input{evaluation.tex}
+%\input{evaluation.tex}
 \clearpage
-\input{conclusion.tex}
+%\input{conclusion.tex}
 \clearpage
-\input{bibliography.tex}
+%\input{bibliography.tex}
 \clearpage
-\input{list-of-figures.tex}
+%\input{list-of-figures.tex}
 \clearpage
-\input{list-of-tables.tex}
+%\input{list-of-tables.tex}
 \clearpage
-\input{list-of-listings.tex}
+%\input{list-of-listings.tex}
 \clearpage
-\input{appendices.tex}
+%\input{appendices.tex}
 
 \end{document}
