@@ -10,15 +10,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    container:
-      image: blang/latex
-
     steps:
     - uses: actions/checkout@master
     - name: Install packages
       run: |
-        apt-get update
-        apt-get -y install biber poppler-utils texlive-bibtex-extra texlive-binaries texlive-extra-utils
+        sudo apt-get update
+        sudo apt-get -y install biber poppler-utils texlive-bibtex-extra texlive-binaries texlive-extra-utils texlive-fonts-extra
     - name: Compile Dutch abstract
       working-directory: ./paper/abstract-nl
       run: |
