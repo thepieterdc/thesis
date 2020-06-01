@@ -22,14 +22,24 @@ The urge to confine financial losses is even more prominent today, in the wake o
 Nevertheless, Continuous Integration is not a silver bullet. In the initial stage of the project, the number of test cases will be rather small, therefore providing fast feedback to the developers in case of failure. However, as time progresses and the application grows, more test cases will be added that all need to be executed after every change. Eventually, this will consume a significant amount of time as well, thereby nullifying these benefits.
 
 \section*{Solution}
-This thesis focuses on resolving this problem by introducing three techniques. The first two techniques are \emph{Test Suite Minimisation} and \emph{Test Case Selection}. These techniques attempt to predict which test cases are likely to fail, and as such, only execute those test cases with a high probability of failing. The third technique is \emph{Test Case Prioritisation (TCP)}. As the name suggests, this technique will execute every test case in a specific sequence. The order of this sequence is determined by the predicted chance that the test case will fail, executing the most likely failing test cases as soon as possible.\\ This thesis concentrates on TCP (\Cref{fig:tcp-lay}) since this technique guarantees that every failing test case will be executed eventually, even if a test case fails unexpectedly.
+This thesis focuses on resolving this problem by introducing three techniques. The first two techniques are \emph{Test Suite Minimisation} and \emph{Test Case Selection}. These techniques attempt to predict which test cases are likely to fail, and as such, only execute those test cases with a high probability of failing. The third technique is \emph{Test Case Prioritisation (TCP)}. As the name suggests, this technique will execute every test case in a specific sequence. The order of this sequence is determined by the predicted chance that the test case will fail, executing the most likely failing test cases as soon as possible.\\ This thesis concentrates on TCP (\Cref{fig:tcp-lay}) since this technique ensures that every failing test case will eventually be executed. The other two techniques cannot guarantee this because a failing test case might accidentally be omitted. 
 
 \begin{figure}[t!]
 	\centering
-	\includegraphics[width=\textwidth]{assets/tikz/tcp-lay.tikz}
+	\includegraphics[width=0.96\textwidth]{assets/tikz/tcp-lay.tikz}
 	\caption{\tcp{}.}
 	\label{fig:tcp-lay}
 \end{figure}
+
+\section*{Prediction}
+In order to estimate which test cases might fail, the TCP implementation in this thesis consists of ten prediction algorithms, referred to as predictors. Every predictor uses the same input data but with a different interpretation, which is out-of-scope for this summary. This input data is threefold:
+\begin{enumerate}
+	\item \textbf{Affected test cases:} The predictors contain a mapping that links every test case to the corresponding tested lines of code in the application. If the developer modifies a line of code, every \emph{affected} test case is considered a potential failure.
+	
+	\item \textbf{Historical data:} Next, the predictors can examine whether or not a test case has recently failed. Research has indicated that test cases tend to fail consecutively.
+	
+	\item \textbf{Duration data:} Finally, the predictors can use the average duration of a test case as a tie-breaker. If two test cases are equally likely to fail, the test case with the lowest duration should be preferred to speed up the execution.
+\end{enumerate}
 
 \section*{Results}
 The benefit of applying TCP on two existing applications has been analysed. The results are promising, the implemented optimisation framework executes, on average, only between $\SIrange{3}{5}{\percent}$ of the test cases. When examining the time it takes to detect a failing test case, the results indicate a reduction of more than $\SIrange{30}{50}{}$ times compared to the original, unprioritised execution.
