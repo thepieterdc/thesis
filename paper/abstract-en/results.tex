@@ -1,0 +1,41 @@
+\section{Results}
+\noindent The framework has been installed on two existing test subjects. The first project is the UGent Dodona project\footnote{\url{https://dodona.ugent.be/}}, on which the performance of the prediction algorithms has been evaluated. Since the provided version of the agent only supports Java and the Dodona project uses Ruby-on-Rails, a second test subject is required to verify the architecture. For this purpose, the Stratego\footnote{Java Spring application created for the Software Engineering 2 course.} project was used. Additionally, this thesis answers three research questions to obtain insights into a typical test suite.
+
+\subsection{Performance}
+\noindent \Cref{tbl:performance-dodona} illustrates the performance of the four discussed algorithms on two aspects. The first aspect is the amount of executed test cases until the first failure. Secondly, the duration until the first failed test case is measured. This data indicates that the Alpha algorithm executes around $\SI{30}{}$ times fewer test cases and that the first failure is observed almost instantaneously. The Greedy and HGS algorithms reduce the amount of executed test cases by almost half and offer a significant speed-wise improvement as well. The performance of the ROCKET algorithm is remarkable. The algorithm executes much more test cases than the original median but does detect a failing test case almost four times faster.
+
+\begin{table}[h]
+	\centering
+	\begin{tabularx}{\columnwidth}{|X||c|c|}
+		\hline
+		\textbf{Algorithm} & \textbf{Median (tests)} & \textbf{Median (time)}\\
+		\hline
+		\emph{Original} & $\SI{78}{}$ & $\SI{123}{\second}$\\
+		
+		\hline
+		
+		Alpha & $\SI{3}{}$ & $\SI{1}{\second}$\\
+		
+		Greedy & $\SI{33}{}$ & $\SI{12}{\second}$\\
+		
+		HGS & $\SI{10}{}$ & $\SI{6}{\second}$\\
+		
+		ROCKET & $\SI{170}{}$ & $\SI{32}{}$\\
+		
+		\hline
+	\end{tabularx}
+	\caption{Performance on the Dodona project.}
+	\label{tbl:performance-dodona}
+\end{table}
+
+\subsection{Research questions}
+\noindent This thesis answers three research questions using data from the \travisci{} platform. This data has been provided by the TravisTorrent project \cite{msr17challenge} ($\SI{3702595}{}$ jobs) and by Durieux et al. \cite{travisanalysis} ($\SI{35793144}{}$ jobs).
+
+\noindent \textbf{RQ1: Probability of failure.}
+The first research question analyses the probability that a test run will fail. In the provided datasets, a combined $\SI{15}{\percent}$ of all the runs have failed.
+
+\noindent \textbf{RQ2: Average test run duration.}
+After inspecting the TravisTorrent dataset, the timing information was proven inaccurate. Therefore, only the dataset provided by Durieux et al. has been used to answer this question. This dataset has revealed that \travisci{} is used primarily for small projects, with an average execution time of $\SI{385}{\second}$. The maximum duration is more than $\SI{26}{\hour}$.
+
+\noindent \textbf{RQ3: Consecutive failure.}
+The final research question investigates the probability that a test run will fail multiple times in a row. According to the TravisTorrent dataset, which contains the mandatory identifier of the previous test run of the same project, the probability of consecutive failure is more than $\SI{51.76}{\percent}$.

@@ -10,7 +10,7 @@ The first research question will provide useful insights into whether a typical 
 Measuring how long it takes to execute a typical test run is required to estimate the benefit of applying any form of test suite optimisation. We will only consider successful test runs, to reduce bias introduced by prematurely aborting the execution.
 
 \paragraph*{RQ3: Suppose that a test run has failed, what is the probability that the next run will fail as well?}
-The ROCKET algorithm (\cref{ssec:alg-rocket}) relies on the assumption that if a test case has failed in a given test run, it is likely to fail in the subsequent run as well. This research question will investigate the correctness of this hypothesis.
+The ROCKET algorithm (\cref{ssec:alg-rocket}) relies on the assumption that if a test case has failed in a given test run, it is likely to fail in the subsequent run as well. This research question will investigate the likelihood of this hypothesis.
 
 \paragraph*{RQ4: How can \tcp{} be applied to Dodona and what is the resulting performance benefit?}
 This research question will investigate the possibility to apply the \velocity{} framework to the Dodona project and analyse how quickly the available predictors can discover a failing test case.

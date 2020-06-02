@@ -4,31 +4,56 @@
 \usepackage{times}
 \usepackage{microtype}
 \usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{tikz}
 \renewcommand{\baselinestretch}{1.1}
-\usepackage{amsmath}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
 		T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \renewcommand{\familydefault}{\sfdefault}
-\usepackage{sfmath}
-\usepackage{sansmathaccent}
+\usepackage{caption}
+\usepackage[list=true]{subcaption}
+\usepackage{fontawesome5}
+\usepackage[detect-weight=true, binary-units=true, range-phrase=-]{siunitx}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{tikzscale}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+% Table columns.
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+% Subcaptions.
+\captionsetup{compatibility=false}
+
+% Tikz libraries.
+\usetikzlibrary{arrows,arrows.meta,automata,calc,shapes.geometric,positioning}
+
+% Terms.
+\newcommand{\travisci}{Travis CI}
+\newcommand{\velocity}{VeloCIty}
 
 \begin{document}
-	\title{Optimising Continuous Integration using Test Case Prioritisation}
+	\title{Optimising Continuous Integration\\ using Test Case Prioritisation}
 	\author{Pieter De Clercq}
 	\supervisor{Prof. dr. B. Volckaert, Prof. dr. ir. F. De Turck, J. Vaneessen, D. Kerkhove}
 	\maketitle
 	
 	\begin{abstract}
-		This abstract is extremely abstract.
+	Ever since the introduction of traditional software development models in the previous century, the complexity and magnitude of today's software have vastly increased. This evolution has led to the introduction of agile software development approaches, which pose the need for frequent builds and automated testing. Eventually, this increase in size will also negatively affect the size of the testing suites, resulting in severe scalability issues. This thesis proposes a framework and a novel algorithm for test suite optimisation by prioritising test cases which are likely to fail. The performance has been evaluated on two existing applications, and the results are auspicious.
 	\end{abstract}
 
 	\begin{keywords}
-		words, will, appear, here, soon
+		Continuous Integration, test suite, performance, optimisation, prioritisation
 	\end{keywords}
 
-	\section{Introductie}
-	Things will appear here. \cite{cusumanomicrosoft}
+	\input{introduction.tex}
+	\input{techniques.tex}
+	\input{algorithms.tex}
+	\input{framework.tex}
+	\input{results.tex}
+	\input{conclusion.tex}
 	
 	\bibliographystyle{phdsymp}
 	\bibliography{references}

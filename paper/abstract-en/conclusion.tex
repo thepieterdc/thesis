@@ -1,0 +1,11 @@
+\section{Conclusion and future work}
+\noindent This thesis has proven that software projects can benefit from an optimised test suite, in particular, using Test Case Prioritisation. The proposed framework has been implemented successfully on two projects, and its results are promising, but it  still has some limitations and room for improvements.\\
+
+\noindent \textbf{Agent.}
+The provided implementation of the Java agent does not support parallel test case execution. Besides the technical difficulties, a coordination mechanism is required to enable this behaviour, to schedule test cases across multiple threads effectively.\\
+
+\noindent \textbf{Predictor.}
+The prediction algorithms do not currently interact with one another. However, there might be hidden potential in merging the output sequences of multiple algorithms, possibly by using weights.\\
+
+\noindent \textbf{Meta predictor.}
+The elementary meta predictor could be modified to use a saturating counter or Machine Learning to cope with an evolving codebase. Additionally, Machine Learning algorithms could potentially be used as prediction algorithms.

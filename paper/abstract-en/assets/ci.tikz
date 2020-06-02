@@ -1,0 +1,34 @@
+% !TeX root = ../../thesis.tex
+
+\begin{tikzpicture}
+\tikzset{
+	edge/.style={->,> = Latex}
+}
+
+% Developer.
+\node (developer) at (0, 0)
+{\begin{minipage}[c][0.5cm][c]{1cm}\centering \faUser[regular]{}\end{minipage}}; 
+
+% CI system.
+\node (cisystem) at (4, 0)
+{\begin{minipage}[c][0.5cm][c]{1cm}\centering \faHockeyPuck{} CI\end{minipage}};
+
+% Publish.
+\node (publish) at (8, 0)
+{\begin{minipage}[c][0.5cm][c]{2cm}\centering \faUpload{} Release\end{minipage}};
+
+% Developer -> CI.
+\draw[edge] (developer.east) -- (cisystem.west)
+node[midway,above] {\faFileCode[regular]{} Changes};
+
+% CI -> Publish.
+\draw[edge,dashed] (cisystem.east) -- (publish.west)
+node[midway,above] {\faCheck[solid]{}};
+
+% CI -> Developer.
+\draw[edge] (cisystem.north) -- ($(cisystem.north) + (0, 0.5)$) -- ($(developer.north) + (0, 0.5)$) node[midway,above] {\faTimes[solid]{}} -- (developer.north);
+
+% Publish -> Developer.
+\draw[edge] (publish.south) -- ($(publish.south) + (0, -0.5)$) -- ($(developer.south) + (0, -0.5)$) node[midway,below] {\faSync[solid]{} Next iteration} -- (developer.south);
+
+\end{tikzpicture}
