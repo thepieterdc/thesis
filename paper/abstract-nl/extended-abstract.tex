@@ -4,14 +4,57 @@
 \usepackage{times}
 \usepackage{microtype}
 \usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{tikz}
 \renewcommand{\baselinestretch}{1.1}
-\usepackage{amsmath}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
 		T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \renewcommand{\familydefault}{\sfdefault}
-\usepackage{sfmath}
-\usepackage{sansmathaccent}
+\usepackage{caption}
+\usepackage[list=true]{subcaption}
+\usepackage{fontawesome5}
+\usepackage[detect-weight=true, binary-units=true, range-phrase=-]{siunitx}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{tikzscale}
+\usepackage[final]{hyperref}
+\usepackage[dutch]{cleveref}
+
+% Table columns.
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+% Subcaptions.
+\captionsetup{compatibility=false}
+
+% Tikz libraries.
+\usetikzlibrary{arrows,arrows.meta,automata,calc,shapes.geometric,positioning}
+
+% Colours.
+\definecolor{black}{RGB}{0, 0, 0}
+\definecolor{bisque}{HTML}{FFE4C4}
+\definecolor{code-background}{HTML}{EEEEEE}
+\definecolor{code-delim}{RGB}{20,105,176}
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+\definecolor{groovyblue}{HTML}{0000A0}
+\definecolor{groovygreen}{HTML}{008000}
+\colorlet{code-punct}{red!60!black}
+\definecolor{ugent-blue}{RGB}{30, 100, 200}
+
+% Meta-information.
+\hypersetup{
+	pdfauthor = {Pieter De Clercq},
+	pdftitle = {Optimising Continuous Integration using Test Case Prioritisation},
+	pdfsubject = {Master's dissertation submitted in order to obtain the academic degree of Master of Science in Computer Science, june 2020},
+	linkcolor = black,
+	citecolor = ugent-blue,
+	urlcolor = ugent-blue,
+	colorlinks = true,
+}
+
+% Terms.
+\newcommand{\travisci}{Travis CI}
+\newcommand{\velocity}{VeloCIty}
 
 \begin{document}
 	\title{Optimaliseren van Continue Integratie\\ door middel van Test Prioritering}
@@ -20,15 +63,20 @@
 	\maketitle
 	
 	\begin{abstract}
-		Dit abstract is super abstract.
+	Sinds de introductie van traditionele softwareontwikkelingsmodellen in de vorige eeuw is de omvang en de complexiteit van software alsmaar toegenomen. Deze ontplooiingen hebben softwareontwikkelaars ertoe aangezet om over te schakelen op zogenaamde Agile ontwikkelingsmethoden, waarin frequent samenvoegen van code en automatisch testen centraal staan. Op lange termijn zal de stijgende omvang van software echter een bijkomend negatief effect hebben op de grootte van het testpakket\footnote{De verzameling van alle tests in de applicatie.}. Om dit schaalbaarheidsprobleem op te lossen, stelt deze masterproef een framework en een nieuw prioriteringsalgoritme voor. Hierbij worden tests gerangschikt volgens de kans op falen. Het framework is ge\"evalueerd op twee bestaande applicaties en de resultaten zijn veelbelovend.
 	\end{abstract}
 
 	\begin{keywords}
-		woorden, komen, hier
+		Continue Integratie, test suite, performantie, optimalisatie, prioritering
 	\end{keywords}
 
-	\section{Introductie}
-	Dingen komen hier. \cite{cusumanomicrosoft}
+	\input{introduction.tex}
+	\input{techniques.tex}
+	\input{algorithms.tex}
+	\input{framework.tex}
+	\clearpage
+	\input{results.tex}
+	\input{conclusion.tex}
 	
 	\bibliographystyle{phdsymp}
 	\bibliography{references}

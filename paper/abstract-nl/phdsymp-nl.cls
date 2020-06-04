@@ -372,8 +372,8 @@
      \@makecaption{\csname fnum@#1\endcsname}{\ignorespaces #3}{#1}\par
    \endgroup}
 
-\def\tablestring{table}
-\def\figurestring{figure}
+\def\tablestring{tabel}
+\def\figurestring{figuur}
 
 \newlength{\captionindent}
 \long\def\@makecaption#1#2#3{
@@ -397,7 +397,7 @@
 \def\fps@figure{tbp}
 \def\ftype@figure{1}
 \def\ext@figure{lof}
-\def\fnum@figure{Figure~\thefigure}
+\def\fnum@figure{Figuur~\thefigure}
 \def\figure{\@float{figure}}
 \let\endfigure\end@float
 \@namedef{figure*}{\@dblfloat{figure}}
@@ -407,7 +407,7 @@
 \def\fps@table{tbp}
 \def\ftype@table{2}
 \def\ext@table{lot}
-\def\fnum@table{Table~\thetable}
+\def\fnum@table{Tabel~\thetable}
 \def\table{\@float{table}}
 \let\endtable\end@float
 \@namedef{table*}{\@dblfloat{table}}
