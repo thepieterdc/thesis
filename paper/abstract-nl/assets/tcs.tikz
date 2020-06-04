@@ -1,0 +1,42 @@
+% !TeX root = ../../thesis.tex
+
+\begin{tikzpicture}
+\tikzset{
+	edge/.style={->,> = Latex}
+}
+
+% Algorithm.
+\node[draw] (algorithm) at (8.50, 2)
+{\begin{minipage}[c][2cm][c]{2cm}\centering TCS\\Algoritme\end{minipage}};
+
+% Original test cases.
+\foreach \i in {1,2,3,4,5} {
+	% Test case.
+	\node (originaltestcase\i) at (3.50, 5 - \i)
+	{\begin{minipage}[c][0.50cm][c]{0.50cm}\centering $T_\i$\end{minipage}};
+	
+	% Test case -> Algorithm.
+	\draw[edge] (4.00, 5 - \i) -- (5.90, 5 - \i);
+}
+
+% Selected test cases.
+\foreach \i in {1, 2, 4} {
+	% Test case.
+	\node (reorderedtestcase\i) at (13.50, 5 - \i)
+	{\begin{minipage}[c][0.50cm][c]{0.50cm}\centering $T_\i$\end{minipage}};
+	
+	% Algorithm -> Selected test case.
+	\draw[edge] (11.10, 5 - \i) -- (13.00, 5 - \i);
+}
+
+% Selected test cases.
+\foreach \i in {3, 5} {
+	% Test case.
+	\node (reorderedtestcase\i) at (13.50, 5 - \i)
+	{\begin{minipage}[c][0.50cm][c]{0.50cm}\centering $T_\i$\end{minipage}};
+	
+	% Algorithm -> Selected test case.
+	\draw[edge, dashed] (11.10, 5 - \i) -- (13.00, 5 - \i);
+}
+
+\end{tikzpicture}

@@ -12,7 +12,7 @@
 \end{figure*}
 
 \subsection{Test Suite Minimisation (TSM)}
-\noindent The first technique is called Test Suite Minimisation (TSM) \cite{10.1002/stv.430}. TSM will attempt to reduce the size of the test suite by permanently removing redundant test cases according to the following definition:\\
+\noindent The first technique is called Test Suite Minimisation (TSM) \cite{10.1002/stv.430}. TSM attempts to reduce the size of the test suite by permanently removing redundant test cases according to the following definition:\\
 
 \noindent\fbox{\begin{minipage}{\columnwidth}
 \textbf{Given:}
@@ -47,7 +47,7 @@ TCS aims to find a subset $T' \subseteq T$ that is used to test $P'$.
 \begin{itemize}
 	\item $T$ the test suite.
 	\item $PT$ the set of permutations of $T$.
-	\item $f: PT \mapsto \mathbb{R}$ a function from a subset to a real number, this function is used to compare sequences of test cases to find the optimal permutation.
+	\item $f: PT \mapsto \mathbb{R}$ a function from a subset to a real number. This function is used to compare sequences of test cases to find the optimal permutation.
 \end{itemize}
 \mbox{}\\
 TCP finds a permutation $T' \in PT$ such that $\forall T'' \in PT : f(T') \ge f(T'') \Rightarrow (T'' \ne T')$. 

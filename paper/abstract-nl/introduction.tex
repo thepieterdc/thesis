@@ -1,0 +1,17 @@
+% !TeX root = extended-abstract.tex
+
+\section{Introductie}
+\noindent Kenmerkend aan de hedendaagse wereld is de verbazingwekkende snelheid waartegen alles in deze wereld verandert. Dit geldt in het bijzonder voor de informatica, waar elke dag nieuwe ontwikkelingen plaatsvinden. Hoewel deze ontwikkelingen vooral hardware gerelateerd ogen, denk maar aan smartwatches, zelfrijdende auto's, biologische technologie, kunnen ze niet functioneren zonder een nog meer geavanceerde softwarecomponent. Bijgevolg is zowel de omvang als de complexiteit van software de laatste decennia exponentieel toegenomen.\\
+
+\noindent Softwareontwikkelaars hebben ondervonden dat de traditionele ontwikkelingsmethoden deze evolutie niet kunnen bijbenen en hebben hun focus verlegd naar andere strategiee\"n. Eerder dan de volledige applicatie in één keer te implementeren, verkiezen ontwikkelaars vandaag de dag de Agile methoden \cite{beck2001agile}. Deze aanpak schrijft voor dat het primaire doel moet zijn om zo snel mogelijk een minimale versie van de applicatie op de markt te brengen, om de financie\"le risico's te verkleinen, en achteraf extra functionaliteit toe te voegen. Een rapport van The Standish Group bevestigt dat de kans op falen aanzienlijk kleiner is bij het hanteren van een Agile ontwikkelingsmethode \cite{standish2015chaos}.\\
+
+\noindent Deze evolutie draagt echter ook negatieve gevolgen met zich mee. Het is één zaak om een project succesvol af te leveren, maar daarmee is de betrouwbaarheid nog niet gegarandeerd. Meer complexe software leidt onweerlegbaar tot software die meer vatbaar is voor fouten. De Agile aanpak tracht dit probleem op te lossen door middel van Continue Integratie (CI) \cite{SmartJenkinsDefinitive}. Dit idee vereist dat het volledige testpakket (succesvol) wordt uitgevoerd na elke aanpassing aan de code (\Cref{fig:ext-nl-ci}). Vandaag de dag bestaan een legio aan CI-services die dit process vergemakkelijken door middel van automatisatie. Als onderdeel van dit automatisatieproces kan optioneel worden aangevuld met het automatisch uitrollen van nieuwe versies naar de eindgebruikers (Continuous Deployment).
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\columnwidth]{assets/ci.tikz}
+	\caption{Continue Integratie.}
+	\label{fig:ext-nl-ci}
+\end{figure}
+
+\noindent Desalniettemin zal er zich op lange termijn nog een ander probleem voordoen. Aangezien de omvang van software exponentieel toeneemt en elke aanpassing in de code minstens één nieuwe test vereist, zal het aantal tests nog sneller stijgen. Dit leidt andermaal tot een schaalbaarheidsprobleem. Deze masterproef tracht dit probleem op te lossen door het testpakket te optimaliseren en de schaalbaarheid te verhogen.\\

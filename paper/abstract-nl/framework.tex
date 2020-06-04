@@ -1,0 +1,17 @@
+\section{Framework}
+\noindent Deze masterproef stelt het \velocity{} framework voor. Dit programmertaal-onafhankelijk framework laat toe om Test Prioritering te gebruiken met bestaande softwareprojecten. De architectuur bestaat uit drie hoofdcomponenten, een meta predictor en een nieuw prioriteringsalgoritme.
+
+\subsection{Agent}
+\noindent De eerste component is de agent. Deze component wordt ge\"integreerd in het testframework van de applicatie en is verantwoordelijk voor het uitvoeren van de tests in de optimale volgorde. Deze volgorde wordt opgevraagd aan de volgende component, de controller.
+
+\subsection{Controller}
+\noindent De controller is een server die twee taken uitvoert. De eerste taak is het afhandelen van verzoeken door de agent en deze door te sturen naar de \emph{voorspeller}. Daarnaast ontvangt de controller ook feedback van de agent na elk uitgevoerd testpakket. Deze informatie wordt gebruikt om de meta predictor bij te werken, hierover later meer.
+
+\subsection{Voorspeller}
+\noindent Het laatste onderdeel van de architectuur is de voorspeller. Deze component inspecteert de aanpassingen aan de code om de optimale uitvoeringsvolgorde te bepalen. Deze volgorde wordt bepaald met behulp van tien ingebouwde voorspellingsalgoritmen. Deze algoritmen zijn varianten van de drie eerder besproken algoritmen, aangevuld met het Alfa-algoritme (zie verder).
+
+\subsection{Meta predictor}
+\noindent Aangezien de voorspeller tien algoritmen bevat, is er een extra onderdeel nodig dat bepaalt welk van deze tien voorspelde volgordes de uiteindelijke uitvoeringsvolgorde moet worden. De meta predictor is een tabel die een score toekent aan elk voorspellingsalgoritme. De volgorde van het algoritme met de hoogste score wordt gekozen als finale uitvoeringsvolgorde. Nadat de tests zijn uitgevoerd evalueert de controller de volgorde van de andere algoritmen en worden de scores bijgewerkt.
+
+\subsection{Alfa algoritme}
+\noindent Naast de Gretig, HGS- en ROCKET-algoritmen bevat dit framework ook een eigen algoritme. Dit algoritme start met het analyseren van de tests om de verzameling $ATS$ van getroffen tests te bepalen. Binnen $ATS$, beschouwt het algoritme elke test die ten minste één keer gefaald is in de laatste drie uitvoeringen. Deze tests worden geselecteerd in stijgende uitvoeringstijd. Daarna worden de overblijvende tests in $ATS$ geselecteerd, eveneens volgens stijgende uitvoeringstijd. Na deze twee stappen worden de resterende tests geselecteerd volgens het eerder besproken gretig algoritme.
