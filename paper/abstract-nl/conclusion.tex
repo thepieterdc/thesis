@@ -2,10 +2,10 @@
 \noindent In deze masterproef is aangetoond dat het testpakket van softwareprojecten geoptimaliseerd kan worden, in het bijzonder met behulp van Test Prioritering. Het voorgestelde framework is succesvol ge\"implementeerd in twee projecten en de resultaten zijn veelbelovend. Er zijn echter nog een aantal limitaties, alsook ruimte voor verbetering.\\
 
 \noindent \textbf{Agent.}
-Voor de implementatie van de agent in deze masterproef werd gekozen voor Java, meer specifiek het JUnit testframework. Dit heeft als nadeel dat tests niet in parallel kunnen worden uitgevoerd. Om dit mogelijk te maken is er, naast de technische moeilijkheden, nood aan een co\"ordinatiemechanisme om tests over meerdere processorthreads te plannen.\\
+Voor de implementatie van de agent in deze masterproef werd gekozen voor Java, meer specifiek het JUnit testframework. Dit heeft als nadeel dat tests niet parallel kunnen worden uitgevoerd. Om dit mogelijk te maken is er, naast de technische moeilijkheden, nood aan een co\"ordinatiemechanisme om tests over meerdere processorthreads te plannen.\\
 
 \noindent \textbf{Voorspeller.}
-Momenteel werkt elk voorspellingsalgoritme volledig op zichzelf. Mogelijks kan er verborgen potentieel verschuilen in de combinatie van verschillende algoritmen, bijvoorbeeld door gewichten toe te kennen aan elk algoritme en op basis daarvan de voorspellingen te mengen.\\
+Momenteel werken alle voorspellingsalgoritmes los van elkaar. Mogelijks kan er verborgen potentieel schuilen in het combineren van verschillende algoritmen, bijvoorbeeld door gewichten toe te kennen aan elk algoritme en op basis daarvan de voorspellingen samen te voegen.\\
 
 \noindent \textbf{Meta predictor.}
 De eenvoudige meta predictor die in deze masterproef wordt gebruikt kan aangepast worden naar bijvoorbeeld een saturerende teller, of naar een Machine Learning algoritme. Analoog kan Machine Learning eventueel worden gebruikt als voorspellingsalgoritme.

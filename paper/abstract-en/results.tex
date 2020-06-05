@@ -1,7 +1,9 @@
 \section{Results}
+% fix course voetnoot zodat die niet onder het nummer komt!
 \noindent The framework has been installed on two existing test subjects. The first project is the Ghent University Dodona project\footnote{\url{https://dodona.ugent.be/}}, on which the performance of the prediction algorithms has been evaluated. Since the provided version of the agent only supports Java and the Dodona project uses Ruby-on-Rails, a second test subject is required to verify the architecture. For this purpose, the Stratego\footnote{Java Spring application created for the Software Engineering 2 course.} project was used. Additionally, this thesis answers three research questions to obtain insights into a typical test suite.
 
 \subsection{Performance}
+% zeg dat vergelijkt met original want anders staat er niet waarmee je vergelijkt.
 \noindent \Cref{tbl:performance-dodona} compares the performance of the four discussed algorithms on two aspects. The first aspect is the amount of executed test cases until the first failure. Secondly, the duration until the first failed test case is measured. These results indicate that the Alpha algorithm executes around $\SI{30}{}$ times fewer test cases and that the first failure is observed almost instantaneously. The Greedy and HGS algorithms reduce the amount of executed test cases by almost half and offer a significant speed-wise improvement as well. The performance of the ROCKET algorithm is remarkable. The algorithm executes much more test cases than the original median but does detect a failing test case almost four times faster.
 
 \begin{table}[h]

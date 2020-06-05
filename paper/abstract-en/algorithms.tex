@@ -1,5 +1,5 @@
 \section{Algorithms}
-\noindent This thesis prefers to use TCP since this technique does not incur the risk of false-negative failing test cases. In order to determine the optimal order of execution, this thesis presents three existing algorithms.\\
+\noindent This thesis focuses on TCP since this technique does not incur the risk of false-negative failing test cases. In order to determine the optimal order of execution, this thesis presents three existing algorithms.\\
 
 \noindent The input data for these algorithms is threefold:\\
 
@@ -12,7 +12,7 @@
 \end{itemize}
 
 \subsection{Greedy algorithm}
-\noindent The first algorithm is a greedy heuristic that was initially designed as an algorithm for the set-covering problem \cite{evaluationoftestsuiteminimization}. This heuristic starts with an empty set of test cases and the set of all code lines $C$. Next, the algorithm iteratively selects the test case that contributes the most code lines that are not yet covered, updating $C$ after every selected test case. The algorithm halts when either all test cases are selected or $C$ is empty. In order to modify this algorithm to make it applicable to TCP, the selection order must be preserved and used as the prioritised sequence.
+\noindent The first algorithm is a greedy heuristic that was initially designed as an algorithm for the set-covering problem \cite{evaluationoftestsuiteminimization}. This heuristic starts with an empty set of test cases and the set of all code lines $C$. Next, the algorithm iteratively selects the test case that contributes the most code lines that are not yet covered, updating $C$ after every selected test case. The algorithm halts when either all test cases are selected or $C$ is empty. In order to modify this algorithm to make it applicable to TCP, the selection order must be saved and used as the prioritised sequence.
 
 \subsection{HGS algorithm}
 \noindent The second algorithm was created by Harrold, Gupta and Soffa \cite{hgs}. As opposed to the greedy heuristic, this algorithm uses a different perspective. First, the algorithm sorts the code lines increasingly based on the number of test cases that cover them. The motivation for this sorting operation is that some test cases must inevitably be executed, as they are the only test cases that cover a given set of lines. However, these test cases can also cover other lines and therefore make other test cases redundant. The algorithm iterates over the code lines in this order and selects one corresponding test case in each iteration. Afterwards, the order is updated to remove source code lines which are now covered by the selected test case. This process is repeated until there are no lines left to cover.
