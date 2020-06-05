@@ -23,7 +23,7 @@
 
 % Publish.
 \node[draw] (publish) at (8, 0)
-{\begin{minipage}[c][0.5cm][c]{3cm}\centering \faGlobe{} Publish\end{minipage}};
+{\begin{minipage}[c][0.5cm][c]{3cm}\centering \faGlobe{} Release\end{minipage}};
 
 % Developer -> CI.
 \draw[edge] (developer.east) -- (cisystem.west)

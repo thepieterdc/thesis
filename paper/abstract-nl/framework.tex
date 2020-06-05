@@ -1,5 +1,8 @@
 \section{Framework}
-\noindent Deze masterproef stelt het \velocity{} framework voor. Dit programmertaal-onafhankelijk framework laat toe om Test Prioritering te gebruiken met bestaande softwareprojecten. De architectuur bestaat uit drie hoofdcomponenten, een meta predictor en een nieuw prioriteringsalgoritme.
+\noindent Deze masterproef stelt het \velocity{} framework voor. Dit programmertaal-onafhankelijk framework laat toe om Test Prioritering te gebruiken op bestaande softwareprojecten. De architectuur bestaat uit drie hoofdcomponenten, een meta predictor en een nieuw prioriteringsalgoritme.
+
+% MAAK VAN ALFA ALPHA (CTRL-F HIEROP)
+% MAAK VAN VOORSPELLER PREDICTOR (CTRL-F HIEROP)
 
 \subsection{Agent}
 \noindent De eerste component is de agent. Deze component wordt ge\"integreerd in het testframework van de applicatie en is verantwoordelijk voor het uitvoeren van de tests in de optimale volgorde. Deze volgorde wordt opgevraagd aan de volgende component, de controller.
@@ -7,10 +10,11 @@
 \subsection{Controller}
 \noindent De controller is een server die twee taken uitvoert. De eerste taak is het afhandelen van verzoeken door de agent en deze door te sturen naar de \emph{voorspeller}. Daarnaast ontvangt de controller ook feedback van de agent na elk uitgevoerd testpakket. Deze informatie wordt gebruikt om de meta predictor bij te werken, hierover later meer.
 
-\subsection{Voorspeller}
-\noindent Het laatste onderdeel van de architectuur is de voorspeller. Deze component inspecteert de aanpassingen aan de code om de optimale uitvoeringsvolgorde te bepalen. Deze volgorde wordt bepaald met behulp van tien ingebouwde voorspellingsalgoritmen. Deze algoritmen zijn varianten van de drie eerder besproken algoritmen, aangevuld met het Alfa-algoritme (zie verder).
+\subsection{Predictor}
+\noindent Het laatste onderdeel van de architectuur is de voorspeller. Deze component inspecteert de aanpassingen aan de code om zo de optimale uitvoeringsvolgorde te bepalen. Deze volgorde wordt bepaald aan de hand van tien ingebouwde voorspellingsalgoritmen. Deze algoritmen zijn varianten van de drie eerder besproken algoritmen, aangevuld met het Alpha-algoritme (zie verder).
 
 \subsection{Meta predictor}
+% die elk een eigen volgorde hebben, welke van deze tien volgordes
 \noindent Aangezien de voorspeller tien algoritmen bevat, is er een extra onderdeel nodig dat bepaalt welk van deze tien voorspelde volgordes de uiteindelijke uitvoeringsvolgorde moet worden. De meta predictor is een tabel die een score toekent aan elk voorspellingsalgoritme. De volgorde van het algoritme met de hoogste score wordt gekozen als finale uitvoeringsvolgorde. Nadat de tests zijn uitgevoerd evalueert de controller de volgorde van de andere algoritmen en worden de scores bijgewerkt.
 
 \subsection{Alfa algoritme}

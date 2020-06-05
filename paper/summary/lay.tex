@@ -5,6 +5,8 @@
 \section*{Software}
 Computers, smartphones, cars, or even much simpler devices like alarm clocks and microwaves, every digital device that exists today consists of two distinct parts. The first, physical part is the hardware, which is the combination of mechanical bits and electrical wiring that enable a device to interact with the real world. The type of interaction can range from either very primitive to extremely complex, such as emitting an LED-light, producing a sound, or launching a rocket. The second part is the software, which is installed on the hardware of the device. Software is developed by software engineers using programming languages and instructs the hardware on what to do, and when.
 
+% entire science on its own is geen ding -> zoek andere uitdrukking
+% before they reach the users
 \section*{Testing}
 Deciding on what is the "best" approach towards the development of software is an entire science on its own with two main conceptions. The traditional approach starts with a thinking phase, followed by a programming phase and finalised by a testing phase. In the first phase, the developers create a detailed design document that describes the required functionality of the final application. Next, the developers write computer code that implements the desired functionality. When this process is completed, the quality assurance team thoroughly tests the application. This testing phase exists in hardware as well. Consider, for example, crash tests conducted by car manufacturers. The purpose of these tests is to detect potential issues and anomalies (bugs) in the application before its end-users do. This phase is critical because bugs can result in financial loss or incur other disastrous effects, such as the explosion of two space rockets in the previous decade, mere seconds after ignition.
 
@@ -24,6 +26,7 @@ Nevertheless, Continuous Integration is not a silver bullet. In the initial stag
 \section*{Solution}
 This thesis focuses on resolving this problem by introducing three techniques. The first two techniques are \emph{Test Suite Minimisation} and \emph{Test Case Selection}. These techniques attempt to predict which test cases are likely to fail, and as such, only execute those test cases with a high probability of failing. The third technique is \emph{Test Case Prioritisation (TCP)}. As the name suggests, this technique will execute every test case in a specific sequence. The order of this sequence is determined by the predicted chance that the test case will fail, executing the most likely failing test cases as soon as possible.\\ This thesis concentrates on TCP (\Cref{fig:tcp-lay}) since this technique ensures that every failing test case will eventually be executed. The other two techniques cannot guarantee this because a failing test case might accidentally be omitted. 
 
+% Maak Publish - Release
 \begin{figure}[t!]
 	\centering
 	\includegraphics[width=0.96\textwidth]{assets/tikz/tcp-lay.tikz}

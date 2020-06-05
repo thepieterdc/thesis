@@ -15,7 +15,8 @@ jobs:
     - name: Install packages
       run: |
         sudo apt-get update
-        sudo apt-get -y install biber poppler-utils texlive-bibtex-extra texlive-binaries texlive-extra-utils texlive-fonts-extra
+        sudo apt-get -y install biber latexmk poppler-utils texlive-bibtex-extra texlive-binaries texlive-lang-european texlive-extra-utils texlive-fonts-extra texlive-science
+        sudo updmap-sys --enable Map=fontawesome5.map
     - name: Compile Dutch abstract
       working-directory: ./paper/abstract-nl
       run: |

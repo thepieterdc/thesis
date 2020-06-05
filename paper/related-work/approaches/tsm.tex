@@ -4,6 +4,7 @@
 \label{ssec:tsm}
 The first technique is called \acrfull{tsm}, also referred to as \emph{Test Suite Reduction} in literature. This technique will try to reduce the size of the test suite by permanently removing redundant test cases. This problem has been formally defined by Rothermel \cite{10.1002/stv.430} in \cref{def:tsm} and illustrated in \Cref{fig:tsm}.
 
+% zelfde opmerkingen als extended abstract
 \begin{definition}[\tsm{}]
 \label{def:tsm}
 \mbox{}\\Given:
@@ -18,6 +19,7 @@ The first technique is called \acrfull{tsm}, also referred to as \emph{Test Suit
 
 \noindent If we apply the concepts of the previous chapter to the above definition, we can interpret the set of requirements $R$ as source code lines that must be covered. A requirement $r_i$ can subsequently be satisfied by any test case $t_j \in T$ that belongs to the subset $T_i$. Observe that the problem of finding $T'$ is closely related to the \emph{hitting set problem} (\cref{def:hitting-set}) \cite{10.1002/stv.430}.
 
+% Waar komt die K vandaan en waarom gebeurt er niets meer mee????
 \begin{definition}[Hitting Set Problem]
 \label{def:hitting-set}
 \mbox{}\\Given:
