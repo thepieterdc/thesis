@@ -14,16 +14,12 @@
 \subsection{Test Suite Minimisation (TSM)}
 \noindent The first technique is called Test Suite Minimisation (TSM) \cite{10.1002/stv.430}. TSM attempts to reduce the size of the test suite by permanently removing redundant test cases according to the following definition:\\
 
-% fix dat tekst niet onder dat puntje komt
-% probeer tekst eens italic te maken ipv bold
-% fix breedte
-% specifieer dat i ranget van 1 tot m
-\noindent\fbox{\begin{minipage}{\columnwidth}
+\noindent\fbox{\begin{minipage}{\dimexpr\columnwidth-2\fboxsep-2\fboxrule\relax}
 \textbf{Given:}
-\begin{itemize}
+\begin{itemize}[leftmargin=1em]
 	\item $T = \{t_1, \dots, t_n\}$ a test suite consisting of test cases $t_j$.
 	\item $R = \{r_1, \dots, r_m\}$ a set of requirements that must be satisfied in order to provide the desired ``adequate'' testing of the program.
-	\item $\{T_1, \dots, T_m\}$ subsets of test cases in $T$, such that any one of the test cases $t_j \in T_i$ can be used to satisfy requirement $r_i$.
+	\item $\{T_1, \dots, T_m\}$ subsets of test cases in $T$, such that for every $i \in [1..m]$, any one of the test cases $t_j \in T_i$ can be used to satisfy requirement $r_i$.
 \end{itemize}
 \mbox{}\\
 TSM is then defined as the task of finding a subset $T'$ of test cases $t_j \in T$ that satisfies every requirement $r_i$.
@@ -32,12 +28,9 @@ TSM is then defined as the task of finding a subset $T'$ of test cases $t_j \in 
 \subsection{Test Case Selection (TCS)}
 \noindent Instead of permanently removing redundant test cases, it is also possible to analyse the code changes and deduce which test cases should be executed and which ones might be omitted altogether. This technique is referred to as Test Case Selection (TCS) \cite{10.1002/stv.430}.\\
 
-% fix dat tekst niet onder dat puntje komt
-% fix breedte
-% specifieer dat i ranget van 1 tot m
-\noindent\fbox{\begin{minipage}{\columnwidth}
+\noindent\fbox{\begin{minipage}{\dimexpr\columnwidth-2\fboxsep-2\fboxrule\relax}
 \textbf{Given:}
-\begin{itemize}
+\begin{itemize}[leftmargin=1em]
 	\item $T$ the test suite.
 	\item $P$ the previous version of the source code.
 	\item $P'$ the current (modified) version of the source code.
@@ -47,19 +40,15 @@ TCS aims to find a subset $T' \subseteq T$ that is used to test $P'$.
 \end{minipage}}
 
 \subsection{Test Case Prioritisation (TCP)}
-% in this case slaat op medische stuff -> aanpassen
-\noindent While TSM and TCS execute only the relevant test cases, sometimes it might be required that every test case is successfully executed. Consider, for example, critical software for medical purposes. In this case, it is still possible to optimise the test suite by executing all test cases in a specific order. Test Case Prioritisation (TCP) \cite{10.1002/stv.430} constructs an ordered sequence that aims to fulfil a predetermined objective as fast as possible. This thesis primarily uses the detection of the first failed test case as the objective.\\
+\noindent While TSM and TCS execute only the relevant test cases, sometimes it might be required to execute every test case successfully (e.g., critical software for medical purposes). In this case, it is still possible to optimise the test suite by executing all test cases in a specific order. Test Case Prioritisation (TCP) \cite{10.1002/stv.430} constructs an ordered sequence that aims to fulfil a predetermined objective as fast as possible. This thesis primarily uses the detection of the first failed test case as the objective.\\
 
-% fix dat tekst niet onder dat puntje komt
-% fix breedte
-% specifieer dat i ranget van 1 tot m
-\noindent\fbox{\begin{minipage}{\columnwidth}
+\noindent\fbox{\begin{minipage}{\dimexpr\columnwidth-2\fboxsep-2\fboxrule\relax}
 \textbf{Given:}
-\begin{itemize}
+\begin{itemize}[leftmargin=1em]
 	\item $T$ the test suite.
 	\item $PT$ the set of permutations of $T$.
 	\item $f: PT \mapsto \mathbb{R}$ a function which is used to compare sequences of test cases to find the optimal permutation.
 \end{itemize}
 \mbox{}\\
-TCP finds a permutation $T' \in PT$ such that $\forall T'' \in PT : f(T') \ge f(T'') \Rightarrow (T'' \ne T')$. 
+TCP finds a permutation $T' \in PT$ such that\\ $\forall T'' \in PT : f(T') \ge f(T'') \Rightarrow (T'' \ne T')$. 
 \end{minipage}}
