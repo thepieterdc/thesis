@@ -3,7 +3,7 @@
 \footnote{\url{https://dodona.ugent.be/}} van de Universiteit Gent. Dit project is gebruikt om de performantie van de voorspellingsalgoritmen te evalueren. Aangezien de agent in deze masterproef enkel compatibel is met Java applicaties en Dodona gebouwd is in Ruby-on-Rails, is een tweede testapplicatie gebruikt om de installatie te verifi\"eren. Hiervoor werd het Stratego\footnote{Java Spring applicatie ontwikkeld voor het vak Software Engineering 2.} project gebruikt. Aansluitend beantwoordt deze masterproef drie onderzoeksvragen, met als doel waardevolle inzichten te vergaren over testpakketten.
 
 \subsection{Performantie}
-\noindent \Cref{tbl:performance-dodona} vergelijkt de vier besproken algoritmen op twee vlakken. Deze vlakken zijn respectievelijk het aantal uitgevoerde tests tot de eerste gefaalde test en de bijbehorende uitvoeringstijd van het parti\"ele testpakket. Deze resultaten tonen aan dat het Alfa algoritme bijna $\SI{30}{}$ keer minder tests uitvoert en dat de eerste falende test bijna onmiddellijk gedetecteerd wordt. Het Gretig en HGS-algoritme halveren het aantal uitgevoerde tests en zorgen tegelijk voor een sterke reductie van de uitvoeringstijd. De performantie van het ROCKET-algoritme is opmerkelijk. Dit algoritme voert veel meer tests uit dan de mediaan van de originele volgorde, maar detecteert een falende test vier keer sneller.
+\noindent \Cref{tbl:performance-dodona} vergelijkt de vier besproken algoritmen op twee vlakken. Deze vlakken zijn respectievelijk het aantal uitgevoerde tests tot de eerste gefaalde test en de bijbehorende uitvoeringstijd van het parti\"ele testpakket. Deze resultaten tonen aan dat het Alpha-algoritme bijna $\SI{30}{}$ keer minder tests uitvoert en dat de eerste falende test bijna onmiddellijk gedetecteerd wordt. Het Gretig en HGS-algoritme halveren het aantal uitgevoerde tests en zorgen tegelijk voor een sterke reductie van de uitvoeringstijd. De performantie van het ROCKET-algoritme is opmerkelijk. Dit algoritme voert veel meer tests uit dan de mediaan van de originele volgorde, maar detecteert een falende test vier keer sneller.
 
 \begin{table}[h]
 	\centering
@@ -15,7 +15,7 @@
 		
 		\hline
 		
-		Alfa & $\SI{3}{}$ & $\SI{1}{\second}$\\
+		Alpha & $\SI{3}{}$ & $\SI{1}{\second}$\\
 		
 		Greedy & $\SI{33}{}$ & $\SI{12}{\second}$\\
 		

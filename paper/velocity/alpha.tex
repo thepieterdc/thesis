@@ -13,14 +13,13 @@ Besides the earlier presented Greedy, HGS and ROCKET algorithms (\cref{sec:relat
 	
 	\item $C = \{c_1, \dots, c_m\}$: the set of all source code lines in the application, that are covered by at least one test case $t \in TS$.
 	
-	% current - j swappen
 	\item $F = \begin{bmatrix}
 			F_1 & \dots & F_n
 		\end{bmatrix}$: the failure statuses of each test case.
 			\begin{itemize}
 				\item $F_t = \begin{bmatrix}
 					f_1 & \dots & f_m
-				\end{bmatrix}$: the failure status of test case $t$ over the previous $m$ successive executions. $F_{ij} = 1$ if test case $i$ has failed in execution $(current - j)$, $0$ if it has passed.
+				\end{bmatrix}$: the failure status of test case $t$ over the previous $m$ successive executions. $F_{ij} = 1$ if test case $i$ has failed, respectively $0$ if $i$ has passed in execution $(current - j)$.
 			\end{itemize}
 			
 	\item $D = \begin{bmatrix}
@@ -55,12 +54,9 @@ Besides the earlier presented Greedy, HGS and ROCKET algorithms (\cref{sec:relat
 
 \noindent Afterwards, we repeat the same procedure for every failed (yet unaffected) test case and likewise use the execution time as a tie-breaker. Where the previous phase helps a developer to get fast feedback about whether or not they have resolved the issue, this phase ensures that the other failing test cases are executed early as well. Similar to the previous step, we again update $C$ after every prioritised test case.\\
 
-\noindent Research (\cref{ssec:results-rq1}) has indicated that on average, a minor fraction ($\SIrange{10}{20}{\percent}$) of all test runs will contain a failed test case. As a result, the previous two phases will often not select any test case at all. Therefore, we will now focus on executing test cases that cover affected code lines. More specifically, the third phase of the algorithm will execute every affected test case, sorted by decreasing cardinality of the intersection between $C$ and the test group of that test case. 
+\noindent Research (\cref{ssec:results-rq1}) has indicated that on average, a minor fraction ($\SIrange{10}{20}{\percent}$) of all test runs will contain a failed test case. As a result, the previous two phases will often not select any test case at all. Therefore, we will now focus on executing test cases that cover affected code lines. More specifically, the third phase of the algorithm will execute every affected test case, sorted by decreasing cardinality of the intersection between $C$ and the test group of that test case. After every selected test case, $C$ is updated in the same way as the previous phases. Since this phase uses $C$ in the comparison, every selected test case can influence the next selected test case. The update process of $C$ will ultimately lead to some affected test cases not strictly requiring to be executed, similar to the Greedy algorithm (\cref{ssec:alg-greedy}).\\
 
-% hoe wordt C geupdate? -> aangeven dat het op dezelfde manier wordt geupdate
-After every selection, we will update $C$ as well. Since this phase uses $C$ in the comparison, every selected test case can influence the next selected test case. The update process of $C$ will ultimately lead to some affected test cases not strictly requiring to be executed, similar to the Greedy algorithm (\cref{ssec:alg-greedy}).\\
-
-\noindent In the last phase, the algorithm will select the test cases based on the cardinality of the intersection between $C$ and their test group. We repeat this process until $C$ is empty and update $C$ accordingly. When $C$ is empty, the algorithm will yield the remaining test cases. Notice that these test cases will not contribute to the test coverage whatsoever since the previous iteration would already have selected every test case that would incur additional coverage. Subsequently, these test cases are de facto redundant and are therefore candidates for removal by TSM. However, since this is a prioritisation algorithm, these tests will still be executed and prioritised by increasing execution time.
+\noindent In the last phase, the algorithm selects the test cases based on the cardinality of the intersection between $C$ and their test group. This process is repeated until $C$ is empty and update $C$ accordingly. When $C$ is empty, the algorithm yields the remaining test cases. Notice that these test cases will not contribute to the test coverage whatsoever since the previous iteration would already have selected every test case that would incur additional coverage. Subsequently, these test cases are de facto redundant and are therefore candidates for removal by TSM. However, since this is a prioritisation algorithm, these tests will still be executed and prioritised by increasing execution time.
 
 \begin{algorithm}[htbp!]
 \caption{Alpha algorithm for \tcp{}.}

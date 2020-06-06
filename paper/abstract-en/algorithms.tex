@@ -1,9 +1,11 @@
 \section{Algorithms}
 \noindent This thesis focuses on TCP since this technique does not incur the risk of false-negative failing test cases. In order to determine the optimal order of execution, this thesis presents three existing algorithms.\\
 
+\mbox{}
+
 \noindent The input data for these algorithms is threefold:\\
 
-\begin{itemize}
+\begin{itemize}[leftmargin=1em]
 \item \textbf{Affected test cases:} By combining previous coverage results and the list of changes that the developer has made to the code, the framework can estimate which test cases are likely affected by those changes and assign a higher priority.
 
 \item \textbf{Historical data:} Next, historical failure data can be used. Suppose that a test case has failed in its previous execution, then there exists a chance that it will subsequently fail in the current run. Either way, this test case should be executed early to verify that the underlying issue has been resolved.
@@ -16,8 +18,6 @@
 
 \subsection{HGS algorithm}
 \noindent The second algorithm was created by Harrold, Gupta and Soffa \cite{hgs}. As opposed to the greedy heuristic, this algorithm uses a different perspective. First, the algorithm sorts the code lines increasingly based on the number of test cases that cover them. The motivation for this sorting operation is that some test cases must inevitably be executed, as they are the only test cases that cover a given set of lines. However, these test cases can also cover other lines and therefore make other test cases redundant. The algorithm iterates over the code lines in this order and selects one corresponding test case in each iteration. Afterwards, the order is updated to remove source code lines which are now covered by the selected test case. This process is repeated until there are no lines left to cover.
-
-\clearpage
 
 \subsection{ROCKET algorithm}
 \noindent Finally, this thesis considers the ROCKET algorithm \cite{6676952}. This algorithm prioritises test cases by assigning a score to every test case, which is calculated using historical failure data. Afterwards, the algorithm computes the cumulative score $CS_t$ of every test case $t$ and defines the following objective function $g$, in which $E_t$ represents the execution time of the test case:

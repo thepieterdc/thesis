@@ -3,7 +3,7 @@
 
 \noindent De algoritmen kunnen gebruik maken van drie gegevensreeksen:\\
 
-\begin{itemize}
+\begin{itemize}[leftmargin=1em]
 \item \textbf{Getroffen tests:} Door gebruik te maken van eerdere codebedekkingsresultaten\footnote{de \emph{code coverage} geeft aan welke instructies in de code worden uitgevoerd bij het uitvoeren van een test} en de lijst met aanpassingen aan de code kan het framework bepalen welke tests mogelijks getroffen zijn door deze aanpassingen. Bijgevolg kan aan deze tests een hogere prioriteit toegewezen worden.
 
 \item \textbf{Historische uitvoeringsdata:} Vervolgens kan een algoritme gebruikmaken van historische uitvoeringsdata. Stel dat een test tijdens de vorige uitvoering gefaald is, dan bestaat de kans dat deze nu opnieuw zal falen. Bijgevolg moet deze test een hoge prioriteit krijgen om te controleren of het onderliggend probleem inmiddels is opgelost.
@@ -12,13 +12,10 @@
 \end{itemize}
 
 \subsection{Gretig algoritme}
-\noindent Het eerste algoritme is een gretige heuristiek die oorspronkelijk ontworpen is om het \emph{set-covering probleem} op te lossen \cite{evaluationoftestsuiteminimization}. De heuristiek start met een de lege verzameling tests en de verzameling $C$ van alle codelijnen. Vervolgens selecteert het algoritme iteratief de test die het meeste codelijnen in $C$ bedekt. Na elke geselecteerde test worden de bedekte lijnen verwijderd uit $C$. Het algoritme herhaalt deze stappen totdat elke test geselecteerd is, of tot dat $C$ leeg is. 
-% door de selectievolgorde bij te houden en te gebruiken als uitvoeringsvolgorde bekomen we een TCP algoritme.
-Dit algoritme kan aangepast worden naar TCP door de selectievolgorde bij te houden en die te gebruiken als uitvoeringsvolgorde.
+\noindent Het eerste algoritme is een gretige heuristiek die oorspronkelijk ontworpen is om het \emph{set-covering probleem} op te lossen \cite{evaluationoftestsuiteminimization}. De heuristiek start met een de lege verzameling tests en de verzameling $C$ van alle codelijnen. Vervolgens selecteert het algoritme iteratief de test die het meeste codelijnen in $C$ bedekt. Na elke geselecteerde test worden de bedekte lijnen verwijderd uit $C$. Het algoritme herhaalt deze stappen totdat elke test geselecteerd is, of tot dat $C$ leeg is. Door de selectievolgorde bij te houden en die te gebruiken als uitvoeringsvolgorde, kan dit algoritme worden gebruikt voor TCP.
 
-% herschrijf dit!!!!! superrare zin
 \subsection{HGS-algoritme}
-\noindent Het tweede algoritme is bedacht door Harrold, Gupta en Soffa \cite{hgs}. In tegenstelling tot het gretige algoritme, gebruikt dit algoritme een andere invalshoek. Het algoritme begint met de lijst met codelijnen te sorteren op stijgend aantal tests waardoor ze bedekt zijn. De reden voor deze sortering is dat sommige tests hoe dan ook moeten uitgevoerd worden, aangezien ze mogelijks de enige tests zijn die een bepaalde codelijn bedekken. Deze tests kunnen echter ook codelijnen bedekken die door andere tests worden bedekt, waardoor deze overbodig worden. Het algoritme overloopt alle codelijnen in deze volgorde en selecteert steeds een van de corresponderende tests. Na elke geselecteerde test wordt de lijst met codelijnen bijgewerkt om lijnen en wordt elke lijn die bedekt is door de geselecteerde test verwijderd. Dit process herhaalt zich tot elke codelijn bedekt is.
+\noindent Het tweede algoritme is bedacht door Harrold, Gupta en Soffa \cite{hgs}. In tegenstelling tot het gretige algoritme, gebruikt dit algoritme een andere invalshoek. Het algoritme begint door de lijst met codelijnen $C$ te sorteren volgens stijgend aantal tests dat een codelijn bedekt. De reden voor deze sortering is dat sommige tests hoe dan ook moeten uitgevoerd worden, aangezien ze mogelijks de enige tests zijn die een bepaalde codelijn bedekken. Deze tests kunnen echter ook codelijnen bedekken die door andere tests worden bedekt, waardoor deze overbodig worden. Het algoritme overloopt alle codelijnen in deze volgorde en selecteert steeds een van de corresponderende tests. Na elke geselecteerde test wordt elke lijn die bedekt is door de geselecteerde test verwijderd uit $C$. Dit process herhaalt zich tot $C$ leeg is en bijgevolg elke codelijn bedekt is.
 
 \subsection{ROCKET-algoritme}
 \noindent Ten slotte beschouwt deze masterproef het ROCKET-algoritme \cite{6676952}. Dit algoritme rangschikt tests door aan elke test een score toe te kennen, op basis van historische uitvoeringsgegevens. Daarna wordt de cumulatieve score $CS_t$ voor elke test $t$ berekent en wordt de objectieffunctie $g$ gedefinieerd. In deze functie stelt $E_t$ de uitvoeringstijd van de test voor:
