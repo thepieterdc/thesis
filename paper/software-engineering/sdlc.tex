@@ -1,8 +1,7 @@
 % !TeX root = ../thesis.tex
 
-% KIJK NAAR DIE OMIT SOME WANT DAS RAAR
 \section{Software Development Life Cycle}\label{sec:se-sdlc}
-An implementation of the SDLC typically consists of several phases and a model that describes the transition from every phase to another. Depending on the nature of the software, we can either omit some or add more phases. The five phases below were compiled from multiple sources \cite{2010govardhan, 7106435} and describe a generic approach to which most software projects adhere.
+An implementation of the SDLC consists of two parts. The first part is a list of phases, and the second part is a function that describes the transitions between these phases. Depending on the nature of the software, existing phases can either be omitted or additional phases can be added. The five phases below were compiled from multiple sources \cite{2010govardhan, 7106435} and describe a generic approach to which most software projects adhere.
 \begin{enumerate}
 	\bolditem{Requirements phase} In the first phase of the development process, the developers acquaint themselves with the project and compile a list of the desired functionalities \cite{7106435}. Subsequently, the developers can decide on the financial details, the required hardware specifications as well as which external software libraries will need to be acquired.
 	
@@ -36,9 +35,8 @@ This is the most basic test type. The purpose of a unit test is to verify the be
 
 \clearpage
 
-% "the fact that" is Nederlands -> pas aan
 \subsubsection{Integration tests}
-The second category involves a more advanced type of tests. An integration test validates the interaction between two or more individual components \cite{whittaker2000}. Ideally, accompanying unit tests should exist that test these components as well. As opposed to the previous unit tests, a developer will usually implement an integration test as a \gls{blackboxtest} \cite[p.~6]{6588537}. A black-box test differs from the earlier white-box tests in the fact that the implementation details of the code under test are irrelevant for the construction of the test. Since a black-box test does not require any details about the code, we can, in fact, construct the integration tests before we implement the actual feature itself. A typical example of an integration test is the communication between the front-end and the back-end side of a web application. Another example is illustrated in \Cref{lst:se-integration-test}.\\
+The second category involves a more advanced type of tests. An integration test validates the interaction between two or more individual components \cite{whittaker2000}. Ideally, accompanying unit tests should exist that test these components as well. As opposed to the previous unit tests, a developer will usually implement an integration test as a \gls{blackboxtest} \cite[p.~6]{6588537}. The difference between a black-box and a white-box test is that a black-box test assumes that the implementation details of the code under test are unknown during the construction of the test. Since a black-box test does not require any details about the code, we can, in fact, construct the integration tests before we implement the actual feature itself. A typical example of an integration test is the communication between the front-end and the back-end side of a web application. Another example is illustrated in \Cref{lst:se-integration-test}.\\
 	
 \lstinputlisting[caption=Java integration test in JUnit., label=lst:se-integration-test, language=Java]{assets/listings/example-integration-test.java}
 

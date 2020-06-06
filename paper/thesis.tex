@@ -68,13 +68,13 @@
 \renewcommand{\headrulewidth}{0.5pt}
 \renewcommand{\footrulewidth}{0pt}
 
-\fancypagestyle{plain}{
-	\fancyhf{}
-	\fancyhead[LE,RO]{\headerfmtpage{\thepage}}
-	\fancyhead[LO]{\headerfmt{\rightmark}}
-	\fancyhead[RE]{\headerfmt{\leftmark}}
-	\renewcommand{\headrulewidth}{0.5pt}
-	\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{ % eerste bladzijde van een hoofdstuk
+  \fancyhf{}
+  \fancyhead[LE,RO]{\headerfmtpage{\thepage}}
+  \fancyhead[LO]{\headerfmt{\rightmark}}
+  \fancyhead[RE]{\headerfmt{\leftmark}}
+  \renewcommand{\headrulewidth}{0.5pt}
+  \renewcommand{\footrulewidth}{0pt}
 }
 
 % Colours.
@@ -184,9 +184,6 @@
 \crefname{listing}{example}{examples}  
 \Crefname{listing}{Example}{Examples}
 
-% ZET PAGINANUMMERS BIJ ANDERE DINGEN.
-% GOOI EVENTUEEL SUMMARIES UIT INHOUDSTAFEL.
-
 \begin{document}
 \onehalfspacing
 	
@@ -194,6 +191,9 @@
 \frontmatter
 \pagestyle{empty}
 \includepdf[pages=-]{titlepage.pdf}
+\pagenumbering{roman}
+
+\pagestyle{plain}
 
 \blankpage{}
 
@@ -214,15 +214,12 @@
 \selectlanguage{english}
 
 % Extended abstracts.
-\addcontentsline{toc}{chapter}{Extended abstract}
 \includepdf[pages=-]{abstract-en/extended-abstract.pdf}
 \includepdf[pages=-]{abstract-nl/extended-abstract.pdf}
 
 % Lay summary.
 \input{summary/lay.tex}
 \clearpage
-
-\pagestyle{fancy}
 
 \blankpage{}
 
@@ -231,6 +228,7 @@
 
 % Corpus.
 \mainmatter
+\pagenumbering{arabic}
 
 \input{glossary.tex}
 \clearpage

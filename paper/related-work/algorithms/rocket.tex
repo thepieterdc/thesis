@@ -3,11 +3,8 @@
 \subsection{ROCKET algorithm}
 \label{ssec:alg-rocket}
 
-The third and final algorithm is the ROCKET algorithm. This algorithm has been presented by Marijan, Gotlieb and Sen \cite{6676952} as part of a case study to improve the testing efficiency of industrial video conferencing software.
-% 2 keer "previous algorithms" -> 
- Contrarily to the previous algorithms, which attempted to execute as few test cases as possible, this algorithm does execute the entire test suite. Unlike the previous algorithms that only take code coverage into account, this algorithm also considers historical failure data and test execution time. The objective of this algorithm is twofold: select the test cases with the highest successive failure rate, while also maximising the number of executed test cases in a limited time frame. In the implementation below, we will consider an infinite time frame as this is a domain-specific constraint and irrelevant for this thesis. This algorithm will yield a total ordering of all the test cases in the test suite, ordered using a weighted function.\\
+The third and final algorithm is the ROCKET algorithm. This algorithm has been presented by Marijan, Gotlieb and Sen \cite{6676952} as part of a case study to improve the testing efficiency of industrial video conferencing software. This algorithm differs from the previous two algorithms on two aspects. First, this algorithm does execute the entire test suite, rather than attempting to execute as few test cases as possible. Additionally, this algorithm considers historical failure data, as well as test execution time. The objective of this algorithm is twofold: select the test cases with the highest successive failure rate, while also maximising the number of executed test cases in a limited time frame. In the implementation below, we will consider an infinite time frame as this is a domain-specific constraint and irrelevant for this thesis. This algorithm will yield a total ordering of all the test cases in the test suite, ordered using a weighted function.\\
 
-% PAS IF/ELSE BIJ F AAN ZODAT CURRENT-J NIET OP VOLGENDE LIJN STAAT
 \noindent The modified version of the algorithm (of which the pseudocode is provided in \Cref{alg:rocket}) takes three inputs:
 \begin{itemize}
 	\item $TS = \{T_1, \dots, T_n\}$: the set of test cases to prioritise.
@@ -20,7 +17,7 @@ The third and final algorithm is the ROCKET algorithm. This algorithm has been p
 		\begin{itemize}
 			\item $F_t = \begin{bmatrix}
 				f_1 & \dots & f_m
-			\end{bmatrix}$: the failure status of test case $t$ over the previous $m$ successive executions. $F_{ij} = 1$ if test case $i$ has failed in execution $(current - j)$, $0$ if it has passed.
+			\end{bmatrix}$: the failure status of test case $t$ over the previous $m$ successive executions. $F_{ij} = 1$ if test case $i$ has failed, respectively $0$ if $i$ has passed in execution $(current - j)$.
 		\end{itemize}
 \end{itemize}
 
