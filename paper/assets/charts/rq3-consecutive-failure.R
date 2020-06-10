@@ -12,7 +12,7 @@ ggplot(data, aes(x=gh_build_started_at)) +
   geom_histogram(data=data, aes(fill = "Total runs"), size = 0) +
   geom_histogram(data=subset(data, failed == TRUE), aes(fill = "Failed runs"), size = 0) +
   guides(color=FALSE) +
-  ggtitle("Consecutive failures in Travis CI over time") +
+  ggtitle("Consecutive failures on Travis CI over time") +
   labs(x = "Time", y = "Consecutive test suite executions") +
   scale_fill_manual("Status", values = fills, guide = guide_legend(
     direction = "horizontal",
