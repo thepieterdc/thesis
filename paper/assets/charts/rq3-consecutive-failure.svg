@@ -13,7 +13,7 @@
    viewBox="0 0 522.23926 239.61035"
    version="1.1"
    id="svg747"
-   sodipodi:docname="rq2-consecutive-failure.svg"
+   sodipodi:docname="rq3-consecutive-failure.svg"
    inkscape:version="0.92.3 (2405546, 2018-03-11)">
   <metadata
      id="metadata751">
@@ -23,7 +23,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -44,9 +44,9 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="1.3665434"
-     inkscape:cx="509.77144"
-     inkscape:cy="199.02432"
+     inkscape:zoom="1.9325842"
+     inkscape:cx="351.41088"
+     inkscape:cy="202.0594"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
@@ -2041,24 +2041,27 @@
      width="100%"
      height="100%"
      transform="translate(-5.7841797,-5.7412109)" />
-  <use
-     style="fill:#000000;fill-opacity:1"
-     xlink:href="#glyph3-2"
-     x="80.431641"
-     y="16.506836"
-     id="use660"
-     width="100%"
-     height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
-  <use
-     style="fill:#000000;fill-opacity:1"
-     xlink:href="#glyph3-3"
-     x="88.4375"
-     y="16.506836"
-     id="use662"
-     width="100%"
-     height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+  <g
+     id="g409">
+    <use
+       transform="translate(-5.7841797,-5.7412109)"
+       height="100%"
+       width="100%"
+       id="use660"
+       y="16.506836"
+       x="80.431641"
+       xlink:href="#glyph3-2"
+       style="fill:#000000;fill-opacity:1" />
+    <use
+       transform="translate(-5.7841797,-5.7412109)"
+       height="100%"
+       width="100%"
+       id="use662"
+       y="16.506836"
+       x="88.4375"
+       xlink:href="#glyph3-3"
+       style="fill:#000000;fill-opacity:1" />
+  </g>
   <use
      style="fill:#000000;fill-opacity:1"
      xlink:href="#glyph3-4"
@@ -2221,24 +2224,28 @@
      width="100%"
      height="100%"
      transform="translate(-5.7841797,-5.7412109)" />
-  <use
-     style="fill:#000000;fill-opacity:1"
-     xlink:href="#glyph3-9"
-     x="203.09766"
-     y="16.506836"
-     id="use700"
-     width="100%"
-     height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
-  <use
-     style="fill:#000000;fill-opacity:1"
-     xlink:href="#glyph3-3"
-     x="206.29395"
-     y="16.506836"
-     id="use702"
-     width="100%"
-     height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+  <g
+     id="g409-6"
+     transform="translate(122.35645,-0.109375)">
+    <use
+       transform="translate(-5.7841797,-5.7412109)"
+       height="100%"
+       width="100%"
+       id="use660-7"
+       y="16.506836"
+       x="80.431641"
+       xlink:href="#glyph3-2"
+       style="fill:#000000;fill-opacity:1" />
+    <use
+       transform="translate(-5.7841797,-5.7412109)"
+       height="100%"
+       width="100%"
+       id="use662-5"
+       y="16.506836"
+       x="88.4375"
+       xlink:href="#glyph3-3"
+       style="fill:#000000;fill-opacity:1" />
+  </g>
   <use
      style="fill:#000000;fill-opacity:1"
      xlink:href="#glyph3-11"
@@ -2256,7 +2263,7 @@
      id="use706"
      width="100%"
      height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+     transform="translate(-1.2841797,-5.7412109)" />
   <use
      style="fill:#000000;fill-opacity:1"
      xlink:href="#glyph3-15"
@@ -2265,7 +2272,7 @@
      id="use708"
      width="100%"
      height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+     transform="translate(-1.2841797,-5.7412109)" />
   <use
      style="fill:#000000;fill-opacity:1"
      xlink:href="#glyph3-13"
@@ -2274,7 +2281,7 @@
      id="use710"
      width="100%"
      height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+     transform="translate(-1.2841797,-5.7412109)" />
   <use
      style="fill:#000000;fill-opacity:1"
      xlink:href="#glyph3-10"
@@ -2283,7 +2290,7 @@
      id="use712"
      width="100%"
      height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+     transform="translate(-1.2841797,-5.7412109)" />
   <use
      style="fill:#000000;fill-opacity:1"
      xlink:href="#glyph3-9"
@@ -2292,7 +2299,7 @@
      id="use714"
      width="100%"
      height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+     transform="translate(-1.2841797,-5.7412109)" />
   <use
      style="fill:#000000;fill-opacity:1"
      xlink:href="#glyph3-4"
@@ -2301,7 +2308,7 @@
      id="use716"
      width="100%"
      height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+     transform="translate(-1.2841797,-5.7412109)" />
   <use
      style="fill:#000000;fill-opacity:1"
      xlink:href="#glyph3-11"
@@ -2319,7 +2326,7 @@
      id="use720"
      width="100%"
      height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+     transform="translate(-1.2841797,-5.7412109)" />
   <use
      style="fill:#000000;fill-opacity:1"
      xlink:href="#glyph3-17"
@@ -2328,7 +2335,7 @@
      id="use722"
      width="100%"
      height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+     transform="translate(-1.2841797,-5.7412109)" />
   <use
      style="fill:#000000;fill-opacity:1"
      xlink:href="#glyph3-11"
@@ -2346,7 +2353,7 @@
      id="use726"
      width="100%"
      height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+     transform="translate(-1.2841797,-5.7412109)" />
   <use
      style="fill:#000000;fill-opacity:1"
      xlink:href="#glyph3-10"
@@ -2355,7 +2362,7 @@
      id="use728"
      width="100%"
      height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+     transform="translate(-1.2841797,-5.7412109)" />
   <use
      style="fill:#000000;fill-opacity:1"
      xlink:href="#glyph3-5"
@@ -2364,7 +2371,7 @@
      id="use730"
      width="100%"
      height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+     transform="translate(-1.2841797,-5.7412109)" />
   <use
      style="fill:#000000;fill-opacity:1"
      xlink:href="#glyph3-15"
@@ -2373,7 +2380,7 @@
      id="use732"
      width="100%"
      height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+     transform="translate(-1.2841797,-5.7412109)" />
   <use
      style="fill:#000000;fill-opacity:1"
      xlink:href="#glyph3-11"
@@ -2391,7 +2398,7 @@
      id="use736"
      width="100%"
      height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+     transform="translate(-1.2841797,-5.7412109)" />
   <use
      style="fill:#000000;fill-opacity:1"
      xlink:href="#glyph3-9"
@@ -2400,7 +2407,7 @@
      id="use738"
      width="100%"
      height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+     transform="translate(-1.2841797,-5.7412109)" />
   <use
      style="fill:#000000;fill-opacity:1"
      xlink:href="#glyph3-18"
@@ -2409,7 +2416,7 @@
      id="use740"
      width="100%"
      height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+     transform="translate(-1.2841797,-5.7412109)" />
   <use
      style="fill:#000000;fill-opacity:1"
      xlink:href="#glyph3-5"
@@ -2418,5 +2425,5 @@
      id="use742"
      width="100%"
      height="100%"
-     transform="translate(-5.7841797,-5.7412109)" />
+     transform="translate(-1.2841797,-5.7412109)" />
 </svg>
