@@ -50,6 +50,15 @@ class AbstractDatabase:
         raise NotImplemented
 
     @abstractmethod
+    def get_repository(self, url: str) -> Optional[Repository]:
+        """
+        Gets the repository for the given url.
+
+        :param url: url to the repository
+        """
+        raise NotImplemented
+
+    @abstractmethod
     def get_run_by_id(self, id: int) -> Optional[Run]:
         """
         Gets the given run.
@@ -81,12 +90,12 @@ class AbstractDatabase:
         raise NotImplemented
 
     @abstractmethod
-    def get_tests_by_coverage(self, run: Run, blocks: List[CodeBlock]) -> \
-        Set[Test]:
+    def get_tests_by_coverage(self, repository: Repository,
+                              blocks: List[CodeBlock]) -> Set[Test]:
         """
         Gets the tests that provide coverage for the given list of blocks.
 
-        :param run: run, used to find the repository and base path
+        :param repository: repository, used to find the repository id
         :param blocks: list of code ranges
         :return: tests that cover the given code blocks
         """
