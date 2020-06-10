@@ -101,10 +101,13 @@ class PostgresDatabase(AbstractDatabase):
 
         for resp in cursor.fetchall():
             name, testorder = resp
-            orders = list(
-                map(lambda d: test_cases[int(d)], testorder.split(",")))
+            if not testorder:
+                yield name, list()
+            else:
+                orders = list(
+                    map(lambda d: test_cases[int(d)], testorder.split(",")))
 
-            yield (name, orders)
+                yield name, orders
 
         # Close the connection.
         cursor.close()
@@ -120,6 +123,21 @@ class PostgresDatabase(AbstractDatabase):
         cursor.close()
 
         return None if not result else result[0]
+
+    def get_repository(self, url: str) -> Optional[Repository]:
+        cursor = self.__connection.cursor()
+        cursor.execute("SELECT id FROM repositories WHERE url=%s", (url,))
+        repository_result = cursor.fetchone()
+
+        if repository_result:
+            repository = Repository(repository_result[0], url)
+            cursor.close()
+            return repository
+
+        cursor.close()
+
+        # Repository not found.
+        return None
 
     def get_run_by_id(self, id: int) -> Optional[Run]:
         cursor = self.__connection.cursor()
@@ -147,7 +165,7 @@ class PostgresDatabase(AbstractDatabase):
         cursor = self.__connection.cursor()
         cursor.execute(
             "SELECT p.name, ps.score FROM predictors_scores ps INNER JOIN predictors p on ps.predictor_id = p.id WHERE ps.repository_id=%s",
-            (repository.id, )
+            (repository.id,)
         )
 
         yield from cursor.fetchall()
@@ -171,8 +189,8 @@ class PostgresDatabase(AbstractDatabase):
         # Iterate over the results.
         return set(Test(id, blocks) for id, blocks in ret.items())
 
-    def get_tests_by_coverage(self, run: Run, blocks: List[CodeBlock]) -> \
-        Set[Test]:
+    def get_tests_by_coverage(self, repository: Repository,
+                              blocks: List[CodeBlock]) -> Set[Test]:
         cursor = self.__connection.cursor()
 
         ret = defaultdict(set)
@@ -185,7 +203,7 @@ class PostgresDatabase(AbstractDatabase):
                 "INNER JOIN tests t on tc.test_id = t.id WHERE "
                 "t.repository_id=%s AND tc.sourcefile=%s AND tc.from_line <= "
                 "%s AND %s <= tc.to_line",
-                (run.repository.id, b.file, b.to_line, b.from_line))
+                (repository.id, b.file, b.to_line, b.from_line))
 
             # Add the coverage
             for row in cursor.fetchall():

@@ -25,27 +25,27 @@ class AffectedCommand(AbstractCommand):
         return "affected"
 
     def run(self, arguments: List[str]) -> None:
-        if not arguments:
-            logging.error(f'Syntax: {self.name()} run_id')
+        if len(arguments) != 2:
+            logging.error(f'Syntax: {self.name()} repository_url commit')
             exit(2)
 
         # Parse the arguments.
-        run_id = int(arguments[0])
+        repository_url = str(arguments[0]).rstrip("/")
+        commit = str(arguments[1])
 
-        # Get the current run.
-        run = self._db.get_run_by_id(run_id)
-        if not run:
-            logging.error(f'Run {run_id} was not found.')
+        # Get the current repository.
+        repository = self._db.get_repository(repository_url)
+        if not repository:
+            logging.error(f'Repository was not found.')
             exit(2)
 
-        logging.info(f'Run found.')
-        logging.info(f'Repository: {run.repository}')
+        logging.info(f'Repository: {repository}')
 
         # Get the affected code in this commit.
-        affected_code = list(run.repository.changes(run.commit))
+        affected_code = list(repository.changes(commit))
 
         # Fetch the tests that cover the changed files.
-        affected_tests = self._db.get_tests_by_coverage(run, affected_code)
+        affected_tests = self._db.get_tests_by_coverage(repository, affected_code)
 
         affected_test_names = set(
             map(lambda t: self._db.get_test_by_id(t.id), affected_tests)

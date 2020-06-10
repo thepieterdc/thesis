@@ -24,20 +24,19 @@ class ScoresCommand(AbstractCommand):
 
     def run(self, arguments: List[str]) -> None:
         if not arguments:
-            logging.error(f'Syntax: {self.name()} run_id')
+            logging.error(f'Syntax: {self.name()} repository_url')
             exit(2)
 
         # Parse the arguments.
-        run_id = int(arguments[0])
+        repository_url = str(arguments[0]).rstrip("/")
 
-        # Get the current run.
-        run = self._db.get_run_by_id(run_id)
-        if not run:
-            logging.error(f'Run {run_id} was not found.')
+        # Get the current repository.
+        repository = self._db.get_repository(repository_url)
+        if not repository:
+            logging.error(f'Repository was not found.')
             exit(2)
 
-        logging.info(f'Run found.')
-        logging.info(f'Repository: {run.repository}')
+        logging.info(f'Repository: {repository}')
 
-        for (predictor, score) in self._db.get_scores(run.repository):
+        for (predictor, score) in self._db.get_scores(repository):
             logging.info(f'{predictor}: {score}')
