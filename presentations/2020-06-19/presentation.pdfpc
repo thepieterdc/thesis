@@ -1,0 +1,153 @@
+[font_size]
+19
+[notes]
+### 1
+Welkom allemaal, ik ga vandaag iets meer vertellen over mijn thesis, die gaat over het optimaliseren van Continue Integratie door middel van Test Prioritering
+### 2
+Even kort de structuur van deze presentatie schetsen: Eerst ga ik het probleem bespreken
+### 3
+Daarna ga ik reeds bestaande oplossingen overlopen
+### 4
+Gevolgd door mijn eigen implementatie hiervan
+### 5
+En dan het effect van het toepassen van de besproken technieken op bestaande software
+### 6
+Afsluiten ga ik doen met een korte demo zodat jullie je er iets bij kunnen voorstellen
+### 7
+Maar eerst en vooral
+### 8
+Deze thesis gaat over Continue Integratie (afgekort als CI); maar wat is dat nu eigenlijk?
+### 9
+Voor de mensen die het niet zouden kennen, ga ik dit concept kort uitleggen met behulp van een voorbeeld van een bedrijf dat Android apps ontwikkelt
+### 10
+Links zie je een werknemer van het bedrijf. Het ding in het midden stelt een server voor waarop een CI service draait.
+### 11
+Aangezien een bedrijf meer dan 1 werknemer heeft die tegelijk aan andere delen van dezelfde applicatie werkt, is het belangrijk dat elke werknemer meerdere keren per dag zijn aanpassingen naar de CI server synchroniseert, om deze te integreren met de aanpassingen van andere mensen.
+### 12
+Na deze synchronisatie zal de CI service een aantal checks uitvoeren, waaronder de tests van de applicatie
+### 13
+Tests worden uitgevoerd
+### 14
+Het uitvoeren van deze tests kan 2 kanten uit, ofwel allemaal slagen, ofwel minstens 1 test die faalt
+### 15
+In het geval dat er een falende test is, wordt de ontwikkelaar hiervan op de hoogte gebracht en kan hij het probleem oplossen
+### 16
+In het andere geval slagen alle tests
+### 17
+En dan kan de CI service zodanig worden ingesteld om bijvoorbeeld na elke succesvolle integratie een nieuwe versie van de app naar de play store te pushen, zodat de gebruikers meteen alle nieuwste updates kunnen gebruiken
+### 18
+Nu, wat is het probleem hiermee?
+### 19
+Het probleem zit hem eigenlijk in die tests
+### 20
+Bij het begin van de app zullen er namelijk niet veel tests zijn
+### 21
+Maar naarmate de tijd verstrijkt en het project groeit
+### 22
+Komen er alsmaar meer tests bij, waardoor het uitvoeren van al die tests heel lang duurt en je dus niet snel weet of er een probleem in je code zit of niet
+### 23
+Wat kunnen we hier nu aan doen, er zijn drie bestaande oplossingen
+### 24
+De eerste is test selectie
+### 25
+In deze manier nemen we de verzameling tests en kijken we welke veranderingen er zijn toegebracht aan de code
+### 26
+Door dat te analyseren kunnen we inschatten welke tests waarschijnlijk niet getroffen zullen zijn en die voor deze run niet uitvoeren
+### 27
+De tweede manier is Test Minimalisatie
+### 28
+Hier nemen we opnieuw de verzameling tests
+### 29
+Maar analyseren we welke tests volledig redundant zijn en permanent mogen worden verwijderd, bijvoorbeeld twee of meerdere tests die samen hetzelfde testen als één andere bestaande test
+### 30
+De laatste manier is Test Prioritering
+### 31
+De vorige 2 manieren probeerden minder tests uit te voeren, maar soms kan het zijn, bijvoorbeeld bij medische, kritische software, dat wel altijd alle tests moeten worden uitgevoerd om geen enkel risico te lopen
+### 32
+In dit geval kunnen we nog steeds een optimalisatie doen, door de tests in een zodanige volgorde uit te voeren dat we snel een falende test kunnen detecteren. Als er immers snel een falende test wordt gedetecteerd, kan de programmeur dit snel oplossen en de andere tests laten stoppen met uitvoeren aangezien hij toch al weet dat er een gefaald is
+### 33
+Ziezo, probleem opgelost
+### 34
+Of niet?
+### 35
+Wel, de waarheid is dat dit in theorie heel goed klinkt, maar zoals vaak is het in de praktikj een ander paar mouwen
+### 36
+Om dit te illustreren, laten we eens kijken naar wat er in de praktijk bestaat
+### 37
+Voor Java bestaat er Clover, wat recent opensource is gemaakt. Dit werkt vrij goed, maar enkel voor Java en het is ook niet eenvoudig om de manier van prioritering te beinvloeden
+### 38
+En voor alle andere programmeertalen, welja, bestaat er niets dat algemeen toepasbaar en vooral uitbreidbaar is
+### 39
+Dit brengt ons naadloos bij mijn eigen implementatie
+### 40
+Deze implementatie bestaat uit 3 componenten die communiceren via een uniforme HTTP interface. Los daarvan bestaan deze componenten volledig op zichzelf en kunnen ze dus volledig los van elkaar worden aangepast en uitgebreid
+### 41
+De eerste component is de agent
+### 42
+Gevolgd door de controller
+### 43
+En tenslotte de predictor
+### 44
+Ik zal nu deze componenten bespreken, beginnend met de agent
+### 45
+De agent is afhankelijk van de programmeertaal en wordt in het gebruikte test framework ingeplugd. Deze agent heeft twee taken, de eerste taak is het uitvoeren van alle tests in een bepaalde volgorde die door de predictor wordt bepaald
+### 46
+Daarnaast stuurt de agent nadat de tests zijn uitgevoerd ook feedback naar de controller
+### 47
+Dan, de tweede component, de controller
+### 48
+De controller heeft ook twee taken: Enerzijds is dit een soort brug tussen de agent en de predictor, dus stuurt binnenkomende verzoeken door
+### 49
+Anderzijds zal de controller ook feedback van de agent analyseren om de performance van volgende uitvoeringen te verbeteren
+### 50
+Dat brengt ons bij de derde component, de predictor
+### 51
+Zoals de naam al doet vermoeden, bepaalt de predictor de volgorde waarin de tests worden uitgevoerd
+### 52
+Dit wordt gedaan aan de hand van 10 ingebouwde algoritmes
+### 53
+Het belangrijkste aspect is dat de predictor uitbreidbaar is. Elk algoritme gebruikt dezelfde interface; een voorbeeld staat hieronder. Het algoritme kan de coverage, vorige uitvoeringsresultaten en uitvoeringstijden van de tests gebruiken om zo een volgorde te bepalen. In het voorbeeld hieronder wordt er simpelweg een volledig willekeurige volgorde gegenereerd
+### 54
+Een van deze algoritmes heb ik zelf gemaakt, door de beste punten van de andere algoritmes bij elkaar te gooien. Dit algoritme bestaat uit 4 stappen
+### 55
+Eerst selecteren we alle tests die getroffen zijn door code aanpassingen in de huidige run én die ook minstens één keer gefaald zijn in de vorige 3 runs. We ordenen die op basis van uitvoeringstijd zodat de snelste tests eerder worden uitgevoerd
+### 56
+Daarna doen we exact hetzelfde voor alle overblijvende getroffen tests (die dus niet onlangs gefaald zijn)
+### 57
+Eens dat gedaan is worden alle overblijvende tests geordend op volgorde van hoeveel extra gecoverde code ze nog kunnen bijdragen (rekening houdend met de tests die al geselecteerd zijn)
+### 58
+Stel dat er uiteindelijk nog tests zouden overblijven die geen nieuwe coverage meer bijdragen, voeren we deze tests uit volgens stijgende uitvoeringstijd. Merk op dat deze tests eigenlijk redundant zijn en dus ook zouden kunnen worden overgeslagen, maar zoals eerder gezegd kiezen we ervoor om die toch uit te voeren voor de zekerheid
+### 59
+De aandachtige luisteraar heeft misschien opgemerkt dat er nog een puzzelstuk ontbreekt: De predictor bestaat namelijk uit 10 algoritmes, die elk een uitvoeringsvolgorde bepalen
+### 60
+Maar hoe moeten we nu kiezen wat de uiteindelijke volgorde moet zijn?
+### 61
+Hiervoor dient de metapredictor
+### 62
+De metapredictor in deze thesis is zeer eenvoudig en werkt door elk algoritme een score te geven voor het huidige project, en telkens het algoritme met de hoogste score te verkiezen. Deze score wordt bijgewerkt door de controller tijdens het analyseren van de uitgevoerde tests. Dit heeft als bijkomend voordeel dat als de aard van het project zou evolueren over de tijd, een ander algoritme mogelijks beter zou kunnen werken en dat dit automatisch wordt aangepast
+Een mogelijke uitbreiding zou kunnen zijn om hier Machine Learning voor te gebruiken. Verder zijn er ook bestaande algoritmes die zuiver gebaseerd zijn op Machine Learning
+### 63
+Nu we weten hoe het werkt, tijd om eens te kijken hoe goed het werkt
+### 64
+Eerst en vooral heb ik in deze thesis drie onderzoeksvragen over de tests van een typische applicatie beantwoord
+De eerste onderzoeksvraag was om te kijken wat de kans is dat een test run gaat falen; door twee bronnen van een veelgebruikte publieke CI service te combineren blijkt dit tussen de 11 en 19% te liggen
+### 65
+Vervolgens, op dezelfde service, blijkt dat de gemiddelde test run daar tussen de 2 en 5 minuten duurt. Wat aangeeft dat deze service voornamelijk voor kleine projecten wordt gebruikt. Er zijn echter ook een aantal uitschieters die zeer geavanceerde test technieken gebruiken en een aantal uur duren
+### 66
+Tenslotte de kans dat een test run tweemaal na elkaar gaat falen, op deze service is dit iets meer dan 50% en dus zeer hoog
+### 67
+En nu dus de performance van mijn implementatie op het Dodona project van de UGent. We kunnen hierbij twee aspecten beschouwen. Te beginnen met het aantal uitgevoerde tests totdat de eerste falende test wordt gedetecteerd.
+### 68
+Daarnaast heeft het uitvoeren van 25 keer minder tests natuurlijk ook een invloed op de wachttijd tot de eerste falende test wordt waargenomen. Deze grafiek ziet er gelijkaardig uit, maar het verschil is veel significanter; tot wel 40 keer
+### 70
+Dus, samengevat
+### 71
+Met CI kunnen we automatisch tests uitvoeren, iets wat zeer goed is om vroegtijdig fouten te detecteren
+### 72
+Veel tests kunnen echter een probleem vormen omdat je dan lang moet wachten op resultaten
+### 73
+Dit kunnen we oplossen met Test Prioritering, waarbij we tests herordenen om veel sneller een falende test kunnen detecteren
+### 74
+Dit heeft als resultaat dat de wachttijd daalt en de productiviteit stijgt
+### 75
+Zijn er nog vragen?

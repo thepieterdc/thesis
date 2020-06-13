@@ -6,8 +6,8 @@ data <- subset(data, Alpha > -1 & Alpha < 80)
 data$idx = seq(1:length(data$commit))
 
 ggplot(data, aes(idx)) +
-  geom_line(aes(y = Original, color = "Original")) +
-  geom_line(aes(y = Alpha, color = "Alpha")) +
+  geom_line(aes(y = Original_ms / 1000, color = "Original")) +
+  geom_line(aes(y = Alpha_ms / 1000, color = "Alpha")) +
   ggtitle("Performance of the Alpha algorithm on Dodona") +
   labs(x = "Test run", y = "seconds until first failure") +
   scale_color_manual(name = "Algorithm", values = c("Original" = "gray", "Alpha" = "red")) +
