@@ -1,4 +1,5 @@
 <!-- $theme: gaia -->
+<!-- $size: 4:3 -->
 
 <link rel="stylesheet" href="../styles.css" />
 
@@ -61,6 +62,7 @@
 2) Solutions
 3) Implementation
 4) Results
+5) Demo
 
 ---
 
@@ -578,8 +580,8 @@ def predict(test_cases, coverage, results, duration):
 
 1) Unstable, affected test cases (by duration)
 2) Affected test cases (by duration)
-3) Test cases based on additional coverage
-4) Other test cases <code>[redunant]</code>
+3) Test cases based on added coverage
+4) Other test cases <code>[redundant]</code>
 
 ---
 
@@ -630,50 +632,11 @@ def predict(test_cases, coverage, results, duration):
 
 ---
 
-<!-- Note: Eerst en vooral heb ik in deze thesis drie onderzoeksvragen over de tests van een typische applicatie beantwoord -->
-
-<!-- Note: De eerste onderzoeksvraag was om te kijken wat de kans is dat een test run gaat falen; door twee bronnen van een veelgebruikte publieke CI service te combineren blijkt dit tussen de 11 en 19% te liggen -->
-
-## Results
-
-#### RQ1: Failure probability
-
-<br/>
-<img src="charts/rq1-failure-probability.svg" style="width: 100%" />
-
-<br/>
-<br/>
-<center>
-	11% - 19%
-</center>
-
----
-
-<!-- Note: Vervolgens, op dezelfde service, blijkt dat de gemiddelde test run daar tussen de 2 en 5 minuten duurt. Wat aangeeft dat deze service voornamelijk voor kleine projecten wordt gebruikt. Er zijn echter ook een aantal uitschieters die zeer geavanceerde test technieken gebruiken en een aantal uur duren -->
-
-## Results
-
-#### RQ2: Average test run duration
-
-<img src="charts/rq2-test-run-durations.svg" style="width: 100%" />
-
----
-
-<!-- Note: Tenslotte de kans dat een test run tweemaal na elkaar gaat falen, op deze service is dit iets meer dan 50% en dus zeer hoog -->
-
-## Results
-
-#### RQ3: Consecutive failure probability
-
-<img src="charts/rq3-consecutive-failure.svg" style="width: 100%" />
-
----
-
 ## Results
 
 <!-- Note: En nu dus de performance van mijn implementatie op het Dodona project van de UGent. We kunnen hierbij twee aspecten beschouwen. Te beginnen met het aantal uitgevoerde tests totdat de eerste falende test wordt gedetecteerd. -->
 
-#### RQ4: Performance on Dodona (Tests)
+#### Performance on Dodona (Tests)
 
 <img src="charts/rq4-dodona-alpha.svg" style="width: 100%" />
 
@@ -691,7 +654,7 @@ def predict(test_cases, coverage, results, duration):
 
 <!-- Note: Daarnaast heeft het uitvoeren van 25 keer minder tests natuurlijk ook een invloed op de wachttijd tot de eerste falende test wordt waargenomen. Deze grafiek ziet er gelijkaardig uit, maar het verschil is veel significanter; tot wel 40 keer -->
 
-#### RQ4: Performance on Dodona (Duration)
+#### Performance on Dodona (Duration)
 
 <img src="charts/rq4-dodona-alpha-time.svg" style="width: 100%" />
 

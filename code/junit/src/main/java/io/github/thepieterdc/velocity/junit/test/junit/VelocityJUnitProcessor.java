@@ -75,7 +75,6 @@ public class VelocityJUnitProcessor implements TestClassProcessor {
     
     @Override
     public void processTestClass(final TestClassRunInfo testClass) {
-        LOGGER.debug("Executing test class {}", testClass.getTestClassName());
         this.executor.execute(testClass.getTestClassName());
     }
     

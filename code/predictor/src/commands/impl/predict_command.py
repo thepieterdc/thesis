@@ -43,7 +43,7 @@ class PredictCommand(AbstractCommand):
         affected_code = list(run.repository.changes(run.commit))
 
         # Fetch the tests that cover the changed files.
-        affected_tests = self._db.get_tests_by_coverage(run, affected_code)
+        affected_tests = self._db.get_tests_by_coverage(run.repository, affected_code)
         all_tests = self._db.get_tests(run.repository)
         all_test_results = self._db.get_test_results(run.repository)
         logging.info(

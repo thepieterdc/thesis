@@ -5,13 +5,14 @@
 __author__ = "Pieter De Clercq"
 __license__ = "MIT"
 
-import git
 import logging
 import tempfile
 from typing import Iterable
 
-from entities import CodeBlock
+import git
+
 from clone import CloneProgressLogger, parse_changes
+from entities import CodeBlock
 
 
 class Repository:
@@ -56,7 +57,7 @@ class Repository:
             # Get the changes.
             logging.info('Parsing changed files...')
             try:
-                changes = commit.diff(commit.parents[0], create_patch=True)
+                changes = commit.parents[0].diff(commit, create_patch=True)
                 amt_changes = len(changes)
                 for idx, item in enumerate(changes):
                     file_name = item.a_path

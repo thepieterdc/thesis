@@ -40,7 +40,7 @@ while True:
     affected_code = list(run.repository.changes(run.commit))
 
     # Fetch the tests that cover the changed files.
-    affected_tests = db.get_tests_by_coverage(run, affected_code)
+    affected_tests = db.get_tests_by_coverage(run.repository, affected_code)
     all_tests = db.get_tests(run.repository)
     all_test_results = db.get_test_results(run.repository)
 

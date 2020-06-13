@@ -60,6 +60,7 @@ class Evaluator:
 
             # Predict an order.
             order = list(predictor.predict())
+            print(predictor_name, order)
 
             if self.__verbose:
                 logging.info(f"Order predicted: {order}")
