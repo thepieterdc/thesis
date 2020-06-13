@@ -555,6 +555,8 @@ def predict(test_cases, coverage, results, duration):
 
 <!-- Werkt door elk algoritme een score te geven per applicatie en dan degene met de hoogste te kiezen. Score wordt bijgewerkt in de feedbackfase van de controller. -->
 
+<!-- Uitbreiding: Machine Learning (of ML als predictor gebruiken) -->
+
 ## Implementation / Meta predictor
 
 <img src="metapredictor-4.svg" style="width: 100%" />
@@ -607,9 +609,10 @@ def predict(test_cases, coverage, results, duration):
 <img src="charts/rq4-dodona-alpha.svg" style="width: 95%" />
 
 <br />
-<br />
+
 <center>
-  <strong># test cases:</strong> < 25x | <strong>duration:</strong> < 40x
+  <strong># test cases:</strong> < 25x | <strong>duration:</strong> < 40x<br/>
+  <span>until first observed failure</span>
 </center>
 
 ---
@@ -658,7 +661,7 @@ def predict(test_cases, coverage, results, duration):
 <center>
 	<img src="conclusion-reorder.svg" style="width: 20%" />
   <br/>
-  <strong>TCP</strong>
+  <strong>Test Case Prioritisation</strong>
 </center>
 
 ---
