@@ -1,4 +1,5 @@
 <!-- $theme: gaia -->
+<!-- $size: 4:3 -->
 
 <link rel="stylesheet" href="../styles.css" />
 
@@ -578,7 +579,7 @@ def predict(test_cases, coverage, results, duration):
 
 1) Unstable, affected test cases (by duration)
 2) Affected test cases (by duration)
-3) Test cases based on additional coverage
+3) Test cases based on added coverage
 4) Other test cases <code>[redunant]</code>
 
 ---
