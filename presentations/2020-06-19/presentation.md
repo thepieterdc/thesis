@@ -5,7 +5,11 @@
 
 <!-- *footer: Promotors: prof. dr. Volckaert, prof. dr. ir. De Turck | Supervisors: Jasper Vaneessen, Dwight Kerkhove-->
 
-<!-- Note: Welkom allemaal, ik ga vandaag iets meer vertellen over mijn thesis, die gaat over het optimaliseren van Continue Integratie door middel van Test Prioritering -->
+<!-- Note: Welkom -->
+
+<!-- Note: Meer vertellen -->
+
+<!-- Note: Test Prioritering -->
 
 # Optimising ==CI== using
 # ==Test Case Prioritisation==
@@ -19,7 +23,9 @@
 <!-- footer: Pieter De Clercq - July 19, 2020 -->
 <!-- page_number: true -->
 
-<!-- Note: Even kort de structuur van deze presentatie schetsen: Eerst ga ik het probleem bespreken -->
+<!-- Note: Kort structuur -->
+
+<!-- Note: Probleem bespreken -->
 
 ## Overview
 1) Problem
@@ -28,7 +34,7 @@
 
 <!-- page_same: true -->
 
-<!-- Note: Daarna ga ik reeds bestaande oplossingen overlopen -->
+<!-- Note: Bestaande oplossingen -->
 
 ## Overview
 1) Problem
@@ -36,7 +42,7 @@
 
 ---
 
-<!-- Note: Gevolgd door mijn eigen implementatie hiervan -->
+<!-- Note: Eigen implementatie -->
 
 ## Overview
 1) Problem
@@ -45,7 +51,7 @@
 
 ---
 
-<!-- Note: En dan het effect van het toepassen van de besproken technieken op bestaande software -->
+<!-- Note: Effect op bestaande -->
 
 ## Overview
 1) Problem
@@ -55,7 +61,7 @@
 
 ---
 
-<!-- Note: Afsluiten ga ik doen met een korte demo zodat jullie je er iets bij kunnen voorstellen -->
+<!-- Note: Demo -->
 
 ## Overview
 1) Problem
@@ -69,19 +75,23 @@
 <!-- page_same: false -->
 <!-- *template: gaia -->
 
-<!-- Note: Maar eerst en vooral -->
+<!-- Note: Eerst en vooral -->
 
 # ==But== first
 
 ---
 
-<!-- Note: Deze thesis gaat over Continue Integratie (afgekort als CI); maar wat is dat nu eigenlijk? -->
+<!-- Note: Wat? -->
+
+<!-- Note: Afkorting CI -->
 
 # Just what is ==CI==?
 
 ---
 
-<!-- Note: Voor de mensen die het niet zouden kennen, ga ik dit concept kort uitleggen met behulp van een voorbeeld van een bedrijf dat Android apps ontwikkelt -->
+<!-- Note: Voorbeeld -->
+
+<!-- Note: Bedrijf Android -->
 
 ## Continuous Integration
 
@@ -97,7 +107,9 @@
 
 <!-- page_same: true -->
 
-<!-- Note: Links zie je een werknemer van het bedrijf. Het ding in het midden stelt een server voor waarop een CI service draait. -->
+<!-- Note: Werknemer -->
+
+<!-- Note: CI service op server -->
 
 ## Continuous Integration
 
@@ -108,7 +120,11 @@
 
 ---
 
-<!-- Note: Aangezien een bedrijf meer dan 1 werknemer heeft die tegelijk aan andere delen van dezelfde applicatie werkt, is het belangrijk dat elke werknemer meerdere keren per dag zijn aanpassingen naar de CI server synchroniseert, om deze te integreren met de aanpassingen van andere mensen. -->
+<!-- Note: Meerdere keren per dag -->
+
+<!-- Note: Sync met werknemers -->
+
+<!-- Note: Integreren -->
 
 ## Continuous Integration
 
@@ -119,7 +135,9 @@
 
 ---
 
-<!-- Note: Na deze synchronisatie zal de CI service een aantal checks uitvoeren, waaronder de tests van de applicatie -->
+<!-- Note: Checks (Stijl, Compileer) -->
+
+<!-- Note: Tests -->
 
 ## Continuous Integration
 
@@ -130,7 +148,7 @@
 
 ---
 
-<!-- Note: Tests worden uitgevoerd -->
+<!-- Note: Tests -->
 
 ## Continuous Integration
 
@@ -143,7 +161,7 @@
 
 ## Continuous Integration
 
-<!-- Note: Het uitvoeren van deze tests kan 2 kanten uit, ofwel allemaal slagen, ofwel minstens 1 test die faalt -->
+<!-- Note: Falen of Slagen -->
 
 <br/>
 <center>
@@ -152,7 +170,9 @@
 
 ---
 
-<!-- Note: In het geval dat er een falende test is, wordt de ontwikkelaar hiervan op de hoogte gebracht en kan hij het probleem oplossen -->
+<!-- Note: Weet waar is probleem? -->
+
+<!-- Note: Oplossen -->
 
 ## Continuous Integration
 
@@ -163,7 +183,7 @@
 
 ---
 
-<!-- Note: In het andere geval slagen alle tests -->
+<!-- Note: Ofwel slagen -->
 
 ## Continuous Integration
 
@@ -174,7 +194,9 @@
 
 ---
 
-<!-- Note: En dan kan de CI service zodanig worden ingesteld om bijvoorbeeld na elke succesvolle integratie een nieuwe versie van de app naar de play store te pushen, zodat de gebruikers meteen alle nieuwste updates kunnen gebruiken -->
+<!-- Note: Automatisch Play Store -->
+
+<!-- Note: Nieuwste versie -->
 
 ## Continuous Integration
 
@@ -188,20 +210,24 @@
 <!-- page_same: false -->
 <!-- *template: gaia -->
 
-<!-- Note: Nu, wat is het probleem hiermee? -->
+<!-- Note: Wat is probleem? -->
 
 # Problem?
 
 ---
 
-<!-- Note: Het probleem zit hem eigenlijk in die tests -->
+<!-- Note: In tests -->
 
 
 # ==Tests!==
 
 ---
 
-<!-- Note: Bij het begin van de app zullen er namelijk niet veel tests zijn -->
+<!-- Note: Begin -->
+
+<!-- Note: Weinig functionaliteit -->
+
+<!-- Note: Weinig tests -->
 
 ## Tests
 
@@ -213,7 +239,7 @@
 
 <!-- *page_same: true -->
 
-<!-- Note: Maar naarmate de tijd verstrijkt en het project groeit -->
+<!-- Note: Tijd verstrijkt -->
 
 ## Tests
 
@@ -225,7 +251,11 @@
 
 <!-- *page_same: true -->
 
-<!-- Note: Komen er alsmaar meer tests bij, waardoor het uitvoeren van al die tests heel lang duurt en je dus niet snel weet of er een probleem in je code zit of niet -->
+<!-- Note: Meer functionaliteit -->
+
+<!-- Note: Meer tests nodig -->
+
+<!-- Note: Duurt langer [TODO PLAATS TIJD] -->
 
 ## Tests
 
@@ -237,13 +267,15 @@
 
 <!-- *template: gaia -->
 
-<!-- Note: Wat kunnen we hier nu aan doen, er zijn drie bestaande oplossingen -->
+<!-- Note:  Wat aan doen? -->
+
+<!-- Note: Drie oplossingen -->
 
 # Solutions
 
 ---
 
-<!-- Note: De eerste is test selectie -->
+<!-- Note: Test Selectie -->
 
 # Solutions
 
@@ -251,7 +283,9 @@
 
 ---
 
-<!-- Note: In deze manier nemen we de verzameling tests en kijken we welke veranderingen er zijn toegebracht aan de code -->
+<!-- Note: Beschouw tests -->
+
+<!-- Note: Analyseer veranderingen -->
 
 ## Solutions / Test Case ==Selection==
 
@@ -261,7 +295,7 @@
 
 <!-- *page_same: true -->
 
-<!-- Note: Door dat te analyseren kunnen we inschatten welke tests waarschijnlijk niet getroffen zullen zijn en die voor deze run niet uitvoeren-->
+<!-- Note: Welke beinvloed? -->
 
 ## Solutions / Test Case ==Selection==
 
@@ -269,14 +303,14 @@
 
 ---
 
-<!-- Note: De tweede manier is Test Minimalisatie -->
+<!-- Note: Test Minimalisatie -->
 
 # Solutions
 ## Test Suite ==Minimisation==
 
 ---
 
-<!-- Note: Hier nemen we opnieuw de verzameling tests -->
+<!-- Note: Neem tests -->
 
 ## Solutions / Test Suite ==Minimisation==
 
@@ -284,7 +318,13 @@
 
 ---
 
-<!-- Note: Maar analyseren we welke tests volledig redundant zijn en permanent mogen worden verwijderd, bijvoorbeeld twee of meerdere tests die samen hetzelfde testen als één andere bestaande test -->
+<!-- Note: Voer alles uit -->
+
+<!-- Note: Wanneer tevreden -->
+
+<!-- Note: Permanent -->
+
+<!-- Note: Verschil met Selectie -->
 
 <!-- *page_same: true -->
 
@@ -294,14 +334,20 @@
 
 ---
 
-<!-- Note: De laatste manier is Test Prioritering -->
+<!-- Note: Prioritering -->
 
 # Solutions
 ## Test Case ==Prioritisation==
 
 ---
 
-<!-- Note: De vorige 2 manieren probeerden minder tests uit te voeren, maar soms kan het zijn, bijvoorbeeld bij medische, kritische software, dat wel altijd alle tests moeten worden uitgevoerd om geen enkel risico te lopen -->
+<!-- Note: Vorige technieken -->
+
+<!-- Note: Medische software -->
+
+<!-- Note: Belangrijk alles uitvoeren -->
+
+<!-- Note: Neem alle tests -->
 
 ## Solutions  / Test Case ==Prioritisation==
 
@@ -311,7 +357,13 @@
 
 <!-- *page_same: true -->
 
-<!-- Note: In dit geval kunnen we nog steeds een optimalisatie doen, door de tests in een zodanige volgorde uit te voeren dat we snel een falende test kunnen detecteren. Als er immers snel een falende test wordt gedetecteerd, kan de programmeur dit snel oplossen en de andere tests laten stoppen met uitvoeren aangezien hij toch al weet dat er een gefaald is -->
+<!-- Note: Voer allemaal uit -->
+
+<!-- Note: Volgorde -->
+
+<!-- Note: Snel falen -->
+
+<!-- Note: Ontwikkelaar weet waar fout [5M] -->
 
 ## Solutions / Test Case ==Prioritisation==
 
@@ -321,19 +373,21 @@
 
 <!-- *template: gaia -->
 
-<!-- Note: Ziezo, probleem opgelost -->
+<!-- Note: Voila -->
 
 # So.. problem ==solved!==
 
 ---
 
-<!-- Note: Of niet? -->
+<!-- Note: Of niet -->
 
 # ..right?
 
 ---
 
-<!-- Note: Wel, de waarheid is dat dit in theorie heel goed klinkt, maar zoals vaak is het in de praktikj een ander paar mouwen -->
+<!-- Note: Theorie -->
+
+<!-- Note: Ander paar mouwen -->
 
 <img src="well-yes-but-no.jpg"/>
 
@@ -341,13 +395,19 @@
 
 <!-- *template: invert -->
 
-<!-- Note: Om dit te illustreren, laten we eens kijken naar wat er in de praktijk bestaat -->
+<!-- Note: Wat bestaat? -->
 
 # ==State== of the art
 
 ---
 
-<!-- Note: Voor Java bestaat er Clover, wat recent opensource is gemaakt. Dit werkt vrij goed, maar enkel voor Java en het is ook niet eenvoudig om de manier van prioritering te beinvloeden -->
+<!-- Note: Java -->
+
+<!-- Note: Clover -->
+
+<!-- Note: Vrij goed -->
+
+<!-- Note: Niet aanpasbaar -->
 
 ## State of the art
 
@@ -357,7 +417,9 @@
 
 ---
 
-<!-- Note: En voor alle andere programmeertalen, welja, bestaat er niets dat algemeen toepasbaar en vooral uitbreidbaar is -->
+<!-- Note: Andere talen -->
+
+<!-- Note: Wel ja -->
 
 ## State of the art
 
@@ -369,13 +431,17 @@
 
 <!-- *template: gaia -->
 
-<!-- Note: Dit brengt ons naadloos bij mijn eigen implementatie  -->
+<!-- Note: Naadloos -->
 
 # Implementation
 
 ---
 
-<!-- Note: Deze implementatie bestaat uit 3 componenten die communiceren via een uniforme HTTP interface. Los daarvan bestaan deze componenten volledig op zichzelf en kunnen ze dus volledig los van elkaar worden aangepast en uitgebreid -->
+<!-- Note: 3 componenten -->
+
+<!-- Note: Uniforme interface -->
+
+<!-- Note: Apart ontwikkelen -->
 
 # Implementation
 
@@ -385,7 +451,7 @@
 
 <!-- page_same: true -->
 
-<!-- Note: De eerste component is de agent -->
+<!-- Note: Agent -->
 
 # Implementation
 
@@ -393,7 +459,7 @@
 
 ---
 
-<!-- Note: Gevolgd door de controller -->
+<!-- Note: Controller -->
 
 # Implementation
 
@@ -401,7 +467,7 @@
 
 ---
 
-<!-- Note: En tenslotte de predictor -->
+<!-- Note: Tenslotte -->
 
 # Implementation
 
@@ -411,7 +477,9 @@
 
 <!-- page_same: false -->
 
-<!-- Note: Ik zal nu deze componenten bespreken, beginnend met de agent -->
+<!-- Note: Bespreken -->
+
+<!-- Note: Agent -->
 
 # Implementation
 
@@ -419,7 +487,13 @@
 
 ---
 
-<!-- Note: De agent is afhankelijk van de programmeertaal en wordt in het gebruikte test framework ingeplugd. Deze agent heeft twee taken, de eerste taak is het uitvoeren van alle tests in een bepaalde volgorde die door de predictor wordt bepaald -->
+<!-- Note: Ingeplugd in tests -->
+
+<!-- Note: Dus Taal afhankelijk -->
+
+<!-- Note: Twee taken -->
+
+<!-- Note: Volgorde uitvoeren (predictor) -->
 
 ## Implementation / Agent
 
@@ -431,7 +505,9 @@
 
 ---
 
-<!-- Note: Daarnaast stuurt de agent nadat de tests zijn uitgevoerd ook feedback naar de controller -->
+<!-- Note: Daarnaast -->
+
+<!-- Note: Feedback over uitvoering -->
 
 <!-- *page_same: true -->
 
@@ -445,7 +521,7 @@
 
 ---
 
-<!-- Note: Dan, de tweede component, de controller -->
+<!-- Note: Controller -->
 
 # Implementation
 
@@ -453,7 +529,9 @@
 
 ---
 
-<!-- Note: De controller heeft ook twee taken: Enerzijds is dit een soort brug tussen de agent en de predictor, dus stuurt binnenkomende verzoeken door -->
+<!-- Note: Agent / Predictor zijn onafh.-->
+
+<!-- Note: Koppelen -->
 
 ## Implementation / Controller
 
@@ -468,7 +546,9 @@
 
 <!-- *page_same: true -->
 
-<!-- Note: Anderzijds zal de controller ook feedback van de agent analyseren om de performance van volgende uitvoeringen te verbeteren -->
+<!-- Note: Verwerk resultaten agent -->
+
+<!-- Note: Performantie volgende runs -->
 
 ## Implementation / Controller
 
@@ -481,7 +561,7 @@
 
 ---
 
-<!-- Note: Dat brengt ons bij de derde component, de predictor -->
+<!-- Note: Predictor -->
 
 # Implementation
 
@@ -489,7 +569,7 @@
 
 ---
 
-<!-- Note: Zoals de naam al doet vermoeden, bepaalt de predictor de volgorde waarin de tests worden uitgevoerd -->
+<!-- Note: Volgorde Falen -->
 
 ## Implementation / Predictor
 
@@ -503,7 +583,9 @@
 
 <!-- *page_same: true -->
 
-<!-- Note: Dit wordt gedaan aan de hand van 10 ingebouwde algoritmes -->
+<!-- Note: 10 Algoritmes -->
+
+<!-- Note: Elk eigen volgorde genereren -->
 
 ## Implementation / Predictor
 
@@ -517,7 +599,11 @@
 
 <!-- *page_same: true -->
 
-<!-- Note: Het belangrijkste aspect is dat de predictor uitbreidbaar is. Elk algoritme gebruikt dezelfde interface; een voorbeeld staat hieronder. Het algoritme kan de coverage, vorige uitvoeringsresultaten en uitvoeringstijden van de tests gebruiken om zo een volgorde te bepalen. In het voorbeeld hieronder wordt er simpelweg een volledig willekeurige volgorde gegenereerd -->
+<!-- Note: Uitbreidbaar -->
+
+<!-- Note: Interface -->
+
+<!-- Note: Voorbeeld [9M] -->
 
 ## Implementation / Predictor
 
@@ -537,7 +623,13 @@ def predict(test_cases, coverage, results, duration):
 
 ---
 
-<!-- Note: Een van deze algoritmes heb ik zelf gemaakt, door de beste punten van de andere algoritmes bij elkaar te gooien. Dit algoritme bestaat uit 4 stappen -->
+<!-- Note: Een van 10 -->
+
+<!-- Note: Alpha -->
+
+<!-- Note: Zelf gemaakt -->
+
+<!-- Note: Combineer andere -->
 
 ## Implementation / Alpha-algorithm
 
@@ -547,7 +639,9 @@ def predict(test_cases, coverage, results, duration):
 
 <!-- page_same: true -->
 
-<!-- Note: Eerst selecteren we alle tests die getroffen zijn door code aanpassingen in de huidige run én die ook minstens één keer gefaald zijn in de vorige 3 runs. We ordenen die op basis van uitvoeringstijd zodat de snelste tests eerder worden uitgevoerd -->
+<!-- Note: Code aangepast -->
+
+<!-- Note: Onlangs gefaald (2 vorige) -->
 
 ## Implementation / Alpha-algorithm
 
@@ -555,7 +649,7 @@ def predict(test_cases, coverage, results, duration):
 
 ---
 
-<!-- Note: Daarna doen we exact hetzelfde voor alle overblijvende getroffen tests (die dus niet onlangs gefaald zijn) -->
+<!-- Note: Code aangepast -->
 
 ## Implementation / Alpha-algorithm
 
@@ -564,7 +658,9 @@ def predict(test_cases, coverage, results, duration):
 
 ---
 
-<!-- Note: Eens dat gedaan is worden alle overblijvende tests geordend op volgorde van hoeveel extra gecoverde code ze nog kunnen bijdragen (rekening houdend met de tests die al geselecteerd zijn) -->
+<!-- Note: Overblijvende tests -->
+
+<!-- Note: Nog niet geteste lijnen -->
 
 ## Implementation / Alpha-algorithm
 
@@ -574,7 +670,11 @@ def predict(test_cases, coverage, results, duration):
 
 ---
 
-<!-- Note: Stel dat er uiteindelijk nog tests zouden overblijven die geen nieuwe coverage meer bijdragen, voeren we deze tests uit volgens stijgende uitvoeringstijd. Merk op dat deze tests eigenlijk redundant zijn en dus ook zouden kunnen worden overgeslagen, maar zoals eerder gezegd kiezen we ervoor om die toch uit te voeren voor de zekerheid -->
+<!-- Note: Elke lijn getest -->
+
+<!-- Note: Redundant -->
+
+<!-- Note: Toch uitvoeren [10M] -->
 
 ## Implementation / Alpha-algorithm
 
@@ -587,7 +687,11 @@ def predict(test_cases, coverage, results, duration):
 
 <!-- page_same: false -->
 
-<!-- Note: De aandachtige luisteraar heeft misschien opgemerkt dat er nog een puzzelstuk ontbreekt: De predictor bestaat namelijk uit 10 algoritmes, die elk een uitvoeringsvolgorde bepalen -->
+<!-- Note: Aandachtige luisteraar -->
+
+<!-- Note: 10 algoritmes -->
+
+<!-- Note: 10 volgordes -->
 
 ## Implementation / Meta predictor
 
@@ -597,7 +701,7 @@ def predict(test_cases, coverage, results, duration):
 
 <!-- page_same: true -->
 
-<!-- Note: Maar hoe moeten we nu kiezen wat de uiteindelijke volgorde moet zijn? -->
+<!-- Note: Hoe weten? -->
 
 ## Implementation / Meta predictor
 
@@ -605,7 +709,7 @@ def predict(test_cases, coverage, results, duration):
 
 ---
 
-<!-- Note: Hiervoor dient de metapredictor -->
+<!-- Note: Meta predictor -->
 
 ## Implementation / Meta predictor
 
@@ -613,9 +717,13 @@ def predict(test_cases, coverage, results, duration):
 
 ---
 
-<!-- Note: De metapredictor in deze thesis is zeer eenvoudig en werkt door elk algoritme een score te geven voor het huidige project, en telkens het algoritme met de hoogste score te verkiezen. Deze score wordt bijgewerkt door de controller tijdens het analyseren van de uitgevoerde tests. Dit heeft als bijkomend voordeel dat als de aard van het project zou evolueren over de tijd, een ander algoritme mogelijks beter zou kunnen werken en dat dit automatisch wordt aangepast -->
+<!-- Note: Eenvoudige tabel -->
 
-<!-- Note: Een mogelijke uitbreiding zou kunnen zijn om hier Machine Learning voor te gebruiken. Verder zijn er ook bestaande algoritmes die zuiver gebaseerd zijn op Machine Learning -->
+<!-- Note: Score per algo -->
+
+<!-- Note: Controller verhoogt als goed -->
+
+<!-- Note: Machine Learning -->
 
 ## Implementation / Meta predictor
 
@@ -626,7 +734,9 @@ def predict(test_cases, coverage, results, duration):
 <!-- page_same: false -->
 <!-- *template: gaia -->
 
-<!-- Note: Nu we weten hoe het werkt, tijd om eens te kijken hoe goed het werkt -->
+<!-- Note: Weten hoe -->
+
+<!-- Note: Kijken hoe goed -->
 
 # Results
 
@@ -634,7 +744,15 @@ def predict(test_cases, coverage, results, duration):
 
 ## Results
 
-<!-- Note: En nu dus de performance van mijn implementatie op het Dodona project van de UGent. We kunnen hierbij twee aspecten beschouwen. Te beginnen met het aantal uitgevoerde tests totdat de eerste falende test wordt gedetecteerd. -->
+<!-- Note: Dodona UGent -->
+
+<!-- Note: Aantal tests tot faal -->
+
+<!-- Note: Grijs origineel -->
+
+<!-- Note: Rood Alpha -->
+
+<!-- Note: 25 keer -->
 
 #### Performance on Dodona (Tests)
 
@@ -652,7 +770,11 @@ def predict(test_cases, coverage, results, duration):
 
 ## Results
 
-<!-- Note: Daarnaast heeft het uitvoeren van 25 keer minder tests natuurlijk ook een invloed op de wachttijd tot de eerste falende test wordt waargenomen. Deze grafiek ziet er gelijkaardig uit, maar het verschil is veel significanter; tot wel 40 keer -->
+<!-- Note: Tijd -->
+
+<!-- Note: Grafiek gelijkaardig -->
+
+<!-- Note: 40 keer -->
 
 #### Performance on Dodona (Duration)
 
@@ -670,13 +792,15 @@ def predict(test_cases, coverage, results, duration):
 
 <!-- *template: gaia -->
 
+<!-- Note: Demo -->
+
 # Demo
 
 ---
 
 <!-- *template: gaia -->
 
-<!-- Note: Dus, samengevat --> 
+<!-- Note: Samengevat --> 
 
 # Wrapping up
 
@@ -684,7 +808,11 @@ def predict(test_cases, coverage, results, duration):
 
 ## Conclusion
 
-<!-- Note: Met CI kunnen we automatisch tests uitvoeren, iets wat zeer goed is om vroegtijdig fouten te detecteren -->
+<!-- Note: Tests goed -->
+
+<!-- Note: Fouten detecteren -->
+
+<!-- Note: Eindgebruikers -->
 
 <center>
 	<img src="conclusion-tests-begin.svg" style="width: 50%" />
@@ -694,7 +822,11 @@ def predict(test_cases, coverage, results, duration):
 
 <!-- *page_same: true -->
 
-<!-- Note: Veel tests kunnen echter een probleem vormen omdat je dan lang moet wachten op resultaten -->
+<!-- Note: Veel tests -->
+
+<!-- Note: Probleem -->
+
+<!-- Note: Traag feedback -->
 
 ## Conclusion
 
@@ -704,7 +836,13 @@ def predict(test_cases, coverage, results, duration):
 
 ---
 
-<!-- Note: Dit kunnen we oplossen met Test Prioritering, waarbij we tests herordenen om veel sneller een falende test kunnen detecteren -->
+<!-- Note: Oplossen -->
+
+<!-- Note: Test Prioritering -->
+
+<!-- Note: Rangschikken -->
+
+<!-- Note: Snel falen -->
 
 ## Conclusion
 
@@ -717,7 +855,11 @@ def predict(test_cases, coverage, results, duration):
 
 ---
 
-<!-- Note: Dit heeft als resultaat dat de wachttijd daalt en de productiviteit stijgt -->
+<!-- Note: Resultaat -->
+
+<!-- Note: Wachten daalt -->
+
+<!-- Note: Productiviteit stijgt -->
 
 ## Conclusion
 
@@ -730,7 +872,9 @@ def predict(test_cases, coverage, results, duration):
 
 <!-- *template: gaia -->
 
-<!-- Note: Zijn er nog vragen? -->
+<!-- Note: Was presentatie -->
+
+<!-- Note: Eventuele vragen -->
 
 # Questions?
 

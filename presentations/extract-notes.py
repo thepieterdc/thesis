@@ -19,9 +19,9 @@ with open(in_file, "r") as fh:
 
 # Write file.
 with open(out_file, "w+") as fh:
-    fh.write("[notes]\n")
+    fh.write("[font_size]\n34\n[notes]\n")
     for slide, slide_notes in enumerate(notes):
         if slide_notes:
             fh.write(f"### {slide + 1}\n")
             for note in slide_notes:
-                fh.write(f"{note}\n")
+                fh.write(f"{note}\n\n")
